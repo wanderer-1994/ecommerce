@@ -1,0 +1,493 @@
+@media all and (min-width: 901px){
+    .prodDetail{
+        margin-right: 45px;
+    }
+    .prodDetail .backBar{
+        margin-bottom: 3px;
+        padding: 3px;
+        background-color: white;
+        border-radius: 3px;
+    }
+    .prodDetail .backBar .backButton{
+        color: white;
+        background-color: #2196f399;
+        display: inline-block;
+        padding: 3px 15px 0px 15px;
+        border-radius: 3px;
+        cursor: pointer;
+    }
+    .prodDetail .backBar .backButton:hover{
+        background-color: #2196f3;
+    }
+    .prodDetail .backBar .backButton svg{
+        margin-right: -10px;
+    }
+    .prodDetail{
+        padding: 5px 2px 5px 0px;
+    }
+    .prodDetail .prodDetailWrapper{
+        background-color: white;
+        border-radius: 3px;
+    }
+    .prodDetail .imgContainer{
+        display: inline-block;
+        width: 50%;
+        height: 460px;
+    }
+    .prodDetail .mainImg{
+        width: 100%;
+        height: calc(100% - 73px);
+        text-align: center;
+    }
+    .prodDetail img{
+        max-width: 100%;
+        max-height: 100%;
+        display: inline-block;
+    }
+    .prodDetail .miniImgs{
+        width: calc(100% - 10px);
+        margin-left: 5px;
+        height: 70px;
+        border-radius: 3px;
+        background-color: #ababab55;
+        overflow: hidden;
+        margin-top: 3px;
+    }
+    .prodDetail .miniImgs img{
+        height: 60px;
+        width: auto;
+        margin-top: 5px;
+        display: inline-block;
+        border-radius: 3px;
+        margin-left: 5px;
+        cursor: pointer;
+    }
+    .prodDetail .miniImgs img.active{
+        box-shadow: 0px 3px 10px 0px #9c27b0;
+    }
+    .prodDetail .prodInfo{
+        display: inline-block;
+        vertical-align: top;
+        padding-left: 15px;
+        padding-right: 3px;
+        min-width: 400px;
+        width: 50%;
+    }
+    .prodDetail .prodName{
+        color: gray;
+        font-size: 18px;
+        margin-bottom: 5px;
+        margin-top: 5px;
+    }
+    .prodDetail .prodWarranty{
+        color: gray;
+        font-style: italic;
+        margin-bottom: 5px;
+        margin-left: 10px;
+    }
+    .prodDetail .priceGroup{
+        color: gray;
+        font-style: italic;
+        margin-left: 10px;
+    }
+    .prodDetail .rootPrice{
+        margin-left: 5px;
+        margin-right: 10px;
+        font-size: 15px;
+        text-decoration: line-through;
+    }
+    .prodDetail .prodPrice{
+        color: red;
+        margin-right: 10px;
+        margin-left: 5px;
+    }
+    .prodDetail .saleInfo{
+        background-color: red;
+        color: white;
+        display: inline-block;
+        border-radius: 1px;
+        padding-left: 3px;
+        padding-right: 3px;
+        font-size: 14px;
+    }
+    .prodDetail .prodReviewLink a{
+        display: inline-block;
+        height: 50px;
+        line-height: 50px;
+    }
+    .prodDetail .prodAction{
+        text-align: center;
+    }
+    .prodDetail .prodAction button{
+        border: none;
+        height: 50px;
+        background-color: red;
+        border-radius: 2px;
+        padding: 5px;
+        cursor: pointer;
+    }
+    .prodDetail .prodAction button.addToCart{
+        margin-right: 5px;
+        border: 1px solid red;
+        background-color: pink;
+        color: red;
+        width: 50%;
+    }
+    .prodDetail .prodAction button.buyNow{
+        width: calc(50% - 5px);
+    }
+    .prodDetail .prodAction button,
+    .prodDetail .prodAction button a{
+        color: white;
+        text-decoration: none;
+        font-size: 20px;
+        vertical-align: top;
+    }
+    .prodDetail .prodAction button a{
+        display: inline-block;
+        height: 100%;
+        width: 100%;
+        margin-top: 4%;
+    }
+    .prodDetail .prodDescription{
+        margin-top: 10px;
+        font-size: 15px;
+        border-top: 1px solid #bcbcbc;
+        padding-top: 5px;
+    }
+    
+    /*  */
+    .upSellProd{
+        padding: 5px 2px 5px 0px;
+    }
+    .upSellProd a{
+        text-decoration: none;
+    }
+    .upSellProd .title{
+        height: 38px;
+    }
+    .upSellProd .title h1{
+        font-size: 25px;
+        color: white;
+        font-style: italic;
+        display: inline-block;
+        padding: 5px 25px 5px 5px;
+        background-color: red;
+        vertical-align: middle;
+        height: 100%;
+        border-top-left-radius: 10px;
+    }
+    .upSellProd .shape{
+        display: inline-block;
+        height: 100%;
+        width: 38px;
+        border-radius: 50%;
+        background-color: red;
+        vertical-align: middle;
+        margin-left: -19px;
+    }
+    .upSellProd.similarProd .title h1,
+    .upSellProd.similarProd .shape{
+        background-color: blue;
+    }
+    .upSellProd .prodWrapper{
+        border-bottom-left-radius: 2px;
+        border-bottom-right-radius: 2px;
+        border-top-right-radius: 2px;
+        /* background-color: #efefef; */
+    }
+    .upSellProd .prodBox{
+        display: inline-block;
+        width: calc(100%/5.2 - 6px);
+        margin: 3px 3px 3px 3px;
+        background-color: white;
+        position: relative;
+        vertical-align: text-top;    
+    }
+    .upSellProd .prodName{
+        font-size: 15px;
+        text-align: center;
+        color: gray;
+        padding: 5px;
+        font-weight: 100;
+        height: 50px;
+        overflow: hidden;
+    }
+    .upSellProd img{
+        height: 150px;
+        display: block;
+        margin: auto;
+    }
+    .upSellProd .priceGroup{
+        color: gray;
+        font-style: italic;
+        text-align: center;
+        margin-top: 5px;
+    }
+    .upSellProd .rootPrice{
+        margin-left: 5px;
+        margin-right: 10px;
+        font-size: 15px;
+        text-decoration: line-through;
+    }
+    .upSellProd .prodPrice{
+        color: red;
+        margin-right: 10px;
+        margin-left: 5px;
+    }
+    .upSellProd .saleInfo{
+        background-color: red;
+        color: white;
+        display: inline-block;
+        border-radius: 1px;
+        padding-left: 3px;
+        padding-right: 3px;
+        font-size: 14px;
+    }
+}
+@media all and (max-width: 900px){
+    .prodDetail .backBar{
+        margin-bottom: 3px;
+        padding: 3px;
+        background-color: white;
+        border-radius: 3px;
+    }
+    .prodDetail .backBar .backButton{
+        color: white;
+        background-color: #2196f399;
+        display: inline-block;
+        padding: 3px 15px 0px 15px;
+        border-radius: 3px;
+        cursor: pointer;
+    }
+    .prodDetail .backBar .backButton:hover{
+        background-color: #2196f3;
+    }
+    .prodDetail .backBar .backButton svg{
+        margin-right: -10px;
+    }
+    .prodDetail{
+        padding: 5px 2px 5px 0px;
+    }
+    .prodDetail .prodDetailWrapper{
+        background-color: white;
+        border-radius: 3px;
+    }
+    .prodDetail .imgContainer{
+        display: inline-block;
+        width: 100%;
+        height: 400px;
+    }
+    .prodDetail .mainImg{
+        width: 100%;
+        height: calc(100% - 73px);
+        text-align: center;
+    }
+    .prodDetail img{
+        max-width: 100%;
+        max-height: 100%;
+        display: inline-block;
+    }
+    .prodDetail .miniImgs{
+        width: calc(100% - 10px);
+        margin-left: 5px;
+        height: 70px;
+        border-radius: 3px;
+        background-color: #ababab55;
+        overflow: hidden;
+        margin-top: 3px;
+    }
+    .prodDetail .miniImgs img{
+        height: 60px;
+        width: auto;
+        margin-top: 5px;
+        display: inline-block;
+        border-radius: 3px;
+        margin-left: 5px;
+        cursor: pointer;
+    }
+    .prodDetail .miniImgs img.active{
+        box-shadow: 0px 3px 10px 0px #9c27b0;
+    }
+    .prodDetail .prodInfo{
+        display: inline-block;
+        vertical-align: top;
+        padding-left: 15px;
+        padding-right: 3px;
+        min-width: 400px;
+        width: 50%;
+        padding-bottom: 10px;
+    }
+    .prodDetail .prodName{
+        color: gray;
+        font-size: 18px;
+        margin-bottom: 5px;
+        margin-top: 5px;
+    }
+    .prodDetail .prodWarranty{
+        color: gray;
+        font-style: italic;
+        margin-bottom: 5px;
+        margin-left: 10px;
+    }
+    .prodDetail .priceGroup{
+        color: gray;
+        font-style: italic;
+        margin-left: 10px;
+    }
+    .prodDetail .rootPrice{
+        margin-left: 5px;
+        margin-right: 10px;
+        font-size: 15px;
+        text-decoration: line-through;
+    }
+    .prodDetail .prodPrice{
+        color: red;
+        margin-right: 10px;
+        margin-left: 5px;
+    }
+    .prodDetail .saleInfo{
+        background-color: red;
+        color: white;
+        display: inline-block;
+        border-radius: 1px;
+        padding-left: 3px;
+        padding-right: 3px;
+        font-size: 14px;
+    }
+    .prodDetail .prodReviewLink a{
+        display: inline-block;
+        height: 50px;
+        line-height: 50px;
+    }
+    .prodDetail .prodAction{
+        text-align: center;
+    }
+    .prodDetail .prodAction button{
+        border: none;
+        height: 50px;
+        background-color: red;
+        border-radius: 2px;
+        padding: 5px;
+        cursor: pointer;
+    }
+    .prodDetail .prodAction button.addToCart{
+        margin-right: 5px;
+        border: 1px solid red;
+        background-color: pink;
+        color: red;
+        width: 50%;
+    }
+    .prodDetail .prodAction button.buyNow{
+        width: calc(50% - 5px);
+    }
+    .prodDetail .prodAction button,
+    .prodDetail .prodAction button a{
+        color: white;
+        text-decoration: none;
+        font-size: 20px;
+        vertical-align: top;
+    }
+    .prodDetail .prodAction button a{
+        display: inline-block;
+        height: 100%;
+        width: 100%;
+        margin-top: 4%;
+    }
+    .prodDetail .prodDescription{
+        margin-top: 10px;
+        font-size: 15px;
+        border-top: 1px solid #bcbcbc;
+        padding-top: 5px;
+    }
+    
+    /*  */
+    .upSellProd{
+        padding: 5px 2px 5px 0px;
+    }
+    .upSellProd a{
+        text-decoration: none;
+    }
+    .upSellProd .title{
+        height: 38px;
+    }
+    .upSellProd .title h1{
+        font-size: 25px;
+        color: white;
+        font-style: italic;
+        display: inline-block;
+        padding: 5px 25px 5px 5px;
+        background-color: red;
+        vertical-align: middle;
+        height: 100%;
+        border-top-left-radius: 10px;
+    }
+    .upSellProd .shape{
+        display: inline-block;
+        height: 100%;
+        width: 38px;
+        border-radius: 50%;
+        background-color: red;
+        vertical-align: middle;
+        margin-left: -19px;
+    }
+    .upSellProd.similarProd .title h1,
+    .upSellProd.similarProd .shape{
+        background-color: blue;
+    }
+    .upSellProd .prodWrapper{
+        border-bottom-left-radius: 2px;
+        border-bottom-right-radius: 2px;
+        border-top-right-radius: 2px;
+        /* background-color: #efefef; */
+    }
+    .upSellProd .prodBox{
+        display: inline-block;
+        width: calc(100%/2 - 6px);
+        margin: 3px 3px 3px 3px;
+        background-color: white;
+        position: relative;
+        vertical-align: text-top;    
+    }
+    .upSellProd .prodName{
+        font-size: 15px;
+        text-align: center;
+        color: gray;
+        padding: 5px;
+        font-weight: 100;
+        height: 50px;
+        overflow: hidden;
+    }
+    .upSellProd img{
+        height: 150px;
+        max-width: 100%;
+        display: block;
+        margin: auto;
+    }
+    .upSellProd .priceGroup{
+        color: gray;
+        font-style: italic;
+        text-align: center;
+        margin-top: 5px;
+    }
+    .upSellProd .rootPrice{
+        margin-left: 5px;
+        margin-right: 10px;
+        font-size: 15px;
+        text-decoration: line-through;
+    }
+    .upSellProd .prodPrice{
+        color: red;
+        margin-right: 10px;
+        margin-left: 5px;
+    }
+    .upSellProd .saleInfo{
+        background-color: red;
+        color: white;
+        display: inline-block;
+        border-radius: 1px;
+        padding-left: 3px;
+        padding-right: 3px;
+        font-size: 14px;
+    }
+}

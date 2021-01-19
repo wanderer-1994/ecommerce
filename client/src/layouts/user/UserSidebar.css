@@ -1,0 +1,142 @@
+@media all and (min-width: 901px){
+    .UserSidebar .mobileSidebarClose{
+        display: none;
+    }
+    .UserSidebar{
+        position: sticky;
+        top: 50px;
+        padding-top: 5px;
+        height: calc(100vh - 50px);
+        padding-bottom: 80px;
+        float: left;
+        width: 250px;
+        margin-top: 15px;
+        overflow-y: auto;
+        z-index: 15;
+    }
+    .UserSidebar::-webkit-scrollbar{
+        width: 10px;
+        border-radius: 5px;
+        overflow: hidden;
+    }
+    .UserSidebar::-webkit-scrollbar-track{
+        border-radius: 5px;
+    }
+    .UserSidebar::-webkit-scrollbar-thumb{
+        width: 10px;
+        background-color: #cdcdcd;
+        border-radius: 5px;
+    }
+    .UserSidebar::-webkit-scrollbar-thumb:hover{
+        background-color: #ababab;
+    }
+    .UserSidebar li a{
+        display: inline-block;
+        text-decoration: none;
+        font-style: italic;
+        color: black;
+        font-size: 15px;
+        padding: 2px 10px 2px 5px;
+        margin-left: 5px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: calc(100% - 5px);
+    }
+    .UserSidebar li a:hover{
+        background-color: #ffc107;
+        color: white;
+    }
+    .UserSidebar li a.level_1{
+        font-style: normal;
+    }
+    .UserSidebar li a.level_2{
+        padding-left: 15px;
+    }
+    .UserSidebar li a.level_3{
+        padding-left: 25px;
+    }
+    .UserSidebar li a.level_4{
+        padding-left: 35px;
+    }
+}
+
+@media all and (max-width: 900px){
+    .UserSidebar .mobileSidebarClose{
+        background-color: white;
+        height: 45px;
+        margin-left: 20%;
+        position: absolute;
+        top: 0px;
+        width: 80%;
+    }
+    .UserSidebar .mobileSidebarClose svg{
+        float: right;
+        margin-right: 10px;
+        margin-top: 5px;
+        color: red;
+        font-size: 30px;
+    }
+    .UserSidebar{
+        display: none;
+        position: fixed;
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        height: 100vh;
+        z-index: 15;
+        background-color: #00000099;
+    }
+    .UserSidebar ul{
+        display: block;
+        height: 100vh;
+        width: 80%;
+        background-color: white;
+        margin-left: 20%;
+        padding-top: 45px;
+    }
+    .UserSidebar ul > div{
+        background-color: #ffffff99;
+        height: 100%;
+        overflow: auto;
+        padding-bottom: 50px;
+    }
+    .UserSidebar li{
+        list-style: none;
+    }
+    .UserSidebar li a{
+        display: inline-block;
+        text-decoration: none;
+        font-style: italic;
+        color: black;
+        font-size: 15px;
+        padding: 4px 10px 4px 5px;
+        margin-left: 5px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: calc(100% - 10px);
+        text-align: center;
+    }
+    .UserSidebar li a.level_1{
+        font-style: normal;
+        background-color: #00000040;
+    }
+    .UserSidebar li a.level_2{
+        padding-left: 15px;
+    }
+    .UserSidebar li a.level_3{
+        padding-left: 25px;
+    }
+    .UserSidebar li a.level_4{
+        padding-left: 35px;
+    }
+    .UserSidebar li a.active{
+        background-color: #9c27b0;
+        color: white;
+    }
+    .UserSidebar li a:hover{
+        background-color: #ffc107;
+        color: white;
+    }
+}

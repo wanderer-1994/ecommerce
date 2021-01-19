@@ -1,0 +1,25 @@
+@media all and (min-width: 901px){
+    .AdminLayout{
+        min-height: calc(100vh + 1px);
+        background-color: #eeeeee;
+    }
+    .AdminWrapper{
+        min-height: 100vh;
+        margin-top: 5px;
+        margin-left: 255px;
+        position: relative;
+        padding-bottom: 150px;
+    }
+}
+@media all and (max-width: 900px){
+    .AdminLayout{
+        min-height: calc(100vh + 1px);
+        background-color: #eeeeee;
+    }
+    .AdminWrapper{
+        min-height: 100vh;
+        margin-top: 5px;
+        position: relative;
+        padding-bottom: 270px;
+    }
+}

@@ -1,0 +1,112 @@
+[
+    {
+        "category_path": "/usb-the-nho",
+        "category_name": "USB, thẻ nhớ",
+        "priority": 1
+    },
+    {
+        "category_path": "/usb-the-nho/usb",
+        "category_name": "USB",
+        "priority": 1
+    },
+    {
+        "category_path": "/usb-the-nho/the-nho",
+        "category_name": "Thẻ nhớ",
+        "priority": 2
+    },
+    {
+        "category_path": "/cap-coc-sac",
+        "category_name": "Cáp, cóc sạc",
+        "priority": 2
+    },
+    {
+        "category_path": "/cap-coc-sac/cap-sac",
+        "category_name": "Cáp sạc",
+        "priority": 1
+    },
+    {
+        "category_path": "/cap-coc-sac/coc-sac",
+        "category_name": "Cóc sạc",
+        "priority": 2
+    },
+    {
+        "category_path": "/tai-nghe-loa",
+        "category_name": "Tai nghe, loa",
+        "priority": 3
+    },
+    {
+        "category_path": "/tai-nghe-loa/tai-nghe-day",
+        "category_name": "Tai nghe có dây",
+        "priority": 1
+    },
+    {
+        "category_path": "/tai-nghe-loa/tai-nghe-bluetooth",
+        "category_name": "Tai nghe bluetooth",
+        "priority": 2
+    },
+    {
+        "category_path": "/tai-nghe-loa/loa",
+        "category_name": "Loa",
+        "priority": 3
+    },
+    {
+        "category_path": "/pin-du-phong",
+        "category_name": "Pin dự phòng",
+        "priority": 4
+    },
+    {
+        "category_path": "/phu-kien-lap-top",
+        "category_name": "Phụ kiện laptop",
+        "priority": 5
+    },
+    {
+        "category_path": "/phu-kien-lap-top/chuot",
+        "category_name": "Chuột",
+        "priority": 1
+    },
+    {
+        "category_path": "/phu-kien-lap-top/ban-phim",
+        "category_name": "Bàn phím",
+        "priority": 2
+    },
+    {
+        "category_path": "/phu-kien-lap-top/phu-kien-lap-top-khac",
+        "category_name": "Tản nhiệt, túi đựng, mousepad…",
+        "priority": 3
+    },
+    {
+        "category_path": "/gia-do-gay-selfie",
+        "category_name": "Giá đỡ, gậy selfie",
+        "priority": 6
+    },
+    {
+        "category_path": "/op-lung-cuong-luc",
+        "category_name": "Ốp lưng, Cường lực",
+        "priority": 7
+    },
+    {
+        "category_path": "/do-choi-cute",
+        "category_name": "Dụng cụ, đồ chơi cute",
+        "priority": 8
+    },
+    {
+        "category_path": "/danh-cho-game-thu",
+        "category_name": "Dành cho game thủ",
+        "priority": 9
+    },
+    {
+        "category_path": "/do-phuot",
+        "category_name": "Đồ phượt, dã ngoại",
+        "priority": 10
+    },
+    {
+        "category_path": "/nha-cua-doi-song",
+        "category_name": "Dụng cụ nhà cửa, đời sống",
+        "priority": 11
+    },
+    {
+        "category_path": "/massage-gym-lam-dep",
+        "category_name": "Dụng cụ massage, gym, làm đẹp",
+        "priority": 12
+    }
+]

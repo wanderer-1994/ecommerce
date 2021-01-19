@@ -1,0 +1,403 @@
+@media all and (min-width: 901px){
+    /* sort are */
+    .OrderImport .adminOnly{
+        display: none;
+    }
+    .OrderImport .header{
+        padding: 5px;
+        background-color: #f44336;
+        margin-bottom: 5px;
+        margin-right: 1px;
+        border-radius: 3px;
+        color: white;
+        font-style: italic;
+        font-size: 30px;
+        font-family: cursive;
+        text-align: center;
+    }
+    .OrderImport .summary{
+        padding: 3px 0px 0px 10px;
+        color: red;
+        font-style: italic;
+        font-size: 16px;
+        font-family: cursive;
+    }
+    .OrderImport .sorter{
+        padding: 5px;
+        background-color: white;
+        margin-bottom: 5px;
+        margin-right: 1px;
+        border-radius: 3px;
+    }
+    .OrderImport .sorter > span{
+        display: inline-block;
+        margin: 5px;
+        font-family: cursive;
+        font-style: italic;
+        font-size: 14px;
+        text-align: left;
+        color: #ff5722;
+    }
+    .OrderImport .sorter > svg{
+        font-size: 20px;
+        vertical-align: middle;
+        color: #f44336;
+    }
+    .OrderImport .sorter select,
+    .OrderImport .sorter input{
+        border-radius: 2px;
+        border: 1px solid #ff5722;
+        margin: 0px 2px 0px 2px;
+        padding: 3px 5px 3px 5px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        -moz-appearance: textfield;
+        font-style: italic;
+        font-family: cursive;
+    }
+    .OrderImport .sorter input{
+        width: 120px;
+    }
+    .OrderImport .sorter input[type=date]::-webkit-inner-spin-button,
+    .OrderImport .sorter input[type=date]::-webkit-clear-button{
+        display: none;
+    }
+    .OrderImport .sorter button{
+        width: 60px;
+        margin: -3px 2px 0px 2px;
+        padding: 2px 0px 2px 0px;
+        height: 25px;
+        vertical-align: text-top;
+        border: none;
+        outline: none;
+        border-radius: 3px;
+        color: white;
+        font-family: cursive;
+        cursor: pointer;
+    }
+    .OrderImport .sorter button.actionLoad{
+        background-color: #03a9f4;
+        box-shadow: 0px 3px 10px 0px #03a9f470;
+    }
+    .OrderImport .sorter button.actionClear{
+        background-color: #f44336;
+        box-shadow: 0px 3px 10px 0px #f4433670;
+    }
+    .OrderImport .sorter button.hideAdminOnly{
+        background-color: #4caf50;
+        box-shadow: 0px 3px 10px 0px #4caf5070;
+        width: 80px;
+    }
+
+    /* products */
+    .OrderImport .prodWrapper{
+        background-color: white;
+        border-radius: 3px;
+        overflow: hidden;
+        margin: 10px 2px 10px 0px;
+        padding: 5px 0px 5px 0px;
+        position: relative;
+    }
+    .OrderImport .prodWrapper > div{
+        display: inline-block;
+        vertical-align: text-top;
+        padding: 5px;
+        width: 130px;
+    }
+    .OrderImport .prodWrapper .order_qty{
+        width: 420px;
+    }
+    .OrderImport .prodWrapper .thumbContainer{
+        position: relative;
+        height: 100%;
+    }
+    .OrderImport .prodWrapper .thumbContainer img{
+        max-width: 99%;
+        max-height: 99%;
+        display: inline-block;
+        margin: auto;
+        border-radius: 2px;
+    }
+    .OrderImport .prodWrapper .prod_name{
+        font-style: italic;
+        font-family: cursive;
+        color: #03a9f4;
+        font-size: 15px;
+        text-align: left;
+        text-decoration: none !important;
+    }
+    .OrderImport .prodWrapper .prod_name a{
+        text-decoration: none;
+    }
+    .OrderImport .prodWrapper .order_qty{
+        font-style: italic;
+        font-family: cursive;
+        color: gray;
+        font-size: 13px;
+        text-align: left;
+        width: 390px;
+    }
+    .OrderImport .prodWrapper .order_qty span,
+    .OrderImport .prodWrapper .order_qty select{
+        padding: 1px 5px 1px 5px;
+        border-radius: 3px;
+        border: none;
+        outline: none;
+        margin-bottom: 3px;
+        vertical-align: text-top;
+    }
+    .OrderImport .prodWrapper .order_qty span.note{
+        display: inline-block;
+        width: 200px;
+        background-color: #efefef;
+    }
+    .OrderImport .prodWrapper .total_order_qty{
+        font-style: italic;
+        font-family: cursive;
+        color: #4caf50;
+        font-size: 15px;
+        text-align: left;
+        width: 70px;
+        padding-right: 10px;
+        text-align: right;
+    }
+    .OrderImport .prodWrapper .sup_price{
+        font-style: italic;
+        font-family: cursive;
+        font-size: 15px;
+        text-align: left;
+        width: 150px;
+        color: gray;
+    }
+    .OrderImport .prodWrapper .sellPrice{
+        color: red;
+    }
+    .OrderImport .prodWrapper .grand_total_product{
+        font-style: italic;
+        font-family: cursive;
+        color: #f44336;
+        font-size: 15px;
+        text-align: left;
+    }
+    .OrderImport .grand_total_all{
+        display: inline-block;
+        height: 50px;
+        line-height: 50px;
+        color: white;
+        background-color: #f44336;
+        border-radius: 3px;
+        padding: 0px 15px 0px 15px;
+        position: fixed;
+        right: 5px;
+        bottom: 3px;
+    }
+}
+@media all and (max-width: 900px){
+    /* sort are */
+    .OrderImport .adminOnly{
+        display: none;
+    }
+    .OrderImport .header{
+        padding: 5px;
+        background-color: #f44336;
+        margin-bottom: 5px;
+        margin-right: 1px;
+        border-radius: 3px;
+        color: white;
+        font-style: italic;
+        font-size: 30px;
+        font-family: sans-serif;
+        text-align: center;
+    }
+    .OrderImport .summary{
+        padding: 3px 0px 0px 10px;
+        color: red;
+        font-style: italic;
+        font-size: 16px;
+        font-family: sans-serif;
+    }
+    .OrderImport .sorter{
+        padding: 5px;
+        background-color: white;
+        margin-bottom: 5px;
+        margin-right: 1px;
+        border-radius: 3px;
+    }
+    .OrderImport .sorter > span{
+        display: inline-block;
+        margin: 5px;
+        font-family: sans-serif;
+        font-style: italic;
+        font-size: 14px;
+        text-align: left;
+        color: #ff5722;
+    }
+    .OrderImport .sorter > svg{
+        font-size: 20px;
+        vertical-align: middle;
+        color: #f44336;
+    }
+    .OrderImport .sorter select,
+    .OrderImport .sorter input{
+        border-radius: 2px;
+        border: 1px solid #ff5722;
+        margin: 0px 2px 0px 2px;
+        padding: 3px 5px 3px 5px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        -moz-appearance: textfield;
+        font-style: italic;
+        font-family: sans-serif;
+    }
+    .OrderImport .sorter input{
+        width: 120px;
+    }
+    .OrderImport .sorter input[type=date]::-webkit-inner-spin-button,
+    .OrderImport .sorter input[type=date]::-webkit-clear-button{
+        display: none;
+    }
+    .OrderImport .sorter button{
+        width: 60px;
+        margin: -3px 2px 0px 2px;
+        padding: 2px 0px 2px 0px;
+        height: 25px;
+        vertical-align: text-top;
+        border: none;
+        outline: none;
+        border-radius: 3px;
+        color: white;
+        font-family: sans-serif;
+        cursor: pointer;
+    }
+    .OrderImport .sorter button.actionLoad{
+        background-color: #03a9f4;
+        box-shadow: 0px 3px 10px 0px #03a9f470;
+    }
+    .OrderImport .sorter button.actionClear{
+        background-color: #f44336;
+        box-shadow: 0px 3px 10px 0px #f4433670;
+    }
+    .OrderImport .sorter button.hideAdminOnly{
+        background-color: #4caf50;
+        box-shadow: 0px 3px 10px 0px #4caf5070;
+        width: 80px;
+    }
+
+    /* products */
+    .OrderImport .prodWrapper{
+        background-color: white;
+        border-radius: 3px;
+        overflow: hidden;
+        margin: 10px 2px 10px 0px;
+        padding: 5px 0px 5px 0px;
+        position: relative;
+    }
+    .OrderImport .prodWrapper > div{
+        display: inline-block;
+        vertical-align: text-top;
+        padding: 5px;
+        width: 130px;
+    }
+    .OrderImport .prodWrapper .order_qty{
+        width: 420px;
+    }
+    .OrderImport .prodWrapper .thumbContainer{
+        position: relative;
+        height: 100%;
+        width: 90px;
+    }
+    .OrderImport .prodWrapper .thumbContainer img{
+        max-width: 99%;
+        max-height: 99%;
+        display: inline-block;
+        margin: auto;
+        border-radius: 2px;
+    }
+    .OrderImport .prodWrapper .prod_name{
+        font-style: italic;
+        font-family: sans-serif;
+        color: #03a9f4;
+        font-size: 15px;
+        text-align: left;
+        width: calc(100% - 90px);
+        overflow-x: auto;
+    }
+    .OrderImport .prodWrapper .prod_name a{
+        text-decoration: none;
+        white-space: nowrap;
+    }
+    .OrderImport .prodWrapper .order_qty{
+        font-style: italic;
+        font-family: sans-serif;
+        color: gray;
+        font-size: 13px;
+        text-align: left;
+        width: 390px;
+        margin-top: 3px;
+    }
+    .OrderImport .prodWrapper .order_qty span,
+    .OrderImport .prodWrapper .order_qty select{
+        padding: 1px 5px 1px 5px;
+        border-radius: 3px;
+        border: none;
+        outline: none;
+        margin-bottom: 3px;
+        vertical-align: text-top;
+    }
+    .OrderImport .prodWrapper .order_qty span.note{
+        display: inline-block;
+        width: 200px;
+        background-color: #efefef;
+    }
+    .OrderImport .prodWrapper .total_order_qty{
+        font-style: italic;
+        font-family: sans-serif;
+        color: #4caf50;
+        font-size: 15px;
+        width: 70px;
+        padding-right: 10px;
+        text-align: center;
+        position: absolute;
+        top: 30px;
+        left: 90px;
+    }
+    .OrderImport .prodWrapper .sup_price{
+        font-style: italic;
+        font-family: sans-serif;
+        font-size: 15px;
+        text-align: left;
+        width: 140px;
+        color: gray;
+        position: absolute;
+        top: 30px;
+        left: 160px;
+    }
+    .OrderImport .prodWrapper .sellPrice{
+        color: red;
+    }
+    .OrderImport .prodWrapper .grand_total_product{
+        font-style: italic;
+        font-family: sans-serif;
+        color: #f44336;
+        font-size: 15px;
+        text-align: left;
+        position: absolute;
+        top: 30px;
+        left: 300px;
+    }
+    .OrderImport .grand_total_all{
+        display: inline-block;
+        height: 50px;
+        line-height: 50px;
+        color: white;
+        background-color: #f44336;
+        border-radius: 3px;
+        padding: 0px 15px 0px 15px;
+        position: fixed;
+        right: 5px;
+        bottom: 3px;
+        z-index: 1;
+    }
+}

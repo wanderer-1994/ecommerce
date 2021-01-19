@@ -1,0 +1,186 @@
+[
+    {
+        "category": "/usb-the-nho/usb",
+        "products": [
+            "https://phatdatcomputer.vn/san-pham/usb-4g-kingston-chinh-hang-fpt",
+            "https://phatdatcomputer.vn/san-pham/usb-8g-kingston-chinh-hang-fpt",
+            "https://phatdatcomputer.vn/san-pham/usb-32g-kingston-chinh-hang-fpt",
+            "https://phatdatcomputer.vn/san-pham/usb-4g-kingston-se-mini",
+            "https://phatdatcomputer.vn/san-pham/usb-8g-kingston-se-mini",
+            "https://phatdatcomputer.vn/san-pham/usb-16g-kingston-se-mini",
+            "https://phatdatcomputer.vn/san-pham/usb-32g-kingston-se-mini"
+        ]
+    },
+    {
+        "category": "/usb-the-nho/the-nho",
+        "products": [
+            "https://phatdatcomputer.vn/san-pham/the-nho-microsd-2g",
+            "https://phatdatcomputer.vn/san-pham/the-nho-microsd-4g", // không có link trong báo giá
+            "https://phatdatcomputer.vn/san-pham/the-nho-microsd-8g",
+            "https://phatdatcomputer.vn/san-pham/the-nho-microsd-16g-kingston",
+            "https://phatdatcomputer.vn/san-pham/the-nho-microsd-32g-kingston",
+            "https://phatdatcomputer.vn/san-pham/the-nho-microsd-64g-sandisk",
+            "https://phatdatcomputer.vn/san-pham/microsd-hoco-128gb-chinh-hang",
+            "https://phatdatcomputer.vn/san-pham/the-nho-sd-16g-sandisk",
+            "https://phatdatcomputer.vn/san-pham/the-nho-sd-32g-sandisk",
+            "https://phatdatcomputer.vn/san-pham/the-nho-sd-64g-sandisk"
+        ]
+    },
+    {
+        "category": "/cap-coc-sac/cap-sac",
+        "products": [
+            "https://phatdatcomputer.vn/san-pham/cap-sac-da-nang-3-dau-12m",
+            "https://phatdatcomputer.vn/san-pham/cap-sac-hoco-x25-typec-1m",
+            "https://phatdatcomputer.vn/san-pham/cap-sac-hoco-x20-iphone-1m",
+            "https://phatdatcomputer.vn/san-pham/cap-sac-hoco-x27-samsung-1m",
+            "https://phatdatcomputer.vn/san-pham/cap-sac-nhanh-hoco-ud02-3in1",
+            "https://phatdatcomputer.vn/san-pham/cap-sac-nhanh-hoco-x2-3in1-1m",
+            "https://phatdatcomputer.vn/san-pham/cap-sac-nhanh-hoco-ud01-lightning",
+            "https://phatdatcomputer.vn/san-pham/cap-sac-nhanh-hoco-ud01-typec",
+            "https://phatdatcomputer.vn/san-pham/cap-sac-nhanh-hoco-ud01-microusb"
+        ]
+    },
+    {
+        "category": "/cap-coc-sac/coc-sac",
+        "products": [
+            "https://phatdatcomputer.vn/san-pham/coc-sac-nhanh-hoco-c73-02-cong-usb",
+            "https://phatdatcomputer.vn/san-pham/coc-sac-nhanh-hoco-c42",
+            "https://phatdatcomputer.vn/san-pham/coc-sac-nhanh-hoco-dc28",
+            "https://phatdatcomputer.vn/san-pham/coc-sac-hoco-c15-3a",
+            "https://phatdatcomputer.vn/san-pham/coc-sac-samsung-2a-loai-thuong"
+        ]
+    },
+    {
+        "category": "/tai-nghe-loa/tai-nghe-day",
+        "products": [
+            "https://phatdatcomputer.vn/san-pham/tai-nghe-dien-thoai-samsung-s10",
+            "https://phatdatcomputer.vn/san-pham/tn-nhet-tai-samsung-s10-akg-zin",
+            "https://phatdatcomputer.vn/san-pham/tn-nhet-tai-remax-rm803",
+            "https://phatdatcomputer.vn/san-pham/tai-nghe-nhet-tai-hoco-m40-chinh-hang",
+            "https://phatdatcomputer.vn/san-pham/tn-nhet-tai-hoco-m18-co-mic",
+            "https://phatdatcomputer.vn/san-pham/headphone-sony-xb450",
+            "https://phatdatcomputer.vn/san-pham/tn-chup-tai-borofone-bo1"
+        ]
+    },
+    {
+        "category": "/tai-nghe-loa/tai-nghe-bluetooth",
+        "products": [
+            "https://phatdatcomputer.vn/san-pham/tn-bluetooth-hoco-e17-chinh-hang",
+            "https://phatdatcomputer.vn/san-pham/tai-nghe-bluetooth-hoco-es21",
+            "https://phatdatcomputer.vn/san-pham/tn-bluetooth-hoco-e26-plus-chinh-hang",
+            "https://phatdatcomputer.vn/san-pham/tn-bluetooth-hoco-e37-chinh-hang",
+            "https://phatdatcomputer.vn/san-pham/tn-bluetooth-hoco-e36",
+            "https://phatdatcomputer.vn/san-pham/headphone-bluetooth-stereo"
+        ]
+    },
+    {
+        "category": "/tai-nghe-loa/loa",
+        "products": [
+            "https://phatdatcomputer.vn/san-pham/loa-bluetooth-mini-charge-g2",
+            "https://phatdatcomputer.vn/san-pham/loa-bluetooth-charge-j5",
+            "https://phatdatcomputer.vn/san-pham/loa-bluetooth-t213"
+        ]
+    },
+    {
+        "category": "/pin-du-phong",
+        "products": [
+            "https://phatdatcomputer.vn/san-pham/pw-10000mah-borofone-bt21",
+            "https://phatdatcomputer.vn/san-pham/pw-10000mah-borofone-bt16",
+            "https://phatdatcomputer.vn/san-pham/pw-20000mah-borofone-bt19b",
+            "https://phatdatcomputer.vn/san-pham/pw-30000mah-borofone-bt2d",
+            "https://phatdatcomputer.vn/san-pham/pw-20000mah-lanex-lpbn10"
+        ]
+    },
+    {
+        "category": "/phu-kien-lap-top/chuot",
+        "products": [
+            "https://phatdatcomputer.vn/san-pham/mouse-simetech-x2-usb",
+            "https://phatdatcomputer.vn/san-pham/mouse-mitsumi-su-usb",
+            "https://phatdatcomputer.vn/san-pham/mouse-kd-logitech-laser-m185",
+            "https://phatdatcomputer.vn/san-pham/mouse-kd-logitech-laser-m235",
+            "https://phatdatcomputer.vn/san-pham/mouse-kd-logitech-laser-m171",
+            "https://phatdatcomputer.vn/san-pham/mouse-kd-logitech-silent-m330",
+            "https://phatdatcomputer.vn/san-pham/mouse-r81632-usb",
+            "https://phatdatcomputer.vn/san-pham/mouse-r81634-usb-den-bac",
+            "https://phatdatcomputer.vn/san-pham/mouse-r81602-usb",
+            "https://phatdatcomputer.vn/san-pham/mouse-apedra-a8-gaming",
+            "https://phatdatcomputer.vn/san-pham/mouse-imice-x5-gaming",
+            "https://phatdatcomputer.vn/san-pham/hp-gaming-bosston-hs09-led",
+            "https://phatdatcomputer.vn/san-pham/headphone-ovann-x2",
+            "https://phatdatcomputer.vn/san-pham/pad-mouse-logitech",
+            "https://phatdatcomputer.vn/san-pham/lot-chuot-s2-800x300x3-mm",
+            "https://phatdatcomputer.vn/san-pham/lot-chuot-razer-x3-kho-lon",
+            "https://phatdatcomputer.vn/san-pham/lot-chuot-razer-q8-250x210x17-mm",
+            "https://phatdatcomputer.vn/san-pham/lot-chuot-s8-780x300x5-mm"
+        ]
+    },
+    {
+        "category": "/phu-kien-lap-top/ban-phim",
+        "products": [
+            "https://phatdatcomputer.vn/san-pham/keyboard-mini-k1000-usb",
+            "https://phatdatcomputer.vn/san-pham/combo-khong-day-mini",
+            "https://phatdatcomputer.vn/san-pham/combo-khong-day-simetech-sm8900-mini",
+            "https://phatdatcomputer.vn/san-pham/combo-kd-simetech-sm9000-mini",
+            "https://phatdatcomputer.vn/san-pham/combo-bosston-837",
+            "https://phatdatcomputer.vn/san-pham/combo-imice-an300-gia-co"
+        ]
+    },
+    {
+        "category": "/phu-kien-lap-top/phu-kien-lap-top-khac",
+        "products": [
+            "https://phatdatcomputer.vn/san-pham/but-trinh-chieu-logitech-r400",
+            "https://phatdatcomputer.vn/san-pham/de-tan-nhiet-n19-1-fan",
+            "https://phatdatcomputer.vn/san-pham/de-tan-nhiet-n99-2-fan",
+            "https://phatdatcomputer.vn/san-pham/de-tan-nhiet-v4-4-fan",
+            "https://phatdatcomputer.vn/san-pham/box-hdd-western-sata-25-usb-30",
+            "https://phatdatcomputer.vn/san-pham/box-hdd-unitek-y3036-25-usb-30",
+            "https://phatdatcomputer.vn/san-pham/tui-chong-soc-laptop-10",
+            "https://phatdatcomputer.vn/san-pham/tui-chong-soc-laptop-12",
+            "https://phatdatcomputer.vn/san-pham/tui-chong-soc-laptop-13",
+            "https://phatdatcomputer.vn/san-pham/tui-chong-soc-laptop-15",
+            "https://phatdatcomputer.vn/san-pham/tui-chong-soc-laptop-17"
+        ]
+    },
+    {
+        "category": "/gia-do-gay-selfie",
+        "products": [
+            "https://phatdatcomputer.vn/san-pham/gay-tu-suong-borofone-by3",
+            "https://phatdatcomputer.vn/san-pham/gay-tu-suong-borofone-by4",
+            "https://phatdatcomputer.vn/san-pham/de-kep-dien-thoai-xe-may-cuc-chac"
+        ]
+    },
+    {
+        "category": "/op-lung-cuong-luc",
+        "products": [
+            
+        ]
+    },
+    {
+        "category": "/do-choi-cute",
+        "products": [
+            "https://phatdatcomputer.vn/san-pham/can-dien-tu-180kg-vuong-personal"]
+    },
+    {
+        "category": "/danh-cho-game-thu",
+        "products": [
+            
+        ]
+    },
+    {
+        "category": "/do-phuot",
+        "products": []
+    },
+    {
+        "category": "/nha-cua-doi-song",
+        "products": [
+            "https://phatdatcomputer.vn/san-pham/o-dien-pipo-pp018-loai-xin-1-cong-tac-3-lo",
+            "https://phatdatcomputer.vn/san-pham/o-dien-pipo-pp028-loai-xin-1-cong-tac-5-lo",
+            "https://phatdatcomputer.vn/san-pham/o-dien-dai-6-o-cam",
+            "https://phatdatcomputer.vn/san-pham/bao-dong-gan-cua-at007"
+        ]
+    },
+    {
+        "category": "/massage-gym-lam-dep",
+        "products": []
+    }
+]

@@ -1,0 +1,30 @@
+@media all and (min-width: 901px){
+    .AdminNavbar{
+        height: 50px;
+        background-color: blue;
+        position: sticky;
+        top: 0px;
+        z-index: 10;
+    }
+    .AdminNavbar .adminMobileMenu{
+        display: none;
+    }
+}
+@media all and (max-width: 900px){
+    .AdminNavbar{
+        height: 50px;
+        background-color: blue;
+        position: sticky;
+        top: 0px;
+        z-index: 10;
+    }
+    .AdminNavbar .adminMobileMenu{
+        float: left;
+        color: white;
+        margin-left: 5px;
+        margin-top: 1px;
+        font-size: 40px;
+        float: right;
+        margin-right: 20px;
+    }
+}

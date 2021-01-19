@@ -1,0 +1,50 @@
+@media all and (min-width: 901px){
+    .quickMenu{
+        display: none;
+    }
+}
+@media all and (max-width: 900px){
+    .quickMenu{
+        text-align: center;
+    }
+    .quickMenu a{
+        text-decoration: none;
+        color: black;
+        display: inline-block;
+        height: 70px;
+        width: 70px;
+        overflow: hidden;
+        margin: 3px 12px 3px 12px;
+        text-align: center;
+        padding-top: 5px;
+        border-radius: 3px;
+    }
+    .quickMenu a img,
+    .quickMenu a svg{
+        height: 40px;
+        width: auto;
+        display: block;
+        margin: auto;
+        cursor: pointer;
+    }
+    .quickMenu a:nth-child(1){
+        border: 1px solid #4caf50;
+        color: #4caf50;
+    }
+    .quickMenu a:nth-child(2){
+        border: 1px solid #ff5722;
+        color: #ff5722;
+        
+    }
+    .quickMenu a:nth-child(3){
+        border: 1px solid #009688;
+        color: #009688;
+    }
+    .quickMenu a:nth-child(4){
+        border: 1px solid #9c27b0;
+        color: #9c27b0;
+    }
+    .quickMenu a:nth-child(4) svg{
+        color: black;
+    }
+}

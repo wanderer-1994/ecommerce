@@ -1,0 +1,82 @@
+.AddProduct{
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    height: 100vh;
+    width: 100%;
+    background-color: #ababab50;
+    z-index: 20;
+}
+.AddProduct .addProductWrapper{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    background-color: white;
+    box-shadow: 0px 3px 10px 0px #00000050;
+    width: 500px;
+    height: 230px;
+    border-radius: 3px;
+    padding: 5px;
+}
+.AddProduct .title{
+    text-align: center;
+    font-family: cursive;
+    font-size: 20px;
+    color: #e91e63;
+    padding-bottom: 3px;
+    border-bottom: 2px solid #e91e6350;
+    font-style: italic;
+}
+.AddProduct .content{
+    text-align: center;
+    font-family: cursive;
+}
+.AddProduct .content span,
+.AddProduct .content input,
+.AddProduct .content select{
+    width: 80%;
+    display: inline-block;
+    margin-top: 5px;
+}
+.AddProduct .content span{
+    color: #8bc34a;
+    font-family: cursive;
+    font-size: 14px;
+    font-style: italic;
+}
+.AddProduct .content input,
+.AddProduct .content select{
+    height: 30px;
+    border: 1px solid #e91e63;
+    border-radius: 3px;
+    outline: none;
+    padding: 0px 5px 0px 5px;
+}
+.AddProduct .action{
+    position: absolute;
+    bottom: 2px;
+    width: 98%;
+    left: 1%;
+}
+.AddProduct .action button{
+    display: inline-block;
+    margin: 2px;
+    width: calc(50% - 4px);
+    height: 40px;
+    border: none;
+    outline: none;
+    border-radius: 3px;
+    color: white;
+    font-family: cursive;
+    font-size: 16px;
+    cursor: pointer;
+}
+.AddProduct .action button.submit{
+    background-color: #8bc34a;
+    box-shadow: 0px 3px 10px 0px #8bc34a70;
+}
+.AddProduct .action button.cancel{
+    background-color: #e91e63;
+    box-shadow: 0px 3px 10px 0px #e91e6370;
+}

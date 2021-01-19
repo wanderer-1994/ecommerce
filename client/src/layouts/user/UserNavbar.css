@@ -1,0 +1,220 @@
+@media all and (min-width: 901px){
+    .UserNavbarBackground{
+        height: 110px;
+        background-color: #fb5533;
+    }
+    .UserNavbarLogo{
+        width: 100px;
+        height: 90px;
+        position: absolute;
+        top: 10px;
+        right: 73%;
+        border-radius: 5px;
+        overflow: hidden;
+        z-index: 15;
+        box-shadow: 0px 0px 10px 3px #ffffff90;
+        /* display: none; */
+    }
+    .UserNavbarLogo img{
+        width: 100%;
+        height: 100%;
+    }
+    .UserNavbarSearch{
+        position: sticky;
+        top: 0px;
+        background-color: #fb5533;
+        margin-top: -60px;
+        height: 50px;
+        text-align: center;
+        padding-top: 3px;
+        z-index: 10;
+    }
+    .UserNavbarSearch form{
+        width: 50%;
+        margin: auto;
+        height: 44px;
+        padding-top: 2px;
+        position: relative;
+    }
+    .UserNavbarSearch form input[name=search]{
+        height: 38px;
+        width: 90%;
+        border-radius: 5px;
+        border: none;
+        padding: 3px 90px 3px 10px;
+        outline: none;
+    }
+    .UserNavbarSearch form button{
+        height: 34px;
+        width: 70px;
+        border-radius: 5px;
+        border: none;
+        background-color: #fb5533;
+        position: absolute;
+        right: calc(5% + 2px);
+        top: 4px;
+        cursor: pointer;
+        color: white;
+        font-size: 16px;
+    }
+    .UserNavbarSearch form button:hover{
+        background-color: red;
+    }
+    .UserNavbarLink{
+        position: absolute;
+        top: 15px;
+        right: 20px;
+    }
+    .UserNavbarLink a{
+        color: white;
+        text-decoration: none;
+    }
+    .UserNavbarLink span{
+        margin-left: 10px;
+        cursor: pointer;
+        border-right: 1px solid white;
+        padding-right: 10px;
+    }
+    .UserNavbarLink span:last-child{
+        border-right: none;
+    }
+    .UserCart{
+        position: absolute;
+        top: 12px;
+        right: calc(25% - 20px);
+    }
+    .UserCart svg{
+        color: white;
+    }
+    .UserCart .CartCount{
+        color: white;
+        background-color: #fb5533;
+        height: 18px;
+        min-width: 18px;
+        font-size: 12px;
+        position: absolute;
+        top: -5px;
+        left: 60%;
+        border-radius: 9px;
+        padding: 2px 5px 2px 5px;
+        border: 1px solid white;
+    }
+    .UserNavbarSearch .mobileMenu{
+        display: none;
+    }
+}
+@media all and (max-width: 900px){
+    .UserNavbarBackground{
+        height: 110px;
+        background-color: #fb5533;
+    }
+    .UserNavbarLogo{
+        /* width: 100px;
+        height: 90px;
+        position: absolute;
+        top: 10px;
+        right: 73%;
+        border-radius: 5px;
+        overflow: hidden;
+        z-index: 15; */
+        display: none;
+    }
+    .UserNavbarLogo img{
+        /* width: 100%;
+        height: 100%; */
+    }
+    .UserNavbarSearch{
+        position: sticky;
+        top: 0px;
+        background-color: #fb5533;
+        margin-top: -60px;
+        height: 50px;
+        text-align: center;
+        padding-top: 3px;
+        z-index: 10;
+    }
+    .UserNavbarSearch form{
+        width: calc(100% - 110px);
+        margin: auto;
+        height: 44px;
+        padding-top: 2px;
+        margin-left: 5px;
+        float: left;
+        position: relative;
+    }
+    .UserNavbarSearch form input[name=search]{
+        height: 38px;
+        width: 96%;
+        border-radius: 5px;
+        border: none;
+        padding: 3px 90px 3px 10px;
+        outline: none;
+    }
+    .UserNavbarSearch form button{
+        height: 34px;
+        width: 70px;
+        border-radius: 5px;
+        border: none;
+        background-color: #fb5533;
+        position: absolute;
+        right: calc(2% + 2px);
+        top: 4px;
+        cursor: pointer;
+        color: white;
+        font-size: 16px;
+    }
+    .UserNavbarSearch form button:hover{
+        background-color: red;
+    }
+    .UserNavbarLink{
+        position: absolute;
+        top: 5px;
+        right: 0px;
+    }
+    .UserNavbarLink a{
+        color: white;
+        text-decoration: none;
+        display: block;
+        width: 100%;
+        height: 100%;
+    }
+    .UserNavbarLink span{
+        cursor: pointer;
+        border-right: 1px solid white;
+        display: inline-block;
+        width: 50%;
+        padding-left: 20px;
+        margin-bottom: 5px;
+    }
+    .UserNavbarLink span:last-child{
+        border-right: none;
+    }
+    .UserCart{
+        position: absolute;
+        top: 12px;
+        right: 30px;
+    }
+    .UserCart svg{
+        color: white;
+    }
+    .UserCart .CartCount{
+        color: white;
+        background-color: #fb5533;
+        height: 18px;
+        min-width: 18px;
+        font-size: 12px;
+        position: absolute;
+        top: -5px;
+        left: 60%;
+        border-radius: 9px;
+        padding: 2px 5px 2px 5px;
+        border: 1px solid white;
+    }
+    .UserNavbarSearch .mobileMenu{
+        float: left;
+        color: white;
+        margin-left: 5px;
+        margin-top: 1px;
+        font-size: 40px;
+    }
+}

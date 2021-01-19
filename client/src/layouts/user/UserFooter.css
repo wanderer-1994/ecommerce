@@ -1,0 +1,72 @@
+@media all and (min-width: 901px){
+    .UserFooter{
+        height: 150px;
+        width: calc(100% - 1px);
+        border-top: 1px solid #cdcdcd;
+        margin-right: 1px;
+        position: absolute;
+        bottom: 0px;
+        z-index: 0;
+        text-align: center;
+        color: gray;
+        padding-top: 10px;
+        font-size: 14px;
+        font-style: italic;
+    }
+    /* fb-fanpage min-size: width x height =  340x130px */
+    .UserFooter .fanpageWrapper{
+        display: inline-block;
+        width: 350px;
+        vertical-align: text-top;
+    }
+    .UserFooter .shopInfo{
+        display: inline-block;
+        width: calc(100% - 350px);
+        vertical-align: text-top;
+    }
+    .UserFooter .shopInfo p{
+        padding: 3px;
+    }
+    .UserFooter .shopInfo a{
+        text-decoration: none;
+        color: gray;
+        padding: 0px;
+    }
+    .UserFooter .shopInfo h2{
+        margin-top: 20px;
+        color: #ababab;
+    }
+}
+@media all and (max-width: 900px){
+    .UserFooter{
+        height: 270px;
+        width: calc(100% - 1px);
+        border-top: 1px solid #cdcdcd;
+        margin-right: 1px;
+        position: absolute;
+        bottom: 0px;
+        z-index: 0;
+        text-align: center;
+        color: gray;
+        padding-top: 10px;
+        font-size: 14px;
+        font-style: italic;
+    }
+    /* fb-fanpage min-size: width x height =  340x130px */
+    .UserFooter .fanpageWrapper{
+        height: 130px;
+    }
+    .UserFooter .shopInfo p{
+        padding: 3px;
+        margin-top: 10px;
+    }
+    .UserFooter .shopInfo a{
+        text-decoration: none;
+        color: gray;
+        padding: 0px;
+    }
+    .UserFooter .shopInfo h2{
+        margin-top: 20px;
+        color: #ababab;
+    }
+}

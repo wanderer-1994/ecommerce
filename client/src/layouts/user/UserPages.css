@@ -1,0 +1,13 @@
+@media all and (min-width: 901px){
+    .UserWrapper{
+        width: calc(100% - 250px - 3px);
+        margin-left: calc(250px + 3px);
+        margin-top: 15px;
+    }
+}
+@media all and (max-width: 900px){
+    .UserWrapper{
+        width: 100%;
+        margin-top: 15px;
+    }
+}

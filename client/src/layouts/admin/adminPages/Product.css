@@ -1,0 +1,580 @@
+@media all and (min-width: 901px){
+    /* sort are */
+    .AdminProduct .sorter{
+        padding: 5px;
+        background-color: white;
+        margin-bottom: 5px;
+        margin-right: 1px;
+    }
+    .AdminProduct .sorter > span{
+        display: inline-block;
+        width: 100px;
+        margin: 5px;
+        font-family: cursive;
+        font-style: italic;
+        font-size: 14px;
+        text-align: center;
+        color: #ff5722;
+    }
+    .AdminProduct .sorter > span.prod_name{
+        width: 150px;
+    }
+    .AdminProduct .sorter select,
+    .AdminProduct .sorter input{
+        display: block;
+        border-radius: 2px;
+        border: 1px solid #ff5722;
+        margin-bottom: 3px;
+        padding: 3px 5px 3px 5px;
+        width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        -moz-appearance: textfield;
+    }
+    .AdminProduct .sorter button{
+        width: 60px;
+        margin: -3px 2px 0px 2px;
+        padding: 2px 0px 2px 0px;
+        height: 25px;
+        vertical-align: text-top;
+        border: none;
+        outline: none;
+        border-radius: 3px;
+        color: white;
+        font-family: cursive;
+        cursor: pointer;
+    }
+    .AdminProduct .sorter button.actionSort{
+        background-color: #03a9f4;
+        box-shadow: 0px 3px 10px 0px #03a9f470;
+    }
+    .AdminProduct .sorter button.actionClear{
+        background-color: #f44336;
+        box-shadow: 0px 3px 10px 0px #f4433670;
+    }
+    .AdminProduct .sorter button.actionAdd{
+        background-color: #4caf50;
+        box-shadow: 0px 3px 10px 0px #4caf5070;
+    }
+    .AdminProduct .summary{
+        padding: 3px 0px 0px 10px;
+        color: red;
+        font-style: italic;
+        font-size: 16px;
+        font-family: cursive;
+    }
+
+    /* products */
+    .AdminProduct .productItemWrapper{
+        background-color: white;
+        margin: 15px 1px 15px 0px;
+        border-radius: 3px;
+    }
+    .AdminProduct .productItemWrapper{
+        position: relative;
+        /* height: 200px; */
+    }
+    .AdminProduct .productItemWrapper > div{
+        display: inline-block;
+        vertical-align: text-top;
+        margin: 3px;
+    }
+    .AdminProduct .productItemWrapper .prod_order{
+        position: absolute;
+        top: -10px;
+        left: 0px;
+        height: 24px;
+        min-width: 24px;
+        padding: 3px 5px 3px 5px;
+        text-align: center;
+        border-radius: 12px;
+        background-color: #cdcdcd;
+        color: rgb(197, 3, 3);
+        z-index: 5;
+        border: 1px solid white;
+        margin: 0px;
+    }
+    .AdminProduct .productItemWrapper .thumb{
+        width: 100px;
+        height: 100%;
+        overflow: hidden;
+        position: relative;
+        border-radius: 2px;
+    }
+    .AdminProduct .productItemWrapper .thumb img{
+        display: block;
+        margin: auto;
+        max-width: 100%;
+        max-height: 100%;
+    }
+    .AdminProduct .productItemWrapper .name{
+        width: 250px;
+        font-size: 12px;
+        font-style: italic;
+        color: gray;
+    }
+    .AdminProduct .productItemWrapper .name a{
+        text-decoration: none;
+    }
+    .AdminProduct .productItemWrapper .name .sup_name input{
+        cursor: pointer;
+        color: blue;
+    }
+    .AdminProduct .productItemWrapper input::-webkit-inner-spin-button,
+    .AdminProduct .productItemWrapper input::-webkit-outer-spin-button{
+        display: none;
+    }
+    .AdminProduct .productItemWrapper .name input,
+    .AdminProduct .productItemWrapper .price input,
+    .AdminProduct .productItemWrapper .cat-trend-war-stock input,
+    .AdminProduct .productItemWrapper .cat-trend-war-stock .warranty select,
+    .AdminProduct .productItemWrapper .updateInfo input{
+        display: block;
+        border-radius: 2px;
+        border: 1px solid #ababab;
+        margin-bottom: 3px;
+        padding: 0px 3px 0px 3px;
+        width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        -moz-appearance: textfield;
+    }
+    .AdminProduct .productItemWrapper .price{
+        width: 100px;
+        font-size: 12px;
+        font-style: italic;
+        color: gray;
+        text-align: center;
+    }
+    .AdminProduct .productItemWrapper .price input,
+    .AdminProduct .productItemWrapper .price input{
+        text-align: center;
+    }
+    .AdminProduct .productItemWrapper .cat-trend-war-stock{
+        width: 150px;
+        font-size: 12px;
+        font-style: italic;
+        color: gray;
+    }
+
+    .AdminProduct .productItemWrapper .updateInfo{
+        width: 300px;
+        font-size: 12px;
+        font-style: italic;
+        color: gray;
+    }
+    .AdminProduct .productItemWrapper .updateInfo .last_updated{
+        text-align: center;
+        border-bottom: 1px solid #cdcdcd;
+        padding-bottom: 2px;
+        margin-bottom: 2px;
+    }
+    .AdminProduct .productItemWrapper .updateInfo .last_updated span{
+        color: red;
+        margin-left: 10px;
+    }
+    .AdminProduct .productItemWrapper .updateInfo .last_updated input{
+        width: 20px;
+        text-align: center;
+        display: inline-block;
+        margin-left: 10px;
+    }
+    .AdminProduct .productItemWrapper .updateInfo ul{
+        margin-left: 20px;
+    }
+    .AdminProduct .productItemWrapper .cat-trend-war-stock,
+    .AdminProduct .productItemWrapper .cat-trend-war-stock .trend-stock input,
+    .AdminProduct .productItemWrapper .cat-trend-war-stock .warranty input{
+        text-align: center;
+    }
+    .AdminProduct .productItemWrapper .cat-trend-war-stock .trend-stock > span,
+    .AdminProduct .productItemWrapper .cat-trend-war-stock .warranty > span{
+        width: calc(50% - 4px);
+        display: inline-block;
+        font-size: 12px;
+        font-style: italic;
+        color: gray;
+        margin: 0px 2px 0px 2px;
+        text-align: center;
+    }
+    .AdminProduct .productItemWrapper .action{
+        width: 120px;
+        text-align: center;
+        font-size: 12px;
+        font-style: italic;
+        color: gray;
+    }
+    .AdminProduct .productItemWrapper .action button{
+        width: calc(50% - 4px);
+        padding: 0px;
+        margin: 0px 1px 2px 1px;
+        height: 38px;
+        vertical-align: text-top;
+        border: none;
+        outline: none;
+        border-radius: 3px;
+        color: white;
+        font-family: cursive;
+        cursor: pointer;
+        font-size: 12px;
+    }
+    .AdminProduct .productItemWrapper .action button.img-des-review{
+        background-color: #4caf50;
+        box-shadow: 0px 3px 10px 0px #4caf5070;
+    }
+    .AdminProduct .productItemWrapper .action button.save{
+        background-color: #03a9f4;
+        box-shadow: 0px 3px 10px 0px #03a9f470;
+    }
+    .AdminProduct .productItemWrapper .action button.delete{
+        background-color: #f44336;
+        box-shadow: 0px 3px 10px 0px #f4433670;
+    }
+    .AdminProduct .productItemWrapper .action button.update{
+        background-color: #ff9800;
+        box-shadow: 0px 3px 10px 0px #ff980070;
+    }
+    .AdminProduct .productItemWrapper .action button.prodInit{
+        width: calc(100% - 8px);
+        height: 25px;
+        background-color: #9c27b0;
+        box-shadow: 0px 3px 10px 0px #9c27b070;
+    }
+
+    /* bottom action bar */
+    .AdminProduct .bottomActionBar{
+        position: fixed;
+        bottom: 3px;
+        right: 3px;
+        display: inline-block;
+        border-radius: 3px;
+        background-color: #00000050;
+        height: 40px;
+        padding: 1px;
+        z-index: 1;
+    }
+    .AdminProduct .bottomActionBar button{
+        margin-right: 10px;
+        padding: 10px;
+        padding-top: 4px;
+        height: 100%;
+        border: none;
+        outline: none;
+        border-radius: 3px;
+        color: white;
+        font-family: cursive;
+        font-size: 16px;
+        cursor: pointer;
+        background-color: #03a9f4;
+        vertical-align: top;
+    }
+    .AdminProduct .bottomActionBar button:last-child{
+        margin-right: 0px;
+    }
+    .AdminProduct .bottomActionBar button.saveAll{
+        background-color: #03a9f4;
+        box-shadow: 0px 3px 10px 0px #03a9f470;
+    }
+    .AdminProduct .bottomActionBar button.updateSupInfoAll{
+        background-color: #ff9800;
+        box-shadow: 0px 3px 10px 0px #ff980070;
+    }
+    .AdminProduct .bottomActionBar button.prodInitAll{
+        background-color: #9c27b0;
+        box-shadow: 0px 3px 10px 0px #9c27b070;
+    }
+}
+@media all and (max-width: 900px){
+    /* sort are */
+    .AdminProduct .sorter{
+        padding: 5px;
+        background-color: white;
+        margin-bottom: 5px;
+        margin-right: 1px;
+    }
+    .AdminProduct .sorter > span{
+        display: inline-block;
+        width: 100px;
+        margin: 5px;
+        font-family: sans-serif;
+        font-style: italic;
+        font-size: 14px;
+        text-align: center;
+        color: #ff5722;
+    }
+    .AdminProduct .sorter > span.prod_name{
+        width: 150px;
+    }
+    .AdminProduct .sorter select,
+    .AdminProduct .sorter input{
+        display: block;
+        border-radius: 2px;
+        border: 1px solid #ff5722;
+        margin-bottom: 3px;
+        padding: 3px 5px 3px 5px;
+        width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        -moz-appearance: textfield;
+    }
+    .AdminProduct .sorter button{
+        width: 60px;
+        margin: -3px 2px 0px 2px;
+        padding: 2px 0px 2px 0px;
+        height: 25px;
+        vertical-align: text-top;
+        border: none;
+        outline: none;
+        border-radius: 3px;
+        color: white;
+        font-family: sans-serif;
+        cursor: pointer;
+    }
+    .AdminProduct .sorter button.actionSort{
+        background-color: #03a9f4;
+        box-shadow: 0px 3px 10px 0px #03a9f470;
+    }
+    .AdminProduct .sorter button.actionClear{
+        background-color: #f44336;
+        box-shadow: 0px 3px 10px 0px #f4433670;
+    }
+    .AdminProduct .sorter button.actionAdd{
+        background-color: #4caf50;
+        box-shadow: 0px 3px 10px 0px #4caf5070;
+    }
+    .AdminProduct .summary{
+        padding: 3px 0px 0px 10px;
+        color: red;
+        font-style: italic;
+        font-size: 16px;
+        font-family: sans-serif;
+    }
+
+    /* products */
+    .AdminProduct .productItemWrapper{
+        background-color: white;
+        margin: 15px 1px 15px 0px;
+        border-radius: 3px;
+    }
+    .AdminProduct .productItemWrapper{
+        position: relative;
+        /* height: 200px; */
+    }
+    .AdminProduct .productItemWrapper > div{
+        display: inline-block;
+        vertical-align: text-top;
+        margin: 3px;
+    }
+    .AdminProduct .productItemWrapper .prod_order{
+        position: absolute;
+        top: -10px;
+        left: 0px;
+        height: 24px;
+        min-width: 24px;
+        padding: 3px 5px 3px 5px;
+        text-align: center;
+        border-radius: 12px;
+        background-color: #cdcdcd;
+        color: rgb(197, 3, 3);
+        z-index: 5;
+        border: 1px solid white;
+        margin: 0px;
+    }
+    .AdminProduct .productItemWrapper .thumb{
+        width: 100px;
+        height: 100%;
+        overflow: hidden;
+        position: relative;
+        border-radius: 2px;
+    }
+    .AdminProduct .productItemWrapper .thumb img{
+        display: block;
+        margin: auto;
+        max-width: 100%;
+        max-height: 100%;
+    }
+    .AdminProduct .productItemWrapper .name{
+        width: 250px;
+        font-size: 12px;
+        font-style: italic;
+        color: gray;
+    }
+    .AdminProduct .productItemWrapper .name a{
+        text-decoration: none;
+    }
+    .AdminProduct .productItemWrapper .name .sup_name input{
+        cursor: pointer;
+        color: blue;
+    }
+    .AdminProduct .productItemWrapper input::-webkit-inner-spin-button,
+    .AdminProduct .productItemWrapper input::-webkit-outer-spin-button{
+        display: none;
+    }
+    .AdminProduct .productItemWrapper .name input,
+    .AdminProduct .productItemWrapper .price input,
+    .AdminProduct .productItemWrapper .cat-trend-war-stock input,
+    .AdminProduct .productItemWrapper .cat-trend-war-stock .warranty select,
+    .AdminProduct .productItemWrapper .updateInfo input{
+        display: block;
+        border-radius: 2px;
+        border: 1px solid #ababab;
+        margin-bottom: 3px;
+        padding: 0px 3px 0px 3px;
+        width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        -moz-appearance: textfield;
+    }
+    .AdminProduct .productItemWrapper .price{
+        width: 100px;
+        font-size: 12px;
+        font-style: italic;
+        color: gray;
+        text-align: center;
+    }
+    .AdminProduct .productItemWrapper .price input,
+    .AdminProduct .productItemWrapper .price input{
+        text-align: center;
+    }
+    .AdminProduct .productItemWrapper .cat-trend-war-stock{
+        width: 150px;
+        font-size: 12px;
+        font-style: italic;
+        color: gray;
+    }
+
+    .AdminProduct .productItemWrapper .updateInfo{
+        width: 300px;
+        font-size: 12px;
+        font-style: italic;
+        color: gray;
+    }
+    .AdminProduct .productItemWrapper .updateInfo .last_updated{
+        text-align: center;
+        border-bottom: 1px solid #cdcdcd;
+        padding-bottom: 2px;
+        margin-bottom: 2px;
+    }
+    .AdminProduct .productItemWrapper .updateInfo .last_updated span{
+        color: red;
+        margin-left: 10px;
+    }
+    .AdminProduct .productItemWrapper .updateInfo .last_updated input{
+        width: 20px;
+        text-align: center;
+        display: inline-block;
+        margin-left: 10px;
+    }
+    .AdminProduct .productItemWrapper .updateInfo ul{
+        margin-left: 20px;
+        margin-bottom: 5px;
+    }
+    .AdminProduct .productItemWrapper .cat-trend-war-stock,
+    .AdminProduct .productItemWrapper .cat-trend-war-stock .trend-stock input,
+    .AdminProduct .productItemWrapper .cat-trend-war-stock .warranty input{
+        text-align: center;
+    }
+    .AdminProduct .productItemWrapper .cat-trend-war-stock .trend-stock > span,
+    .AdminProduct .productItemWrapper .cat-trend-war-stock .warranty > span{
+        width: calc(50% - 4px);
+        display: inline-block;
+        font-size: 12px;
+        font-style: italic;
+        color: gray;
+        margin: 0px 2px 0px 2px;
+        text-align: center;
+    }
+    .AdminProduct .productItemWrapper .action{
+        width: 120px;
+        text-align: center;
+        font-size: 12px;
+        font-style: italic;
+        color: gray;
+        position: absolute;
+        top: 125px;
+        right: 3px;
+    }
+    .AdminProduct .productItemWrapper .action button{
+        width: calc(50% - 4px);
+        padding: 0px;
+        margin: 0px 1px 2px 1px;
+        height: 38px;
+        vertical-align: text-top;
+        border: none;
+        outline: none;
+        border-radius: 3px;
+        color: white;
+        font-family: sans-serif;
+        cursor: pointer;
+        font-size: 12px;
+    }
+    .AdminProduct .productItemWrapper .action button.img-des-review{
+        background-color: #4caf50;
+        box-shadow: 0px 3px 10px 0px #4caf5070;
+    }
+    .AdminProduct .productItemWrapper .action button.save{
+        background-color: #03a9f4;
+        box-shadow: 0px 3px 10px 0px #03a9f470;
+    }
+    .AdminProduct .productItemWrapper .action button.delete{
+        background-color: #f44336;
+        box-shadow: 0px 3px 10px 0px #f4433670;
+    }
+    .AdminProduct .productItemWrapper .action button.update{
+        background-color: #ff9800;
+        box-shadow: 0px 3px 10px 0px #ff980070;
+    }
+    .AdminProduct .productItemWrapper .action button.prodInit{
+        width: calc(100% - 8px);
+        height: 25px;
+        background-color: #9c27b0;
+        box-shadow: 0px 3px 10px 0px #9c27b070;
+    }
+
+    /* bottom action bar */
+    .AdminProduct .bottomActionBar{
+        position: fixed;
+        bottom: 3px;
+        right: 3px;
+        display: inline-block;
+        border-radius: 3px;
+        background-color: #00000050;
+        height: 40px;
+        padding: 1px;
+        z-index: 1;
+    }
+    .AdminProduct .bottomActionBar button{
+        margin-right: 10px;
+        padding: 10px;
+        padding-top: 4px;
+        height: 100%;
+        border: none;
+        outline: none;
+        border-radius: 3px;
+        color: white;
+        font-family: sans-serif;
+        font-size: 16px;
+        cursor: pointer;
+        background-color: #03a9f4;
+        vertical-align: top;
+    }
+    .AdminProduct .bottomActionBar button:last-child{
+        margin-right: 0px;
+    }
+    .AdminProduct .bottomActionBar button.saveAll{
+        background-color: #03a9f4;
+        box-shadow: 0px 3px 10px 0px #03a9f470;
+    }
+    .AdminProduct .bottomActionBar button.updateSupInfoAll{
+        background-color: #ff9800;
+        box-shadow: 0px 3px 10px 0px #ff980070;
+    }
+    .AdminProduct .bottomActionBar button.prodInitAll{
+        background-color: #9c27b0;
+        box-shadow: 0px 3px 10px 0px #9c27b070;
+    }
+}

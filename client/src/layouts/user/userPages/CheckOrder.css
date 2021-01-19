@@ -1,0 +1,601 @@
+@media all and (min-width: 901px){
+    .checkOrder{
+        /* background-color: white; */
+        border-radius: 3px;
+        overflow: hidden;
+        padding: 5px;
+        margin-right: 2px;
+        margin-bottom: 5px;
+        min-height: calc(100vh - 110px);
+        position: relative;
+    }
+    .checkOrder * {
+        font-family: cursive;
+    }
+    .checkOrder .bigTitle{
+        font-size: 30px;
+        font-family: cursive;
+        color: #ff00a5;
+        font-style: italic;
+        border-bottom: 1px solid #ff00a5;
+        padding: 0px 10px 3px 10px;
+        text-align: center;
+        height: 50px;
+    }
+    .checkOrder .bigContent{
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        text-align: center;
+        width: 100%;
+    }
+    .checkOrder .bigInput{
+        height: 40px;
+        width: 40%;
+        padding: 10px;
+        margin-right: 3px;
+        border: 1px solid #ff00a510;
+        border-radius: 5px;
+        font-family: cursive;
+        font-style: italic;
+        font-size: 16px;
+        vertical-align: middle;
+        background-color: #ff00a530;
+        color: #9c27b0;
+        text-align: center;
+        outline: none;
+    }
+    .checkOrder .bigSubmit{
+        height: 40px;
+        padding: 5px 10px 5px 10px;
+        background-color: #ff00a5;
+        color: white;
+        font-family: cursive;
+        font-style: italic;
+        font-size: 16px;
+        vertical-align: middle;
+        border: 1px solid #ff00a5;
+        border-radius: 3px;
+        cursor: pointer;
+    }
+    /*  */
+    .checkOrder .searchWrapper{
+        border-bottom: 1px solid #ff00a5;
+        padding: 5px 10px 8px 10px;
+    }
+    .checkOrder .smallInput{
+        height: 30px;
+        width: 200px;
+        padding: 3px 5px 3px 5px;
+        margin-right: 3px;
+        border: 1px solid #ff00a510;
+        border-radius: 2px;
+        font-family: cursive;
+        font-style: italic;
+        font-size: 14px;
+        vertical-align: middle;
+        background-color: #ff00a530;
+        color: #9c27b0;
+        text-align: center;
+    }
+    .checkOrder .smallSubmit{
+        height: 30px;
+        line-height: 30px;
+        padding: 0px 5px 0px 5px;
+        background-color: #ff00a5;
+        color: white;
+        font-family: cursive;
+        font-style: italic;
+        font-size: 15px;
+        vertical-align: middle;
+        border: 1px solid #ff00a5;
+        border-radius: 3px;
+        cursor: pointer;
+    }
+    
+    /*  */
+    .checkOrder .billWrapper{
+        padding-bottom: 10px;
+    }
+    .checkOrder .productWrapper * {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .checkOrder .title{
+        color: gray;
+        padding-left: 10px;
+        margin-top: 5px;
+    }
+    .checkOrder .billWrapper  .billTitle{
+        background-color: pink;
+        border-radius: 2px;
+        padding: 2px 10px 5px 10px;
+        color: green;
+        margin-top: 10px;
+        font-family: cursive;
+    }
+    .checkOrder .billWrapper  .billTitle span{
+        margin-left: 30px;
+    }   
+    .checkOrder .productWrapper{
+        background-color: white;
+        border-radius: 5px;
+        min-height: 50px;
+        overflow: hidden;
+        margin: 1px 2px 1px 2px;
+        padding: 5px;
+        position: relative;
+    }
+    .checkOrder .productWrapper > div{
+        display: inline-block;
+        vertical-align: text-top;
+    }
+    .checkOrder .productWrapper .prodImg{
+        height: 100%;
+        width: 50px;
+        position: relative;
+    }
+    .checkOrder .productWrapper .prodImg img{
+        max-width: 100%;
+        max-height: 100%;
+        display: block;
+        margin: auto;
+    }
+    .checkOrder .productWrapper .prodName{
+        padding-left: 5px;
+        margin-top: -7px;
+        width: 300px;
+        position: relative;
+        height: calc(100% + 10px);
+    }
+    .checkOrder .productWrapper .prodName a{
+        text-decoration: none;
+        font-family: cursive;
+        color: #8bc34a;
+        color: #00800099;
+        font-size: 15px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        display: block
+    }
+    .checkOrder .productWrapper .prodName input{
+        padding: 2px 4px 2px 4px;
+        font-family: cursive;
+        font-size: 13px;
+        border-radius: 2px;
+        border: 1px solid #ababab;
+        color: gray;
+        background-color: #efefef75;
+        width: calc(100% - 10px);
+    }
+    .checkOrder .productWrapper .orderQty{
+        padding-left: 10px;
+        margin-top: -5px;
+        width: 80px;
+        overflow: hidden;
+        font-family: cursive;
+        text-align: left;
+        color: green;
+        font-size: 14px;
+    }
+    .checkOrder .productWrapper .orderQty span{
+        display: block;
+    }
+    .checkOrder .productWrapper .orderQty input{
+        font-family: cursive;
+        padding: 2px 3px 2px 4px;
+        margin-top: 3px;
+        border-radius: 3px;
+        width: calc(100% - 10px);
+        vertical-align: text-top;
+        -moz-appearance: textfield;
+        text-align: center;
+        border: 1px solid #00800075;
+    }
+    .checkOrder .productWrapper .orderQty input::-webkit-outer-spin-button,
+    .checkOrder .productWrapper .orderQty input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+    }
+    .checkOrder .priceGroup{
+        color: gray;
+        font-style: italic;
+        width: 160px;
+        text-align: center;
+        font-size: 14px;
+        margin-top: -3px;
+    }
+    .checkOrder .priceGroup span{
+        margin-right: 5px;
+        display: inline-block;
+        margin-top: -3px;
+    }
+    .checkOrder .priceGroup span:first-child{
+        display: block;
+    }
+    .checkOrder .rootPrice{
+        font-size: 14px;
+        text-decoration: line-through;
+    }
+    .checkOrder .prodPrice{
+        color: red;
+        font-size: 15px;
+    }
+    .checkOrder .saleInfo{
+        background-color: red;
+        color: white;
+        border-radius: 1px;
+        padding-left: 3px;
+        padding-right: 3px;
+        font-size: 14px;
+        margin-right: 0px;
+    }
+    .checkOrder .productWrapper .prodPrice span{
+        font-size: 13px;
+        color: #ff000085;
+        font-family: cursive;
+    }
+    .checkOrder .productWrapper .warranty{
+        padding: 0px 10px 0px 5px;
+        width: 160px;
+        margin-top: -4px;
+        text-align: left;
+        color: #9c27b0;
+        font-size: 13px;
+        font-family: cursive;
+    }
+    .checkOrder .productWrapper .warranty span{
+        color: red;
+        font-size: 13px;
+    }
+    .checkOrder .productWrapper .status{
+        padding: 0px 5px 0px 5px;
+        width: 120px;
+        margin-top: -4px;
+        text-align: left;
+        color: #8bc34a;
+        font-size: 14px;
+        font-family: cursive;
+    }
+    .checkOrder .productWrapper .status input{
+        padding: 2px 4px 2px 4px;
+        font-family: cursive;
+        font-size: 13px;
+        border-radius: 2px;
+        border: 1px solid #ababab;
+        background-color: #efefef75;
+        width: calc(100% - 10px);
+        margin: auto;
+    }
+    .checkOrder .productWrapper .requestWarranty{
+        height: 100%;
+        vertical-align: top;
+        width: 130px;
+        height: 40px;
+        padding: 0px 10px 0px 10px;
+        border: none;
+        border-radius: 3px;
+        outline: none;
+        background-color: orange;
+        color: white;
+        cursor: pointer;
+        white-space: normal;
+    }
+    .checkOrder .grandTotal{
+        height: 35px;
+        background-color: #ff5722;
+        display: inline-block;
+        padding: 0px 10px 0px 10px;
+        color: white;
+        font-size: 14px;
+        border-radius: 3px;
+        line-height: 35px;
+        margin-top: 1px;
+        margin-left: 2px;
+    }
+}
+@media all and (max-width: 900px){
+    .checkOrder{
+        /* background-color: white; */
+        border-radius: 3px;
+        overflow: hidden;
+        padding: 5px;
+        margin-right: 2px;
+        margin-bottom: 5px;
+        min-height: calc(100vh - 110px);
+        position: relative;
+    }
+    .checkOrder * {
+        font-family: sans-serif;
+    }
+    .checkOrder .bigTitle{
+        font-size: 30px;
+        color: #ff00a5;
+        font-style: italic;
+        border-bottom: 1px solid #ff00a5;
+        padding: 0px 10px 3px 10px;
+        text-align: center;
+        height: 50px;
+    }
+    .checkOrder .bigContent{
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        text-align: center;
+        width: 100%;
+    }
+    .checkOrder .bigInput{
+        height: 40px;
+        width: 70%;
+        padding: 10px;
+        margin-right: 3px;
+        border: 1px solid #ff00a510;
+        border-radius: 5px;
+        font-style: italic;
+        font-size: 16px;
+        vertical-align: middle;
+        background-color: #ff00a530;
+        color: #9c27b0;
+        text-align: center;
+        outline: none;
+    }
+    .checkOrder .bigSubmit{
+        height: 40px;
+        padding: 5px 10px 5px 10px;
+        background-color: #ff00a5;
+        color: white;
+        font-style: italic;
+        font-size: 16px;
+        vertical-align: middle;
+        border: 1px solid #ff00a5;
+        border-radius: 3px;
+        cursor: pointer;
+    }
+    /*  */
+    .checkOrder .searchWrapper{
+        border-bottom: 1px solid #ff00a5;
+        padding: 5px 10px 8px 10px;
+    }
+    .checkOrder .smallInput{
+        height: 30px;
+        width: 200px;
+        padding: 3px 5px 3px 5px;
+        margin-right: 3px;
+        border: 1px solid #ff00a510;
+        border-radius: 2px;
+        font-style: italic;
+        font-size: 14px;
+        vertical-align: middle;
+        background-color: #ff00a530;
+        color: #9c27b0;
+        text-align: center;
+    }
+    .checkOrder .smallSubmit{
+        height: 30px;
+        line-height: 30px;
+        padding: 0px 5px 0px 5px;
+        background-color: #ff00a5;
+        color: white;
+        font-style: italic;
+        font-size: 15px;
+        vertical-align: middle;
+        border: 1px solid #ff00a5;
+        border-radius: 3px;
+        cursor: pointer;
+    }
+    
+    /*  */
+    .checkOrder .billWrapper{
+        padding-bottom: 10px;
+    }
+    .checkOrder .productWrapper * {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .checkOrder .title{
+        color: gray;
+        padding-left: 10px;
+        margin-top: 5px;
+    }
+    .checkOrder .billWrapper  .billTitle{
+        background-color: pink;
+        border-radius: 2px;
+        padding: 2px 10px 5px 10px;
+        color: green;
+        margin-top: 10px;
+    }
+    .checkOrder .billWrapper  .billTitle span:first-child{
+        display: inline-block;
+        width: 40%;
+    }
+    .checkOrder .billWrapper  .billTitle span:nth-child(2){
+        display: inline-block;
+        width : 60%;
+    }
+    .checkOrder .billWrapper  .billTitle span:nth-child(3),
+    .checkOrder .billWrapper  .billTitle span:nth-child(4){
+        display: block;
+    }
+    .checkOrder .productWrapper{
+        background-color: white;
+        border-radius: 2px;
+        height: 115px;
+        overflow: hidden;
+        margin: 1px 2px 1px 2px;
+        padding: 1px;
+        position: relative;
+    }
+    .checkOrder .productWrapper .prodImg{
+        height: 100%;
+        width: 50px;
+        position: relative;
+    }
+    .checkOrder .productWrapper .prodImg img{
+        max-width: 100%;
+        max-height: 100%;
+        display: inline-block;
+        margin: auto;
+    }
+    .checkOrder .productWrapper .prodName{
+        position: absolute;
+        top: 0px;
+        left: 55px;
+        width: calc(100% - 110px);
+        height: 120px;
+    }
+    .checkOrder .productWrapper .prodName a{
+        text-decoration: none;
+        color: #8bc34a;
+        color: #00800099;
+        font-size: 15px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        display: block
+    }
+    .checkOrder .productWrapper .prodName input{
+        padding: 2px 4px 2px 4px;
+        font-size: 15px;
+        border-radius: 2px;
+        border: 1px solid #ababab;
+        color: gray;
+        background-color: #efefef75;
+        width: 98%;
+        position: absolute;
+        top: 90px;
+    }
+    .checkOrder .productWrapper .orderQty{
+        margin-top: -4px;
+        width: 130px;
+        overflow: hidden;
+        text-align: left;
+        color: green;
+        font-size: 14px;
+        position: absolute;
+        top: 25px;
+        left: 210px;
+    }
+    .checkOrder .productWrapper .orderQty span{
+        display: inline-block;
+        vertical-align: middle;
+        margin-right: 5px;
+    }
+    .checkOrder .productWrapper .orderQty input{
+        padding: 2px 3px 2px 4px;
+        margin-top: 3px;
+        border-radius: 3px;
+        width: 50px;
+        vertical-align: text-top;
+        -moz-appearance: textfield;
+        text-align: center;
+        border: 1px solid #00800075;
+        vertical-align: middle;
+    }
+    .checkOrder .productWrapper .orderQty input::-webkit-outer-spin-button,
+    .checkOrder .productWrapper .orderQty input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+    }
+    .checkOrder .priceGroup{
+        color: gray;
+        font-style: italic;
+        width: 160px;
+        text-align: center;
+        font-size: 14px;
+        position: absolute;
+        top: 25px;
+        left: 55px;
+    }
+    .checkOrder .priceGroup span{
+        margin-right: 5px;
+        display: inline-block;
+        margin-top: -3px;
+    }
+    .checkOrder .priceGroup span:first-child{
+        display: none;
+    }
+    .checkOrder .rootPrice{
+        font-size: 14px;
+        text-decoration: line-through;
+    }
+    .checkOrder .prodPrice{
+        color: red;
+        font-size: 15px;
+    }
+    .checkOrder .saleInfo{
+        background-color: red;
+        color: white;
+        border-radius: 1px;
+        padding-left: 3px;
+        padding-right: 3px;
+        font-size: 14px;
+        margin-right: 0px;
+    }
+    .checkOrder .productWrapper .prodPrice span{
+        font-size: 13px;
+        color: #ff000085;
+    }
+    .checkOrder .productWrapper .warranty{
+        padding: 0px 10px 0px 5px;
+        width: 160px;
+        text-align: left;
+        color: #9c27b0;
+        font-size: 13px;
+        position: absolute;
+        top: 50px;
+        left: 55px;
+    }
+    .checkOrder .productWrapper .warranty span{
+        color: red;
+        font-size: 13px;
+    }
+    .checkOrder .productWrapper .status{
+        padding: 0px 5px 0px 5px;
+        width: 120px;
+        text-align: left;
+        color: #8bc34a;
+        font-size: 14px;
+        position: absolute;
+        top: 50px;
+        left: 210px;
+    }
+    .checkOrder .productWrapper .status input{
+        padding: 2px 4px 2px 4px;
+        font-size: 13px;
+        border-radius: 2px;
+        border: 1px solid #ababab;
+        background-color: #efefef75;
+        width: calc(100% - 10px);
+        margin: auto;
+    }
+    .checkOrder .productWrapper .requestWarranty{
+        height: 100%;
+        vertical-align: top;
+        width: 50px;
+        height: calc(100% - 2px);
+        padding: 0px 10px 0px 10px;
+        border: none;
+        border-radius: 3px;
+        outline: none;
+        background-color: orange;
+        color: white;
+        cursor: pointer;
+        white-space: normal;
+        position: absolute;
+        top: 1px;
+        right: 1px;
+    }
+    .checkOrder .grandTotal{
+        height: 35px;
+        background-color: #ff5722;
+        display: inline-block;
+        padding: 0px 10px 0px 10px;
+        color: white;
+        font-size: 14px;
+        border-radius: 3px;
+        line-height: 35px;
+        margin-top: 1px;
+        margin-left: 2px;
+    }
+}

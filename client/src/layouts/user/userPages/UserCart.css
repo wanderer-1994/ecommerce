@@ -1,0 +1,611 @@
+@media all and (min-width: 901px){
+    .mainCart{
+
+    }
+    .mainCart .backBar{
+        margin-bottom: 3px;
+        padding: 3px;
+        border-radius: 3px;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+    }
+    .mainCart .backBar .backButton{
+        color: white;
+        background-color: #2196f399;
+        display: inline-block;
+        padding: 3px 15px 0px 15px;
+        border-radius: 3px;
+        cursor: pointer;
+    }
+    .mainCart .backBar .backButton:hover{
+        background-color: #2196f3;
+    }
+    .mainCart .backBar .backButton svg{
+        margin-right: -10px;
+    }
+    .mainCart .title{
+        font-size: 28px;
+        text-align: center;
+        font-family: cursive;
+        color: #ff00a5;
+        margin-bottom: 10px;
+        text-shadow: 3px 3px #ffa50075, 5px 5px #ffa50050, 7px 7px #ffa50030;
+    }
+    .mainCart .orderWrapper{
+        background-color: white;
+        border-radius: 5px;
+        overflow: hidden;
+        height: 100px;
+        margin: 5px 2px 5px 0px;
+        padding: 5px;
+        position: relative;
+    }
+    .mainCart .orderWrapper > div{
+        display: inline-block;
+        vertical-align: text-top;
+    }
+    .mainCart .prodImg{
+        height: 100%;
+        width: 100px;
+        position: relative;
+    }
+    .mainCart .prodImg img{
+        max-width: 100%;
+        max-height: 100%;
+        display: block;
+        margin: auto;
+    }
+    .mainCart .prodName{
+        padding: 0px 10px 5px 10px;
+        width: calc((100% - 160px)*0.3);
+        position: relative;
+        height: 100%;
+    }
+    .mainCart .prodName a{
+        text-decoration: none;
+        font-family: cursive;
+        color: #8bc34a;
+        color: #00800099;
+        font-size: 15px;
+    }
+    .mainCart .prodName input{
+        padding: 2px 4px 2px 4px;
+        font-family: cursive;
+        font-size: 13px;
+        border-radius: 2px;
+        border: 1px solid #ababab;
+        color: gray;
+        background-color: #efefef75;
+        width: calc(100% - 10px);
+        position: absolute;
+        bottom: 0px;
+        left: 5px;
+    }
+    .mainCart .orderQty{
+        padding: 5px 10px 5px 10px;
+        width: calc((100% - 160px)*0.3);
+        padding-top: 30px;
+        overflow: hidden;
+        font-family: cursive;
+        text-align: center;
+    }
+    .mainCart .orderQty input{
+        font-family: cursive;
+        padding: 3px 5px 3px 5px;
+        width: calc(100% - 10px - 60px);
+        height: 30px;
+        vertical-align: text-top;
+        -moz-appearance: textfield;
+        text-align: center;
+        border: 1px solid #00800075;
+        color: #666666;
+    }
+    .mainCart .orderQty input::-webkit-outer-spin-button,
+    .mainCart .orderQty input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+    }
+    .mainCart .orderQty span{
+        display: inline-block;
+        width: 30px;
+        height: 30px;
+        border: 1px solid #00800075;
+        vertical-align: text-top;
+        margin-left: -1px;
+        margin-right: -1px;
+        border-radius: 2px;
+        cursor: pointer;
+    }
+    .mainCart .orderQty span svg{
+        margin-top: 2px;
+        color: gray;
+    }
+    .mainCart .priceGroup{
+        color: gray;
+        font-style: italic;
+        width: 100px;
+        text-align: right;
+        font-size: 13px;
+        margin-top: 10px;
+    }
+    .mainCart .priceGroup span{
+        margin-top: 3px;
+    }
+    .mainCart .rootPrice{
+        display: block;
+        font-size: 14px;
+        text-decoration: line-through;
+    }
+    .mainCart .prodPrice{
+        color: red;
+        display: block;
+        font-size: 15px;
+    }
+    .mainCart .saleInfo{
+        background-color: red;
+        color: white;
+        border-radius: 1px;
+        padding-left: 3px;
+        padding-right: 3px;
+        font-size: 14px;
+        display: inline-block;
+    }
+    .mainCart .totalCheck{
+        padding: 5px 10px 5px 10px;
+        width: calc((100% - 160px)*0.2);
+        padding-top: 9px;
+        font-family: cursive;
+        color: red;
+    }
+    .mainCart .prodPrice span,
+    .mainCart .totalCheck span{
+        font-size: 13px;
+        color: #ff000085;
+        font-family: cursive;
+    }
+    .mainCart .delete{
+        padding: 5px 10px 5px 10px;
+        width: 50px;
+        height: 100%;
+        padding-top: 30px;
+        max-width: 100px;
+        background-color: red;
+        color: white;
+        cursor: pointer;
+        font-family: cursive;
+        margin-left: 5px;
+        border-radius: 3px;
+    }
+    .mainCart .proceedOrder{
+        width: 250px;
+        height: 40px;
+        line-height: 40px;
+        max-width: 100%;
+        position: fixed;
+        bottom: 15px;
+        right: 30px;
+        background-color: #ff5722;
+        outline: none;
+        color: white;
+        border-radius: 3px;
+        font-size: 16px;
+        font-family: cursive;
+        border: 0px;
+        cursor: pointer;
+        box-shadow: 1px 1px 0px 0px #ffffff, -1px -1px 0px 0px #ffffff, 1px -1px 0px 0px #ffffff, -1px 1px 0px 0px #ffffff;
+    }
+    
+    /*  */
+    .mainCart .userInfo{
+        position: fixed;
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 100;
+        background-color: #ababab50;
+        display: none;
+    }
+    .mainCart .userInfoWrapper0{
+        width: 450px;
+        max-width: 98%;
+        height: 480px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translateX(-50%) translateY(-50%);
+        background-color: white;
+        box-shadow: 0 3px 10px 0 rgba(0,0,0,0.14);
+        border-radius: 2px;
+        padding: 10px 5px 4px 10px;
+    }
+    .mainCart .userInfoTitle{
+        font-size: 20px;
+        font-weight: 100;
+        font-family: cursive;
+        color: gray;
+        border-bottom: 1px solid #dedede;
+        padding-bottom: 3px;
+    }
+    .mainCart .userInfoWrapper1{
+        align-items: middle;
+        text-align: center;
+    }
+    .mainCart .userInfoWrapper1 input{
+        width: 100%;
+        padding: 5px 10px 5px 10px;
+        height: 40px;
+        line-height: 50px;
+        font-size: 16px;
+        font-family: cursive;
+        border: 1px solid rgb(238, 130, 238, 0.75);
+        outline: none;
+        margin-top: 20px;
+        text-align: center;
+        border-radius: 2px;
+    }
+    .mainCart .userInfoWrapper1 textarea{
+        width: 100%;
+        padding: 5px 10px 5px 10px;
+        height: 40px;
+        font-size: 16px;
+        font-family: cursive;
+        border: 1px solid rgb(238, 130, 238, 0.75);
+        outline: none;
+        margin-top: 20px !important;
+        border-radius: 2px;
+    }
+    .mainCart .userInfo .note div{
+        font-family: cursive;
+        color: red;
+        margin-top: 10px;
+    }
+    .mainCart .userInfo .note ul{
+        margin-left: 30px;
+        margin-right: 10px;
+        text-align: justify;
+        font-size: 15px;
+    }
+    .mainCart .userInfo .note ul li{
+        font-family: cursive;
+        color: rgb(177, 13, 177);
+    }
+    .mainCart .userInfoFooter{
+        position: absolute;
+        bottom: 2px;
+        height: 45px;
+        width: calc(100% - 20px);
+        text-align: center;
+    }
+    .mainCart .userInfoFooter button{
+        outline: none;
+        border: 0px;
+        height: 45px;
+        width: calc(50% - 2px);
+        border-radius: 2px;
+        color: white;
+        cursor: pointer;
+        font-size: 16px;
+        font-family: cursive;
+    }
+    .mainCart .cancel{
+        background-color: #ababab;
+        margin-right: 4px;
+    }
+    .mainCart .submit{
+        background-color: #ff5722;
+    }
+}
+@media all and (max-width: 900px){
+    .mainCart{
+
+    }
+    .mainCart .backBar{
+        margin-bottom: 3px;
+        padding: 3px;
+        border-radius: 3px;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+    }
+    .mainCart .backBar .backButton{
+        color: white;
+        background-color: #2196f399;
+        display: inline-block;
+        padding: 3px 15px 0px 15px;
+        border-radius: 3px;
+        cursor: pointer;
+    }
+    .mainCart .backBar .backButton:hover{
+        background-color: #2196f3;
+    }
+    .mainCart .backBar .backButton svg{
+        margin-right: -10px;
+    }
+    .mainCart .title{
+        font-size: 28px;
+        text-align: center;
+        font-family: cursive;
+        color: #ff00a5;
+        margin-bottom: 10px;
+        text-shadow: 3px 3px #ffa50075, 5px 5px #ffa50050, 7px 7px #ffa50030;
+    }
+    .mainCart .orderWrapper{
+        background-color: white;
+        border-radius: 5px;
+        overflow: hidden;
+        height: 100px;
+        margin: 5px 2px 5px 0px;
+        padding: 5px;
+        position: relative;
+    }
+    .mainCart .prodImg{
+        height: 100%;
+        width: 100px;
+        position: relative;
+    }
+    .mainCart .prodImg img{
+        max-width: 100%;
+        max-height: 100%;
+        display: block;
+        margin: auto;
+    }
+    .mainCart .prodName,
+    .mainCart .priceGroup,
+    .mainCart .orderQty,
+    .mainCart .totalCheck{
+        padding: 0px 5px 0px 5px;
+        width: calc(100% - 160px);
+        position: absolute;
+        top: 0px;
+        left: 105px;
+    }
+    .mainCart .priceGroup{
+        top: 4px;
+    }
+    .mainCart .orderQty{
+        top: 10px;
+    }
+    .mainCart .totalCheck{
+        display: none;
+    }
+    .mainCart .prodName a{
+        text-decoration: none;
+        font-family: sans-serif;
+        color: #00800099;
+        font-size: 15px;
+        display: inline-block;
+        height: 20px;
+        width: 98%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .mainCart .prodName input{
+        padding: 2px 4px 2px 4px;
+        font-family: sans-serif;
+        font-size: 13px;
+        border-radius: 2px;
+        border: 1px solid #ababab;
+        color: gray;
+        background-color: #efefef75;
+        width: calc(100% - 10px);
+        position: absolute;
+        top: 75px;
+        left: 5px;
+    }
+    .mainCart .orderQty{
+        padding: 5px 10px 5px 15px;
+        padding-top: 30px;
+        overflow: hidden;
+        font-family: sans-serif;
+        text-align: left;
+    }
+    .mainCart .orderQty input{
+        font-family: sans-serif;
+        padding: 3px 5px 3px 5px;
+        width: 70px;
+        height: 30px;
+        vertical-align: text-top;
+        -moz-appearance: textfield;
+        text-align: center;
+        border: 1px solid #00800075;
+        color: #666666;
+    }
+    .mainCart .orderQty input::-webkit-outer-spin-button,
+    .mainCart .orderQty input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+    }
+    .mainCart .orderQty span{
+        display: inline-block;
+        width: 30px;
+        height: 30px;
+        border: 1px solid #00800075;
+        vertical-align: text-top;
+        margin-left: -1px;
+        margin-right: -1px;
+        border-radius: 2px;
+        cursor: pointer;
+    }
+    .mainCart .orderQty span svg{
+        margin-top: 2px;
+        color: gray;
+    }
+    .mainCart .priceGroup{
+        color: gray;
+        font-style: italic;
+        font-size: 13px;
+        margin-top: 0px;
+        text-align: left;
+    }
+    .mainCart .priceGroup span:first-child{
+        display: none;
+    }
+    .mainCart .priceGroup span{
+        display: inline-block;
+        margin-left: 10px;
+    }
+    .mainCart .rootPrice{
+        font-size: 14px;
+        text-decoration: line-through;
+    }
+    .mainCart .prodPrice{
+        color: red;
+        font-size: 15px;
+    }
+    .mainCart .saleInfo{
+        background-color: red;
+        color: white;
+        border-radius: 1px;
+        padding-left: 3px;
+        padding-right: 3px;
+        font-size: 14px;
+        display: inline-block;
+    }
+    .mainCart .totalCheck{
+        padding: 5px 10px 5px 10px;
+        width: calc((100% - 160px)*0.2);
+        padding-top: 9px;
+        font-family: sans-serif;
+        color: red;
+    }
+    .mainCart .prodPrice span,
+    .mainCart .totalCheck span{
+        font-size: 13px;
+        color: #ff000085;
+        font-family: sans-serif;
+    }
+    .mainCart .delete{
+        padding: 40px 10px 5px 10px;
+        width: 50px;
+        height: calc(100% - 4px);
+        background-color: red;
+        color: white;
+        cursor: pointer;
+        font-family: sans-serif;
+        border-radius: 3px;
+        position: absolute;
+        top: 2px;
+        right: 1px;
+    }
+    .mainCart .proceedOrder{
+        width: 250px;
+        height: 40px;
+        line-height: 40px;
+        max-width: 100%;
+        position: fixed;
+        bottom: 15px;
+        right: 30px;
+        background-color: #ff5722;
+        outline: none;
+        color: white;
+        border-radius: 3px;
+        font-size: 16px;
+        font-family: sans-serif;
+        border: 0px;
+        cursor: pointer;
+        box-shadow: 1px 1px 0px 0px #ffffff, -1px -1px 0px 0px #ffffff, 1px -1px 0px 0px #ffffff, -1px 1px 0px 0px #ffffff;
+    }
+    
+    /*  */
+    .mainCart .userInfo{
+        position: fixed;
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 100;
+        background-color: #00000090;
+        display: none;
+    }
+    .mainCart .userInfoWrapper0{
+        width: 400px;
+        max-width: 98%;
+        height: 520px;
+        position: absolute;
+        top: 40px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: white;
+        box-shadow: 0 3px 10px 0 rgba(0,0,0,0.14);
+        border-radius: 2px;
+        padding: 10px 5px 4px 10px;
+    }
+    .mainCart .userInfoTitle{
+        font-size: 20px;
+        font-weight: 100;
+        font-family: sans-serif;
+        color: red;
+        font-weight: 400;
+        border-bottom: 1px solid #dedede;
+        padding-bottom: 3px;
+    }
+    .mainCart .userInfoWrapper1{
+        align-items: middle;
+        text-align: center;
+    }
+    .mainCart .userInfoWrapper1 input{
+        width: 100%;
+        padding: 5px 10px 5px 10px;
+        height: 40px;
+        line-height: 50px;
+        font-size: 16px;
+        font-family: sans-serif;
+        border: 1px solid rgb(238, 130, 238, 0.75);
+        outline: none;
+        margin-top: 20px;
+        text-align: center;
+        border-radius: 2px;
+    }
+    .mainCart .userInfoWrapper1 textarea{
+        width: 100%;
+        padding: 5px 10px 5px 10px;
+        height: 70px;
+        font-size: 16px;
+        font-family: sans-serif;
+        border: 1px solid rgb(238, 130, 238, 0.75);
+        outline: none;
+        margin-top: 20px !important;
+        border-radius: 2px;
+    }
+    .mainCart .userInfo .note div{
+        font-family: sans-serif;
+        color: red;
+        margin-top: 10px;
+    }
+    .mainCart .userInfo .note ul{
+        margin-left: 30px;
+        margin-right: 10px;
+        text-align: justify;
+        font-size: 15px;
+    }
+    .mainCart .userInfo .note ul li{
+        font-family: sans-serif;
+        color: rgb(177, 13, 177);
+    }
+    .mainCart .userInfoFooter{
+        position: absolute;
+        bottom: 2px;
+        height: 45px;
+        width: calc(100% - 20px);
+        text-align: center;
+    }
+    .mainCart .userInfoFooter button{
+        outline: none;
+        border: 0px;
+        height: 45px;
+        width: calc(50% - 2px);
+        border-radius: 2px;
+        color: white;
+        cursor: pointer;
+        font-size: 16px;
+        font-family: sans-serif;
+    }
+    .mainCart .cancel{
+        background-color: #ababab;
+        margin-right: 4px;
+    }
+    .mainCart .submit{
+        background-color: #ff5722;
+    }
+}

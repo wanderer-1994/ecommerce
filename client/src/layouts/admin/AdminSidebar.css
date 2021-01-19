@@ -1,0 +1,121 @@
+@media all and (min-width: 901px){
+    .AdminSidebar .mobileSidebarClose{
+        display: none;
+    }
+    .AdminSidebar{
+        position: sticky;
+        top: 20px;
+        padding-top: 5px;
+        height: calc(100vh - 20px);
+        padding-bottom: 80px;
+        float: left;
+        width: 250px;
+        overflow-y: auto;
+        z-index: 15;
+    }
+    .AdminSidebar::-webkit-scrollbar{
+        width: 10px;
+        border-radius: 5px;
+        overflow: hidden;
+    }
+    .AdminSidebar::-webkit-scrollbar-track{
+        border-radius: 5px;
+    }
+    .AdminSidebar::-webkit-scrollbar-thumb{
+        width: 10px;
+        background-color: #cdcdcd;
+        border-radius: 5px;
+    }
+    .AdminSidebar::-webkit-scrollbar-thumb:hover{
+        background-color: #ababab;
+    }
+    .AdminSidebar li a{
+        display: inline-block;
+        text-decoration: none;
+        font-style: italic;
+        color: black;
+        font-size: 15px;
+        padding: 2px 10px 2px 5px;
+        margin-left: 5px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: calc(100% - 5px);
+    }
+    
+    .AdminSidebar li a.active{
+        background-color: #9c27b0;
+        color: white;
+    }
+    .AdminSidebar li a:hover{
+        background-color: #ffc107;
+        color: white;
+    }
+}
+
+@media all and (max-width: 900px){
+    .AdminSidebar .mobileSidebarClose{
+        background-color: white;
+        height: 45px;
+        margin-left: 20%;
+        position: absolute;
+        top: 0px;
+        width: 80%;
+    }
+    .AdminSidebar .mobileSidebarClose svg{
+        float: right;
+        margin-right: 10px;
+        margin-top: 5px;
+        color: red;
+        font-size: 30px;
+    }
+    .AdminSidebar{
+        display: none;
+        position: fixed;
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        height: 100vh;
+        z-index: 15;
+        background-color: #00000099;
+    }
+    .AdminSidebar ul{
+        display: block;
+        height: 100vh;
+        width: 80%;
+        background-color: white;
+        margin-left: 20%;
+        padding-top: 45px;
+    }
+    .AdminSidebar ul > div{
+        background-color: #ffffff99;
+        height: 100%;
+        overflow: auto;
+        padding-bottom: 50px;
+    }
+    .AdminSidebar li{
+        list-style: none;
+    }
+    .AdminSidebar li a{
+        display: inline-block;
+        text-decoration: none;
+        font-style: italic;
+        color: black;
+        font-size: 15px;
+        padding: 4px 10px 4px 5px;
+        margin-left: 5px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: calc(100% - 10px);
+        text-align: center;
+    }
+    .AdminSidebar li a.active{
+        background-color: #9c27b0;
+        color: white;
+    }
+    .AdminSidebar li a:hover{
+        background-color: #ffc107;
+        color: white;
+    }
+}

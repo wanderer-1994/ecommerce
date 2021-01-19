@@ -1,0 +1,52 @@
+@media all and (min-width: 901px){
+    .Pagination{
+        text-align: right;
+        position: fixed;
+        bottom: 5px;
+        right: 5px;
+    }
+    .Pagination .paginationWrapper{
+        padding: 3px 5px 3px 5px;
+        display: inline-block;
+        background-color: rgb(255, 0, 0, 0.7);
+        border-radius: 3px;
+        box-shadow: 1px 1px 0px 0px #ffffff, -1px -1px 0px 0px #ffffff, -1px 1px 0px 0px #ffffff, 1px -1px 0px 0px #ffffff;
+    }
+}
+@media all and (max-width: 900px){
+    .Pagination{
+        text-align: right;
+        margin-bottom: 10px;
+    }
+    .Pagination .paginationWrapper{
+        padding: 3px 5px 3px 5px;
+        display: inline-block;
+        border-radius: 3px;
+    }
+}
+.Pagination .paginationItem{
+    display: inline-block;
+    min-width: 25px;
+    height: 25px;
+    line-height: 25px;
+    border-radius: 2px;
+    background-color: royalblue;
+    border: 1px solid royalblue;
+    margin-left: 3px;
+    text-align: center;
+    cursor: pointer;
+}
+.Pagination .paginationItem a{
+    color: white;
+    text-decoration: none;
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+.Pagination .paginationItem.active{
+    background-color: white;
+    border: 1px solid royalblue;
+}
+.Pagination .paginationItem.active a{
+    color: royalblue;
+}
