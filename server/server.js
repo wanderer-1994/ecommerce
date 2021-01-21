@@ -27,7 +27,16 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use(getReqGeneralVariables, getResGeneralVariables);
 
-app.use("/api", AdminRouter, CategoryRouter, OrderRouter, ProductRouter, UserRouter, Others);
+const apiModules = [
+    AdminRouter,
+    CategoryRouter,
+    OrderRouter,
+    ProductRouter,
+    UserRouter,
+    Others
+];
+
+app.use("/api", apiModules);
 
 app.get("/*", (req, res) => {
     res.sendFile("/APP/phukiendhqg/client/build/index.html");

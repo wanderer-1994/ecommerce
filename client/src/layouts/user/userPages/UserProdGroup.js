@@ -147,7 +147,7 @@ class UserProdGroup extends React.Component {
                         {saleoff_percent > 0 ? <span className="saleInfo">{`-${saleoff_percent.toLocaleString()}%`}</span> : null}
                       </div>
                       <div className="prodName"><Link to={prod_link}>{prod_name}</Link></div>
-                      <div className="prodReviewLink"><a href={prod_review} target="blank">xem review >></a></div>
+                      <div className="prodReviewLink"><a href={prod_review} target="blank">xem review &gt;&gt;</a></div>
                       <div className="prodAction">
                         <button className="addToCart" onClick={(event) => this.handleAddToCart(event.target, prod_img, item)}>thêm vào giỏ</button>
                         <Link to="/gio-hang">

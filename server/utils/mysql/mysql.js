@@ -4,8 +4,8 @@ const msClient = mysql.createConnection(
     {
         host: "localhost",
         user: "root",
-        password: "Tkh170294*",
-        database: "phukiendhqg",
+        password: "tkh170294",
+        // database: "phukiendhqg",
         multipleStatements: true
     }
 )
