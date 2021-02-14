@@ -5,40 +5,9 @@ const msClient = mysql.createConnection(
         host: "localhost",
         user: "root",
         password: "tkh170294",
-        // database: "phukiendhqg",
         multipleStatements: true
     }
 )
-
-const require_escape = ["prod_link", "updated_info"]
-
-msClient.getSqlAttrToSelect = attrs_array => {
-    let attr_to_select = "";
-    attrs_array.forEach(item => {
-        attr_to_select += `${item}, `
-    });
-    attr_to_select = attr_to_select.replace(/, $/, "");
-    return attr_to_select;
-}
-
-msClient.getSqlInCondittion = selected_array => {
-    let result_string = "";
-    selected_array.forEach(item => {
-        result_string += `"${item}", `
-    });
-    result_string = result_string.replace(/, $/, "");
-    return result_string;
-}
-
-msClient.getSqlCategoryLike_OrCondition = category => {
-    let categories = category.split(",");
-    let result_string = "";
-    categories.forEach(item => {
-        result_string += `category LIKE "%${escape(item)}%" OR `;
-    })
-    result_string = result_string.replace(/ OR $/, "");
-    return result_string;
-}
 
 msClient.promiseQuery = sql => {
     return new Promise((resolve, reject) => {
@@ -119,19 +88,6 @@ msClient.updateRows = (table, attr_arr, record_arr) => {
     })
 }
 
-msClient.deleteRows = (table, key_index, keys_arr) => {
-    return new Promise(async (resolve, reject) => {
-        try{
-            let sql_prepare_keys = msClient.getSqlInCondittion(keys_arr);
-            let sql_insert_delete_rows = `DELETE FROM ${table} WHERE ${key_index} IN (${sql_prepare_keys})`
-            let result = await msClient.promiseQuery(sql_insert_delete_rows);
-            resolve(result);
-        }catch(err){
-            reject(err);
-        }
-    })
-}
-
 msClient.connectAsync = async () => {
     return new Promise((resolve, reject) => {
         msClient.connect(err => {
@@ -151,7 +107,5 @@ msClient.connectAsync = async () => {
         });
     })
 }
-
-msClient.connectAsync();
 
 module.exports = msClient;

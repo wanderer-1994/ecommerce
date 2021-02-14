@@ -1,13 +1,13 @@
 const express = require("express");
-const msClient = require("../utils/mysql/mysql");
+const msClient = require("../../utils/mysql/mysql");
 const router = express.Router();
 const uuidv4 = require("uuid/v4");
-const { createSystemErrMessage } = require("../utils/functions")
-const { checkAdminByCookie } = require("../utils/middlewares/middlewares");
+const { createSystemErrMessage } = require("../../utils/functions")
+const { checkAdminByCookie } = require("../../utils/middlewares/middlewares");
 
 // router.use(checkAdminByCookie);
 
-router.get("/admin-staff", checkAdminByCookie, async (req, res) => {
+router.get("/admin/staff", checkAdminByCookie, async (req, res) => {
     try{
         if(!req.admin || !req.admin.admin_id) return res.redirect("/");
         res.json({admin: req.admin});
@@ -17,7 +17,7 @@ router.get("/admin-staff", checkAdminByCookie, async (req, res) => {
     }
 });
 
-router.get("/admin-root", checkAdminByCookie, async (req, res) => {
+router.get("/admin/root", checkAdminByCookie, async (req, res) => {
     try{
         if(!req.admin || !req.admin.admin_id) return res.redirect("/");
 
@@ -59,7 +59,7 @@ router.post("/admin/auth", checkAdminByCookie, async (req, res) => {
     }
 })
 
-router.post("/admin/unauth", checkAdminByCookie, async (req, res) => {
+router.post("/admin/logout", checkAdminByCookie, async (req, res) => {
     // req.body: {admin_cookie}
     // res.json({admin, Alert})
     try{
