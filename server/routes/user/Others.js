@@ -13,7 +13,7 @@ const {
 } = require("../utils/const/config");
 const { checkAdminByCookie } = require("../utils/middlewares/middlewares");
 
-router.post("/cart-validate", async (req, res) => {
+router.post("/cart/validate", async (req, res) => {
     // req.body = {prod_ids: prod_ids}
     // res.json({products: [], Alert: []})
     try{
@@ -39,7 +39,7 @@ router.post("/cart-validate", async (req, res) => {
     }
 })
 
-router.post("/access-announce", async (req, res) => {
+router.post("/access/statistic", async (req, res) => {
     // req.body = {machine_key: machine_key, last_access: last_access}
     // res.json({isSuccess: boolean})
     try{

@@ -1,4 +1,5 @@
 const mysql = require("mysql");
+const search = require("../search/search");
 
 const msClient = mysql.createConnection(
     {
@@ -90,13 +91,11 @@ msClient.updateRows = (table, attr_arr, record_arr) => {
 
 msClient.connectAsync = async () => {
     return new Promise((resolve, reject) => {
-        msClient.connect(err => {
+        msClient.connect(async (err) => {
             if(err){
                 console.log("msClient err: ", err);
-                setTimeout(() => {
-                    msClient.connectAsync();
-                }, 2000);
             }else{
+                msClient.searchDictionary = await search.getSearchDictionary(msClient);
                 resolve();
                 setInterval(() => {
                     msClient.query("SELECT 1;");
