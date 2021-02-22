@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const msClient = require("../utils/mysql/mysql");
+const mysqlutils = require("../../utils/mysql/mysqlutils");
 const { updateSupInfo } = require("../utils/subinfo_updater/general_updater");
 const {
     escapeHTML,
@@ -25,9 +26,13 @@ router.post("/cart/validate", async (req, res) => {
         if(prod_ids.length <= 0) return res.end();
 
         let prod_attr_for_client =  ["prod_id"];
-        let attrs_to_select = msClient.getSqlAttrToSelect(prod_attr_for_client);
-        let queryCondition = msClient.getSqlInCondittion(prod_ids);
-        let sqlSelectProduct = `SELECT ${attrs_to_select} FROM phukiendhqg.product WHERE prod_id IN (${queryCondition}) AND (prod_stock > 0) AND (last_updated = 0);`;
+        let sqlSelectProduct =
+        `
+        SELECT "${prod_attr_for_client.map(item => mysqlutils.escapeQuotes(item)).join(`", "`)}"
+        FROM phukiendhqg.product
+        WHERE prod_id IN ("${prod_ids.map(item => mysqlutils.escapeQuotes(item)).join(`", "`)}")
+        AND (prod_stock > 0) AND (last_updated = 0);
+        `;
         let products = await msClient.promiseQuery(sqlSelectProduct);
         res.json({
             products: products,
@@ -47,12 +52,11 @@ router.post("/access/statistic", async (req, res) => {
         last_access = req.body.last_access;
         if(isNaN(parseInt(machine_key)) || isNaN(parseInt(last_access))) return res.end();
         
-        let sqlSelectMachine = `SELECT* FROM phukiendhqg.accessrecord WHERE machine_key = "${machine_key}" LIMIT 1;`;
+        let sqlSelectMachine = `SELECT* FROM phukiendhqg.accessrecord WHERE machine_key = "${mysqlultils.escapeQuotes(machine_key)}" LIMIT 1;`;
         let machines = await msClient.promiseQuery(sqlSelectMachine);
-        let machine_item = new Object;
+        let machine_item = new Object();
         if(machines && machines[0] && machines[0].machine_key){
             // increase
-            machines = unescapeSelectedData(machines);
             machine_item = machines[0];
             let access_history = JSON.parse(machine_item.access_history);
             access_history.push(last_access);
@@ -62,7 +66,13 @@ router.post("/access/statistic", async (req, res) => {
             machine_item.access_history = JSON.stringify([last_access]);
             machine_item.machine_key = machine_key;
         }
-        msClient.updateRows("phukiendhqg.accessrecord", ["machine_key", "access_history"], [machine_item]);
+        let sql =
+        `
+        INSERT INTO \`ecommerce\`.accessrecord (\`machine_key\`, \`access_history\`)
+        VALUES ("${mysqlutils.escapeQuotes(machine_item.machine_key)}", "${mysqlutils.escapeQuotes(machine_item.access_history)}")
+        ON DUPLICATE KEY UPDATE \`access_history\`= "${mysqlutils.escapeQuotes(machine_item.access_history)}"
+        `;
+        await msClient.promiseQuery(sql);
         res.json({
             isSuccess: true
         })

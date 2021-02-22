@@ -1,0 +1,13 @@
+INSERT INTO `ecommerce`.product_eav
+(attribute_id, label, admin_only, html_type, data_type, validation, is_super, is_system, unit)
+VALUES
+# General
+('sup_link', 'Supplier url', '1', 'input', 'varchar', null, '1', '0', null),
+('sup_name', 'Supplier product name', '1', 'input', 'varchar', null, '1', '0', null),
+('sup_warranty', 'Supplier warranty', '1', 'input', 'text', null, '1', '0', null),
+('images', 'Main images', '0', 'multiinput', 'varchar', null, '1', '1', null),
+('thumbnail', 'Thumbnail', '0', 'input', 'varchar', null, '1', '1', null),
+('subsection', 'Tiểu mục', '1', 'multiinput', 'varchar', null, '1', '1', null),
+('sup_price', 'Supplier price', '1', 'input', 'int', null, '1', '0', null),
+('is_new', 'SP mới', '1', 'boolean', 'int', '0|1', '1', '1', null),
+('is_online', 'Online', '0', 'boolean', 'int', '0|1', '1', '1', null)

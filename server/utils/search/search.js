@@ -6,7 +6,7 @@ const productEntityInheritFields = ["product_id", "entity_id", "type_id"];
 const attributeInheritFields = ["attribute_id", "value", "label", "html_type", "data_type", "validation", "is_super", "is_system", "unit"];
 const multivalueAttributes = ["multiselect", "multiinput"];
 
-function createSearchQueryDB ({ categories, entity_ids, refinements, searchPhrase, searchDictionary }) {
+function createSearchQueryDB ({ categories, entity_ids, refinements, searchPhrase, searchDictionary, inStock }) {
     // ## search by category_id
     let queryCID = "";
     if (categories && categories.length > 0) {
@@ -70,8 +70,21 @@ function createSearchQueryDB ({ categories, entity_ids, refinements, searchPhras
     if (searchPhrase) {
         querySearchPhrase = fulltextSearch.generateFulltextSqlSearchProductEntity({ searchPhrase, searchDictionary });
     }
+    // ## search by inStock
+    let queryInStock = "";
+    if (inStock == true) {
+        queryInStock =
+        `
+        SELECT product_id, 100 AS \`weight\`, 'inStock' AS \`type\` FROM (
+            SELECT DISTNCT(IF(\`pe\`.parent IS NOT NULL AND \`pe\`.parent != '', \`pe\`.parent, \`pe\`.entity_id)) AS product_id
+            FROM \`ecommerce\`.inventory AS \`inv\`
+            LEFT JOIN \`ecommerce\`.product_entity AS \`pe\` ON \`pe\`.entity_id = \`inv\`.entity_id
+            WHERE \`inv\`.available_quantity > 0
+        ) AS \`alias\`
+        `;
+    }
     // ## final assembled search query
-    let assembledQuery = [queryCID, queryPID, queryRefinement, querySearchPhrase]
+    let assembledQuery = [queryCID, queryPID, queryRefinement, querySearchPhrase, queryInStock]
     .filter(item => (item != null && item != ""));
     
     if (assembledQuery.length == 0) {
@@ -131,6 +144,9 @@ function searchConfigValidation ({ categories, entity_ids, refinements, searchPh
         } else if (searchPhrase) {
             required.push("name");
         };
+        if (inStock == true) {
+            required.push("inStock");
+        }
         return required;
     } catch (err) {
         throw err
@@ -226,13 +242,20 @@ async function getDetailProducts (products) {
         FROM \`ecommerce\`.product_entity as \`pe\`
         LEFT JOIN \`ecommerce\`.product_eav_multi_value AS \`eav\` ON \`eav\`.entity_id = \`pe\`.entity_id
         WHERE \`pe\`.entity_id in (${product_ids}) OR \`pe\`.parent in (${product_ids})
+        UNION
+        SELECT
+            \`pe\`.entity_id, IF((\`pe\`.parent IS NOT NULL AND \`pe\`.parent != ''), \`pe\`.parent, \`pe\`.entity_id) AS product_id,
+            \`pe\`.type_id, 'available_quantity' AS \`attribute_id\`, \`inv\`.available_quantity AS \`value\`
+        FROM \`ecommerce\`.product_entity as \`pe\`
+        LEFT JOIN \`ecommerce\`.inventory AS \`inv\` ON \`inv\`.entity_id = \`pe\`.entity_id
+        WHERE \`pe\`.entity_id in (${product_ids}) OR \`pe\`.parent in (${product_ids})
     ) AS \`pe\`
     LEFT JOIN \`ecommerce\`.product_eav AS \`attributes\` ON \`attributes\`.attribute_id = \`pe\`.attribute_id
     ORDER BY \`pe\`.product_id, \`pe\`.entity_id
     `;
     let rawData = await msClient.promiseQuery(sql);
-    let products = modelizeProductsData(rawData);
-    return products;
+    let _products = modelizeProductsData(rawData);
+    return _products;
 }
 
 function modelizeProductsData (rawData) {
@@ -323,9 +346,13 @@ function extractRefinements (req) {
 }
 
 async function getSearchDictionary (msClient) {
-    let sql = 'SELECT * FROM `ecommerce`.search_dictionary';
-    let searchDictionary = await msClient.promiseQuery(sql);
-    return searchDictionary;
+    try {
+        let sql = 'SELECT * FROM `ecommerce`.search_dictionary';
+        let searchDictionary = await msClient.promiseQuery(sql);
+        return searchDictionary;
+    } catch (err) {
+        return [];
+    }
 }
 
 async function search (searchConfig) {
@@ -350,6 +377,7 @@ async function search (searchConfig) {
     return {
         currentPage: currentPage,
         totalPages: totalPages,
+        items_per_page: items_per_page,
         products: products
     }
 }

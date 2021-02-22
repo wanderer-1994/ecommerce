@@ -18,9 +18,21 @@ function removeVnCharacter(str){
     str = str.replace(/Ỳ|Ý|Ỵ|Ỷ|Ỹ/g, "Y");
     str = str.replace(/Đ/g, "D");
     return str;
-  }
+}
+
+function generateZerofillId ({ absolute_id, zerofil_length }) {
+    let absolute_length = absolute_id.toString().length;
+    if (absolute_length > zerofil_length) return new Error("ERROR: absolute_id is too large!")
+    let id = "";
+    for (let i = 0; i < zerofil_length - absolute_length; i++) {
+        id += "0";
+    }
+    id += absolute_id;
+    return id;
+}
 
 module.exports = {
     createSystemErrMessage,
-    removeVnCharacter    
+    removeVnCharacter,
+    generateZerofillId    
 }

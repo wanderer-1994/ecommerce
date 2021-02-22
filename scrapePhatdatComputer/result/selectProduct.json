@@ -1,6 +1,7 @@
 [
     {
-        "category": "/usb-the-nho/usb",
+        "category": "storage",
+        "subsection": "usb",
         "products": [
             "https://phatdatcomputer.vn/san-pham/usb-4g-kingston-chinh-hang-fpt",
             "https://phatdatcomputer.vn/san-pham/usb-8g-kingston-chinh-hang-fpt",
@@ -12,10 +13,11 @@
         ]
     },
     {
-        "category": "/usb-the-nho/the-nho",
+        "category": "storage",
+        "subsection": "memory_card",
         "products": [
             "https://phatdatcomputer.vn/san-pham/the-nho-microsd-2g",
-            "https://phatdatcomputer.vn/san-pham/the-nho-microsd-4g", // không có link trong báo giá
+            "https://phatdatcomputer.vn/san-pham/the-nho-microsd-4g",
             "https://phatdatcomputer.vn/san-pham/the-nho-microsd-8g",
             "https://phatdatcomputer.vn/san-pham/the-nho-microsd-16g-kingston",
             "https://phatdatcomputer.vn/san-pham/the-nho-microsd-32g-kingston",
@@ -27,7 +29,8 @@
         ]
     },
     {
-        "category": "/cap-coc-sac/cap-sac",
+        "category": "charger",
+        "subsection": "charge_cable",
         "products": [
             "https://phatdatcomputer.vn/san-pham/cap-sac-da-nang-3-dau-12m",
             "https://phatdatcomputer.vn/san-pham/cap-sac-hoco-x25-typec-1m",
@@ -41,7 +44,8 @@
         ]
     },
     {
-        "category": "/cap-coc-sac/coc-sac",
+        "category": "charger",
+        "subsection": "adapter",
         "products": [
             "https://phatdatcomputer.vn/san-pham/coc-sac-nhanh-hoco-c73-02-cong-usb",
             "https://phatdatcomputer.vn/san-pham/coc-sac-nhanh-hoco-c42",
@@ -51,7 +55,26 @@
         ]
     },
     {
-        "category": "/tai-nghe-loa/tai-nghe-day",
+        "category": "charger",
+        "subsection": "charger_set",
+        "products": [
+        
+        ]
+    },
+    {
+        "category": "charger",
+        "subsection": "powerbank",
+        "products": [
+            "https://phatdatcomputer.vn/san-pham/pw-10000mah-borofone-bt21",
+            "https://phatdatcomputer.vn/san-pham/pw-10000mah-borofone-bt16",
+            "https://phatdatcomputer.vn/san-pham/pw-20000mah-borofone-bt19b",
+            "https://phatdatcomputer.vn/san-pham/pw-30000mah-borofone-bt2d",
+            "https://phatdatcomputer.vn/san-pham/pw-20000mah-lanex-lpbn10"
+        ]
+    },
+    {
+        "category": "sound_accessories",
+        "subsection": "wired_phone",
         "products": [
             "https://phatdatcomputer.vn/san-pham/tai-nghe-dien-thoai-samsung-s10",
             "https://phatdatcomputer.vn/san-pham/tn-nhet-tai-samsung-s10-akg-zin",
@@ -63,7 +86,8 @@
         ]
     },
     {
-        "category": "/tai-nghe-loa/tai-nghe-bluetooth",
+        "category": "sound_accessories",
+        "subsection": "bluetooth_phone",
         "products": [
             "https://phatdatcomputer.vn/san-pham/tn-bluetooth-hoco-e17-chinh-hang",
             "https://phatdatcomputer.vn/san-pham/tai-nghe-bluetooth-hoco-es21",
@@ -74,7 +98,21 @@
         ]
     },
     {
-        "category": "/tai-nghe-loa/loa",
+        "category": "sound_accessories",
+        "subsection": "headphone",
+        "products": [
+            
+        ]
+    },
+    {
+        "category": "sound_accessories",
+        "subsection": "earphone",
+        "products": [
+            
+        ]
+    },
+    {
+        "category": "speaker",
         "products": [
             "https://phatdatcomputer.vn/san-pham/loa-bluetooth-mini-charge-g2",
             "https://phatdatcomputer.vn/san-pham/loa-bluetooth-charge-j5",
@@ -82,17 +120,8 @@
         ]
     },
     {
-        "category": "/pin-du-phong",
-        "products": [
-            "https://phatdatcomputer.vn/san-pham/pw-10000mah-borofone-bt21",
-            "https://phatdatcomputer.vn/san-pham/pw-10000mah-borofone-bt16",
-            "https://phatdatcomputer.vn/san-pham/pw-20000mah-borofone-bt19b",
-            "https://phatdatcomputer.vn/san-pham/pw-30000mah-borofone-bt2d",
-            "https://phatdatcomputer.vn/san-pham/pw-20000mah-lanex-lpbn10"
-        ]
-    },
-    {
-        "category": "/phu-kien-lap-top/chuot",
+        "category": "laptop_accessories",
+        "subsection": "mouse",
         "products": [
             "https://phatdatcomputer.vn/san-pham/mouse-simetech-x2-usb",
             "https://phatdatcomputer.vn/san-pham/mouse-mitsumi-su-usb",
@@ -115,7 +144,8 @@
         ]
     },
     {
-        "category": "/phu-kien-lap-top/ban-phim",
+        "category": "laptop_accessories",
+        "subsection": "keyboard",
         "products": [
             "https://phatdatcomputer.vn/san-pham/keyboard-mini-k1000-usb",
             "https://phatdatcomputer.vn/san-pham/combo-khong-day-mini",
@@ -126,14 +156,18 @@
         ]
     },
     {
-        "category": "/phu-kien-lap-top/phu-kien-lap-top-khac",
+        "category": "laptop_accessories",
+        "subsection": "cooler",
         "products": [
-            "https://phatdatcomputer.vn/san-pham/but-trinh-chieu-logitech-r400",
             "https://phatdatcomputer.vn/san-pham/de-tan-nhiet-n19-1-fan",
             "https://phatdatcomputer.vn/san-pham/de-tan-nhiet-n99-2-fan",
-            "https://phatdatcomputer.vn/san-pham/de-tan-nhiet-v4-4-fan",
-            "https://phatdatcomputer.vn/san-pham/box-hdd-western-sata-25-usb-30",
-            "https://phatdatcomputer.vn/san-pham/box-hdd-unitek-y3036-25-usb-30",
+            "https://phatdatcomputer.vn/san-pham/de-tan-nhiet-v4-4-fan"
+        ]
+    },
+    {
+        "category": "laptop_accessories",
+        "subsection": "carry_bag",
+        "products": [
             "https://phatdatcomputer.vn/san-pham/tui-chong-soc-laptop-10",
             "https://phatdatcomputer.vn/san-pham/tui-chong-soc-laptop-12",
             "https://phatdatcomputer.vn/san-pham/tui-chong-soc-laptop-13",
@@ -142,7 +176,8 @@
         ]
     },
     {
-        "category": "/gia-do-gay-selfie",
+        "category": "phone_accessories",
+        "subsection": "selfie_case",
         "products": [
             "https://phatdatcomputer.vn/san-pham/gay-tu-suong-borofone-by3",
             "https://phatdatcomputer.vn/san-pham/gay-tu-suong-borofone-by4",
@@ -150,37 +185,37 @@
         ]
     },
     {
-        "category": "/op-lung-cuong-luc",
+        "category": "phone_accessories",
+        "subsection": "phone_case",
         "products": [
             
         ]
     },
     {
-        "category": "/do-choi-cute",
-        "products": [
-            "https://phatdatcomputer.vn/san-pham/can-dien-tu-180kg-vuong-personal"]
-    },
-    {
-        "category": "/danh-cho-game-thu",
+        "category": "phone_accessories",
+        "subsection": "screen_protector",
         "products": [
             
         ]
     },
     {
-        "category": "/do-phuot",
+        "category": "game_accessories",
+        "products": [
+            
+        ]
+    },
+    {
+        "category": "travel_accessories",
         "products": []
     },
     {
-        "category": "/nha-cua-doi-song",
+        "category": "routine_accessories",
         "products": [
             "https://phatdatcomputer.vn/san-pham/o-dien-pipo-pp018-loai-xin-1-cong-tac-3-lo",
             "https://phatdatcomputer.vn/san-pham/o-dien-pipo-pp028-loai-xin-1-cong-tac-5-lo",
             "https://phatdatcomputer.vn/san-pham/o-dien-dai-6-o-cam",
-            "https://phatdatcomputer.vn/san-pham/bao-dong-gan-cua-at007"
+            "https://phatdatcomputer.vn/san-pham/bao-dong-gan-cua-at007",
+            "https://phatdatcomputer.vn/san-pham/can-dien-tu-180kg-vuong-personal"
         ]
-    },
-    {
-        "category": "/massage-gym-lam-dep",
-        "products": []
     }
 ]

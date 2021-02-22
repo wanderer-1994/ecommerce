@@ -1,11 +1,12 @@
 const mysql = require("mysql");
 const search = require("../search/search");
+var persist;
 
 const msClient = mysql.createConnection(
     {
         host: "localhost",
-        user: "root",
-        password: "tkh170294",
+        user: "TKH",
+        password: "niemtinvahyvong123",
         multipleStatements: true
     }
 )
@@ -97,7 +98,7 @@ msClient.connectAsync = async () => {
             }else{
                 msClient.searchDictionary = await search.getSearchDictionary(msClient);
                 resolve();
-                setInterval(() => {
+                persist = setInterval(() => {
                     msClient.query("SELECT 1;");
                 }, 60*60*1000) // 1hr đánh thức mysql server 1 lần
 
@@ -105,6 +106,11 @@ msClient.connectAsync = async () => {
             }
         });
     })
+}
+
+msClient.disconnect = () => {
+    msClient.end();
+    clearInterval(persist);
 }
 
 module.exports = msClient;

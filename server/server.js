@@ -11,11 +11,11 @@ const {
 } = require("./utils/middlewares/middlewares");
 
 const AdminRouter = require("./routes/user/AdminRouter");
-const CategoryRouter = require("./routes/CategoryRouter");
-const OrderRouter = require("./routes/OrderRouter");
-const ProductRouter = require("./routes/ProductRouter");
-const UserRouter = require("./routes/UserRouter");
-const Others = require("./routes/Others");
+const CategoryRouter = require("./routes/user/CategoryRouter");
+const OrderRouter = require("./routes/user/orderRouter/OrderRouter");
+const ProductRouter = require("./routes/user/ProductRouter");
+const UserRouter = require("./routes/users/UserRouter");
+const Others = require("./routes/user/Others");
 
 async function appInit () {
     // connect database

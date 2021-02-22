@@ -3,7 +3,7 @@ const msClient = require("../utils/mysql/mysql");
 const router = express.Router();
 const { checkAdminByCookie } = require("../utils/middlewares/middlewares");
 
-router.get("/user-user", async (req, res) => {
+router.get("/user", async (req, res) => {
     try{
         let user_tel = req.query.user_tel;
         if(!user_tel || user_tel == "") return res.end();
