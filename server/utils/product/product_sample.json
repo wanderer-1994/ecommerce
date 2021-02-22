@@ -9,8 +9,18 @@
             "parent": null,
             "created_at": null,
             "updated_at": null,
-            "categories": [],
+            "categories": [
+                {
+                    "category_id": "abc",
+                    "position": 12
+                },
+                {
+                    "category_id": "cdf",
+                    "position": 3
+                }
+            ],
             "tier_price": 28000,
+            "available_quantity": 12,
             "attributes": [
                 {
                     "attribute_code": "name",
@@ -90,6 +100,7 @@
             "updated_at": null,
             "categories": [],
             "tier_price": null,
+            "available_quantity": 12,
             "attributes": [
                 {
                     "attribute_code": "name",
