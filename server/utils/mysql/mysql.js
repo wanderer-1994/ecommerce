@@ -90,6 +90,32 @@ msClient.updateRows = (table, attr_arr, record_arr) => {
     })
 }
 
+async function getProductEav () {
+    try {
+        let sql =
+        `
+        SELECT * FROM \`ecommerce\`.product_eav;
+        `;
+        let productEav = await msClient.promiseQuery(sql);
+        return productEav;
+    } catch (err) {
+        return [];
+    }
+}
+
+async function getCategoryEav () {
+    try {
+        let sql =
+        `
+        SELECT * FROM \`ecommerce\`.category_eav;
+        `;
+        let categoryEav = await msClient.promiseQuery(sql);
+        return categoryEav;
+    } catch (err) {
+        return [];
+    }
+}
+
 msClient.connectAsync = async () => {
     return new Promise((resolve, reject) => {
         msClient.connect(async (err) => {
@@ -97,6 +123,8 @@ msClient.connectAsync = async () => {
                 console.log("msClient err: ", err);
             }else{
                 msClient.searchDictionary = await search.getSearchDictionary(msClient);
+                msClient.productEav = await getProductEav();
+                msClient.categoryEav = await getCategoryEav()
                 resolve();
                 persist = setInterval(() => {
                     msClient.query("SELECT 1;");
