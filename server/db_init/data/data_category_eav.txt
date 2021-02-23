@@ -1,0 +1,7 @@
+INSERT INTO `ecommerce`.category_eav
+(attribute_id, label, referred_target, admin_only, html_type, data_type, validation, is_super, is_system, unit)
+VALUES
+# General
+('title_caption', 'Caption title', NULL, '0', 'input', 'text', null, '0', '1', null),
+('introduction', 'Introduction', NULL, '0', 'input', 'text', null, '0', '1', null),
+('banner_image', 'Banner Image', NULL, '0', 'input', 'varchar', null, '0', '1', null)

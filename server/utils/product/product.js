@@ -103,7 +103,7 @@ async function saveProductEntity (product) {
     try {
         let sqltb_product_entity = [];
         attr_product_entity.forEach(item => {
-            if (product[item] != null) {
+            if (product[item] !== null && product[item] !== "" && product[item] !== undefined) {
                 sqltb_product_entity.push(item);
             }
         });

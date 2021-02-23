@@ -26,6 +26,7 @@ CREATE TABLE `ecommerce`.`product_category_assignment` (
 CREATE TABLE `ecommerce`.`product_eav` (
   `attribute_id` VARCHAR(50) NOT NULL,
   `label` VARCHAR(50) UNIQUE NOT NULL,
+  `referred_target` VARCHAR(255) NULL,
   `admin_only` ENUM('0', '1') NULL DEFAULT '0',
   `html_type` ENUM('input', 'multiinput', 'select', 'multiselect', 'password', 'boolean') NULL DEFAULT 'input',
   `data_type` ENUM('int', 'decimal', 'varchar', 'text', 'html', 'datetime') NULL DEFAULT 'varchar',
@@ -51,7 +52,6 @@ CREATE TABLE `ecommerce`.`product_eav_multi_value` (
 
 ###
 CREATE TABLE `ecommerce`.`product_eav_index` (
-  `entity_id` VARCHAR(50) NOT NULL,
   `product_id` VARCHAR(50) NOT NULL,
   `attribute_id` VARCHAR(50) NOT NULL,
   `value`  VARCHAR(255) NOT NULL,
@@ -97,7 +97,7 @@ CREATE TABLE `ecommerce`.`product_eav_datetime` (
 CREATE TABLE `ecommerce`.`category_entity` (
   `entity_id` VARCHAR(50) NOT NULL,
   `name` VARCHAR(255) NOT NULL,
-  `parent` VARCHAR(50),
+  `parent` VARCHAR(50) NULL,
   `is_online` ENUM('0', '1') NULL DEFAULT '1',
   `position` INT NULL,
   PRIMARY KEY (`entity_id`));
@@ -105,10 +105,12 @@ CREATE TABLE `ecommerce`.`category_entity` (
 ###
 CREATE TABLE `ecommerce`.`category_eav` (
   `attribute_id` VARCHAR(50) NOT NULL,
-  `label` VARCHAR(50) UNIQUE NOT NULL,
+  `label` VARCHAR(50) NOT NULL,
+  `referred_target` VARCHAR(255) NULL,
+  `admin_only` ENUM('0', '1') NULL DEFAULT '0',
   `html_type` ENUM('input', 'multiinput', 'select', 'multiselect', 'password', 'boolean') NULL DEFAULT 'input',
   `data_type` ENUM('int', 'decimal', 'varchar', 'text', 'html', 'datetime') NULL DEFAULT 'varchar',
-  `validation` VARCHAR(255) NOT NULL,
+  `validation` VARCHAR(255) NULL,
   `is_super` ENUM('0', '1') NULL DEFAULT '0',
   `is_system` ENUM('0', '1') NULL DEFAULT '0',
   `unit` VARCHAR(50) NULL,

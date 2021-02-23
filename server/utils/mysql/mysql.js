@@ -1,5 +1,4 @@
 const mysql = require("mysql");
-const search = require("../search/search");
 var persist;
 
 const msClient = mysql.createConnection(
@@ -90,7 +89,7 @@ msClient.updateRows = (table, attr_arr, record_arr) => {
     })
 }
 
-async function getProductEav () {
+msClient.getProductEav = async function () {
     try {
         let sql =
         `
@@ -103,7 +102,7 @@ async function getProductEav () {
     }
 }
 
-async function getCategoryEav () {
+msClient.getCategoryEav = async function () {
     try {
         let sql =
         `
@@ -116,15 +115,25 @@ async function getCategoryEav () {
     }
 }
 
+msClient.getSearchDictionary = async function () {
+    try {
+        let sql = 'SELECT * FROM `ecommerce`.search_dictionary';
+        let searchDictionary = await msClient.promiseQuery(sql);
+        return searchDictionary;
+    } catch (err) {
+        return [];
+    }
+}
+
 msClient.connectAsync = async () => {
     return new Promise((resolve, reject) => {
         msClient.connect(async (err) => {
             if(err){
                 console.log("msClient err: ", err);
             }else{
-                msClient.searchDictionary = await search.getSearchDictionary(msClient);
-                msClient.productEav = await getProductEav();
-                msClient.categoryEav = await getCategoryEav()
+                msClient.searchDictionary = await msClient.getSearchDictionary();
+                msClient.productEav = await msClient.getProductEav();
+                msClient.categoryEav = await msClient.getCategoryEav()
                 resolve();
                 persist = setInterval(() => {
                     msClient.query("SELECT 1;");

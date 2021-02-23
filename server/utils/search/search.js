@@ -15,7 +15,7 @@ function createSearchQueryDB ({ categories, entity_ids, refinements, searchPhras
         WITH RECURSIVE \`cte\` (entity_id) AS (
             SELECT entity_id
             FROM \`ecommerce\`.category_entity
-            WHERE entity_id IN (\'${categories.map(item => mysqlutil.escapeQuotes(item)).join("\', \'")}\')
+            WHERE entity_id IN (\'${categories.map(item => mysqlutils.escapeQuotes(item)).join("\', \'")}\')
             UNION ALL
             SELECT p.entity_id
             FROM \`ecommerce\`.category_entity AS \`p\`
@@ -41,7 +41,7 @@ function createSearchQueryDB ({ categories, entity_ids, refinements, searchPhras
             SELECT IF(\`pe\`.parent IS NOT NULL AND \`pe\`.parent != '', \`pe\`.parent, \`pe\`.entity_id) AS product_id,
             1000 AS \`weight\`
             FROM \`ecommerce\`.\`product_entity\` AS \`pe\`
-            WHERE \`pe\`.entity_id IN (\'${entity_ids.map(item => mysqlutil.escapeQuotes(item)).join("\', \'")}\')
+            WHERE \`pe\`.entity_id IN (\'${entity_ids.map(item => mysqlutils.escapeQuotes(item)).join("\', \'")}\')
         ) AS \`alias\`
         GROUP BY product_id
         `;
@@ -50,7 +50,7 @@ function createSearchQueryDB ({ categories, entity_ids, refinements, searchPhras
     let queryRefinement = "";
     if (refinements && refinements.length > 0) {
         let refinementComponentQueries = refinements.map(item => {
-            return `(\`attribute_id\`='${mysqlutil.escapeQuotes(item.attribute_id)}' AND \`value\` IN ('${item.value.map(item => mysqlutil.escapeQuotes(item.toString())).join("\', \'")}'))`
+            return `(\`attribute_id\`='${mysqlutils.escapeQuotes(item.attribute_id)}' AND \`value\` IN ('${item.value.map(item => mysqlutils.escapeQuotes(item.toString())).join("\', \'")}'))`
         }).join(" OR ");
         
         queryRefinement =
@@ -62,7 +62,7 @@ function createSearchQueryDB ({ categories, entity_ids, refinements, searchPhras
                 WHERE ${refinementComponentQueries}
             ) AS \`alias\` GROUP BY product_id
         ) AS \`alias2\`
-        WHERE (${refinements.map(item => `FIND_IN_SET('${mysqlutil.escapeQuotes(item.attribute_id)}', \`alias2\`.attribute_ids)`).join(" AND ")})
+        WHERE (${refinements.map(item => `FIND_IN_SET('${mysqlutils.escapeQuotes(item.attribute_id)}', \`alias2\`.attribute_ids)`).join(" AND ")})
         `;
     }
     // ## search by search phrase
@@ -100,7 +100,7 @@ function createSearchQueryDB ({ categories, entity_ids, refinements, searchPhras
     return assembledQuery;
 };
 
-function searchConfigValidation ({ categories, entity_ids, refinements, searchPhrase }) {
+function searchConfigValidation ({ categories, entity_ids, refinements, searchPhrase, inStock }) {
     try {
         let required = [];
         if (categories && Array.isArray(categories) && categories.length > 0) {
@@ -260,7 +260,7 @@ async function getDetailProducts (products) {
 
 function modelizeProductsData (rawData) {
     try {
-        let products = mysqlutil.groupByAttribute({
+        let products = mysqlutils.groupByAttribute({
             rawData: rawData,
             groupBy: "product_id"
         });
@@ -272,7 +272,7 @@ function modelizeProductsData (rawData) {
                 return;
             }
             product.type_id = self.type_id;
-            product.__items = mysqlutil.groupByAttribute({
+            product.__items = mysqlutils.groupByAttribute({
                 rawData: product.__items,
                 groupBy: "entity_id"
             });
@@ -294,7 +294,7 @@ function modelizeProductsData (rawData) {
                         product_entity[field_item] = product_entity.__items[0][field_item] || product_entity[field_item];
                     })
                 }
-                product_entity.attributes = mysqlutil.groupByAttribute({
+                product_entity.attributes = mysqlutils.groupByAttribute({
                     rawData: product_entity.__items,
                     groupBy: "attribute_id",
                     nullExcept: [null, ""]
@@ -345,16 +345,6 @@ function extractRefinements (req) {
     return refinements;
 }
 
-async function getSearchDictionary (msClient) {
-    try {
-        let sql = 'SELECT * FROM `ecommerce`.search_dictionary';
-        let searchDictionary = await msClient.promiseQuery(sql);
-        return searchDictionary;
-    } catch (err) {
-        return [];
-    }
-}
-
 async function search (searchConfig) {
     let required = searchConfigValidation(searchConfig);
     let assembledQuery = createSearchQueryDB(searchConfig);
@@ -382,8 +372,18 @@ async function search (searchConfig) {
     }
 }
 
+async function buildProductSearchEavIndex () {
+    try {
+        let searchConfig = {};
+        let result = await search(searchConfig);
+        return result;
+    } catch (err) {
+        throw err;
+    }
+}
+
 module.exports = {
     extractRefinements,
-    getSearchDictionary,
-    search
+    search,
+    buildProductSearchEavIndex
 }

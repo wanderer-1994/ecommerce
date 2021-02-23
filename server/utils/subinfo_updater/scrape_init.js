@@ -1,8 +1,9 @@
 const scraper = require("./pdcom_functions");
 const msClient = require("../mysql/mysql");
 const productMgr = require("../product/product");
+const categoryMgr = require("../category/category");
+const search = require("../search/search");
 const fs = require("fs-extra");
-const axios = require("axios");
 const utils = require("../functions");
 async function getSupplierProduct () {
     const init_products = await fs.readJSON("./init_products.json", "utf8");
@@ -34,6 +35,8 @@ async function initProductDatabase () {
     
     await msClient.connectAsync();
     let time = Date.now();
+
+    // init product
     let init_products = await fs.readJSON("./init_products_1.json", "utf8");
     init_products.forEach((product, index) => {
         Object.keys(product).forEach(key => {
@@ -94,7 +97,7 @@ async function initProductDatabase () {
         product.attributes.forEach((attribute, index) => {
             let is_valid = false;
             if (attribute && attribute.value !== null && attribute.value !== undefined && attribute.value !== "") {
-                let attribute_definition = msClient.productEav.find(item => attribute && item.attribute_id === attribute.attribute_id);
+                let attribute_definition = msClient.productEav.find(item => item.attribute_id === attribute.attribute_id);
                 if (attribute_definition) {
                     ["html_type", "data_type"].forEach(key => {
                         attribute[key] = attribute_definition[key];
@@ -104,13 +107,68 @@ async function initProductDatabase () {
             }
             if (!is_valid) product.attributes[index] = null;
         })
-        product.attributes = product.attributes.filter(
-            item => (item !== null)
-        );
+        product.attributes = product.attributes.filter(item => item !== null);
     });
     for (let i = 0; i < init_products.length; i++) {
         await productMgr.saveProductEntity(init_products[i])
     };
+
+    // init category
+    let init_categories = [];
+    init_products.forEach(product => {
+        if (Array.isArray(product.categories)) {
+            product.categories.map(cat_item => {
+                let match = init_categories.find(m_item => m_item.category_id == cat_item.category_id);
+                if (!match) {
+                    let new_category = {
+                        entity_id: cat_item.category_id,
+                        name: "Place holder",
+                        parent: null,
+                        is_online: "1",
+                        position: null,
+                        attributes: [
+                            {
+                                attribute_id: "title_caption",
+                                value: "Placeholder title caption"
+                            },
+                            {
+                                attribute_id: "banner_image",
+                                value: "https://static.toiimg.com/photo/72975551.cms"
+                            },
+                            {
+                                attribute_id: "introduction",
+                                value: "Placeholder introduction"
+                            }
+                        ]
+                    };
+                    new_category.attributes.forEach((attribute, index) => {
+                        let is_valid = false;
+                        if (attribute && attribute.value !== null && attribute.value !== undefined && attribute.value !== "") {
+                            let attribute_definition = msClient.categoryEav.find(item => item.attribute_id === attribute.attribute_id);
+                            if (attribute_definition) {
+                                ["html_type", "data_type"].forEach(key => {
+                                    attribute[key] = attribute_definition[key];
+                                });
+                                is_valid = true;
+                            }
+                        }
+                        if (!is_valid) new_category.attributes[index] = null;
+                    });
+                    new_category.attributes = new_category.attributes.filter(item => item !== null);
+                    init_categories.push(new_category);
+                }
+            })
+        }
+    });
+
+    for (let i = 0; i < init_categories.length; i++) {
+        await categoryMgr.saveCategoryEntity(init_categories[i])
+    };
+
+    // init build product search eav index
+    let result = await search.buildProductSearchEavIndex();
+    await fs.writeJSON("./product_eav_index.json", result);
+
     console.log("execution time: ", (Date.now() - time), " ms")
     msClient.disconnect();
 }

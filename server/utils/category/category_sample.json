@@ -1,0 +1,36 @@
+[
+    {
+        "entity_id": "storage",
+        "name": "Place holder",
+        "parent": null,
+        "is_online": "1",
+        "position": 1,
+        "attributes": [
+            {
+                "attribute_id": "title_caption",
+                "value": "Let's enjoy the music"
+            },
+            {
+                "attribute_id": "banner_image",
+                "value": "/banner_1.jpg"
+            }
+        ]
+    },
+    {
+        "entity_id": "charger",
+        "name": "Place holder",
+        "parent": null,
+        "is_online": "1",
+        "position": 1,
+        "attributes": [
+            {
+                "attribute_id": "introduction",
+                "value": "These qualified sound accessories will leverage your music experience"
+            },
+            {
+                "attribute_id": "banner_image",
+                "value": "/banner_2.jpg"
+            }
+        ]
+    }
+]
