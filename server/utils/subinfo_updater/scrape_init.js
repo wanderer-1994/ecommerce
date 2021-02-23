@@ -25,10 +25,13 @@ async function getSupplierProduct () {
 
 async function initProductDatabase () {
     // product_entity: "entity_id", "type_id", "created_at", "updated_at"
-    // eav_varchar(255): "sup_link", "sup_name", "sup_warranty", "images", "thumbnail", "subsection"
+    // eav_varchar(255): "sup_link", "sup_name", "sup_warranty", "thumbnail"
+    // eav_multi_value: "images", "subsection"
     // eav_int: "sup_price", "is_new", "is_online"
     // inventory: "available_quantity"
     // product_category_assignment: "category"
+    // product_tier_price: "tier_price"
+    
     await msClient.connectAsync();
     let time = Date.now();
     let init_products = await fs.readJSON("./init_products_1.json", "utf8");
