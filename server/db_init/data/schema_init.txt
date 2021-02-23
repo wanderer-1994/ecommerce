@@ -47,8 +47,7 @@ CREATE TABLE `ecommerce`.`product_eav_option` (
 CREATE TABLE `ecommerce`.`product_eav_multi_value` (
   `entity_id` VARCHAR(50) NOT NULL,
   `attribute_id` VARCHAR(50) NOT NULL,
-  `value` TEXT NOT NULL,
-  `sort_order`  INT NULL);
+  `value` TEXT NOT NULL);
 
 ###
 CREATE TABLE `ecommerce`.`product_eav_index` (
@@ -203,10 +202,9 @@ CREATE TABLE `ecommerce`.`inventory` (
 
 ### TIER PRICE
 ###
-CREATE TABLE `ecommerce`.catalog_product_tier_price (
-  value_id INT ZEROFILL NOT NULL AUTO_INCREMENT,
+CREATE TABLE `ecommerce`.product_tier_price (
   entity_id VARCHAR(50) NOT NULL,
   price INT NOT NULL,
-  PRIMARY KEY (`value_id`)
+  PRIMARY KEY (`entity_id`)
 )
 

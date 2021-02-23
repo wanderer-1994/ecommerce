@@ -23,11 +23,10 @@
             "available_quantity": 12,
             "attributes": [
                 {
-                    "attribute_code": "name",
-                    "attribute_id": 73,
+                    "attribute_id": "name",
                     "value": "Joust Duffle Bag",
-                    "frontend_input": "text",
-                    "frontend_label": "Product Name"
+                    "html_type": "input",
+                    "data_type": "varchar"
                 },
                 {
                     "attribute_code": "description",
