@@ -4,7 +4,7 @@ VALUES
 # General
 ('sup_link', 'Supplier url', '1', 'input', 'varchar', null, '1', '0', null),
 ('sup_name', 'Supplier product name', '1', 'input', 'varchar', null, '1', '0', null),
-('sup_warranty', 'Supplier warranty', '1', 'input', 'text', null, '1', '0', null),
+('sup_warranty', 'Supplier warranty', '1', 'input', 'varchar', null, '1', '0', null),
 ('images', 'Main images', '0', 'multiinput', 'varchar', null, '1', '1', null),
 ('thumbnail', 'Thumbnail', '0', 'input', 'varchar', null, '1', '1', null),
 ('subsection', 'Tiểu mục', '1', 'multiinput', 'varchar', null, '1', '1', null),

@@ -31,7 +31,7 @@ function groupByAttribute ({rawData, groupBy, nullExcept}) {
 }
 
 function escapeQuotes (string) {
-    return string.replace(/\`/g, "\\`").replace(/\"/g, '\\"').replace(/\'/g, "\\'");
+    return string.toString().replace(/\`/g, "\\`").replace(/\"/g, '\\"').replace(/\'/g, "\\'");
 }
 
 function buildProductEavIndexJson (products) {

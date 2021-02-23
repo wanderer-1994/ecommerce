@@ -1,9 +1,10 @@
 const scraper = require("./pdcom_functions");
 const msClient = require("../mysql/mysql");
+const productMgr = require("../product/product");
 const fs = require("fs-extra");
 const axios = require("axios");
 const utils = require("../functions");
-async function getSubProduct () {
+async function getSupplierProduct () {
     const init_products = await fs.readJSON("./init_products.json", "utf8");
     let products = [];
     let quotation = await scraper.get_phatdatcomQuotation({
@@ -28,8 +29,8 @@ async function initProductDatabase () {
     // eav_int: "sup_price", "is_new", "is_online"
     // inventory: "available_quantity"
     // product_category_assignment: "category"
-    let time = Date.now();
     await msClient.connectAsync();
+    let time = Date.now();
     let init_products = await fs.readJSON("./init_products_1.json", "utf8");
     init_products.forEach((product, index) => {
         Object.keys(product).forEach(key => {
@@ -41,13 +42,73 @@ async function initProductDatabase () {
         })
         product.entity_id = `PR${zerofill_id}`;
         product.type_id = "simple";
-        product.images = [product.images];
         product.created_at = time;
         product.updated_at = time;
-        product.is_new = "1";
-        product.is_online = "0";
+        product.categories = [{
+            category_id: product.category,
+            position: null
+        }];
+        product.tier_price = product.sup_price;
+        product.attributes = [];
+        product.attributes.push({
+            attribute_id: "sup_link",
+            value: product.sup_link
+        });
+        product.attributes.push({
+            attribute_id: "sup_name",
+            value: product.sup_name
+        });
+        product.attributes.push({
+            attribute_id: "sup_warranty",
+            value: product.sup_warranty
+        });
+        product.attributes.push({
+            attribute_id: "images",
+            value: [product.images]
+        });
+        product.attributes.push({
+            attribute_id: "thumbnail",
+            value: product.thumbnail
+        });
+        if (product.subsection) {
+            product.attributes.push({
+                attribute_id: "subsection",
+                value: [product.subsection]
+            });
+        }
+        product.attributes.push({
+            attribute_id: "sup_price",
+            value: product.sup_price
+        });
+        product.attributes.push({
+            attribute_id: "is_new",
+            value: 1
+        });
+        product.attributes.push({
+            attribute_id: "is_online",
+            value: 0
+        });
+        product.attributes.forEach((attribute, index) => {
+            let is_valid = false;
+            if (attribute && attribute.value !== null && attribute.value !== undefined && attribute.value !== "") {
+                let attribute_definition = msClient.productEav.find(item => attribute && item.attribute_id === attribute.attribute_id);
+                if (attribute_definition) {
+                    ["html_type", "data_type"].forEach(key => {
+                        attribute[key] = attribute_definition[key];
+                    });
+                    is_valid = true;
+                }
+            }
+            if (!is_valid) product.attributes[index] = null;
+        })
+        product.attributes = product.attributes.filter(
+            item => (item !== null)
+        );
     });
-    console.log(init_products[0])
+    for (let i = 0; i < init_products.length; i++) {
+        await productMgr.saveProductEntity(init_products[i])
+    };
+    console.log("execution time: ", (Date.now() - time), " ms")
     msClient.disconnect();
 }
 
