@@ -10,4 +10,5 @@ VALUES
 ('subsection', 'Tiểu mục', NULL, '1', 'multiinput', 'varchar', null, '1', '1', null),
 ('sup_price', 'Supplier price', NULL, '1', 'input', 'int', null, '1', '0', null),
 ('is_new', 'SP mới', NULL, '1', 'boolean', 'int', '0|1', '1', '1', null),
+('name', 'Product name', NULL, '0', 'input', 'varchar', NULL, '1', '1', null),
 ('is_online', 'Online', NULL, '0', 'boolean', 'int', '0|1', '1', '1', null)

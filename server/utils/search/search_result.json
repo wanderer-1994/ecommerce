@@ -1,0 +1,1533 @@
+{
+    "currentPage": 2,
+    "totalPages": 2,
+    "totalFound": 36,
+    "send": 12,
+    "items_per_page": 24,
+    "products": [
+        {
+            "product_id": "PR0048",
+            "type_id": "simple",
+            "self": {
+                "entity_id": "PR0048",
+                "product_id": "PR0048",
+                "type_id": "simple",
+                "created_at": 1614155679176,
+                "updated_at": 1614155679176,
+                "tier_price": 84000,
+                "available_quantity": 1,
+                "categories": [
+                    {
+                        "category_id": "charger",
+                        "position": 0
+                    }
+                ],
+                "attributes": [
+                    {
+                        "attribute_id": "is_new",
+                        "label": "SP mới",
+                        "admin_only": "1",
+                        "html_type": "boolean",
+                        "data_type": "int",
+                        "validation": "0|1",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": 1
+                    },
+                    {
+                        "attribute_id": "is_online",
+                        "label": "Online",
+                        "admin_only": "0",
+                        "html_type": "boolean",
+                        "data_type": "int",
+                        "validation": "0|1",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": 0
+                    },
+                    {
+                        "attribute_id": "sup_price",
+                        "label": "Supplier price",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "int",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": 84000
+                    },
+                    {
+                        "attribute_id": "images",
+                        "label": "Main images",
+                        "admin_only": "0",
+                        "html_type": "multiinput",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": [
+                            "https://phatdatcomputer.vn/upload/product/bo-sac-nhanh-hoco-dc28-typec1575967849.jpg"
+                        ]
+                    },
+                    {
+                        "attribute_id": "name",
+                        "label": "Product name",
+                        "admin_only": "0",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": "Bộ sạc nhanh HOCO DC28 Type-C (2 cổng USB, 5A max, LED, 1m)"
+                    },
+                    {
+                        "attribute_id": "sup_link",
+                        "label": "Supplier url",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": "https://phatdatcomputer.vn/san-pham/bo-sac-nhanh-hoco-dc28-typec-2-cong-usb-5a-max-led-1m"
+                    },
+                    {
+                        "attribute_id": "subsection",
+                        "label": "Tiểu mục",
+                        "admin_only": "1",
+                        "html_type": "multiinput",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": [
+                            "charger_set"
+                        ]
+                    },
+                    {
+                        "attribute_id": "thumbnail",
+                        "label": "Thumbnail",
+                        "admin_only": "0",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": "https://phatdatcomputer.vn/upload/product/bo-sac-nhanh-hoco-dc28-typec1575967849_250x250.jpg"
+                    },
+                    {
+                        "attribute_id": "sup_warranty",
+                        "label": "Supplier warranty",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": "12T"
+                    },
+                    {
+                        "attribute_id": "sup_name",
+                        "label": "Supplier product name",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": "Bộ sạc nhanh HOCO DC28 Type-C (2 cổng USB, 5A max, LED, 1m)"
+                    }
+                ]
+            }
+        },
+        {
+            "product_id": "PR0049",
+            "type_id": "simple",
+            "self": {
+                "entity_id": "PR0049",
+                "product_id": "PR0049",
+                "type_id": "simple",
+                "created_at": 1614155679176,
+                "updated_at": 1614155679176,
+                "tier_price": 59000,
+                "available_quantity": 1,
+                "categories": [
+                    {
+                        "category_id": "charger",
+                        "position": 0
+                    }
+                ],
+                "attributes": [
+                    {
+                        "attribute_id": "is_new",
+                        "label": "SP mới",
+                        "admin_only": "1",
+                        "html_type": "boolean",
+                        "data_type": "int",
+                        "validation": "0|1",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": 1
+                    },
+                    {
+                        "attribute_id": "is_online",
+                        "label": "Online",
+                        "admin_only": "0",
+                        "html_type": "boolean",
+                        "data_type": "int",
+                        "validation": "0|1",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": 0
+                    },
+                    {
+                        "attribute_id": "sup_price",
+                        "label": "Supplier price",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "int",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": 59000
+                    },
+                    {
+                        "attribute_id": "name",
+                        "label": "Product name",
+                        "admin_only": "0",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": "Bộ sạc nhanh HOCO C72 Lightning (01 cổng USB, 2.1A, 1m)"
+                    },
+                    {
+                        "attribute_id": "sup_link",
+                        "label": "Supplier url",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": "https://phatdatcomputer.vn/san-pham/bo-sac-nhanh-hoco-c72-lightning-01-cong-usb-21a-1m"
+                    },
+                    {
+                        "attribute_id": "sup_name",
+                        "label": "Supplier product name",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": "Bộ sạc nhanh HOCO C72 Lightning (01 cổng USB, 2.1A, 1m)"
+                    },
+                    {
+                        "attribute_id": "sup_warranty",
+                        "label": "Supplier warranty",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": "12T"
+                    },
+                    {
+                        "attribute_id": "thumbnail",
+                        "label": "Thumbnail",
+                        "admin_only": "0",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": "https://phatdatcomputer.vn/upload/product/bo-sac-nhanh-hoco-c72-lightning-01-cong-usb-21a-1m1586312928_250x250.jpg"
+                    },
+                    {
+                        "attribute_id": "subsection",
+                        "label": "Tiểu mục",
+                        "admin_only": "1",
+                        "html_type": "multiinput",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": [
+                            "charger_set"
+                        ]
+                    },
+                    {
+                        "attribute_id": "images",
+                        "label": "Main images",
+                        "admin_only": "0",
+                        "html_type": "multiinput",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": [
+                            "https://phatdatcomputer.vn/upload/product/bo-sac-nhanh-hoco-c72-lightning-01-cong-usb-21a-1m1586312928.jpg"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "product_id": "PR0050",
+            "type_id": "simple",
+            "self": {
+                "entity_id": "PR0050",
+                "product_id": "PR0050",
+                "type_id": "simple",
+                "created_at": 1614155679176,
+                "updated_at": 1614155679176,
+                "tier_price": 52000,
+                "available_quantity": 1,
+                "categories": [
+                    {
+                        "category_id": "charger",
+                        "position": 0
+                    }
+                ],
+                "attributes": [
+                    {
+                        "attribute_id": "is_new",
+                        "label": "SP mới",
+                        "admin_only": "1",
+                        "html_type": "boolean",
+                        "data_type": "int",
+                        "validation": "0|1",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": 1
+                    },
+                    {
+                        "attribute_id": "is_online",
+                        "label": "Online",
+                        "admin_only": "0",
+                        "html_type": "boolean",
+                        "data_type": "int",
+                        "validation": "0|1",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": 0
+                    },
+                    {
+                        "attribute_id": "sup_price",
+                        "label": "Supplier price",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "int",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": 52000
+                    },
+                    {
+                        "attribute_id": "subsection",
+                        "label": "Tiểu mục",
+                        "admin_only": "1",
+                        "html_type": "multiinput",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": [
+                            "charger_set"
+                        ]
+                    },
+                    {
+                        "attribute_id": "sup_name",
+                        "label": "Supplier product name",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": "Bộ sạc nhanh HOCO C73 Lightning (02 cổng USB, 2.4A, 1m)"
+                    },
+                    {
+                        "attribute_id": "sup_warranty",
+                        "label": "Supplier warranty",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": "12T"
+                    },
+                    {
+                        "attribute_id": "sup_link",
+                        "label": "Supplier url",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": "https://phatdatcomputer.vn/san-pham/bo-sac-nhanh-hoco-c73-lightning-02-cong-usb-24a-1m"
+                    },
+                    {
+                        "attribute_id": "thumbnail",
+                        "label": "Thumbnail",
+                        "admin_only": "0",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": "https://phatdatcomputer.vn/upload/product/bo-sac-nhanh-hoco-c73-lightning-02-cong-usb-24a-1m1588076638.png"
+                    },
+                    {
+                        "attribute_id": "name",
+                        "label": "Product name",
+                        "admin_only": "0",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": "Bộ sạc nhanh HOCO C73 Lightning (02 cổng USB, 2.4A, 1m)"
+                    },
+                    {
+                        "attribute_id": "images",
+                        "label": "Main images",
+                        "admin_only": "0",
+                        "html_type": "multiinput",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": [
+                            "https://phatdatcomputer.vn/upload/product/bo-sac-nhanh-hoco-c73-lightning-02-cong-usb-24a-1m1588076638.png"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "product_id": "PR0053",
+            "type_id": "simple",
+            "self": {
+                "entity_id": "PR0053",
+                "product_id": "PR0053",
+                "type_id": "simple",
+                "created_at": 1614155679176,
+                "updated_at": 1614155679176,
+                "tier_price": 270000,
+                "available_quantity": 1,
+                "categories": [
+                    {
+                        "category_id": "charger",
+                        "position": 0
+                    }
+                ],
+                "attributes": [
+                    {
+                        "attribute_id": "is_new",
+                        "label": "SP mới",
+                        "admin_only": "1",
+                        "html_type": "boolean",
+                        "data_type": "int",
+                        "validation": "0|1",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": 1
+                    },
+                    {
+                        "attribute_id": "is_online",
+                        "label": "Online",
+                        "admin_only": "0",
+                        "html_type": "boolean",
+                        "data_type": "int",
+                        "validation": "0|1",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": 0
+                    },
+                    {
+                        "attribute_id": "name",
+                        "label": "Product name",
+                        "admin_only": "0",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": "Pin dự phòng 10.000mAh HOCO J25A Chính hãng (Liền cáp MicroUSB)"
+                    },
+                    {
+                        "attribute_id": "sup_price",
+                        "label": "Supplier price",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "int",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": 270000
+                    },
+                    {
+                        "attribute_id": "thumbnail",
+                        "label": "Thumbnail",
+                        "admin_only": "0",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": "https://phatdatcomputer.vn/upload/product/pw-10000mah-hoco-j25a-chinh-hang1582597435.png"
+                    },
+                    {
+                        "attribute_id": "sup_name",
+                        "label": "Supplier product name",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": "Pin dự phòng 10.000mAh HOCO J25A Chính hãng (Liền cáp MicroUSB)"
+                    },
+                    {
+                        "attribute_id": "sup_link",
+                        "label": "Supplier url",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": "https://phatdatcomputer.vn/san-pham/pin-du-phong-10000mah-hoco-j25a-chinh-hang-lien-cap-microusb"
+                    },
+                    {
+                        "attribute_id": "sup_warranty",
+                        "label": "Supplier warranty",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": "12T"
+                    },
+                    {
+                        "attribute_id": "subsection",
+                        "label": "Tiểu mục",
+                        "admin_only": "1",
+                        "html_type": "multiinput",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": [
+                            "powerbank"
+                        ]
+                    },
+                    {
+                        "attribute_id": "images",
+                        "label": "Main images",
+                        "admin_only": "0",
+                        "html_type": "multiinput",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": [
+                            "https://phatdatcomputer.vn/upload/product/pw-10000mah-hoco-j25a-chinh-hang1582597435.png"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "product_id": "PR0055",
+            "type_id": "simple",
+            "self": {
+                "entity_id": "PR0055",
+                "product_id": "PR0055",
+                "type_id": "simple",
+                "created_at": 1614155679176,
+                "updated_at": 1614155679176,
+                "tier_price": 178000,
+                "available_quantity": 1,
+                "categories": [
+                    {
+                        "category_id": "charger",
+                        "position": 0
+                    }
+                ],
+                "attributes": [
+                    {
+                        "attribute_id": "sup_link",
+                        "label": "Supplier url",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": "https://phatdatcomputer.vn/san-pham/pin-du-phong-10000mah-hoco-j46-red-chinh-hang-lcd-usb-20a-polymer-a"
+                    },
+                    {
+                        "attribute_id": "sup_name",
+                        "label": "Supplier product name",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": "Pin dự phòng 10.000mAh HOCO J46 Red Chính hãng (LCD, USB 2.0A, Polymer A+)"
+                    },
+                    {
+                        "attribute_id": "sup_warranty",
+                        "label": "Supplier warranty",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": "12T"
+                    },
+                    {
+                        "attribute_id": "images",
+                        "label": "Main images",
+                        "admin_only": "0",
+                        "html_type": "multiinput",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": [
+                            "https://phatdatcomputer.vn/upload/product/pw-10000mah-hoco-j461566972728.jpg"
+                        ]
+                    },
+                    {
+                        "attribute_id": "sup_price",
+                        "label": "Supplier price",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "int",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": 178000
+                    },
+                    {
+                        "attribute_id": "is_new",
+                        "label": "SP mới",
+                        "admin_only": "1",
+                        "html_type": "boolean",
+                        "data_type": "int",
+                        "validation": "0|1",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": 1
+                    },
+                    {
+                        "attribute_id": "thumbnail",
+                        "label": "Thumbnail",
+                        "admin_only": "0",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": "https://phatdatcomputer.vn/upload/product/pw-10000mah-hoco-j461566972728_250x250.jpg"
+                    },
+                    {
+                        "attribute_id": "subsection",
+                        "label": "Tiểu mục",
+                        "admin_only": "1",
+                        "html_type": "multiinput",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": [
+                            "powerbank"
+                        ]
+                    },
+                    {
+                        "attribute_id": "is_online",
+                        "label": "Online",
+                        "admin_only": "0",
+                        "html_type": "boolean",
+                        "data_type": "int",
+                        "validation": "0|1",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": 0
+                    },
+                    {
+                        "attribute_id": "name",
+                        "label": "Product name",
+                        "admin_only": "0",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": "Pin dự phòng 10.000mAh HOCO J46 Red Chính hãng (LCD, USB 2.0A, Polymer A+)"
+                    }
+                ]
+            }
+        },
+        {
+            "product_id": "PR0056",
+            "type_id": "simple",
+            "self": {
+                "entity_id": "PR0056",
+                "product_id": "PR0056",
+                "type_id": "simple",
+                "created_at": 1614155679176,
+                "updated_at": 1614155679176,
+                "tier_price": 300000,
+                "available_quantity": 1,
+                "categories": [
+                    {
+                        "category_id": "charger",
+                        "position": 0
+                    }
+                ],
+                "attributes": [
+                    {
+                        "attribute_id": "subsection",
+                        "label": "Tiểu mục",
+                        "admin_only": "1",
+                        "html_type": "multiinput",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": [
+                            "powerbank"
+                        ]
+                    },
+                    {
+                        "attribute_id": "images",
+                        "label": "Main images",
+                        "admin_only": "0",
+                        "html_type": "multiinput",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": [
+                            "https://phatdatcomputer.vn/upload/product/pw-10000mah-hoco-j47-chinh-hang1576565627.jpg"
+                        ]
+                    },
+                    {
+                        "attribute_id": "is_new",
+                        "label": "SP mới",
+                        "admin_only": "1",
+                        "html_type": "boolean",
+                        "data_type": "int",
+                        "validation": "0|1",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": 1
+                    },
+                    {
+                        "attribute_id": "name",
+                        "label": "Product name",
+                        "admin_only": "0",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": "Pin dự phòng 10.000mAh HOCO J47 Gray (Pin Lithium, 2 cổng USB, QC 3.0, Màn hình LED)"
+                    },
+                    {
+                        "attribute_id": "is_online",
+                        "label": "Online",
+                        "admin_only": "0",
+                        "html_type": "boolean",
+                        "data_type": "int",
+                        "validation": "0|1",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": 0
+                    },
+                    {
+                        "attribute_id": "sup_price",
+                        "label": "Supplier price",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "int",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": 300000
+                    },
+                    {
+                        "attribute_id": "sup_link",
+                        "label": "Supplier url",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": "https://phatdatcomputer.vn/san-pham/pin-du-phong-10000mah-hoco-j47-gray-pin-lithium-2-cong-usb-qc-30-man-hinh-led"
+                    },
+                    {
+                        "attribute_id": "sup_name",
+                        "label": "Supplier product name",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": "Pin dự phòng 10.000mAh HOCO J47 Gray (Pin Lithium, 2 cổng USB, QC 3.0, Màn hình LED)"
+                    },
+                    {
+                        "attribute_id": "sup_warranty",
+                        "label": "Supplier warranty",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": "12T"
+                    },
+                    {
+                        "attribute_id": "thumbnail",
+                        "label": "Thumbnail",
+                        "admin_only": "0",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": "https://phatdatcomputer.vn/upload/product/pw-10000mah-hoco-j47-chinh-hang1576565627_250x250.jpg"
+                    }
+                ]
+            }
+        },
+        {
+            "product_id": "PR0057",
+            "type_id": "simple",
+            "self": {
+                "entity_id": "PR0057",
+                "product_id": "PR0057",
+                "type_id": "simple",
+                "created_at": 1614155679176,
+                "updated_at": 1614155679176,
+                "tier_price": 257000,
+                "available_quantity": 1,
+                "categories": [
+                    {
+                        "category_id": "charger",
+                        "position": 0
+                    }
+                ],
+                "attributes": [
+                    {
+                        "attribute_id": "sup_link",
+                        "label": "Supplier url",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": "https://phatdatcomputer.vn/san-pham/pin-du-phong-10000mah-hoco-j56-black-chinh-hang-polymer-a-2-cong-usb-30-sac-ko-day-10w-led"
+                    },
+                    {
+                        "attribute_id": "thumbnail",
+                        "label": "Thumbnail",
+                        "admin_only": "0",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": "https://phatdatcomputer.vn/upload/product/pin-du-phong-10000mah-hoco-j56-chinh-hang-polymer-a-2-cong-usb-30-tich-hop-khong-day-10wden-led-white1602772879.png"
+                    },
+                    {
+                        "attribute_id": "sup_price",
+                        "label": "Supplier price",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "int",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": 257000
+                    },
+                    {
+                        "attribute_id": "name",
+                        "label": "Product name",
+                        "admin_only": "0",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": "Pin dự phòng 10.000mAh HOCO J56 Black Chính hãng (Polymer A+, 2 cổng USB 3.0, sạc ko dây 10W, LED)"
+                    },
+                    {
+                        "attribute_id": "is_online",
+                        "label": "Online",
+                        "admin_only": "0",
+                        "html_type": "boolean",
+                        "data_type": "int",
+                        "validation": "0|1",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": 0
+                    },
+                    {
+                        "attribute_id": "sup_warranty",
+                        "label": "Supplier warranty",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": "12T"
+                    },
+                    {
+                        "attribute_id": "is_new",
+                        "label": "SP mới",
+                        "admin_only": "1",
+                        "html_type": "boolean",
+                        "data_type": "int",
+                        "validation": "0|1",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": 1
+                    },
+                    {
+                        "attribute_id": "images",
+                        "label": "Main images",
+                        "admin_only": "0",
+                        "html_type": "multiinput",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": [
+                            "https://phatdatcomputer.vn/upload/product/pin-du-phong-10000mah-hoco-j56-chinh-hang-polymer-a-2-cong-usb-30-tich-hop-khong-day-10wden-led-white1602772879.png"
+                        ]
+                    },
+                    {
+                        "attribute_id": "subsection",
+                        "label": "Tiểu mục",
+                        "admin_only": "1",
+                        "html_type": "multiinput",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": [
+                            "powerbank"
+                        ]
+                    },
+                    {
+                        "attribute_id": "sup_name",
+                        "label": "Supplier product name",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": "Pin dự phòng 10.000mAh HOCO J56 Black Chính hãng (Polymer A+, 2 cổng USB 3.0, sạc ko dây 10W, LED)"
+                    }
+                ]
+            }
+        },
+        {
+            "product_id": "PR0059",
+            "type_id": "simple",
+            "self": {
+                "entity_id": "PR0059",
+                "product_id": "PR0059",
+                "type_id": "simple",
+                "created_at": 1614155679176,
+                "updated_at": 1614155679176,
+                "tier_price": 185000,
+                "available_quantity": 1,
+                "categories": [
+                    {
+                        "category_id": "charger",
+                        "position": 0
+                    }
+                ],
+                "attributes": [
+                    {
+                        "attribute_id": "sup_warranty",
+                        "label": "Supplier warranty",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": "12T"
+                    },
+                    {
+                        "attribute_id": "thumbnail",
+                        "label": "Thumbnail",
+                        "admin_only": "0",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": "https://phatdatcomputer.vn/upload/product/pin-du-phong-10000mah-hoco-j58-chinh-hang1584432614_250x250.jpg"
+                    },
+                    {
+                        "attribute_id": "images",
+                        "label": "Main images",
+                        "admin_only": "0",
+                        "html_type": "multiinput",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": [
+                            "https://phatdatcomputer.vn/upload/product/pin-du-phong-10000mah-hoco-j58-chinh-hang1584432614.jpg"
+                        ]
+                    },
+                    {
+                        "attribute_id": "subsection",
+                        "label": "Tiểu mục",
+                        "admin_only": "1",
+                        "html_type": "multiinput",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": [
+                            "powerbank"
+                        ]
+                    },
+                    {
+                        "attribute_id": "is_online",
+                        "label": "Online",
+                        "admin_only": "0",
+                        "html_type": "boolean",
+                        "data_type": "int",
+                        "validation": "0|1",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": 0
+                    },
+                    {
+                        "attribute_id": "sup_price",
+                        "label": "Supplier price",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "int",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": 185000
+                    },
+                    {
+                        "attribute_id": "is_new",
+                        "label": "SP mới",
+                        "admin_only": "1",
+                        "html_type": "boolean",
+                        "data_type": "int",
+                        "validation": "0|1",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": 1
+                    },
+                    {
+                        "attribute_id": "name",
+                        "label": "Product name",
+                        "admin_only": "0",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": "Pin dự phòng 10.000mAh HOCO J58 White Chính hãng  (Polymer A+, 2 cổng USB, 1 cổng Type-C 3.0A"
+                    },
+                    {
+                        "attribute_id": "sup_link",
+                        "label": "Supplier url",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": "https://phatdatcomputer.vn/san-pham/pin-du-phong-10000mah-hoco-j58-white-chinh-hang-polymer-a-2-cong-usb-1-cong-typec-30a"
+                    },
+                    {
+                        "attribute_id": "sup_name",
+                        "label": "Supplier product name",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": "Pin dự phòng 10.000mAh HOCO J58 White Chính hãng  (Polymer A+, 2 cổng USB, 1 cổng Type-C 3.0A"
+                    }
+                ]
+            }
+        },
+        {
+            "product_id": "PR0061",
+            "type_id": "simple",
+            "self": {
+                "entity_id": "PR0061",
+                "product_id": "PR0061",
+                "type_id": "simple",
+                "created_at": 1614155679176,
+                "updated_at": 1614155679176,
+                "tier_price": 172000,
+                "available_quantity": 1,
+                "categories": [
+                    {
+                        "category_id": "charger",
+                        "position": 0
+                    }
+                ],
+                "attributes": [
+                    {
+                        "attribute_id": "sup_warranty",
+                        "label": "Supplier warranty",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": "12T"
+                    },
+                    {
+                        "attribute_id": "thumbnail",
+                        "label": "Thumbnail",
+                        "admin_only": "0",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": "https://phatdatcomputer.vn/upload/product/pin-du-phong-10000mah-hoco-j64-2-cong-usb-20a-den-led1599370835.png"
+                    },
+                    {
+                        "attribute_id": "subsection",
+                        "label": "Tiểu mục",
+                        "admin_only": "1",
+                        "html_type": "multiinput",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": [
+                            "powerbank"
+                        ]
+                    },
+                    {
+                        "attribute_id": "is_new",
+                        "label": "SP mới",
+                        "admin_only": "1",
+                        "html_type": "boolean",
+                        "data_type": "int",
+                        "validation": "0|1",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": 1
+                    },
+                    {
+                        "attribute_id": "sup_name",
+                        "label": "Supplier product name",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": "Pin dự phòng 10.000mAh HOCO J64 Black/White (2 cổng USB 2.0A, Đèn LED)"
+                    },
+                    {
+                        "attribute_id": "sup_price",
+                        "label": "Supplier price",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "int",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": 172000
+                    },
+                    {
+                        "attribute_id": "name",
+                        "label": "Product name",
+                        "admin_only": "0",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": "Pin dự phòng 10.000mAh HOCO J64 Black/White (2 cổng USB 2.0A, Đèn LED)"
+                    },
+                    {
+                        "attribute_id": "sup_link",
+                        "label": "Supplier url",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": "https://phatdatcomputer.vn/san-pham/pin-du-phong-10000mah-hoco-j64-blackwhite-2-cong-usb-20a-den-led"
+                    },
+                    {
+                        "attribute_id": "images",
+                        "label": "Main images",
+                        "admin_only": "0",
+                        "html_type": "multiinput",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": [
+                            "https://phatdatcomputer.vn/upload/product/pin-du-phong-10000mah-hoco-j64-2-cong-usb-20a-den-led1599370835.png"
+                        ]
+                    },
+                    {
+                        "attribute_id": "is_online",
+                        "label": "Online",
+                        "admin_only": "0",
+                        "html_type": "boolean",
+                        "data_type": "int",
+                        "validation": "0|1",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": 0
+                    }
+                ]
+            }
+        },
+        {
+            "product_id": "PR0062",
+            "type_id": "simple",
+            "self": {
+                "entity_id": "PR0062",
+                "product_id": "PR0062",
+                "type_id": "simple",
+                "created_at": 1614155679176,
+                "updated_at": 1614155679176,
+                "tier_price": 168000,
+                "available_quantity": 1,
+                "categories": [
+                    {
+                        "category_id": "charger",
+                        "position": 0
+                    }
+                ],
+                "attributes": [
+                    {
+                        "attribute_id": "is_online",
+                        "label": "Online",
+                        "admin_only": "0",
+                        "html_type": "boolean",
+                        "data_type": "int",
+                        "validation": "0|1",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": 0
+                    },
+                    {
+                        "attribute_id": "images",
+                        "label": "Main images",
+                        "admin_only": "0",
+                        "html_type": "multiinput",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": [
+                            "https://phatdatcomputer.vn/upload/product/pin-du-phong-10000mah-hoco-dj01-max-chinh-hang-2-cong-usb-21a-man-hinh-led1599371027.png"
+                        ]
+                    },
+                    {
+                        "attribute_id": "thumbnail",
+                        "label": "Thumbnail",
+                        "admin_only": "0",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": "https://phatdatcomputer.vn/upload/product/pin-du-phong-10000mah-hoco-dj01-max-chinh-hang-2-cong-usb-21a-man-hinh-led1599371027.png"
+                    },
+                    {
+                        "attribute_id": "sup_price",
+                        "label": "Supplier price",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "int",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": 168000
+                    },
+                    {
+                        "attribute_id": "is_new",
+                        "label": "SP mới",
+                        "admin_only": "1",
+                        "html_type": "boolean",
+                        "data_type": "int",
+                        "validation": "0|1",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": 1
+                    },
+                    {
+                        "attribute_id": "subsection",
+                        "label": "Tiểu mục",
+                        "admin_only": "1",
+                        "html_type": "multiinput",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": [
+                            "powerbank"
+                        ]
+                    },
+                    {
+                        "attribute_id": "name",
+                        "label": "Product name",
+                        "admin_only": "0",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": "Pin dự phòng 10.000mAh HOCO DJ01 MAX Black Chính hãng  (2 cổng USB 2.1A, màn hình LED)"
+                    },
+                    {
+                        "attribute_id": "sup_link",
+                        "label": "Supplier url",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": "https://phatdatcomputer.vn/san-pham/pin-du-phong-10000mah-hoco-dj01-max-black-chinh-hang-2-cong-usb-21a-man-hinh-led"
+                    },
+                    {
+                        "attribute_id": "sup_name",
+                        "label": "Supplier product name",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": "Pin dự phòng 10.000mAh HOCO DJ01 MAX Black Chính hãng  (2 cổng USB 2.1A, màn hình LED)"
+                    },
+                    {
+                        "attribute_id": "sup_warranty",
+                        "label": "Supplier warranty",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": "12T"
+                    }
+                ]
+            }
+        },
+        {
+            "product_id": "PR0064",
+            "type_id": "simple",
+            "self": {
+                "entity_id": "PR0064",
+                "product_id": "PR0064",
+                "type_id": "simple",
+                "created_at": 1614155679176,
+                "updated_at": 1614155679176,
+                "tier_price": 372000,
+                "available_quantity": 1,
+                "categories": [
+                    {
+                        "category_id": "charger",
+                        "position": 0
+                    }
+                ],
+                "attributes": [
+                    {
+                        "attribute_id": "sup_price",
+                        "label": "Supplier price",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "int",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": 372000
+                    },
+                    {
+                        "attribute_id": "is_online",
+                        "label": "Online",
+                        "admin_only": "0",
+                        "html_type": "boolean",
+                        "data_type": "int",
+                        "validation": "0|1",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": 0
+                    },
+                    {
+                        "attribute_id": "is_new",
+                        "label": "SP mới",
+                        "admin_only": "1",
+                        "html_type": "boolean",
+                        "data_type": "int",
+                        "validation": "0|1",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": 1
+                    },
+                    {
+                        "attribute_id": "sup_link",
+                        "label": "Supplier url",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": "https://phatdatcomputer.vn/san-pham/pin-du-phong-30000mah-hoco-j60-blackwhite-chinh-hang-4-cong-usb-led"
+                    },
+                    {
+                        "attribute_id": "sup_name",
+                        "label": "Supplier product name",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": "Pin dự phòng 30.000mAh HOCO J60 Black/White Chính hãng (4 Cổng USB, LED)"
+                    },
+                    {
+                        "attribute_id": "sup_warranty",
+                        "label": "Supplier warranty",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": "12T"
+                    },
+                    {
+                        "attribute_id": "thumbnail",
+                        "label": "Thumbnail",
+                        "admin_only": "0",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": "https://phatdatcomputer.vn/upload/product/pin-du-phong-30000mah-hoco-j60-chinh-hang-4-cong-usb-led1592984469.png"
+                    },
+                    {
+                        "attribute_id": "subsection",
+                        "label": "Tiểu mục",
+                        "admin_only": "1",
+                        "html_type": "multiinput",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": [
+                            "powerbank"
+                        ]
+                    },
+                    {
+                        "attribute_id": "images",
+                        "label": "Main images",
+                        "admin_only": "0",
+                        "html_type": "multiinput",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": [
+                            "https://phatdatcomputer.vn/upload/product/pin-du-phong-30000mah-hoco-j60-chinh-hang-4-cong-usb-led1592984469.png"
+                        ]
+                    },
+                    {
+                        "attribute_id": "name",
+                        "label": "Product name",
+                        "admin_only": "0",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": "Pin dự phòng 30.000mAh HOCO J60 Black/White Chính hãng (4 Cổng USB, LED)"
+                    }
+                ]
+            }
+        },
+        {
+            "product_id": "PR0065",
+            "type_id": "simple",
+            "self": {
+                "entity_id": "PR0065",
+                "product_id": "PR0065",
+                "type_id": "simple",
+                "created_at": 1614155679176,
+                "updated_at": 1614155679176,
+                "tier_price": 378000,
+                "available_quantity": 1,
+                "categories": [
+                    {
+                        "category_id": "charger",
+                        "position": 0
+                    }
+                ],
+                "attributes": [
+                    {
+                        "attribute_id": "is_online",
+                        "label": "Online",
+                        "admin_only": "0",
+                        "html_type": "boolean",
+                        "data_type": "int",
+                        "validation": "0|1",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": 0
+                    },
+                    {
+                        "attribute_id": "is_new",
+                        "label": "SP mới",
+                        "admin_only": "1",
+                        "html_type": "boolean",
+                        "data_type": "int",
+                        "validation": "0|1",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": 1
+                    },
+                    {
+                        "attribute_id": "sup_price",
+                        "label": "Supplier price",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "int",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": 378000
+                    },
+                    {
+                        "attribute_id": "subsection",
+                        "label": "Tiểu mục",
+                        "admin_only": "1",
+                        "html_type": "multiinput",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": [
+                            "powerbank"
+                        ]
+                    },
+                    {
+                        "attribute_id": "name",
+                        "label": "Product name",
+                        "admin_only": "0",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": "Pin dự phòng 30.000mAh HOCO J62 Black/White Chính hãng (3 Cổng USB, LED)"
+                    },
+                    {
+                        "attribute_id": "images",
+                        "label": "Main images",
+                        "admin_only": "0",
+                        "html_type": "multiinput",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": [
+                            "https://phatdatcomputer.vn/upload/product/pin-du-phong-30000mah-hoco-j62-chinh-hang1585387916.png"
+                        ]
+                    },
+                    {
+                        "attribute_id": "sup_link",
+                        "label": "Supplier url",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": "https://phatdatcomputer.vn/san-pham/pin-du-phong-30000mah-hoco-j62-blackwhite-chinh-hang-3-cong-usb-led"
+                    },
+                    {
+                        "attribute_id": "sup_name",
+                        "label": "Supplier product name",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": "Pin dự phòng 30.000mAh HOCO J62 Black/White Chính hãng (3 Cổng USB, LED)"
+                    },
+                    {
+                        "attribute_id": "sup_warranty",
+                        "label": "Supplier warranty",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": "12T"
+                    },
+                    {
+                        "attribute_id": "thumbnail",
+                        "label": "Thumbnail",
+                        "admin_only": "0",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": "https://phatdatcomputer.vn/upload/product/pin-du-phong-30000mah-hoco-j62-chinh-hang1585387916.png"
+                    }
+                ]
+            }
+        }
+    ]
+}

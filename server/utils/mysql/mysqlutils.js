@@ -95,10 +95,27 @@ function isAttributeSearchable (attribute) {
     )
 }
 
+function convertDataType (value, data_type) {
+    switch (data_type) {
+        case "int": case "datetime":
+            value = parseInt(value);
+            if (isNaN(value)) value = null;
+            break;
+        case "decimal":
+            value = parseFloat(value);
+            if (isNaN(value)) value = null;
+            break;
+        default:
+            break;
+    };
+    return value;
+}
+
 module.exports = {
     separateSQL,
     groupByAttribute,
     escapeQuotes,
     buildProductEavIndexJson,
-    isAttributeSearchable
+    isAttributeSearchable,
+    convertDataType
 }

@@ -54,8 +54,8 @@ CREATE TABLE `ecommerce`.`product_eav_multi_value` (
 CREATE TABLE `ecommerce`.`product_eav_index` (
   `product_id` VARCHAR(50) NOT NULL,
   `attribute_id` VARCHAR(50) NOT NULL,
-  `value`  VARCHAR(255) NOT NULL,
-  PRIMARY KEY (`product_id`, `attribute_id`, `value`));
+  `value`  TEXT NOT NULL,
+  PRIMARY KEY (`product_id`, `attribute_id`, `value`(255)));
 
 ###
 CREATE TABLE `ecommerce`.`product_eav_int` (
@@ -82,7 +82,7 @@ CREATE TABLE `ecommerce`.`product_eav_varchar` (
 CREATE TABLE `ecommerce`.`product_eav_text` (
   `entity_id` VARCHAR(50) NOT NULL,
   `attribute_id` VARCHAR(50) NOT NULL,
-  `value`  TEXT NOT NULL,
+  `value` TEXT NOT NULL,
   PRIMARY KEY (`entity_id`, `attribute_id`));
 
 ###

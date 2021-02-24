@@ -2,11 +2,21 @@ const mysqlutils = require("../mysql/mysqlutils");
 const fulltextSearch = require("./fulltextSearch");
 const msClient = require("../mysql/mysql");
 const { items_per_page } = require("../../utils/const/config");
-const productEntityInheritFields = ["product_id", "entity_id", "type_id"];
-const attributeInheritFields = ["attribute_id", "value", "label", "html_type", "data_type", "validation", "is_super", "is_system", "unit"];
+const productEntityInheritFields = ["product_id", "entity_id", "type_id", "created_at", "updated_at"];
+const productEntityPropsAsAttributes = [
+    {
+        attribute_id: "tier_price",
+        data_type: "int"
+    },
+    {
+        attribute_id: "available_quantity",
+        data_type: "int"
+    }
+];
+const attributeInheritFields = ["attribute_id", "label", "referred_target", "admin_only", "html_type", "data_type", "validation", "is_super", "is_system", "unit", "value"];
 const multivalueAttributes = ["multiselect", "multiinput"];
 
-function createSearchQueryDB ({ categories, entity_ids, refinements, searchPhrase, searchDictionary, inStock }) {
+function createSearchQueryDB ({ categories, entity_ids, refinements, searchPhrase, searchDictionary, inStock, tier_price }) {
     // ## search by category_id
     let queryCID = "";
     if (categories && categories.length > 0) {
@@ -83,8 +93,53 @@ function createSearchQueryDB ({ categories, entity_ids, refinements, searchPhras
         ) AS \`alias\`
         `;
     }
+    // ### search by price
+    let queryTierPrice = "";
+    if (tier_price) {
+        if (typeof(tier_price.min) === "number" && typeof(tier_price.max) === "number") {
+            queryTierPrice =
+            `
+            SELECT product_id, 50 AS \`weight\`, 'tier_price' AS \`type\` FROM (
+                SELECT DISTINCT(IF(\`pe\`.parent IS NOT NULL AND \`pe\`.parent != '', \`pe\`.parent, \`pe\`.entity_id)) AS product_id
+                FROM \`ecommerce\`.product_tier_price AS \`tier_price\`
+                LEFT JOIN \`ecommerce\`.product_entity AS \`pe\` ON \`pe\`.entity_id = \`tier_price\`.entity_id
+                WHERE \`tier_price\`.price > ${tier_price.min} AND \`tier_price\`.price < ${tier_price.max}
+            ) AS \`alias\`
+            `;
+        } else if(typeof(tier_price.min) === "number") {
+            queryTierPrice =
+            `
+            SELECT product_id, 50 AS \`weight\`, 'tier_price' AS \`type\` FROM (
+                SELECT DISTINCT(IF(\`pe\`.parent IS NOT NULL AND \`pe\`.parent != '', \`pe\`.parent, \`pe\`.entity_id)) AS product_id
+                FROM \`ecommerce\`.product_tier_price AS \`tier_price\`
+                LEFT JOIN \`ecommerce\`.product_entity AS \`pe\` ON \`pe\`.entity_id = \`tier_price\`.entity_id
+                WHERE \`tier_price\`.price > ${tier_price.min}
+            ) AS \`alias\`
+            `;
+        } else if(typeof(tier_price.max) === "number") {
+            queryTierPrice =
+            `
+            SELECT product_id, 50 AS \`weight\`, 'tier_price' AS \`type\` FROM (
+                SELECT DISTINCT(IF(\`pe\`.parent IS NOT NULL AND \`pe\`.parent != '', \`pe\`.parent, \`pe\`.entity_id)) AS product_id
+                FROM \`ecommerce\`.product_tier_price AS \`tier_price\`
+                LEFT JOIN \`ecommerce\`.product_entity AS \`pe\` ON \`pe\`.entity_id = \`tier_price\`.entity_id
+                WHERE \`tier_price\`.price < ${tier_price.max}
+            ) AS \`alias\`
+            `;
+        } else if(typeof(tier_price.equal) === "number") {
+            queryTierPrice =
+            `
+            SELECT product_id, 50 AS \`weight\`, 'tier_price' AS \`type\` FROM (
+                SELECT DISTINCT(IF(\`pe\`.parent IS NOT NULL AND \`pe\`.parent != '', \`pe\`.parent, \`pe\`.entity_id)) AS product_id
+                FROM \`ecommerce\`.product_tier_price AS \`tier_price\`
+                LEFT JOIN \`ecommerce\`.product_entity AS \`pe\` ON \`pe\`.entity_id = \`tier_price\`.entity_id
+                WHERE \`tier_price\`.price = ${tier_price.equal}
+            ) AS \`alias\`
+            `;
+        }
+    }
     // ## final assembled search query
-    let assembledQuery = [queryCID, queryPID, queryRefinement, querySearchPhrase, queryInStock]
+    let assembledQuery = [queryCID, queryPID, queryRefinement, querySearchPhrase, queryInStock, queryTierPrice]
     .filter(item => (item != null && item != ""));
     
     if (assembledQuery.length == 0) {
@@ -100,7 +155,7 @@ function createSearchQueryDB ({ categories, entity_ids, refinements, searchPhras
     return assembledQuery;
 };
 
-function searchConfigValidation ({ categories, entity_ids, refinements, searchPhrase, inStock }) {
+function searchConfigValidation ({ categories, entity_ids, refinements, searchPhrase, inStock, tier_price }) {
     try {
         let required = [];
         if (categories && Array.isArray(categories) && categories.length > 0) {
@@ -144,8 +199,20 @@ function searchConfigValidation ({ categories, entity_ids, refinements, searchPh
         } else if (searchPhrase) {
             required.push("name");
         };
-        if (inStock == true) {
+        if (inStock === true) {
             required.push("inStock");
+        }; 
+        if (tier_price) {
+            if (
+                ("min" in tier_price && tier_price.min !== null && typeof(tier_price.min) !== "number") ||
+                ("max" in tier_price && tier_price.max !== null && typeof(tier_price.max) !== "number") ||
+                ("equal" in tier_price && tier_price.equal !== null && typeof(tier_price.equal) !== "number")
+            ) {
+                throw new Error("Error: Search config invalid - tier_price.min, tier_price.max, tier_price.equal must be number")
+            }
+            if (typeof(tier_price.min) === "number" || typeof(tier_price.max) === "number" || typeof(tier_price.equal) === "number") {
+                required.push("tier_price");
+            }
         }
         return required;
     } catch (err) {
@@ -200,54 +267,68 @@ async function getDetailProducts (products) {
     let product_ids = products.map(item => `'${mysqlutils.escapeQuotes(item.product_id.toString())}'`).join(", ");
     let sql =
     `
-    SELECT \`pe\`.entity_id, \`pe\`.product_id, \`pe\`.type_id, \`pe\`.value, \`attributes\`.*  FROM (
+    SELECT \`pe\`.entity_id, \`pe\`.product_id, \`pe\`.type_id, \`pe\`.created_at, \`pe\`.updated_at, \`pe\`.value, \`attributes\`.*, \`pe\`.attribute_id FROM (
         SELECT
             \`pe\`.entity_id, IF((\`pe\`.parent IS NOT NULL AND \`pe\`.parent != ''), \`pe\`.parent, \`pe\`.entity_id) AS product_id,
-            \`pe\`.type_id, \`eav\`.attribute_id, \`eav\`.value
+            \`pe\`.type_id, \`pe\`.created_at, \`pe\`.updated_at, \`eav\`.attribute_id, \`eav\`.value
         FROM \`ecommerce\`.product_entity AS \`pe\`
         LEFT JOIN \`ecommerce\`.product_eav_int AS \`eav\` ON \`eav\`.entity_id = \`pe\`.entity_id
         WHERE \`pe\`.entity_id IN (${product_ids}) OR \`pe\`.parent IN (${product_ids})
         UNION
         SELECT
             \`pe\`.entity_id, IF((\`pe\`.parent IS NOT NULL AND \`pe\`.parent != ''), \`pe\`.parent, \`pe\`.entity_id) AS product_id,
-            \`pe\`.type_id, \`eav\`.attribute_id, \`eav\`.value
+            \`pe\`.type_id, \`pe\`.created_at, \`pe\`.updated_at, \`eav\`.attribute_id, \`eav\`.value
         FROM \`ecommerce\`.product_entity AS \`pe\`
         LEFT JOIN \`ecommerce\`.product_eav_decimal AS \`eav\` ON \`eav\`.entity_id = \`pe\`.entity_id
         WHERE \`pe\`.entity_id IN (${product_ids}) OR \`pe\`.parent IN (${product_ids})
         UNION
         SELECT
             \`pe\`.entity_id, IF((\`pe\`.parent IS NOT NULL AND \`pe\`.parent != ''), \`pe\`.parent, \`pe\`.entity_id) AS product_id,
-            \`pe\`.type_id, \`eav\`.attribute_id, \`eav\`.value
+            \`pe\`.type_id, \`pe\`.created_at, \`pe\`.updated_at, \`eav\`.attribute_id, \`eav\`.value
         FROM \`ecommerce\`.product_entity AS \`pe\`
         LEFT JOIN \`ecommerce\`.product_eav_varchar AS \`eav\` ON \`eav\`.entity_id = \`pe\`.entity_id
         WHERE \`pe\`.entity_id IN (${product_ids}) OR \`pe\`.parent IN (${product_ids})
         UNION
         SELECT
             \`pe\`.entity_id, IF((\`pe\`.parent IS NOT NULL AND \`pe\`.parent != ''), \`pe\`.parent, \`pe\`.entity_id) AS product_id,
-            \`pe\`.type_id, \`eav\`.attribute_id, \`eav\`.value
+            \`pe\`.type_id, \`pe\`.created_at, \`pe\`.updated_at, \`eav\`.attribute_id, \`eav\`.value
         FROM \`ecommerce\`.product_entity AS \`pe\`
         LEFT JOIN \`ecommerce\`.product_eav_text AS \`eav\` ON \`eav\`.entity_id = \`pe\`.entity_id
         WHERE \`pe\`.entity_id IN (${product_ids}) OR \`pe\`.parent IN (${product_ids})
         UNION
         SELECT
             \`pe\`.entity_id, IF((\`pe\`.parent IS NOT NULL AND \`pe\`.parent != ''), \`pe\`.parent, \`pe\`.entity_id) AS product_id,
-            \`pe\`.type_id, \`eav\`.attribute_id, \`eav\`.value
+            \`pe\`.type_id, \`pe\`.created_at, \`pe\`.updated_at, \`eav\`.attribute_id, \`eav\`.value
         FROM \`ecommerce\`.product_entity AS \`pe\`
         LEFT JOIN \`ecommerce\`.product_eav_datetime AS \`eav\` ON \`eav\`.entity_id = \`pe\`.entity_id
         WHERE \`pe\`.entity_id IN (${product_ids}) OR \`pe\`.parent IN (${product_ids})
         UNION
         SELECT
             \`pe\`.entity_id, IF((\`pe\`.parent IS NOT NULL AND \`pe\`.parent != ''), \`pe\`.parent, \`pe\`.entity_id) AS product_id,
-            \`pe\`.type_id, \`eav\`.attribute_id, \`eav\`.value
+            \`pe\`.type_id, \`pe\`.created_at, \`pe\`.updated_at, \`eav\`.attribute_id, \`eav\`.value
         FROM \`ecommerce\`.product_entity as \`pe\`
         LEFT JOIN \`ecommerce\`.product_eav_multi_value AS \`eav\` ON \`eav\`.entity_id = \`pe\`.entity_id
         WHERE \`pe\`.entity_id in (${product_ids}) OR \`pe\`.parent in (${product_ids})
         UNION
         SELECT
             \`pe\`.entity_id, IF((\`pe\`.parent IS NOT NULL AND \`pe\`.parent != ''), \`pe\`.parent, \`pe\`.entity_id) AS product_id,
-            \`pe\`.type_id, 'available_quantity' AS \`attribute_id\`, \`inv\`.available_quantity AS \`value\`
+            \`pe\`.type_id, \`pe\`.created_at, \`pe\`.updated_at, 'available_quantity' AS \`attribute_id\`, \`inv\`.available_quantity AS \`value\`
         FROM \`ecommerce\`.product_entity as \`pe\`
         LEFT JOIN \`ecommerce\`.inventory AS \`inv\` ON \`inv\`.entity_id = \`pe\`.entity_id
+        WHERE \`pe\`.entity_id in (${product_ids}) OR \`pe\`.parent in (${product_ids})
+        UNION
+        SELECT
+            \`pe\`.entity_id, IF((\`pe\`.parent IS NOT NULL AND \`pe\`.parent != ''), \`pe\`.parent, \`pe\`.entity_id) AS product_id,
+            \`pe\`.type_id, \`pe\`.created_at, \`pe\`.updated_at, 'tier_price' AS \`attribute_id\`, \`tier_price\`.price AS \`value\`
+        FROM \`ecommerce\`.product_entity as \`pe\`
+        LEFT JOIN \`ecommerce\`.product_tier_price AS \`tier_price\` ON \`tier_price\`.entity_id = \`pe\`.entity_id
+        WHERE \`pe\`.entity_id in (${product_ids}) OR \`pe\`.parent in (${product_ids})
+        UNION
+        SELECT
+            \`pe\`.entity_id, IF((\`pe\`.parent IS NOT NULL AND \`pe\`.parent != ''), \`pe\`.parent, \`pe\`.entity_id) AS product_id,
+            \`pe\`.type_id, \`pe\`.created_at, \`pe\`.updated_at, 'category' AS \`attribute_id\`, CONCAT(\`pca\`.category_id, '---', IFNULL(\`pca\`.position, "0")) AS \`value\`
+        FROM \`ecommerce\`.product_entity as \`pe\`
+        LEFT JOIN \`ecommerce\`.product_category_assignment AS \`pca\` ON \`pca\`.product_id = \`pe\`.entity_id
         WHERE \`pe\`.entity_id in (${product_ids}) OR \`pe\`.parent in (${product_ids})
     ) AS \`pe\`
     LEFT JOIN \`ecommerce\`.product_eav AS \`attributes\` ON \`attributes\`.attribute_id = \`pe\`.attribute_id
@@ -292,12 +373,37 @@ function modelizeProductsData (rawData) {
                 if(product_entity.__items[0]){
                     productEntityInheritFields.forEach(field_item => {
                         product_entity[field_item] = product_entity.__items[0][field_item] || product_entity[field_item];
+                    });
+                    productEntityPropsAsAttributes.forEach(prop_attribute => {
+                        let match = product_entity.__items.find(m_item => m_item.attribute_id == prop_attribute.attribute_id);
+                        if (match) {
+                            let converted_value = mysqlutils.convertDataType(match.value, prop_attribute.data_type)
+                            if (converted_value !== null && converted_value !== undefined && converted_value !== "") {
+                                product_entity[prop_attribute.attribute_id] = converted_value;
+                            }
+                        }
+                    });
+                    product_entity.categories = [];
+                    product_entity.__items.forEach(attribute => {
+                        if (attribute && attribute.attribute_id === "category" && attribute.value !== null) {
+                            attribute.value = attribute.value.toString();
+                            let category_id = attribute.value.replace(/---\d+$/, "");
+                            let position = attribute.value.slice(category_id.length + 3);
+                            position = parseInt(position);
+                            if (isNaN(position)) {
+                                position = 0;
+                            };
+                            product_entity.categories.push({
+                                category_id: category_id,
+                                position: position
+                            })
+                        }
                     })
                 }
                 product_entity.attributes = mysqlutils.groupByAttribute({
                     rawData: product_entity.__items,
                     groupBy: "attribute_id",
-                    nullExcept: [null, ""]
+                    nullExcept: [null, "", "category", ...productEntityPropsAsAttributes.map(item => item.attribute_id)]
                 });
                 product_entity.attributes.forEach(attr_item => {
                     if(attr_item.__items[0]){
@@ -306,12 +412,18 @@ function modelizeProductsData (rawData) {
                         }
                         attributeInheritFields.forEach(field_item => {
                             attr_item[field_item] = attr_item.__items[0][field_item] || attr_item[field_item];
-                        })
+                        });
+                        attr_item.value = mysqlutils.convertDataType(attr_item.value, attr_item.data_type);
                     }
                     if(multivalueAttributes.indexOf(attr_item.html_type) != -1){
                         attr_item.value = [];
                         attr_item.__items.forEach(value_item => {
-                            attr_item.value.push(value_item.value);
+                            if (value_item) {
+                                let converted_value = mysqlutils.convertDataType(value_item.value, attr_item.data_type);
+                                if (converted_value !== null && converted_value !== undefined && converted_value !== "") {
+                                    attr_item.value.push(converted_value);
+                                }
+                            }
                         })
                     }
                     delete attr_item.__items;
@@ -357,7 +469,8 @@ async function search (searchConfig) {
     products = sortProductsBySignificantWeight(products);
     products = filterDistinctProductEntities(products);
     let currentPage = parseInt(searchConfig.page);
-    if(isNaN(currentPage) || currentPage < 1) currentPage = 1; 
+    if(isNaN(currentPage) || currentPage < 1) currentPage = 1;
+    let totalFound = products.length;
     let totalPages = Math.ceil(products.length/items_per_page);
     if(currentPage > totalPages) currentPage = totalPages;
     let slice_start = (currentPage - 1)*items_per_page;
@@ -367,6 +480,8 @@ async function search (searchConfig) {
     return {
         currentPage: currentPage,
         totalPages: totalPages,
+        totalFound: totalFound,
+        send: products.length,
         items_per_page: items_per_page,
         products: products
     }

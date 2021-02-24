@@ -87,6 +87,10 @@ async function initProductDatabase () {
             value: product.sup_price
         });
         product.attributes.push({
+            attribute_id: "name",
+            value: product.sup_name
+        });
+        product.attributes.push({
             attribute_id: "is_new",
             value: 1
         });
@@ -166,8 +170,8 @@ async function initProductDatabase () {
     };
 
     // init build product search eav index
-    let result = await search.buildProductSearchEavIndex();
-    await fs.writeJSON("./product_eav_index.json", result);
+    // let result = await search.buildProductSearchEavIndex();
+    // await fs.writeJSON("./product_eav_index.json", result);
 
     console.log("execution time: ", (Date.now() - time), " ms")
     msClient.disconnect();

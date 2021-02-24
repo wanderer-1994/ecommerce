@@ -1,0 +1,143 @@
+WITH RECURSIVE `cte` (entity_id) AS (
+    SELECT entity_id
+    FROM `ecommerce`.category_entity
+    WHERE entity_id IN ('storage', 'charger')
+    UNION ALL
+    SELECT p.entity_id
+    FROM `ecommerce`.category_entity AS `p`
+    INNER JOIN `cte` ON `p`.parent = `cte`.entity_id
+)
+SELECT product_id, MAX(weight) AS weight, 'category' AS `type` FROM (
+    SELECT
+    IF(`pe`.parent IS NOT NULL AND `pe`.parent != '', `pe`.parent, `pe`.entity_id) AS product_id,
+    IF(`pca`.position IS NOT NULL, 100 + `pca`.position, 100) AS `weight`
+    FROM `ecommerce`.product_category_assignment AS `pca`
+    INNER JOIN `ecommerce`.product_entity AS `pe` ON `pe`.entity_id = `pca`.product_id
+    WHERE `pca`.category_id IN(SELECT DISTINCT entity_id FROM `cte`)
+) as `alias`
+GROUP BY product_id
+        UNION ALL
+SELECT product_id, MAX(weight) AS weight, 'entity_id' AS `type` FROM (
+    SELECT IF(`pe`.parent IS NOT NULL AND `pe`.parent != '', `pe`.parent, `pe`.entity_id) AS product_id,
+    1000 AS `weight`
+    FROM `ecommerce`.`product_entity` AS `pe`
+    WHERE `pe`.entity_id IN ('PR0010', 'PR0001')
+) AS `alias`
+GROUP BY product_id
+        UNION ALL
+SELECT product_id, MAX(weight) AS weight, 'name' AS `type` FROM (
+    SELECT IF(`pe`.parent IS NOT NULL AND `pe`.parent != '', `pe`.parent, `pe`.entity_id) AS `product_id`, weight
+    FROM (
+        SELECT entity_id, SUM(weight) AS weight
+        FROM (
+
+        SELECT entity_id, 1 AS `weight`
+        FROM `ecommerce`.`product_eav_varchar`
+        WHERE attribute_id='name' AND UPPER(value) LIKE '%CAP%'
+            UNION ALL
+        SELECT entity_id, 1 AS `weight`
+        FROM `ecommerce`.`product_eav_varchar`
+        WHERE attribute_id='name' AND UPPER(value) LIKE '%SAC%'
+            UNION ALL
+        SELECT entity_id, 1 AS `weight`
+        FROM `ecommerce`.`product_eav_varchar`
+        WHERE attribute_id='name' AND UPPER(value) LIKE '%NHANH%'
+            UNION ALL
+        SELECT entity_id, 1 AS `weight`
+        FROM `ecommerce`.`product_eav_varchar`
+        WHERE attribute_id='name' AND UPPER(value) LIKE '%HOCO%'
+            UNION ALL
+        SELECT entity_id, 1 AS `weight`
+        FROM `ecommerce`.`product_eav_varchar`
+        WHERE attribute_id='name' AND UPPER(value) LIKE '%X21%'
+            UNION ALL
+        SELECT entity_id, 1 AS `weight`
+        FROM `ecommerce`.`product_eav_varchar`
+        WHERE attribute_id='name' AND UPPER(value) LIKE '%CHINH%'
+            UNION ALL
+        SELECT entity_id, 1 AS `weight`
+        FROM `ecommerce`.`product_eav_varchar`
+        WHERE attribute_id='name' AND UPPER(value) LIKE '%HANG%'
+            UNION ALL
+        SELECT entity_id, 2 AS `weight`
+        FROM `ecommerce`.`product_eav_varchar`
+        WHERE attribute_id='name' AND UPPER(value) LIKE '%CAP SAC%'
+            UNION ALL
+        SELECT entity_id, 2 AS `weight`
+        FROM `ecommerce`.`product_eav_varchar`
+        WHERE attribute_id='name' AND UPPER(value) LIKE '%SAC NHANH%'
+            UNION ALL
+        SELECT entity_id, 2 AS `weight`
+        FROM `ecommerce`.`product_eav_varchar`
+        WHERE attribute_id='name' AND UPPER(value) LIKE '%NHANH HOCO%'
+            UNION ALL
+        SELECT entity_id, 2 AS `weight`
+        FROM `ecommerce`.`product_eav_varchar`
+        WHERE attribute_id='name' AND UPPER(value) LIKE '%HOCO X21%'
+            UNION ALL
+        SELECT entity_id, 2 AS `weight`
+        FROM `ecommerce`.`product_eav_varchar`
+        WHERE attribute_id='name' AND UPPER(value) LIKE '%X21 CHINH%'
+            UNION ALL
+        SELECT entity_id, 2 AS `weight`
+        FROM `ecommerce`.`product_eav_varchar`
+        WHERE attribute_id='name' AND UPPER(value) LIKE '%CHINH HANG%'
+            UNION ALL
+        SELECT entity_id, 3 AS `weight`
+        FROM `ecommerce`.`product_eav_varchar`
+        WHERE attribute_id='name' AND UPPER(value) LIKE BINARY '%CÁP%'
+            UNION ALL
+        SELECT entity_id, 3 AS `weight`
+        FROM `ecommerce`.`product_eav_varchar`
+        WHERE attribute_id='name' AND UPPER(value) LIKE BINARY '%SẠC%'
+            UNION ALL
+        SELECT entity_id, 3 AS `weight`
+        FROM `ecommerce`.`product_eav_varchar`
+        WHERE attribute_id='name' AND UPPER(value) LIKE BINARY '%NHANH%'
+            UNION ALL
+        SELECT entity_id, 3 AS `weight`
+        FROM `ecommerce`.`product_eav_varchar`
+        WHERE attribute_id='name' AND UPPER(value) LIKE BINARY '%HOCO%'
+            UNION ALL
+        SELECT entity_id, 3 AS `weight`
+        FROM `ecommerce`.`product_eav_varchar`
+        WHERE attribute_id='name' AND UPPER(value) LIKE BINARY '%X21%'
+            UNION ALL
+        SELECT entity_id, 3 AS `weight`
+        FROM `ecommerce`.`product_eav_varchar`
+        WHERE attribute_id='name' AND UPPER(value) LIKE BINARY '%CHÍNH%'
+            UNION ALL
+        SELECT entity_id, 3 AS `weight`
+        FROM `ecommerce`.`product_eav_varchar`
+        WHERE attribute_id='name' AND UPPER(value) LIKE BINARY '%HÃNG%'
+            UNION ALL
+        SELECT entity_id, 4 AS `weight`
+        FROM `ecommerce`.`product_eav_varchar`
+        WHERE attribute_id='name' AND UPPER(value) LIKE BINARY '%CÁP SẠC%'
+            UNION ALL
+        SELECT entity_id, 4 AS `weight`
+        FROM `ecommerce`.`product_eav_varchar`
+        WHERE attribute_id='name' AND UPPER(value) LIKE BINARY '%SẠC NHANH%'
+            UNION ALL
+        SELECT entity_id, 4 AS `weight`
+        FROM `ecommerce`.`product_eav_varchar`
+        WHERE attribute_id='name' AND UPPER(value) LIKE BINARY '%NHANH HOCO%'
+            UNION ALL
+        SELECT entity_id, 4 AS `weight`
+        FROM `ecommerce`.`product_eav_varchar`
+        WHERE attribute_id='name' AND UPPER(value) LIKE BINARY '%HOCO X21%'
+            UNION ALL
+        SELECT entity_id, 4 AS `weight`
+        FROM `ecommerce`.`product_eav_varchar`
+        WHERE attribute_id='name' AND UPPER(value) LIKE BINARY '%X21 CHÍNH%'
+            UNION ALL
+        SELECT entity_id, 4 AS `weight`
+        FROM `ecommerce`.`product_eav_varchar`
+        WHERE attribute_id='name' AND UPPER(value) LIKE BINARY '%CHÍNH HÃNG%'
+
+        ) AS `alias`
+        GROUP BY entity_id
+    ) AS `alias2`
+    INNER JOIN `ecommerce`.product_entity AS `pe` ON `pe`.entity_id = `alias2`.entity_id
+) AS `alias3`
+GROUP BY product_id
