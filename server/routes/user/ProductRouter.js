@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const msClient = require("../system_modules/mysql/mysql");
+const msClient = require("../../system_modules/mysql/mysql");
 const search = require("../../system_modules/search/search");
 const {
     createSystemErrMessage,
@@ -16,17 +16,40 @@ router.get("/product", async (req, res) => {
         let prod_attr_for_client =  ["prod_id", "prod_link", "sup_name", "prod_name", "prod_review", "prod_thumb", "prod_img",
                                     "category", "warranty", "prod_price", "saleoff_percent", "prod_trend", "prod_description"];
         let attrs_to_select = msClient.getSqlAttrToSelect(prod_attr_for_client);
+        let refinements = search.extractRefinements(req);
+        refinements.forEach((attribute, index) => {
+            let match = msClient.productEav.find(m_item => m_item.attribute_id == attribute.attribute_id);
+            if (match) {
+                attribute.html_type = match.html_type;
+                attribute.data_type = match.data_type;
+            } else {
+                refinements[index] = null;
+            }
+        });
 
-        let searchConfig = {
-            categories: req.query.categories ? req.query.categories.split("|") : null,
-            entity_ids: req.query.entity_ids ? req.query.entity_ids.split("|") : null,
-            refinements: search.extractRefinements(req),
-            searchPhrase: req.query.keyword,
-            searchDictionary: msClient.searchDictionary,
-            page: req.query.page
-        };
-        let searchResult = await search.search(searchConfig);
-        res.json(searchResult);
+        let isRefinementsValid = true;
+        refinements = refinements.filter(item => {
+            if (item === null) {
+                isRefinementsValid = false;
+                return false;
+            };
+            return true;
+        });
+
+        if (!isRefinementsValid) {
+            res.redirect("./abc");
+        } else {
+            let searchConfig = {
+                categories: req.query.categories ? req.query.categories.split("|") : null,
+                entity_ids: req.query.entity_ids ? req.query.entity_ids.split("|") : null,
+                refinements: refinements,
+                searchPhrase: req.query.keyword,
+                searchDictionary: msClient.searchDictionary,
+                page: req.query.page
+            };
+            let searchResult = await search.search(searchConfig);
+            res.json(searchResult);
+        }
     }catch(err){
         res.Alert.push(createSystemErrMessage(001))
         res.json({Alert: res.Alert});

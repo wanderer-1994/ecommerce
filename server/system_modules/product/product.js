@@ -6,90 +6,7 @@ const attr_product_category_assignment = ["product_id", "category_id", "position
 const attr_inventory = ["entity_id", "available_quantity"];
 const attr_tier_price = ["entity_id", "price"];
 const attr_eav = ["entity_id", "attribute_id", "value"];
-const attr_eav_table = [
-    {
-        html_type: "boolean",
-        data_type: "ANY",
-        table: "product_eav_int"
-    },
-    {
-        html_type: "multiinput",
-        data_type: "ANY",
-        table: "product_eav_multi_value"
-    },
-    {
-        html_type: "multiselect",
-        data_type: "ANY",
-        table: "product_eav_multi_value"
-    },
-    {
-        html_type: "password",
-        data_type: "ANY",
-        table: "product_eav_varchar"
-    },
-    // 
-    {
-        html_type: "input",
-        data_type: "int",
-        table: "product_eav_int"
-    },
-    {
-        html_type: "input",
-        data_type: "decimal",
-        table: "product_eav_decimal"
-    },
-    {
-        html_type: "input",
-        data_type: "varchar",
-        table: "product_eav_varchar"
-    },
-    {
-        html_type: "input",
-        data_type: "text",
-        table: "product_eav_text"
-    },
-    {
-        html_type: "input",
-        data_type: "html",
-        table: "product_eav_text"
-    },
-    {
-        html_type: "input",
-        data_type: "datetime",
-        table: "product_eav_datetime"
-    },
-    // 
-    {
-        html_type: "select",
-        data_type: "int",
-        table: "product_eav_int"
-    },
-    {
-        html_type: "select",
-        data_type: "decimal",
-        table: "product_eav_decimal"
-    },
-    {
-        html_type: "select",
-        data_type: "varchar",
-        table: "product_eav_varchar"
-    },
-    {
-        html_type: "select",
-        data_type: "text",
-        table: "product_eav_text"
-    },
-    {
-        html_type: "select",
-        data_type: "html",
-        table: "product_eav_text"
-    },
-    {
-        html_type: "select",
-        data_type: "datetime",
-        table: "product_eav_datetime"
-    },
-]
+const { getProductEavTableName } = require("./product_eav_table");
 
 async function saveProductEntity (product) {
     // product_entity: "entity_id", "type_id", "created_at", "updated_at"
@@ -174,20 +91,13 @@ async function saveProductEntity (product) {
 
         product.attributes.forEach(attribute => {
             let is_valid = false;
-            let table_indicator = attr_eav_table.find(item => {
-                return (
-                    item.html_type == attribute.html_type &&
-                    (item.data_type == attribute.data_type || item.data_type == "ANY")
-                )
-            });
-            if (table_indicator) {
-                if (table_indicator.table == "product_eav_multi_value") {
-                    sql_eav_multi_value.push(attribute);
-                    is_valid = true;
-                } else if (Object.keys(sql_eav_single_value).indexOf(table_indicator.table) != -1) {
-                    sql_eav_single_value[table_indicator.table].push(attribute);
-                    is_valid = true;
-                }
+            let table_name = getProductEavTableName(attribute);
+            if (table_name == "product_eav_multi_value") {
+                sql_eav_multi_value.push(attribute);
+                is_valid = true;
+            } else if (Object.keys(sql_eav_single_value).indexOf(table_name) != -1) {
+                sql_eav_single_value[table_name].push(attribute);
+                is_valid = true;
             }
             if (!is_valid) {
                 console.log("Warning: skip attribute ", attribute);
