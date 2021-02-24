@@ -3,12 +3,12 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const cors = require("cors")
 const formidable = require("formidable");
-const msClient = require("./utils/mysql/mysql");
+const msClient = require("./system_modules/mysql/mysql");
 
 const { 
     getResGeneralVariables,
     getReqGeneralVariables,
-} = require("./utils/middlewares/middlewares");
+} = require("./system_modules/middlewares/middlewares");
 
 const AdminRouter = require("./routes/user/AdminRouter");
 const CategoryRouter = require("./routes/user/CategoryRouter");

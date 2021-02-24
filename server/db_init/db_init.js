@@ -1,5 +1,5 @@
 const fs = require("fs-extra");
-const msClient = require("../utils/mysql/mysql");
+const msClient = require("../system_modules/mysql/mysql");
 
 var executes = [
     'schema_init.txt',

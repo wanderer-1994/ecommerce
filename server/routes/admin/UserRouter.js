@@ -1,7 +1,7 @@
 const express = require("express");
-const msClient = require("../utils/mysql/mysql");
+const msClient = require("../system_modules/mysql/mysql");
 const router = express.Router();
-const { checkAdminByCookie } = require("../utils/middlewares/middlewares");
+const { checkAdminByCookie } = require("../system_modules/middlewares/middlewares");
 
 router.get("/user", checkAdminByCookie, async (req, res) => {
     try{

@@ -1,15 +1,15 @@
 const express = require("express");
 const router = express.Router();
-const msClient = require("../utils/mysql/mysql");
-const { updateSupInfo } = require("../utils/subinfo_updater/general_updater");
+const msClient = require("../system_modules/mysql/mysql");
+const { updateSupInfo } = require("../system_modules/subinfo_updater/general_updater");
 const {
     createSystemErrMessage,
     unescapeSelectedData
-} = require("../utils/functions");
+} = require("../system_modules/functions");
 const {
     items_per_page
-} = require("../utils/const/config");
-const { checkAdminByCookie } = require("../utils/middlewares/middlewares");
+} = require("../system_modules/const/config");
+const { checkAdminByCookie } = require("../system_modules/middlewares/middlewares");
 
 router.get("/product", checkAdminByCookie, async (req, res) => {
     // return full data

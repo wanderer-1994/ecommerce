@@ -1,13 +1,13 @@
 const express = require("express");
 const router = express.Router();
-const msClient = require("../utils/mysql/mysql");
-const search = require("../../utils/search/search");
+const msClient = require("../system_modules/mysql/mysql");
+const search = require("../../system_modules/search/search");
 const {
     createSystemErrMessage,
-} = require("../utils/functions");
+} = require("../system_modules/functions");
 const {
     items_per_page
-} = require("../../utils/const/config");
+} = require("../../system_modules/const/config");
 
 router.get("/product", async (req, res) => {
     // req.query= {page, categories, entity_ids, refinements, searchPhrase}

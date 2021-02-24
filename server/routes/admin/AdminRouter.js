@@ -1,9 +1,9 @@
 const express = require("express");
-const msClient = require("../../utils/mysql/mysql");
+const msClient = require("../../system_modules/mysql/mysql");
 const router = express.Router();
 const uuidv4 = require("uuid/v4");
-const { createSystemErrMessage } = require("../../utils/functions")
-const { checkAdminByCookie } = require("../../utils/middlewares/middlewares");
+const { createSystemErrMessage } = require("../../system_modules/functions")
+const { checkAdminByCookie } = require("../../system_modules/middlewares/middlewares");
 
 // router.use(checkAdminByCookie);
 

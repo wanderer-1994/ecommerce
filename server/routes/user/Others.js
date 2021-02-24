@@ -1,18 +1,18 @@
 const express = require("express");
 const router = express.Router();
-const msClient = require("../utils/mysql/mysql");
-const mysqlutils = require("../../utils/mysql/mysqlutils");
-const { updateSupInfo } = require("../utils/subinfo_updater/general_updater");
+const msClient = require("../system_modules/mysql/mysql");
+const mysqlutils = require("../../system_modules/mysql/mysqlutils");
+const { updateSupInfo } = require("../system_modules/subinfo_updater/general_updater");
 const {
     escapeHTML,
     createSystemErrMessage,
     validateCartContent,
     unescapeSelectedData
-} = require("../utils/functions");
+} = require("../system_modules/functions");
 const {
     items_per_page
-} = require("../utils/const/config");
-const { checkAdminByCookie } = require("../utils/middlewares/middlewares");
+} = require("../system_modules/const/config");
+const { checkAdminByCookie } = require("../system_modules/middlewares/middlewares");
 
 router.post("/cart/validate", async (req, res) => {
     // req.body = {prod_ids: prod_ids}

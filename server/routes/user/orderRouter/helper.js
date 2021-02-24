@@ -1,4 +1,4 @@
-const mysqlutils = require("../../../utils/mysql/mysqlutils");
+const mysqlutils = require("../../../system_modules/mysql/mysqlutils");
 const orderInheritFields = ["order_time", "status", "shipping_status", "rcver_name", "rcver_tel"];
 const productInheritFields = ["prod_name", "price", "discount_percent", "discount_direct", "warranty", "prod_thumb", "category"];
 

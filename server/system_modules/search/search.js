@@ -1,7 +1,7 @@
 const mysqlutils = require("../mysql/mysqlutils");
 const fulltextSearch = require("./fulltextSearch");
 const msClient = require("../mysql/mysql");
-const { items_per_page } = require("../../utils/const/config");
+const { items_per_page } = require("../const/config");
 const productEntityInheritFields = ["product_id", "entity_id", "type_id", "created_at", "updated_at"];
 const productEntityPropsAsAttributes = [
     {

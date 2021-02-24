@@ -5,19 +5,19 @@ const fs = require("fs-extra");
 async function run () {
     await msClient.connectAsync();
     let searchConfig = {
-        categories: ["storage", "charger"],
+        // categories: ["speaker", "phone_accessories"],
         // entity_ids: ["PR0010", "PR0001"],
-        // refinements: [
-        //     {
-        //         attribute_id: "subsection",
-        //         value: ["usb", "charge_cable"]
-        //     },
-        //     {
-        //         attribute_id: "sup_warranty",
-        //         value: ["12T"]
-        //     },
-        // ],
-        searchPhrase: "USB",
+        refinements: [
+            {
+                attribute_id: "subsection",
+                value: ["usb", "charge_cable"]
+            },
+            {
+                attribute_id: "sup_warranty",
+                value: ["12T"]
+            },
+        ],
+        // searchPhrase: "USB",
         searchDictionary: msClient.searchDictionary,
         page: 3
     };

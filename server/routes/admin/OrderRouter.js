@@ -1,9 +1,9 @@
 const express = require("express");
-const msClient = require("../utils/mysql/mysql");
+const msClient = require("../system_modules/mysql/mysql");
 const router = express.Router();
-const { createSystemErrMessage, unescapeSelectedData } = require("../utils/functions")
-const { getTimeStampId } = require("../utils/const/timestamp_id_keeper");
-const { checkAdminByCookie } = require("../utils/middlewares/middlewares");
+const { createSystemErrMessage, unescapeSelectedData } = require("../system_modules/functions")
+const { getTimeStampId } = require("../system_modules/const/timestamp_id_keeper");
+const { checkAdminByCookie } = require("../system_modules/middlewares/middlewares");
 
 router.get("/order", checkAdminByCookie, async (req, res) => {
     try{
