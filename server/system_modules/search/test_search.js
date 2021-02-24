@@ -4,24 +4,30 @@ const fs = require("fs-extra");
 
 async function run () {
     await msClient.connectAsync();
+    let start = Date.now();
     let searchConfig = {
-        // categories: ["speaker", "phone_accessories"],
-        // entity_ids: ["PR0010", "PR0001"],
-        refinements: [
-            {
-                attribute_id: "subsection",
-                value: ["usb", "charge_cable"]
-            },
-            {
-                attribute_id: "sup_warranty",
-                value: ["12T"]
-            },
-        ],
-        // searchPhrase: "USB",
+        categories: ["speaker", "phone_accessories", "charger"],
+        entity_ids: ["PR0010", "PR0001", "PR0029"],
+        // refinements: [
+        //     {
+        //         attribute_id: "subsection",
+        //         value: ["usb", "charge_cable"]
+        //     },
+        //     {
+        //         attribute_id: "sup_warranty",
+        //         value: ["12T"]
+        //     },
+        //     {
+        //         attribute_id: "sup_price",
+        //         value: [36000]
+        //     }
+        // ],
+        searchPhrase: "Cáp sạc nhanh HOCO DU10 cai gi the ha ban ban dang lam gi the vay",
         searchDictionary: msClient.searchDictionary,
         page: 3
     };
     let searchResult = await search.search(searchConfig);
+    console.log("Search took ", Date.now() - start, " ms")
     await fs.writeJSON("./search_result.json", searchResult);
     msClient.disconnect();
 };
