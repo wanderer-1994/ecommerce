@@ -15,6 +15,7 @@ const productEntityPropsAsAttributes = [
 ];
 const attributeInheritFields = ["attribute_id", "label", "referred_target", "admin_only", "html_type", "data_type", "validation", "is_super", "is_system", "unit", "value"];
 const multivalueAttributes = ["multiselect", "multiinput"];
+const productTypeIds = ["self", "parent", "variants"];
 
 function createSearchQueryDB ({ categories, entity_ids, refinements, searchPhrase, searchDictionary, inStock, tier_price }) {
     // ## search by category_id
@@ -489,9 +490,66 @@ async function search (searchConfig) {
 
 async function buildProductSearchEavIndex () {
     try {
-        let searchConfig = {};
-        let result = await search(searchConfig);
-        return result;
+        for (let i = 1; i > 0; i++) {
+            let searchConfig = {page: i};
+            let searchResult = await search(searchConfig);
+            let products = searchResult.products;
+            for (let j = 0; j < products.length; j++) {
+                let attributes = [];
+                productTypeIds.forEach(type_id => {
+                    if (type_id !== "variants") {
+                        if (products[j][type_id] && Array.isArray(products[j][type_id].attributes)) {
+                            attributes.push(...products[j][type_id].attributes);
+                        }
+                    } else {
+                        if (Array.isArray(products[j]["variants"])) {
+                            products[j]["variants"].forEach(variant => {
+                                if (variant && Array.isArray(variant.attributes)) {
+                                    attributes.push(...variant.attributes);
+                                }
+                            })
+                        }
+                    }
+                });
+                attributes = attributes.filter(item => {
+                    let valid = true;
+                    if (typeof(item.attribute_id) !== "string" || item.attribute_id === "") valid = false;
+                    if (Array.isArray(item.value)) {
+                        item.value = item.value.filter(v_item => v_item !== null && v_item !== undefined && v_item !== "");
+                        if (item.value.length == 0) valid = false;
+                    } else if ((typeof(item.value) !== "string" && typeof(item.value) !== "number") || item.value === "") {
+                        valid = false;
+                    } else {
+                        // convert value to consistent array format for easy manipulation
+                        item.value = [item.value];
+                    };
+                    return valid;
+                })
+                let sql_build_index = "";
+                if (attributes.length > 0) {
+                    let product_id = mysqlutils.escapeQuotes(products[j].product_id);
+                    sql_build_index =
+                    `
+                    INSERT INTO \`ecommerce\`.product_eav_index (product_id, attribute_id, value)
+                    VALUES
+                    ${attributes.map(
+                        attribute => {
+                            let attribute_id = mysqlutils.escapeQuotes(attribute.attribute_id);
+                            return attribute.value.map(
+                                v_item => `("${product_id}", "${attribute_id}", "${mysqlutils.escapeQuotes(v_item)}")`
+                            ).join(",\n");
+                        }
+                    ).join(",\n")} AS new
+                    ON DUPLICATE KEY UPDATE
+                    product_id = new.product_id,
+                    attribute_id = new.attribute_id,
+                    value = new.value;
+                    `;
+                };
+                await msClient.promiseQuery(sql_build_index);
+            }
+            if (i >= searchResult.totalPages) break;
+        }
     } catch (err) {
         throw err;
     }

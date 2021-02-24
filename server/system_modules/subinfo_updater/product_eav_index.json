@@ -1,6 +1,8 @@
 {
     "currentPage": 1,
     "totalPages": 5,
+    "totalFound": 105,
+    "send": 24,
     "items_per_page": 24,
     "products": [
         {
@@ -10,93 +12,122 @@
                 "entity_id": "PR0001",
                 "product_id": "PR0001",
                 "type_id": "simple",
+                "created_at": 1614161045151,
+                "updated_at": 1614161045151,
+                "tier_price": 173000,
+                "available_quantity": 1,
+                "categories": [
+                    {
+                        "category_id": "storage",
+                        "position": 0
+                    }
+                ],
                 "attributes": [
                     {
                         "attribute_id": "is_new",
-                        "value": "1",
                         "label": "SP mới",
+                        "admin_only": "1",
                         "html_type": "boolean",
                         "data_type": "int",
                         "validation": "0|1",
                         "is_super": "1",
-                        "is_system": "1"
+                        "is_system": "1",
+                        "value": 1
                     },
                     {
                         "attribute_id": "is_online",
-                        "value": "0",
                         "label": "Online",
+                        "admin_only": "0",
                         "html_type": "boolean",
                         "data_type": "int",
                         "validation": "0|1",
                         "is_super": "1",
-                        "is_system": "1"
+                        "is_system": "1",
+                        "value": 0
                     },
                     {
                         "attribute_id": "sup_price",
-                        "value": "173000",
                         "label": "Supplier price",
+                        "admin_only": "1",
                         "html_type": "input",
                         "data_type": "int",
                         "is_super": "1",
-                        "is_system": "0"
+                        "is_system": "0",
+                        "value": 173000
                     },
                     {
-                        "attribute_id": "subsection",
-                        "value": [
-                            "usb"
-                        ],
-                        "label": "Tiểu mục",
-                        "html_type": "multiinput",
+                        "attribute_id": "name",
+                        "label": "Product name",
+                        "admin_only": "0",
+                        "html_type": "input",
                         "data_type": "varchar",
                         "is_super": "1",
-                        "is_system": "1"
-                    },
-                    {
-                        "attribute_id": "images",
-                        "value": [
-                            "https://phatdatcomputer.vn/upload/product/usb-64g-hoco-ud6-20-chinh-hang1585636909.png"
-                        ],
-                        "label": "Main images",
-                        "html_type": "multiinput",
-                        "data_type": "varchar",
-                        "is_super": "1",
-                        "is_system": "1"
+                        "is_system": "1",
+                        "value": "USB 2.0 64G HOCO UD6 Chính hãng"
                     },
                     {
                         "attribute_id": "thumbnail",
-                        "value": "https://phatdatcomputer.vn/upload/product/usb-64g-hoco-ud6-20-chinh-hang1585636909.png",
                         "label": "Thumbnail",
+                        "admin_only": "0",
                         "html_type": "input",
                         "data_type": "varchar",
                         "is_super": "1",
-                        "is_system": "1"
+                        "is_system": "1",
+                        "value": "https://phatdatcomputer.vn/upload/product/usb-64g-hoco-ud6-20-chinh-hang1585636909.png"
+                    },
+                    {
+                        "attribute_id": "images",
+                        "label": "Main images",
+                        "admin_only": "0",
+                        "html_type": "multiinput",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": [
+                            "https://phatdatcomputer.vn/upload/product/usb-64g-hoco-ud6-20-chinh-hang1585636909.png"
+                        ]
                     },
                     {
                         "attribute_id": "sup_warranty",
-                        "value": "12T",
                         "label": "Supplier warranty",
+                        "admin_only": "1",
                         "html_type": "input",
                         "data_type": "varchar",
                         "is_super": "1",
-                        "is_system": "0"
+                        "is_system": "0",
+                        "value": "12T"
                     },
                     {
                         "attribute_id": "sup_name",
-                        "value": "USB 2.0 64G HOCO UD6 Chính hãng",
                         "label": "Supplier product name",
+                        "admin_only": "1",
                         "html_type": "input",
                         "data_type": "varchar",
                         "is_super": "1",
-                        "is_system": "0"
+                        "is_system": "0",
+                        "value": "USB 2.0 64G HOCO UD6 Chính hãng"
+                    },
+                    {
+                        "attribute_id": "subsection",
+                        "label": "Tiểu mục",
+                        "admin_only": "1",
+                        "html_type": "multiinput",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": [
+                            "usb"
+                        ]
                     },
                     {
                         "attribute_id": "sup_link",
-                        "value": "https://phatdatcomputer.vn/san-pham/usb-20-64g-hoco-ud6-chinh-hang",
                         "label": "Supplier url",
+                        "admin_only": "1",
                         "html_type": "input",
                         "data_type": "varchar",
                         "is_super": "1",
-                        "is_system": "0"
+                        "is_system": "0",
+                        "value": "https://phatdatcomputer.vn/san-pham/usb-20-64g-hoco-ud6-chinh-hang"
                     }
                 ]
             }
@@ -108,93 +139,122 @@
                 "entity_id": "PR0002",
                 "product_id": "PR0002",
                 "type_id": "simple",
+                "created_at": 1614161045151,
+                "updated_at": 1614161045151,
+                "tier_price": 145000,
+                "available_quantity": 1,
+                "categories": [
+                    {
+                        "category_id": "storage",
+                        "position": 0
+                    }
+                ],
                 "attributes": [
                     {
                         "attribute_id": "is_new",
-                        "value": "1",
                         "label": "SP mới",
+                        "admin_only": "1",
                         "html_type": "boolean",
                         "data_type": "int",
                         "validation": "0|1",
                         "is_super": "1",
-                        "is_system": "1"
+                        "is_system": "1",
+                        "value": 1
                     },
                     {
                         "attribute_id": "is_online",
-                        "value": "0",
                         "label": "Online",
+                        "admin_only": "0",
                         "html_type": "boolean",
                         "data_type": "int",
                         "validation": "0|1",
                         "is_super": "1",
-                        "is_system": "1"
+                        "is_system": "1",
+                        "value": 0
                     },
                     {
                         "attribute_id": "sup_price",
-                        "value": "145000",
                         "label": "Supplier price",
+                        "admin_only": "1",
                         "html_type": "input",
                         "data_type": "int",
                         "is_super": "1",
-                        "is_system": "0"
+                        "is_system": "0",
+                        "value": 145000
                     },
                     {
                         "attribute_id": "thumbnail",
-                        "value": "https://phatdatcomputer.vn/upload/product/usb-hoco-16gb-ud5-30-chinh-hang1568793534_250x250.jpg",
                         "label": "Thumbnail",
+                        "admin_only": "0",
                         "html_type": "input",
                         "data_type": "varchar",
                         "is_super": "1",
-                        "is_system": "1"
-                    },
-                    {
-                        "attribute_id": "sup_name",
-                        "value": "USB 3.0 16G HOCO UD5 Chính hãng",
-                        "label": "Supplier product name",
-                        "html_type": "input",
-                        "data_type": "varchar",
-                        "is_super": "1",
-                        "is_system": "0"
+                        "is_system": "1",
+                        "value": "https://phatdatcomputer.vn/upload/product/usb-hoco-16gb-ud5-30-chinh-hang1568793534_250x250.jpg"
                     },
                     {
                         "attribute_id": "sup_warranty",
-                        "value": "12T",
                         "label": "Supplier warranty",
+                        "admin_only": "1",
                         "html_type": "input",
                         "data_type": "varchar",
                         "is_super": "1",
-                        "is_system": "0"
+                        "is_system": "0",
+                        "value": "12T"
+                    },
+                    {
+                        "attribute_id": "sup_name",
+                        "label": "Supplier product name",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": "USB 3.0 16G HOCO UD5 Chính hãng"
                     },
                     {
                         "attribute_id": "sup_link",
-                        "value": "https://phatdatcomputer.vn/san-pham/usb-30-16g-hoco-ud5-chinh-hang",
                         "label": "Supplier url",
+                        "admin_only": "1",
                         "html_type": "input",
                         "data_type": "varchar",
                         "is_super": "1",
-                        "is_system": "0"
+                        "is_system": "0",
+                        "value": "https://phatdatcomputer.vn/san-pham/usb-30-16g-hoco-ud5-chinh-hang"
+                    },
+                    {
+                        "attribute_id": "name",
+                        "label": "Product name",
+                        "admin_only": "0",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": "USB 3.0 16G HOCO UD5 Chính hãng"
                     },
                     {
                         "attribute_id": "images",
-                        "value": [
-                            "https://phatdatcomputer.vn/upload/product/usb-hoco-16gb-ud5-30-chinh-hang1568793534.jpg"
-                        ],
                         "label": "Main images",
+                        "admin_only": "0",
                         "html_type": "multiinput",
                         "data_type": "varchar",
                         "is_super": "1",
-                        "is_system": "1"
+                        "is_system": "1",
+                        "value": [
+                            "https://phatdatcomputer.vn/upload/product/usb-hoco-16gb-ud5-30-chinh-hang1568793534.jpg"
+                        ]
                     },
                     {
                         "attribute_id": "subsection",
-                        "value": [
-                            "usb"
-                        ],
                         "label": "Tiểu mục",
+                        "admin_only": "1",
                         "html_type": "multiinput",
                         "data_type": "varchar",
                         "is_super": "1",
-                        "is_system": "1"
+                        "is_system": "1",
+                        "value": [
+                            "usb"
+                        ]
                     }
                 ]
             }
@@ -206,93 +266,122 @@
                 "entity_id": "PR0003",
                 "product_id": "PR0003",
                 "type_id": "simple",
+                "created_at": 1614161045151,
+                "updated_at": 1614161045151,
+                "tier_price": 160000,
+                "available_quantity": 1,
+                "categories": [
+                    {
+                        "category_id": "storage",
+                        "position": 0
+                    }
+                ],
                 "attributes": [
                     {
                         "attribute_id": "is_new",
-                        "value": "1",
                         "label": "SP mới",
+                        "admin_only": "1",
                         "html_type": "boolean",
                         "data_type": "int",
                         "validation": "0|1",
                         "is_super": "1",
-                        "is_system": "1"
-                    },
-                    {
-                        "attribute_id": "is_online",
-                        "value": "0",
-                        "label": "Online",
-                        "html_type": "boolean",
-                        "data_type": "int",
-                        "validation": "0|1",
-                        "is_super": "1",
-                        "is_system": "1"
-                    },
-                    {
-                        "attribute_id": "sup_price",
-                        "value": "160000",
-                        "label": "Supplier price",
-                        "html_type": "input",
-                        "data_type": "int",
-                        "is_super": "1",
-                        "is_system": "0"
+                        "is_system": "1",
+                        "value": 1
                     },
                     {
                         "attribute_id": "subsection",
-                        "value": [
-                            "usb"
-                        ],
                         "label": "Tiểu mục",
+                        "admin_only": "1",
                         "html_type": "multiinput",
                         "data_type": "varchar",
                         "is_super": "1",
-                        "is_system": "1"
+                        "is_system": "1",
+                        "value": [
+                            "usb"
+                        ]
                     },
                     {
                         "attribute_id": "images",
-                        "value": [
-                            "https://phatdatcomputer.vn/upload/product/usb-32gb-hoco-ud5-301562734015.jpg"
-                        ],
                         "label": "Main images",
+                        "admin_only": "0",
                         "html_type": "multiinput",
                         "data_type": "varchar",
                         "is_super": "1",
-                        "is_system": "1"
-                    },
-                    {
-                        "attribute_id": "thumbnail",
-                        "value": "https://phatdatcomputer.vn/upload/product/usb-32gb-hoco-ud5-301562734015_250x250.jpg",
-                        "label": "Thumbnail",
-                        "html_type": "input",
-                        "data_type": "varchar",
-                        "is_super": "1",
-                        "is_system": "1"
+                        "is_system": "1",
+                        "value": [
+                            "https://phatdatcomputer.vn/upload/product/usb-32gb-hoco-ud5-301562734015.jpg"
+                        ]
                     },
                     {
                         "attribute_id": "sup_warranty",
-                        "value": "12T",
                         "label": "Supplier warranty",
+                        "admin_only": "1",
                         "html_type": "input",
                         "data_type": "varchar",
                         "is_super": "1",
-                        "is_system": "0"
+                        "is_system": "0",
+                        "value": "12T"
+                    },
+                    {
+                        "attribute_id": "thumbnail",
+                        "label": "Thumbnail",
+                        "admin_only": "0",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": "https://phatdatcomputer.vn/upload/product/usb-32gb-hoco-ud5-301562734015_250x250.jpg"
+                    },
+                    {
+                        "attribute_id": "name",
+                        "label": "Product name",
+                        "admin_only": "0",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": "USB 3.0 32G HOCO UD5 Chính hãng"
                     },
                     {
                         "attribute_id": "sup_link",
-                        "value": "https://phatdatcomputer.vn/san-pham/usb-30-32g-hoco-ud5-chinh-hang",
                         "label": "Supplier url",
+                        "admin_only": "1",
                         "html_type": "input",
                         "data_type": "varchar",
                         "is_super": "1",
-                        "is_system": "0"
+                        "is_system": "0",
+                        "value": "https://phatdatcomputer.vn/san-pham/usb-30-32g-hoco-ud5-chinh-hang"
+                    },
+                    {
+                        "attribute_id": "sup_price",
+                        "label": "Supplier price",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "int",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": 160000
+                    },
+                    {
+                        "attribute_id": "is_online",
+                        "label": "Online",
+                        "admin_only": "0",
+                        "html_type": "boolean",
+                        "data_type": "int",
+                        "validation": "0|1",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": 0
                     },
                     {
                         "attribute_id": "sup_name",
-                        "value": "USB 3.0 32G HOCO UD5 Chính hãng",
                         "label": "Supplier product name",
+                        "admin_only": "1",
                         "html_type": "input",
                         "data_type": "varchar",
                         "is_super": "1",
-                        "is_system": "0"
+                        "is_system": "0",
+                        "value": "USB 3.0 32G HOCO UD5 Chính hãng"
                     }
                 ]
             }
@@ -304,93 +393,122 @@
                 "entity_id": "PR0004",
                 "product_id": "PR0004",
                 "type_id": "simple",
+                "created_at": 1614161045151,
+                "updated_at": 1614161045151,
+                "tier_price": 230000,
+                "available_quantity": 1,
+                "categories": [
+                    {
+                        "category_id": "storage",
+                        "position": 0
+                    }
+                ],
                 "attributes": [
                     {
                         "attribute_id": "is_new",
-                        "value": "1",
                         "label": "SP mới",
+                        "admin_only": "1",
                         "html_type": "boolean",
                         "data_type": "int",
                         "validation": "0|1",
                         "is_super": "1",
-                        "is_system": "1"
+                        "is_system": "1",
+                        "value": 1
                     },
                     {
                         "attribute_id": "is_online",
-                        "value": "0",
                         "label": "Online",
+                        "admin_only": "0",
                         "html_type": "boolean",
                         "data_type": "int",
                         "validation": "0|1",
                         "is_super": "1",
-                        "is_system": "1"
+                        "is_system": "1",
+                        "value": 0
                     },
                     {
                         "attribute_id": "sup_price",
-                        "value": "230000",
                         "label": "Supplier price",
+                        "admin_only": "1",
                         "html_type": "input",
                         "data_type": "int",
                         "is_super": "1",
-                        "is_system": "0"
+                        "is_system": "0",
+                        "value": 230000
                     },
                     {
                         "attribute_id": "sup_link",
-                        "value": "https://phatdatcomputer.vn/san-pham/usb-30-64g-hoco-ud5-chinh-hang",
                         "label": "Supplier url",
+                        "admin_only": "1",
                         "html_type": "input",
                         "data_type": "varchar",
                         "is_super": "1",
-                        "is_system": "0"
+                        "is_system": "0",
+                        "value": "https://phatdatcomputer.vn/san-pham/usb-30-64g-hoco-ud5-chinh-hang"
                     },
                     {
                         "attribute_id": "sup_name",
-                        "value": "USB 3.0 64G HOCO UD5 Chính hãng",
                         "label": "Supplier product name",
+                        "admin_only": "1",
                         "html_type": "input",
                         "data_type": "varchar",
                         "is_super": "1",
-                        "is_system": "0"
-                    },
-                    {
-                        "attribute_id": "subsection",
-                        "value": [
-                            "usb"
-                        ],
-                        "label": "Tiểu mục",
-                        "html_type": "multiinput",
-                        "data_type": "varchar",
-                        "is_super": "1",
-                        "is_system": "1"
+                        "is_system": "0",
+                        "value": "USB 3.0 64G HOCO UD5 Chính hãng"
                     },
                     {
                         "attribute_id": "sup_warranty",
-                        "value": "12T",
                         "label": "Supplier warranty",
+                        "admin_only": "1",
                         "html_type": "input",
                         "data_type": "varchar",
                         "is_super": "1",
-                        "is_system": "0"
+                        "is_system": "0",
+                        "value": "12T"
                     },
                     {
                         "attribute_id": "thumbnail",
-                        "value": "https://phatdatcomputer.vn/upload/product/usb-64gb-hoco-ud5-301562734112_250x250.jpg",
                         "label": "Thumbnail",
+                        "admin_only": "0",
                         "html_type": "input",
                         "data_type": "varchar",
                         "is_super": "1",
-                        "is_system": "1"
+                        "is_system": "1",
+                        "value": "https://phatdatcomputer.vn/upload/product/usb-64gb-hoco-ud5-301562734112_250x250.jpg"
                     },
                     {
-                        "attribute_id": "images",
-                        "value": [
-                            "https://phatdatcomputer.vn/upload/product/usb-64gb-hoco-ud5-301562734112.jpg"
-                        ],
-                        "label": "Main images",
+                        "attribute_id": "subsection",
+                        "label": "Tiểu mục",
+                        "admin_only": "1",
                         "html_type": "multiinput",
                         "data_type": "varchar",
                         "is_super": "1",
-                        "is_system": "1"
+                        "is_system": "1",
+                        "value": [
+                            "usb"
+                        ]
+                    },
+                    {
+                        "attribute_id": "images",
+                        "label": "Main images",
+                        "admin_only": "0",
+                        "html_type": "multiinput",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": [
+                            "https://phatdatcomputer.vn/upload/product/usb-64gb-hoco-ud5-301562734112.jpg"
+                        ]
+                    },
+                    {
+                        "attribute_id": "name",
+                        "label": "Product name",
+                        "admin_only": "0",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": "USB 3.0 64G HOCO UD5 Chính hãng"
                     }
                 ]
             }
@@ -402,93 +520,122 @@
                 "entity_id": "PR0005",
                 "product_id": "PR0005",
                 "type_id": "simple",
+                "created_at": 1614161045151,
+                "updated_at": 1614161045151,
+                "tier_price": 274000,
+                "available_quantity": 1,
+                "categories": [
+                    {
+                        "category_id": "storage",
+                        "position": 0
+                    }
+                ],
                 "attributes": [
                     {
                         "attribute_id": "is_new",
-                        "value": "1",
                         "label": "SP mới",
+                        "admin_only": "1",
                         "html_type": "boolean",
                         "data_type": "int",
                         "validation": "0|1",
                         "is_super": "1",
-                        "is_system": "1"
+                        "is_system": "1",
+                        "value": 1
                     },
                     {
                         "attribute_id": "is_online",
-                        "value": "0",
                         "label": "Online",
+                        "admin_only": "0",
                         "html_type": "boolean",
                         "data_type": "int",
                         "validation": "0|1",
                         "is_super": "1",
-                        "is_system": "1"
+                        "is_system": "1",
+                        "value": 0
                     },
                     {
                         "attribute_id": "sup_price",
-                        "value": "274000",
                         "label": "Supplier price",
+                        "admin_only": "1",
                         "html_type": "input",
                         "data_type": "int",
                         "is_super": "1",
-                        "is_system": "0"
-                    },
-                    {
-                        "attribute_id": "subsection",
-                        "value": [
-                            "usb"
-                        ],
-                        "label": "Tiểu mục",
-                        "html_type": "multiinput",
-                        "data_type": "varchar",
-                        "is_super": "1",
-                        "is_system": "1"
+                        "is_system": "0",
+                        "value": 274000
                     },
                     {
                         "attribute_id": "images",
-                        "value": [
-                            "https://phatdatcomputer.vn/upload/product/usb-64g-hoco-ud8-30-typec-chinh-hang1602771599.png"
-                        ],
                         "label": "Main images",
+                        "admin_only": "0",
                         "html_type": "multiinput",
                         "data_type": "varchar",
                         "is_super": "1",
-                        "is_system": "1"
+                        "is_system": "1",
+                        "value": [
+                            "https://phatdatcomputer.vn/upload/product/usb-64g-hoco-ud8-30-typec-chinh-hang1602771599.png"
+                        ]
+                    },
+                    {
+                        "attribute_id": "subsection",
+                        "label": "Tiểu mục",
+                        "admin_only": "1",
+                        "html_type": "multiinput",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": [
+                            "usb"
+                        ]
+                    },
+                    {
+                        "attribute_id": "name",
+                        "label": "Product name",
+                        "admin_only": "0",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": "USB 3.0 64G HOCO UD8 Type-C Chính hãng"
                     },
                     {
                         "attribute_id": "sup_link",
-                        "value": "https://phatdatcomputer.vn/san-pham/usb-30-64g-hoco-ud8-typec-chinh-hang",
                         "label": "Supplier url",
+                        "admin_only": "1",
                         "html_type": "input",
                         "data_type": "varchar",
                         "is_super": "1",
-                        "is_system": "0"
+                        "is_system": "0",
+                        "value": "https://phatdatcomputer.vn/san-pham/usb-30-64g-hoco-ud8-typec-chinh-hang"
                     },
                     {
                         "attribute_id": "sup_name",
-                        "value": "USB 3.0 64G HOCO UD8 Type-C Chính hãng",
                         "label": "Supplier product name",
+                        "admin_only": "1",
                         "html_type": "input",
                         "data_type": "varchar",
                         "is_super": "1",
-                        "is_system": "0"
+                        "is_system": "0",
+                        "value": "USB 3.0 64G HOCO UD8 Type-C Chính hãng"
                     },
                     {
                         "attribute_id": "sup_warranty",
-                        "value": "12T",
                         "label": "Supplier warranty",
+                        "admin_only": "1",
                         "html_type": "input",
                         "data_type": "varchar",
                         "is_super": "1",
-                        "is_system": "0"
+                        "is_system": "0",
+                        "value": "12T"
                     },
                     {
                         "attribute_id": "thumbnail",
-                        "value": "https://phatdatcomputer.vn/upload/product/usb-64g-hoco-ud8-30-typec-chinh-hang1602771599.png",
                         "label": "Thumbnail",
+                        "admin_only": "0",
                         "html_type": "input",
                         "data_type": "varchar",
                         "is_super": "1",
-                        "is_system": "1"
+                        "is_system": "1",
+                        "value": "https://phatdatcomputer.vn/upload/product/usb-64g-hoco-ud8-30-typec-chinh-hang1602771599.png"
                     }
                 ]
             }
@@ -500,93 +647,122 @@
                 "entity_id": "PR0006",
                 "product_id": "PR0006",
                 "type_id": "simple",
+                "created_at": 1614161045151,
+                "updated_at": 1614161045151,
+                "tier_price": 75000,
+                "available_quantity": 1,
+                "categories": [
+                    {
+                        "category_id": "storage",
+                        "position": 0
+                    }
+                ],
                 "attributes": [
                     {
-                        "attribute_id": "is_online",
-                        "value": "0",
-                        "label": "Online",
-                        "html_type": "boolean",
-                        "data_type": "int",
-                        "validation": "0|1",
-                        "is_super": "1",
-                        "is_system": "1"
-                    },
-                    {
                         "attribute_id": "is_new",
-                        "value": "1",
                         "label": "SP mới",
+                        "admin_only": "1",
                         "html_type": "boolean",
                         "data_type": "int",
                         "validation": "0|1",
                         "is_super": "1",
-                        "is_system": "1"
+                        "is_system": "1",
+                        "value": 1
                     },
                     {
-                        "attribute_id": "subsection",
-                        "value": [
-                            "memory_card"
-                        ],
-                        "label": "Tiểu mục",
-                        "html_type": "multiinput",
-                        "data_type": "varchar",
+                        "attribute_id": "is_online",
+                        "label": "Online",
+                        "admin_only": "0",
+                        "html_type": "boolean",
+                        "data_type": "int",
+                        "validation": "0|1",
                         "is_super": "1",
-                        "is_system": "1"
-                    },
-                    {
-                        "attribute_id": "images",
-                        "value": [
-                            "https://phatdatcomputer.vn/upload/product/the-nho-microsd-16g-hoco-box-class10-chinh-hang-chuyen-dung-camera1608467516.png"
-                        ],
-                        "label": "Main images",
-                        "html_type": "multiinput",
-                        "data_type": "varchar",
-                        "is_super": "1",
-                        "is_system": "1"
+                        "is_system": "1",
+                        "value": 0
                     },
                     {
                         "attribute_id": "sup_price",
-                        "value": "75000",
                         "label": "Supplier price",
+                        "admin_only": "1",
                         "html_type": "input",
                         "data_type": "int",
                         "is_super": "1",
-                        "is_system": "0"
-                    },
-                    {
-                        "attribute_id": "sup_link",
-                        "value": "https://phatdatcomputer.vn/san-pham/the-nho-microsd-16g-hoco-box-class10-chinh-hang-chuyen-dung-camera",
-                        "label": "Supplier url",
-                        "html_type": "input",
-                        "data_type": "varchar",
-                        "is_super": "1",
-                        "is_system": "0"
-                    },
-                    {
-                        "attribute_id": "sup_name",
-                        "value": "Thẻ nhớ MicroSD 16G HOCO Box Class10 Chính hãng (Chuyên dùng Camera)",
-                        "label": "Supplier product name",
-                        "html_type": "input",
-                        "data_type": "varchar",
-                        "is_super": "1",
-                        "is_system": "0"
+                        "is_system": "0",
+                        "value": 75000
                     },
                     {
                         "attribute_id": "sup_warranty",
-                        "value": "24T",
                         "label": "Supplier warranty",
+                        "admin_only": "1",
                         "html_type": "input",
                         "data_type": "varchar",
                         "is_super": "1",
-                        "is_system": "0"
+                        "is_system": "0",
+                        "value": "24T"
                     },
                     {
                         "attribute_id": "thumbnail",
-                        "value": "https://phatdatcomputer.vn/upload/product/the-nho-microsd-16g-hoco-box-class10-chinh-hang-chuyen-dung-camera1608467516.png",
                         "label": "Thumbnail",
+                        "admin_only": "0",
                         "html_type": "input",
                         "data_type": "varchar",
                         "is_super": "1",
-                        "is_system": "1"
+                        "is_system": "1",
+                        "value": "https://phatdatcomputer.vn/upload/product/the-nho-microsd-16g-hoco-box-class10-chinh-hang-chuyen-dung-camera1608467516.png"
+                    },
+                    {
+                        "attribute_id": "subsection",
+                        "label": "Tiểu mục",
+                        "admin_only": "1",
+                        "html_type": "multiinput",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": [
+                            "memory_card"
+                        ]
+                    },
+                    {
+                        "attribute_id": "images",
+                        "label": "Main images",
+                        "admin_only": "0",
+                        "html_type": "multiinput",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": [
+                            "https://phatdatcomputer.vn/upload/product/the-nho-microsd-16g-hoco-box-class10-chinh-hang-chuyen-dung-camera1608467516.png"
+                        ]
+                    },
+                    {
+                        "attribute_id": "name",
+                        "label": "Product name",
+                        "admin_only": "0",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": "Thẻ nhớ MicroSD 16G HOCO Box Class10 Chính hãng (Chuyên dùng Camera)"
+                    },
+                    {
+                        "attribute_id": "sup_link",
+                        "label": "Supplier url",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": "https://phatdatcomputer.vn/san-pham/the-nho-microsd-16g-hoco-box-class10-chinh-hang-chuyen-dung-camera"
+                    },
+                    {
+                        "attribute_id": "sup_name",
+                        "label": "Supplier product name",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": "Thẻ nhớ MicroSD 16G HOCO Box Class10 Chính hãng (Chuyên dùng Camera)"
                     }
                 ]
             }
@@ -598,93 +774,122 @@
                 "entity_id": "PR0007",
                 "product_id": "PR0007",
                 "type_id": "simple",
+                "created_at": 1614161045151,
+                "updated_at": 1614161045151,
+                "tier_price": 85000,
+                "available_quantity": 1,
+                "categories": [
+                    {
+                        "category_id": "storage",
+                        "position": 0
+                    }
+                ],
                 "attributes": [
                     {
-                        "attribute_id": "sup_price",
-                        "value": "85000",
-                        "label": "Supplier price",
-                        "html_type": "input",
-                        "data_type": "int",
-                        "is_super": "1",
-                        "is_system": "0"
-                    },
-                    {
-                        "attribute_id": "sup_name",
-                        "value": "Thẻ nhớ MicroSD 32G HOCO Box Class10 (Chuyên dùng Camera)",
-                        "label": "Supplier product name",
-                        "html_type": "input",
-                        "data_type": "varchar",
-                        "is_super": "1",
-                        "is_system": "0"
-                    },
-                    {
-                        "attribute_id": "sup_warranty",
-                        "value": "24T",
-                        "label": "Supplier warranty",
-                        "html_type": "input",
-                        "data_type": "varchar",
-                        "is_super": "1",
-                        "is_system": "0"
-                    },
-                    {
-                        "attribute_id": "thumbnail",
-                        "value": "https://phatdatcomputer.vn/upload/product/the-nho-microsd-32g-hoco-box-class10-chuyen-dung-camera1608467644_250x250.jpg",
-                        "label": "Thumbnail",
-                        "html_type": "input",
-                        "data_type": "varchar",
-                        "is_super": "1",
-                        "is_system": "1"
-                    },
-                    {
-                        "attribute_id": "sup_link",
-                        "value": "https://phatdatcomputer.vn/san-pham/the-nho-microsd-32g-hoco-box-class10-chuyen-dung-camera",
-                        "label": "Supplier url",
-                        "html_type": "input",
-                        "data_type": "varchar",
-                        "is_super": "1",
-                        "is_system": "0"
-                    },
-                    {
-                        "attribute_id": "images",
-                        "value": [
-                            "https://phatdatcomputer.vn/upload/product/the-nho-microsd-32g-hoco-box-class10-chuyen-dung-camera1608467644.jpg"
-                        ],
-                        "label": "Main images",
-                        "html_type": "multiinput",
-                        "data_type": "varchar",
-                        "is_super": "1",
-                        "is_system": "1"
-                    },
-                    {
-                        "attribute_id": "subsection",
-                        "value": [
-                            "memory_card"
-                        ],
-                        "label": "Tiểu mục",
-                        "html_type": "multiinput",
-                        "data_type": "varchar",
-                        "is_super": "1",
-                        "is_system": "1"
-                    },
-                    {
                         "attribute_id": "is_new",
-                        "value": "1",
                         "label": "SP mới",
+                        "admin_only": "1",
                         "html_type": "boolean",
                         "data_type": "int",
                         "validation": "0|1",
                         "is_super": "1",
-                        "is_system": "1"
+                        "is_system": "1",
+                        "value": 1
                     },
                     {
                         "attribute_id": "is_online",
-                        "value": "0",
                         "label": "Online",
+                        "admin_only": "0",
                         "html_type": "boolean",
                         "data_type": "int",
                         "validation": "0|1",
                         "is_super": "1",
-                        "is_system": "1"
+                        "is_system": "1",
+                        "value": 0
+                    },
+                    {
+                        "attribute_id": "sup_price",
+                        "label": "Supplier price",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "int",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": 85000
+                    },
+                    {
+                        "attribute_id": "thumbnail",
+                        "label": "Thumbnail",
+                        "admin_only": "0",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": "https://phatdatcomputer.vn/upload/product/the-nho-microsd-32g-hoco-box-class10-chuyen-dung-camera1608467644_250x250.jpg"
+                    },
+                    {
+                        "attribute_id": "images",
+                        "label": "Main images",
+                        "admin_only": "0",
+                        "html_type": "multiinput",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": [
+                            "https://phatdatcomputer.vn/upload/product/the-nho-microsd-32g-hoco-box-class10-chuyen-dung-camera1608467644.jpg"
+                        ]
+                    },
+                    {
+                        "attribute_id": "subsection",
+                        "label": "Tiểu mục",
+                        "admin_only": "1",
+                        "html_type": "multiinput",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": [
+                            "memory_card"
+                        ]
+                    },
+                    {
+                        "attribute_id": "name",
+                        "label": "Product name",
+                        "admin_only": "0",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": "Thẻ nhớ MicroSD 32G HOCO Box Class10 (Chuyên dùng Camera)"
+                    },
+                    {
+                        "attribute_id": "sup_link",
+                        "label": "Supplier url",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": "https://phatdatcomputer.vn/san-pham/the-nho-microsd-32g-hoco-box-class10-chuyen-dung-camera"
+                    },
+                    {
+                        "attribute_id": "sup_name",
+                        "label": "Supplier product name",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": "Thẻ nhớ MicroSD 32G HOCO Box Class10 (Chuyên dùng Camera)"
+                    },
+                    {
+                        "attribute_id": "sup_warranty",
+                        "label": "Supplier warranty",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": "24T"
                     }
                 ]
             }
@@ -696,93 +901,122 @@
                 "entity_id": "PR0008",
                 "product_id": "PR0008",
                 "type_id": "simple",
+                "created_at": 1614161045151,
+                "updated_at": 1614161045151,
+                "tier_price": 176000,
+                "available_quantity": 1,
+                "categories": [
+                    {
+                        "category_id": "storage",
+                        "position": 0
+                    }
+                ],
                 "attributes": [
                     {
-                        "attribute_id": "thumbnail",
-                        "value": "https://phatdatcomputer.vn/upload/product/the-nho-microsd-64g-hoco-box-class10-chuyen-camera1610940674.png",
-                        "label": "Thumbnail",
-                        "html_type": "input",
-                        "data_type": "varchar",
+                        "attribute_id": "is_new",
+                        "label": "SP mới",
+                        "admin_only": "1",
+                        "html_type": "boolean",
+                        "data_type": "int",
+                        "validation": "0|1",
                         "is_super": "1",
-                        "is_system": "1"
-                    },
-                    {
-                        "attribute_id": "images",
-                        "value": [
-                            "https://phatdatcomputer.vn/upload/product/the-nho-microsd-64g-hoco-box-class10-chuyen-camera1610940674.png"
-                        ],
-                        "label": "Main images",
-                        "html_type": "multiinput",
-                        "data_type": "varchar",
-                        "is_super": "1",
-                        "is_system": "1"
+                        "is_system": "1",
+                        "value": 1
                     },
                     {
                         "attribute_id": "is_online",
-                        "value": "0",
                         "label": "Online",
+                        "admin_only": "0",
                         "html_type": "boolean",
                         "data_type": "int",
                         "validation": "0|1",
                         "is_super": "1",
-                        "is_system": "1"
-                    },
-                    {
-                        "attribute_id": "sup_warranty",
-                        "value": "24T",
-                        "label": "Supplier warranty",
-                        "html_type": "input",
-                        "data_type": "varchar",
-                        "is_super": "1",
-                        "is_system": "0"
-                    },
-                    {
-                        "attribute_id": "sup_name",
-                        "value": "Thẻ nhớ MicroSD 64G HOCO Box Class10 (Chuyên dùng Camera)",
-                        "label": "Supplier product name",
-                        "html_type": "input",
-                        "data_type": "varchar",
-                        "is_super": "1",
-                        "is_system": "0"
-                    },
-                    {
-                        "attribute_id": "sup_link",
-                        "value": "https://phatdatcomputer.vn/san-pham/the-nho-microsd-64g-hoco-box-class10-chuyen-dung-camera",
-                        "label": "Supplier url",
-                        "html_type": "input",
-                        "data_type": "varchar",
-                        "is_super": "1",
-                        "is_system": "0"
-                    },
-                    {
-                        "attribute_id": "subsection",
-                        "value": [
-                            "memory_card"
-                        ],
-                        "label": "Tiểu mục",
-                        "html_type": "multiinput",
-                        "data_type": "varchar",
-                        "is_super": "1",
-                        "is_system": "1"
-                    },
-                    {
-                        "attribute_id": "is_new",
-                        "value": "1",
-                        "label": "SP mới",
-                        "html_type": "boolean",
-                        "data_type": "int",
-                        "validation": "0|1",
-                        "is_super": "1",
-                        "is_system": "1"
+                        "is_system": "1",
+                        "value": 0
                     },
                     {
                         "attribute_id": "sup_price",
-                        "value": "176000",
                         "label": "Supplier price",
+                        "admin_only": "1",
                         "html_type": "input",
                         "data_type": "int",
                         "is_super": "1",
-                        "is_system": "0"
+                        "is_system": "0",
+                        "value": 176000
+                    },
+                    {
+                        "attribute_id": "images",
+                        "label": "Main images",
+                        "admin_only": "0",
+                        "html_type": "multiinput",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": [
+                            "https://phatdatcomputer.vn/upload/product/the-nho-microsd-64g-hoco-box-class10-chuyen-camera1610940674.png"
+                        ]
+                    },
+                    {
+                        "attribute_id": "name",
+                        "label": "Product name",
+                        "admin_only": "0",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": "Thẻ nhớ MicroSD 64G HOCO Box Class10 (Chuyên dùng Camera)"
+                    },
+                    {
+                        "attribute_id": "sup_link",
+                        "label": "Supplier url",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": "https://phatdatcomputer.vn/san-pham/the-nho-microsd-64g-hoco-box-class10-chuyen-dung-camera"
+                    },
+                    {
+                        "attribute_id": "sup_name",
+                        "label": "Supplier product name",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": "Thẻ nhớ MicroSD 64G HOCO Box Class10 (Chuyên dùng Camera)"
+                    },
+                    {
+                        "attribute_id": "sup_warranty",
+                        "label": "Supplier warranty",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": "24T"
+                    },
+                    {
+                        "attribute_id": "thumbnail",
+                        "label": "Thumbnail",
+                        "admin_only": "0",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": "https://phatdatcomputer.vn/upload/product/the-nho-microsd-64g-hoco-box-class10-chuyen-camera1610940674.png"
+                    },
+                    {
+                        "attribute_id": "subsection",
+                        "label": "Tiểu mục",
+                        "admin_only": "1",
+                        "html_type": "multiinput",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": [
+                            "memory_card"
+                        ]
                     }
                 ]
             }
@@ -794,93 +1028,122 @@
                 "entity_id": "PR0009",
                 "product_id": "PR0009",
                 "type_id": "simple",
+                "created_at": 1614161045151,
+                "updated_at": 1614161045151,
+                "tier_price": 394000,
+                "available_quantity": 1,
+                "categories": [
+                    {
+                        "category_id": "storage",
+                        "position": 0
+                    }
+                ],
                 "attributes": [
                     {
-                        "attribute_id": "sup_price",
-                        "value": "394000",
-                        "label": "Supplier price",
-                        "html_type": "input",
-                        "data_type": "int",
-                        "is_super": "1",
-                        "is_system": "0"
-                    },
-                    {
-                        "attribute_id": "thumbnail",
-                        "value": "https://phatdatcomputer.vn/upload/product/the-nho-microsd-128g-hoco-box-class10-chinh-hang-chuyen-dung-camera1608467742_250x250.jpg",
-                        "label": "Thumbnail",
-                        "html_type": "input",
-                        "data_type": "varchar",
-                        "is_super": "1",
-                        "is_system": "1"
-                    },
-                    {
-                        "attribute_id": "subsection",
-                        "value": [
-                            "memory_card"
-                        ],
-                        "label": "Tiểu mục",
-                        "html_type": "multiinput",
-                        "data_type": "varchar",
-                        "is_super": "1",
-                        "is_system": "1"
-                    },
-                    {
-                        "attribute_id": "is_new",
-                        "value": "1",
-                        "label": "SP mới",
-                        "html_type": "boolean",
-                        "data_type": "int",
-                        "validation": "0|1",
-                        "is_super": "1",
-                        "is_system": "1"
-                    },
-                    {
                         "attribute_id": "is_online",
-                        "value": "0",
                         "label": "Online",
+                        "admin_only": "0",
                         "html_type": "boolean",
                         "data_type": "int",
                         "validation": "0|1",
                         "is_super": "1",
-                        "is_system": "1"
+                        "is_system": "1",
+                        "value": 0
+                    },
+                    {
+                        "attribute_id": "sup_price",
+                        "label": "Supplier price",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "int",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": 394000
                     },
                     {
                         "attribute_id": "images",
-                        "value": [
-                            "https://phatdatcomputer.vn/upload/product/the-nho-microsd-128g-hoco-box-class10-chinh-hang-chuyen-dung-camera1608467742.jpg"
-                        ],
                         "label": "Main images",
+                        "admin_only": "0",
                         "html_type": "multiinput",
                         "data_type": "varchar",
                         "is_super": "1",
-                        "is_system": "1"
+                        "is_system": "1",
+                        "value": [
+                            "https://phatdatcomputer.vn/upload/product/the-nho-microsd-128g-hoco-box-class10-chinh-hang-chuyen-dung-camera1608467742.jpg"
+                        ]
                     },
                     {
-                        "attribute_id": "sup_warranty",
-                        "value": "24T",
-                        "label": "Supplier warranty",
+                        "attribute_id": "subsection",
+                        "label": "Tiểu mục",
+                        "admin_only": "1",
+                        "html_type": "multiinput",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": [
+                            "memory_card"
+                        ]
+                    },
+                    {
+                        "attribute_id": "name",
+                        "label": "Product name",
+                        "admin_only": "0",
                         "html_type": "input",
                         "data_type": "varchar",
                         "is_super": "1",
-                        "is_system": "0"
-                    },
-                    {
-                        "attribute_id": "sup_name",
-                        "value": "Thẻ nhớ MicroSD 128G HOCO Box Class10 Chính hãng (Chuyên dùng Camera)",
-                        "label": "Supplier product name",
-                        "html_type": "input",
-                        "data_type": "varchar",
-                        "is_super": "1",
-                        "is_system": "0"
+                        "is_system": "1",
+                        "value": "Thẻ nhớ MicroSD 128G HOCO Box Class10 Chính hãng (Chuyên dùng Camera)"
                     },
                     {
                         "attribute_id": "sup_link",
-                        "value": "https://phatdatcomputer.vn/san-pham/the-nho-microsd-128g-hoco-box-class10-chinh-hang-chuyen-dung-camera",
                         "label": "Supplier url",
+                        "admin_only": "1",
                         "html_type": "input",
                         "data_type": "varchar",
                         "is_super": "1",
-                        "is_system": "0"
+                        "is_system": "0",
+                        "value": "https://phatdatcomputer.vn/san-pham/the-nho-microsd-128g-hoco-box-class10-chinh-hang-chuyen-dung-camera"
+                    },
+                    {
+                        "attribute_id": "sup_name",
+                        "label": "Supplier product name",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": "Thẻ nhớ MicroSD 128G HOCO Box Class10 Chính hãng (Chuyên dùng Camera)"
+                    },
+                    {
+                        "attribute_id": "sup_warranty",
+                        "label": "Supplier warranty",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": "24T"
+                    },
+                    {
+                        "attribute_id": "thumbnail",
+                        "label": "Thumbnail",
+                        "admin_only": "0",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": "https://phatdatcomputer.vn/upload/product/the-nho-microsd-128g-hoco-box-class10-chinh-hang-chuyen-dung-camera1608467742_250x250.jpg"
+                    },
+                    {
+                        "attribute_id": "is_new",
+                        "label": "SP mới",
+                        "admin_only": "1",
+                        "html_type": "boolean",
+                        "data_type": "int",
+                        "validation": "0|1",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": 1
                     }
                 ]
             }
@@ -892,93 +1155,122 @@
                 "entity_id": "PR0010",
                 "product_id": "PR0010",
                 "type_id": "simple",
+                "created_at": 1614161045151,
+                "updated_at": 1614161045151,
+                "tier_price": 59000,
+                "available_quantity": 1,
+                "categories": [
+                    {
+                        "category_id": "charger",
+                        "position": 0
+                    }
+                ],
                 "attributes": [
                     {
-                        "attribute_id": "sup_warranty",
-                        "value": "12T",
-                        "label": "Supplier warranty",
-                        "html_type": "input",
-                        "data_type": "varchar",
-                        "is_super": "1",
-                        "is_system": "0"
-                    },
-                    {
                         "attribute_id": "is_new",
-                        "value": "1",
                         "label": "SP mới",
+                        "admin_only": "1",
                         "html_type": "boolean",
                         "data_type": "int",
                         "validation": "0|1",
                         "is_super": "1",
-                        "is_system": "1"
-                    },
-                    {
-                        "attribute_id": "subsection",
-                        "value": [
-                            "charge_cable"
-                        ],
-                        "label": "Tiểu mục",
-                        "html_type": "multiinput",
-                        "data_type": "varchar",
-                        "is_super": "1",
-                        "is_system": "1"
-                    },
-                    {
-                        "attribute_id": "images",
-                        "value": [
-                            "https://phatdatcomputer.vn/upload/product/cap-sac-nhanh-hoco-x21-plus-typec1582976472.png"
-                        ],
-                        "label": "Main images",
-                        "html_type": "multiinput",
-                        "data_type": "varchar",
-                        "is_super": "1",
-                        "is_system": "1"
-                    },
-                    {
-                        "attribute_id": "sup_link",
-                        "value": "https://phatdatcomputer.vn/san-pham/cap-sac-nhanh-hoco-x21-plus-typec-silicone-30a-1m",
-                        "label": "Supplier url",
-                        "html_type": "input",
-                        "data_type": "varchar",
-                        "is_super": "1",
-                        "is_system": "0"
-                    },
-                    {
-                        "attribute_id": "thumbnail",
-                        "value": "https://phatdatcomputer.vn/upload/product/cap-sac-nhanh-hoco-x21-plus-typec1582976472.png",
-                        "label": "Thumbnail",
-                        "html_type": "input",
-                        "data_type": "varchar",
-                        "is_super": "1",
-                        "is_system": "1"
-                    },
-                    {
-                        "attribute_id": "sup_name",
-                        "value": "Cáp sạc nhanh HOCO X21 Plus Type-C (Silicone, 3.0A, 1m)",
-                        "label": "Supplier product name",
-                        "html_type": "input",
-                        "data_type": "varchar",
-                        "is_super": "1",
-                        "is_system": "0"
-                    },
-                    {
-                        "attribute_id": "sup_price",
-                        "value": "59000",
-                        "label": "Supplier price",
-                        "html_type": "input",
-                        "data_type": "int",
-                        "is_super": "1",
-                        "is_system": "0"
+                        "is_system": "1",
+                        "value": 1
                     },
                     {
                         "attribute_id": "is_online",
-                        "value": "0",
                         "label": "Online",
+                        "admin_only": "0",
                         "html_type": "boolean",
                         "data_type": "int",
                         "validation": "0|1",
                         "is_super": "1",
-                        "is_system": "1"
+                        "is_system": "1",
+                        "value": 0
+                    },
+                    {
+                        "attribute_id": "sup_name",
+                        "label": "Supplier product name",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": "Cáp sạc nhanh HOCO X21 Plus Type-C (Silicone, 3.0A, 1m)"
+                    },
+                    {
+                        "attribute_id": "sup_warranty",
+                        "label": "Supplier warranty",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": "12T"
+                    },
+                    {
+                        "attribute_id": "sup_price",
+                        "label": "Supplier price",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "int",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": 59000
+                    },
+                    {
+                        "attribute_id": "subsection",
+                        "label": "Tiểu mục",
+                        "admin_only": "1",
+                        "html_type": "multiinput",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": [
+                            "charge_cable"
+                        ]
+                    },
+                    {
+                        "attribute_id": "images",
+                        "label": "Main images",
+                        "admin_only": "0",
+                        "html_type": "multiinput",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": [
+                            "https://phatdatcomputer.vn/upload/product/cap-sac-nhanh-hoco-x21-plus-typec1582976472.png"
+                        ]
+                    },
+                    {
+                        "attribute_id": "name",
+                        "label": "Product name",
+                        "admin_only": "0",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": "Cáp sạc nhanh HOCO X21 Plus Type-C (Silicone, 3.0A, 1m)"
+                    },
+                    {
+                        "attribute_id": "sup_link",
+                        "label": "Supplier url",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": "https://phatdatcomputer.vn/san-pham/cap-sac-nhanh-hoco-x21-plus-typec-silicone-30a-1m"
+                    },
+                    {
+                        "attribute_id": "thumbnail",
+                        "label": "Thumbnail",
+                        "admin_only": "0",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": "https://phatdatcomputer.vn/upload/product/cap-sac-nhanh-hoco-x21-plus-typec1582976472.png"
                     }
                 ]
             }
@@ -990,93 +1282,122 @@
                 "entity_id": "PR0011",
                 "product_id": "PR0011",
                 "type_id": "simple",
+                "created_at": 1614161045151,
+                "updated_at": 1614161045151,
+                "tier_price": 54000,
+                "available_quantity": 1,
+                "categories": [
+                    {
+                        "category_id": "charger",
+                        "position": 0
+                    }
+                ],
                 "attributes": [
                     {
                         "attribute_id": "is_online",
-                        "value": "0",
                         "label": "Online",
+                        "admin_only": "0",
                         "html_type": "boolean",
                         "data_type": "int",
                         "validation": "0|1",
                         "is_super": "1",
-                        "is_system": "1"
-                    },
-                    {
-                        "attribute_id": "subsection",
-                        "value": [
-                            "charge_cable"
-                        ],
-                        "label": "Tiểu mục",
-                        "html_type": "multiinput",
-                        "data_type": "varchar",
-                        "is_super": "1",
-                        "is_system": "1"
-                    },
-                    {
-                        "attribute_id": "images",
-                        "value": [
-                            "https://phatdatcomputer.vn/upload/product/cap-sac-nhanh-hoco-x21-plus-microusb-silicol-30a-1m1582976831.png"
-                        ],
-                        "label": "Main images",
-                        "html_type": "multiinput",
-                        "data_type": "varchar",
-                        "is_super": "1",
-                        "is_system": "1"
-                    },
-                    {
-                        "attribute_id": "is_new",
-                        "value": "1",
-                        "label": "SP mới",
-                        "html_type": "boolean",
-                        "data_type": "int",
-                        "validation": "0|1",
-                        "is_super": "1",
-                        "is_system": "1"
-                    },
-                    {
-                        "attribute_id": "thumbnail",
-                        "value": "https://phatdatcomputer.vn/upload/product/cap-sac-nhanh-hoco-x21-plus-microusb-silicol-30a-1m1582976831.png",
-                        "label": "Thumbnail",
-                        "html_type": "input",
-                        "data_type": "varchar",
-                        "is_super": "1",
-                        "is_system": "1"
+                        "is_system": "1",
+                        "value": 0
                     },
                     {
                         "attribute_id": "sup_price",
-                        "value": "54000",
                         "label": "Supplier price",
+                        "admin_only": "1",
                         "html_type": "input",
                         "data_type": "int",
                         "is_super": "1",
-                        "is_system": "0"
+                        "is_system": "0",
+                        "value": 54000
                     },
                     {
                         "attribute_id": "sup_link",
-                        "value": "https://phatdatcomputer.vn/san-pham/cap-sac-nhanh-hoco-x21-plus-microusb-silicone-30a-1m",
                         "label": "Supplier url",
+                        "admin_only": "1",
                         "html_type": "input",
                         "data_type": "varchar",
                         "is_super": "1",
-                        "is_system": "0"
-                    },
-                    {
-                        "attribute_id": "sup_name",
-                        "value": "Cáp sạc nhanh HOCO X21 Plus MicroUSB (Silicone, 3.0A, 1m)",
-                        "label": "Supplier product name",
-                        "html_type": "input",
-                        "data_type": "varchar",
-                        "is_super": "1",
-                        "is_system": "0"
+                        "is_system": "0",
+                        "value": "https://phatdatcomputer.vn/san-pham/cap-sac-nhanh-hoco-x21-plus-microusb-silicone-30a-1m"
                     },
                     {
                         "attribute_id": "sup_warranty",
-                        "value": "12T",
                         "label": "Supplier warranty",
+                        "admin_only": "1",
                         "html_type": "input",
                         "data_type": "varchar",
                         "is_super": "1",
-                        "is_system": "0"
+                        "is_system": "0",
+                        "value": "12T"
+                    },
+                    {
+                        "attribute_id": "subsection",
+                        "label": "Tiểu mục",
+                        "admin_only": "1",
+                        "html_type": "multiinput",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": [
+                            "charge_cable"
+                        ]
+                    },
+                    {
+                        "attribute_id": "images",
+                        "label": "Main images",
+                        "admin_only": "0",
+                        "html_type": "multiinput",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": [
+                            "https://phatdatcomputer.vn/upload/product/cap-sac-nhanh-hoco-x21-plus-microusb-silicol-30a-1m1582976831.png"
+                        ]
+                    },
+                    {
+                        "attribute_id": "name",
+                        "label": "Product name",
+                        "admin_only": "0",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": "Cáp sạc nhanh HOCO X21 Plus MicroUSB (Silicone, 3.0A, 1m)"
+                    },
+                    {
+                        "attribute_id": "thumbnail",
+                        "label": "Thumbnail",
+                        "admin_only": "0",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": "https://phatdatcomputer.vn/upload/product/cap-sac-nhanh-hoco-x21-plus-microusb-silicol-30a-1m1582976831.png"
+                    },
+                    {
+                        "attribute_id": "is_new",
+                        "label": "SP mới",
+                        "admin_only": "1",
+                        "html_type": "boolean",
+                        "data_type": "int",
+                        "validation": "0|1",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": 1
+                    },
+                    {
+                        "attribute_id": "sup_name",
+                        "label": "Supplier product name",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": "Cáp sạc nhanh HOCO X21 Plus MicroUSB (Silicone, 3.0A, 1m)"
                     }
                 ]
             }
@@ -1088,93 +1409,122 @@
                 "entity_id": "PR0012",
                 "product_id": "PR0012",
                 "type_id": "simple",
+                "created_at": 1614161045151,
+                "updated_at": 1614161045151,
+                "tier_price": 29000,
+                "available_quantity": 1,
+                "categories": [
+                    {
+                        "category_id": "charger",
+                        "position": 0
+                    }
+                ],
                 "attributes": [
                     {
-                        "attribute_id": "is_online",
-                        "value": "0",
-                        "label": "Online",
-                        "html_type": "boolean",
-                        "data_type": "int",
-                        "validation": "0|1",
-                        "is_super": "1",
-                        "is_system": "1"
-                    },
-                    {
-                        "attribute_id": "sup_price",
-                        "value": "29000",
-                        "label": "Supplier price",
-                        "html_type": "input",
-                        "data_type": "int",
-                        "is_super": "1",
-                        "is_system": "0"
-                    },
-                    {
                         "attribute_id": "is_new",
-                        "value": "1",
                         "label": "SP mới",
+                        "admin_only": "1",
                         "html_type": "boolean",
                         "data_type": "int",
                         "validation": "0|1",
                         "is_super": "1",
-                        "is_system": "1"
+                        "is_system": "1",
+                        "value": 1
                     },
                     {
-                        "attribute_id": "sup_link",
-                        "value": "https://phatdatcomputer.vn/san-pham/cap-sac-nhanh-hoco-x26-typec-day-du-1m",
-                        "label": "Supplier url",
-                        "html_type": "input",
-                        "data_type": "varchar",
+                        "attribute_id": "is_online",
+                        "label": "Online",
+                        "admin_only": "0",
+                        "html_type": "boolean",
+                        "data_type": "int",
+                        "validation": "0|1",
                         "is_super": "1",
-                        "is_system": "0"
-                    },
-                    {
-                        "attribute_id": "sup_name",
-                        "value": "Cáp sạc nhanh HOCO X26 Type-C (Dây dù, 1m)",
-                        "label": "Supplier product name",
-                        "html_type": "input",
-                        "data_type": "varchar",
-                        "is_super": "1",
-                        "is_system": "0"
-                    },
-                    {
-                        "attribute_id": "sup_warranty",
-                        "value": "12T",
-                        "label": "Supplier warranty",
-                        "html_type": "input",
-                        "data_type": "varchar",
-                        "is_super": "1",
-                        "is_system": "0"
-                    },
-                    {
-                        "attribute_id": "thumbnail",
-                        "value": "https://phatdatcomputer.vn/upload/product/cap-sac-hoco-x26-typec-1m1553543019_250x250.jpg",
-                        "label": "Thumbnail",
-                        "html_type": "input",
-                        "data_type": "varchar",
-                        "is_super": "1",
-                        "is_system": "1"
+                        "is_system": "1",
+                        "value": 0
                     },
                     {
                         "attribute_id": "subsection",
-                        "value": [
-                            "charge_cable"
-                        ],
                         "label": "Tiểu mục",
+                        "admin_only": "1",
                         "html_type": "multiinput",
                         "data_type": "varchar",
                         "is_super": "1",
-                        "is_system": "1"
+                        "is_system": "1",
+                        "value": [
+                            "charge_cable"
+                        ]
                     },
                     {
                         "attribute_id": "images",
-                        "value": [
-                            "https://phatdatcomputer.vn/upload/product/cap-sac-hoco-x26-typec-1m1553543019.jpg"
-                        ],
                         "label": "Main images",
+                        "admin_only": "0",
                         "html_type": "multiinput",
                         "data_type": "varchar",
                         "is_super": "1",
-                        "is_system": "1"
+                        "is_system": "1",
+                        "value": [
+                            "https://phatdatcomputer.vn/upload/product/cap-sac-hoco-x26-typec-1m1553543019.jpg"
+                        ]
+                    },
+                    {
+                        "attribute_id": "sup_price",
+                        "label": "Supplier price",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "int",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": 29000
+                    },
+                    {
+                        "attribute_id": "name",
+                        "label": "Product name",
+                        "admin_only": "0",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": "Cáp sạc nhanh HOCO X26 Type-C (Dây dù, 1m)"
+                    },
+                    {
+                        "attribute_id": "sup_link",
+                        "label": "Supplier url",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": "https://phatdatcomputer.vn/san-pham/cap-sac-nhanh-hoco-x26-typec-day-du-1m"
+                    },
+                    {
+                        "attribute_id": "sup_name",
+                        "label": "Supplier product name",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": "Cáp sạc nhanh HOCO X26 Type-C (Dây dù, 1m)"
+                    },
+                    {
+                        "attribute_id": "sup_warranty",
+                        "label": "Supplier warranty",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": "12T"
+                    },
+                    {
+                        "attribute_id": "thumbnail",
+                        "label": "Thumbnail",
+                        "admin_only": "0",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": "https://phatdatcomputer.vn/upload/product/cap-sac-hoco-x26-typec-1m1553543019_250x250.jpg"
                     }
                 ]
             }
@@ -1186,93 +1536,122 @@
                 "entity_id": "PR0013",
                 "product_id": "PR0013",
                 "type_id": "simple",
+                "created_at": 1614161045151,
+                "updated_at": 1614161045151,
+                "tier_price": 23000,
+                "available_quantity": 1,
+                "categories": [
+                    {
+                        "category_id": "charger",
+                        "position": 0
+                    }
+                ],
                 "attributes": [
                     {
-                        "attribute_id": "is_new",
-                        "value": "1",
-                        "label": "SP mới",
-                        "html_type": "boolean",
+                        "attribute_id": "sup_price",
+                        "label": "Supplier price",
+                        "admin_only": "1",
+                        "html_type": "input",
                         "data_type": "int",
-                        "validation": "0|1",
                         "is_super": "1",
-                        "is_system": "1"
+                        "is_system": "0",
+                        "value": 23000
                     },
                     {
                         "attribute_id": "is_online",
-                        "value": "0",
                         "label": "Online",
+                        "admin_only": "0",
                         "html_type": "boolean",
                         "data_type": "int",
                         "validation": "0|1",
                         "is_super": "1",
-                        "is_system": "1"
+                        "is_system": "1",
+                        "value": 0
                     },
                     {
-                        "attribute_id": "sup_price",
-                        "value": "23000",
-                        "label": "Supplier price",
-                        "html_type": "input",
+                        "attribute_id": "is_new",
+                        "label": "SP mới",
+                        "admin_only": "1",
+                        "html_type": "boolean",
                         "data_type": "int",
+                        "validation": "0|1",
                         "is_super": "1",
-                        "is_system": "0"
-                    },
-                    {
-                        "attribute_id": "sup_link",
-                        "value": "https://phatdatcomputer.vn/san-pham/cap-sac-nhanh-hoco-x37-microusb-24a-nhua-pvc-1m",
-                        "label": "Supplier url",
-                        "html_type": "input",
-                        "data_type": "varchar",
-                        "is_super": "1",
-                        "is_system": "0"
-                    },
-                    {
-                        "attribute_id": "sup_name",
-                        "value": "Cáp sạc nhanh HOCO X37 MicroUSB (2.4A, nhựa PVC, 1m)",
-                        "label": "Supplier product name",
-                        "html_type": "input",
-                        "data_type": "varchar",
-                        "is_super": "1",
-                        "is_system": "0"
-                    },
-                    {
-                        "attribute_id": "sup_warranty",
-                        "value": "12T",
-                        "label": "Supplier warranty",
-                        "html_type": "input",
-                        "data_type": "varchar",
-                        "is_super": "1",
-                        "is_system": "0"
-                    },
-                    {
-                        "attribute_id": "thumbnail",
-                        "value": "https://phatdatcomputer.vn/upload/product/cap-sac-nhanh-hoco-x37-microusb-24a-nhua-pvc-1m1596106196_250x250.jpg",
-                        "label": "Thumbnail",
-                        "html_type": "input",
-                        "data_type": "varchar",
-                        "is_super": "1",
-                        "is_system": "1"
+                        "is_system": "1",
+                        "value": 1
                     },
                     {
                         "attribute_id": "images",
-                        "value": [
-                            "https://phatdatcomputer.vn/upload/product/cap-sac-nhanh-hoco-x37-microusb-24a-nhua-pvc-1m1596106196.jpg"
-                        ],
                         "label": "Main images",
+                        "admin_only": "0",
                         "html_type": "multiinput",
                         "data_type": "varchar",
                         "is_super": "1",
-                        "is_system": "1"
+                        "is_system": "1",
+                        "value": [
+                            "https://phatdatcomputer.vn/upload/product/cap-sac-nhanh-hoco-x37-microusb-24a-nhua-pvc-1m1596106196.jpg"
+                        ]
                     },
                     {
                         "attribute_id": "subsection",
-                        "value": [
-                            "charge_cable"
-                        ],
                         "label": "Tiểu mục",
+                        "admin_only": "1",
                         "html_type": "multiinput",
                         "data_type": "varchar",
                         "is_super": "1",
-                        "is_system": "1"
+                        "is_system": "1",
+                        "value": [
+                            "charge_cable"
+                        ]
+                    },
+                    {
+                        "attribute_id": "name",
+                        "label": "Product name",
+                        "admin_only": "0",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": "Cáp sạc nhanh HOCO X37 MicroUSB (2.4A, nhựa PVC, 1m)"
+                    },
+                    {
+                        "attribute_id": "sup_link",
+                        "label": "Supplier url",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": "https://phatdatcomputer.vn/san-pham/cap-sac-nhanh-hoco-x37-microusb-24a-nhua-pvc-1m"
+                    },
+                    {
+                        "attribute_id": "sup_name",
+                        "label": "Supplier product name",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": "Cáp sạc nhanh HOCO X37 MicroUSB (2.4A, nhựa PVC, 1m)"
+                    },
+                    {
+                        "attribute_id": "sup_warranty",
+                        "label": "Supplier warranty",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": "12T"
+                    },
+                    {
+                        "attribute_id": "thumbnail",
+                        "label": "Thumbnail",
+                        "admin_only": "0",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": "https://phatdatcomputer.vn/upload/product/cap-sac-nhanh-hoco-x37-microusb-24a-nhua-pvc-1m1596106196_250x250.jpg"
                     }
                 ]
             }
@@ -1284,93 +1663,122 @@
                 "entity_id": "PR0014",
                 "product_id": "PR0014",
                 "type_id": "simple",
+                "created_at": 1614161045151,
+                "updated_at": 1614161045151,
+                "tier_price": 30000,
+                "available_quantity": 1,
+                "categories": [
+                    {
+                        "category_id": "charger",
+                        "position": 0
+                    }
+                ],
                 "attributes": [
                     {
-                        "attribute_id": "is_new",
-                        "value": "1",
-                        "label": "SP mới",
-                        "html_type": "boolean",
-                        "data_type": "int",
-                        "validation": "0|1",
+                        "attribute_id": "sup_warranty",
+                        "label": "Supplier warranty",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "varchar",
                         "is_super": "1",
-                        "is_system": "1"
+                        "is_system": "0",
+                        "value": "12T"
                     },
                     {
                         "attribute_id": "is_online",
-                        "value": "0",
                         "label": "Online",
+                        "admin_only": "0",
                         "html_type": "boolean",
                         "data_type": "int",
                         "validation": "0|1",
                         "is_super": "1",
-                        "is_system": "1"
+                        "is_system": "1",
+                        "value": 0
                     },
                     {
-                        "attribute_id": "sup_price",
-                        "value": "30000",
-                        "label": "Supplier price",
-                        "html_type": "input",
+                        "attribute_id": "is_new",
+                        "label": "SP mới",
+                        "admin_only": "1",
+                        "html_type": "boolean",
                         "data_type": "int",
+                        "validation": "0|1",
                         "is_super": "1",
-                        "is_system": "0"
-                    },
-                    {
-                        "attribute_id": "sup_link",
-                        "value": "https://phatdatcomputer.vn/san-pham/cap-sac-nhanh-hoco-x37-lightning-24a-nhua-pvc-1m",
-                        "label": "Supplier url",
-                        "html_type": "input",
-                        "data_type": "varchar",
-                        "is_super": "1",
-                        "is_system": "0"
-                    },
-                    {
-                        "attribute_id": "sup_name",
-                        "value": "Cáp sạc nhanh HOCO X37 Lightning (2.4A, nhựa PVC, 1m)",
-                        "label": "Supplier product name",
-                        "html_type": "input",
-                        "data_type": "varchar",
-                        "is_super": "1",
-                        "is_system": "0"
-                    },
-                    {
-                        "attribute_id": "images",
-                        "value": [
-                            "https://phatdatcomputer.vn/upload/product/cap-sac-nhanh-hoco-x37-lightning-24a-nhua-pvc-1m1596106150.jpg"
-                        ],
-                        "label": "Main images",
-                        "html_type": "multiinput",
-                        "data_type": "varchar",
-                        "is_super": "1",
-                        "is_system": "1"
-                    },
-                    {
-                        "attribute_id": "sup_warranty",
-                        "value": "12T",
-                        "label": "Supplier warranty",
-                        "html_type": "input",
-                        "data_type": "varchar",
-                        "is_super": "1",
-                        "is_system": "0"
+                        "is_system": "1",
+                        "value": 1
                     },
                     {
                         "attribute_id": "thumbnail",
-                        "value": "https://phatdatcomputer.vn/upload/product/cap-sac-nhanh-hoco-x37-lightning-24a-nhua-pvc-1m1596106150_250x250.jpg",
                         "label": "Thumbnail",
+                        "admin_only": "0",
                         "html_type": "input",
                         "data_type": "varchar",
                         "is_super": "1",
-                        "is_system": "1"
+                        "is_system": "1",
+                        "value": "https://phatdatcomputer.vn/upload/product/cap-sac-nhanh-hoco-x37-lightning-24a-nhua-pvc-1m1596106150_250x250.jpg"
+                    },
+                    {
+                        "attribute_id": "name",
+                        "label": "Product name",
+                        "admin_only": "0",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": "Cáp sạc nhanh HOCO X37 Lightning (2.4A, nhựa PVC, 1m)"
                     },
                     {
                         "attribute_id": "subsection",
-                        "value": [
-                            "charge_cable"
-                        ],
                         "label": "Tiểu mục",
+                        "admin_only": "1",
                         "html_type": "multiinput",
                         "data_type": "varchar",
                         "is_super": "1",
-                        "is_system": "1"
+                        "is_system": "1",
+                        "value": [
+                            "charge_cable"
+                        ]
+                    },
+                    {
+                        "attribute_id": "sup_name",
+                        "label": "Supplier product name",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": "Cáp sạc nhanh HOCO X37 Lightning (2.4A, nhựa PVC, 1m)"
+                    },
+                    {
+                        "attribute_id": "sup_link",
+                        "label": "Supplier url",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": "https://phatdatcomputer.vn/san-pham/cap-sac-nhanh-hoco-x37-lightning-24a-nhua-pvc-1m"
+                    },
+                    {
+                        "attribute_id": "sup_price",
+                        "label": "Supplier price",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "int",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": 30000
+                    },
+                    {
+                        "attribute_id": "images",
+                        "label": "Main images",
+                        "admin_only": "0",
+                        "html_type": "multiinput",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": [
+                            "https://phatdatcomputer.vn/upload/product/cap-sac-nhanh-hoco-x37-lightning-24a-nhua-pvc-1m1596106150.jpg"
+                        ]
                     }
                 ]
             }
@@ -1382,93 +1790,122 @@
                 "entity_id": "PR0015",
                 "product_id": "PR0015",
                 "type_id": "simple",
+                "created_at": 1614161045151,
+                "updated_at": 1614161045151,
+                "tier_price": 27000,
+                "available_quantity": 1,
+                "categories": [
+                    {
+                        "category_id": "charger",
+                        "position": 0
+                    }
+                ],
                 "attributes": [
                     {
-                        "attribute_id": "sup_warranty",
-                        "value": "12T",
-                        "label": "Supplier warranty",
-                        "html_type": "input",
+                        "attribute_id": "images",
+                        "label": "Main images",
+                        "admin_only": "0",
+                        "html_type": "multiinput",
                         "data_type": "varchar",
                         "is_super": "1",
-                        "is_system": "0"
-                    },
-                    {
-                        "attribute_id": "thumbnail",
-                        "value": "https://phatdatcomputer.vn/upload/product/cap-sac-nhanh-hoco-x37-typec-24a-nhua-pvc-1m1596106016.png",
-                        "label": "Thumbnail",
-                        "html_type": "input",
-                        "data_type": "varchar",
-                        "is_super": "1",
-                        "is_system": "1"
-                    },
-                    {
-                        "attribute_id": "is_new",
-                        "value": "1",
-                        "label": "SP mới",
-                        "html_type": "boolean",
-                        "data_type": "int",
-                        "validation": "0|1",
-                        "is_super": "1",
-                        "is_system": "1"
-                    },
-                    {
-                        "attribute_id": "is_online",
-                        "value": "0",
-                        "label": "Online",
-                        "html_type": "boolean",
-                        "data_type": "int",
-                        "validation": "0|1",
-                        "is_super": "1",
-                        "is_system": "1"
+                        "is_system": "1",
+                        "value": [
+                            "https://phatdatcomputer.vn/upload/product/cap-sac-nhanh-hoco-x37-typec-24a-nhua-pvc-1m1596106016.png"
+                        ]
                     },
                     {
                         "attribute_id": "subsection",
+                        "label": "Tiểu mục",
+                        "admin_only": "1",
+                        "html_type": "multiinput",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
                         "value": [
                             "charge_cable"
-                        ],
-                        "label": "Tiểu mục",
-                        "html_type": "multiinput",
-                        "data_type": "varchar",
-                        "is_super": "1",
-                        "is_system": "1"
+                        ]
                     },
                     {
-                        "attribute_id": "images",
-                        "value": [
-                            "https://phatdatcomputer.vn/upload/product/cap-sac-nhanh-hoco-x37-typec-24a-nhua-pvc-1m1596106016.png"
-                        ],
-                        "label": "Main images",
-                        "html_type": "multiinput",
-                        "data_type": "varchar",
+                        "attribute_id": "is_online",
+                        "label": "Online",
+                        "admin_only": "0",
+                        "html_type": "boolean",
+                        "data_type": "int",
+                        "validation": "0|1",
                         "is_super": "1",
-                        "is_system": "1"
+                        "is_system": "1",
+                        "value": 0
                     },
                     {
                         "attribute_id": "sup_price",
-                        "value": "27000",
                         "label": "Supplier price",
+                        "admin_only": "1",
                         "html_type": "input",
                         "data_type": "int",
                         "is_super": "1",
-                        "is_system": "0"
+                        "is_system": "0",
+                        "value": 27000
+                    },
+                    {
+                        "attribute_id": "is_new",
+                        "label": "SP mới",
+                        "admin_only": "1",
+                        "html_type": "boolean",
+                        "data_type": "int",
+                        "validation": "0|1",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": 1
+                    },
+                    {
+                        "attribute_id": "name",
+                        "label": "Product name",
+                        "admin_only": "0",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": "Cáp sạc nhanh HOCO X37 Type-C (2.4A, nhựa PVC, 1m)"
                     },
                     {
                         "attribute_id": "sup_link",
-                        "value": "https://phatdatcomputer.vn/san-pham/cap-sac-nhanh-hoco-x37-typec-24a-nhua-pvc-1m",
                         "label": "Supplier url",
+                        "admin_only": "1",
                         "html_type": "input",
                         "data_type": "varchar",
                         "is_super": "1",
-                        "is_system": "0"
+                        "is_system": "0",
+                        "value": "https://phatdatcomputer.vn/san-pham/cap-sac-nhanh-hoco-x37-typec-24a-nhua-pvc-1m"
                     },
                     {
                         "attribute_id": "sup_name",
-                        "value": "Cáp sạc nhanh HOCO X37 Type-C (2.4A, nhựa PVC, 1m)",
                         "label": "Supplier product name",
+                        "admin_only": "1",
                         "html_type": "input",
                         "data_type": "varchar",
                         "is_super": "1",
-                        "is_system": "0"
+                        "is_system": "0",
+                        "value": "Cáp sạc nhanh HOCO X37 Type-C (2.4A, nhựa PVC, 1m)"
+                    },
+                    {
+                        "attribute_id": "sup_warranty",
+                        "label": "Supplier warranty",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": "12T"
+                    },
+                    {
+                        "attribute_id": "thumbnail",
+                        "label": "Thumbnail",
+                        "admin_only": "0",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": "https://phatdatcomputer.vn/upload/product/cap-sac-nhanh-hoco-x37-typec-24a-nhua-pvc-1m1596106016.png"
                     }
                 ]
             }
@@ -1480,93 +1917,122 @@
                 "entity_id": "PR0016",
                 "product_id": "PR0016",
                 "type_id": "simple",
+                "created_at": 1614161045151,
+                "updated_at": 1614161045151,
+                "tier_price": 73000,
+                "available_quantity": 1,
+                "categories": [
+                    {
+                        "category_id": "charger",
+                        "position": 0
+                    }
+                ],
                 "attributes": [
                     {
-                        "attribute_id": "images",
-                        "value": [
-                            "https://phatdatcomputer.vn/upload/product/cap-sac-nhanh-hoco-u29-microusb-nhua-tpe-20a-man-hinh-led-12m1592308512.png"
-                        ],
-                        "label": "Main images",
+                        "attribute_id": "subsection",
+                        "label": "Tiểu mục",
+                        "admin_only": "1",
                         "html_type": "multiinput",
                         "data_type": "varchar",
                         "is_super": "1",
-                        "is_system": "1"
-                    },
-                    {
-                        "attribute_id": "sup_warranty",
-                        "value": "12T",
-                        "label": "Supplier warranty",
-                        "html_type": "input",
-                        "data_type": "varchar",
-                        "is_super": "1",
-                        "is_system": "0"
-                    },
-                    {
-                        "attribute_id": "thumbnail",
-                        "value": "https://phatdatcomputer.vn/upload/product/cap-sac-nhanh-hoco-u29-microusb-nhua-tpe-20a-man-hinh-led-12m1592308512.png",
-                        "label": "Thumbnail",
-                        "html_type": "input",
-                        "data_type": "varchar",
-                        "is_super": "1",
-                        "is_system": "1"
-                    },
-                    {
-                        "attribute_id": "sup_price",
-                        "value": "73000",
-                        "label": "Supplier price",
-                        "html_type": "input",
-                        "data_type": "int",
-                        "is_super": "1",
-                        "is_system": "0"
-                    },
-                    {
-                        "attribute_id": "is_new",
-                        "value": "1",
-                        "label": "SP mới",
-                        "html_type": "boolean",
-                        "data_type": "int",
-                        "validation": "0|1",
-                        "is_super": "1",
-                        "is_system": "1"
-                    },
-                    {
-                        "attribute_id": "is_online",
-                        "value": "0",
-                        "label": "Online",
-                        "html_type": "boolean",
-                        "data_type": "int",
-                        "validation": "0|1",
-                        "is_super": "1",
-                        "is_system": "1"
+                        "is_system": "1",
+                        "value": [
+                            "charge_cable"
+                        ]
                     },
                     {
                         "attribute_id": "sup_link",
-                        "value": "https://phatdatcomputer.vn/san-pham/cap-sac-nhanh-hoco-u29-microusb-nhua-tpe-20a-man-hinh-led-12m",
                         "label": "Supplier url",
+                        "admin_only": "1",
                         "html_type": "input",
                         "data_type": "varchar",
                         "is_super": "1",
-                        "is_system": "0"
+                        "is_system": "0",
+                        "value": "https://phatdatcomputer.vn/san-pham/cap-sac-nhanh-hoco-u29-microusb-nhua-tpe-20a-man-hinh-led-12m"
                     },
                     {
-                        "attribute_id": "sup_name",
-                        "value": "Cáp sạc nhanh HOCO U29 MicroUSB (Nhựa TPE, 2.0A, Màn hình LED, 1.2m)",
-                        "label": "Supplier product name",
+                        "attribute_id": "sup_warranty",
+                        "label": "Supplier warranty",
+                        "admin_only": "1",
                         "html_type": "input",
                         "data_type": "varchar",
                         "is_super": "1",
-                        "is_system": "0"
+                        "is_system": "0",
+                        "value": "12T"
                     },
                     {
-                        "attribute_id": "subsection",
-                        "value": [
-                            "charge_cable"
-                        ],
-                        "label": "Tiểu mục",
+                        "attribute_id": "name",
+                        "label": "Product name",
+                        "admin_only": "0",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": "Cáp sạc nhanh HOCO U29 MicroUSB (Nhựa TPE, 2.0A, Màn hình LED, 1.2m)"
+                    },
+                    {
+                        "attribute_id": "sup_price",
+                        "label": "Supplier price",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "int",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": 73000
+                    },
+                    {
+                        "attribute_id": "is_online",
+                        "label": "Online",
+                        "admin_only": "0",
+                        "html_type": "boolean",
+                        "data_type": "int",
+                        "validation": "0|1",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": 0
+                    },
+                    {
+                        "attribute_id": "images",
+                        "label": "Main images",
+                        "admin_only": "0",
                         "html_type": "multiinput",
                         "data_type": "varchar",
                         "is_super": "1",
-                        "is_system": "1"
+                        "is_system": "1",
+                        "value": [
+                            "https://phatdatcomputer.vn/upload/product/cap-sac-nhanh-hoco-u29-microusb-nhua-tpe-20a-man-hinh-led-12m1592308512.png"
+                        ]
+                    },
+                    {
+                        "attribute_id": "sup_name",
+                        "label": "Supplier product name",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": "Cáp sạc nhanh HOCO U29 MicroUSB (Nhựa TPE, 2.0A, Màn hình LED, 1.2m)"
+                    },
+                    {
+                        "attribute_id": "thumbnail",
+                        "label": "Thumbnail",
+                        "admin_only": "0",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": "https://phatdatcomputer.vn/upload/product/cap-sac-nhanh-hoco-u29-microusb-nhua-tpe-20a-man-hinh-led-12m1592308512.png"
+                    },
+                    {
+                        "attribute_id": "is_new",
+                        "label": "SP mới",
+                        "admin_only": "1",
+                        "html_type": "boolean",
+                        "data_type": "int",
+                        "validation": "0|1",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": 1
                     }
                 ]
             }
@@ -1578,93 +2044,122 @@
                 "entity_id": "PR0017",
                 "product_id": "PR0017",
                 "type_id": "simple",
+                "created_at": 1614161045151,
+                "updated_at": 1614161045151,
+                "tier_price": 39000,
+                "available_quantity": 1,
+                "categories": [
+                    {
+                        "category_id": "charger",
+                        "position": 0
+                    }
+                ],
                 "attributes": [
                     {
-                        "attribute_id": "sup_price",
-                        "value": "39000",
-                        "label": "Supplier price",
-                        "html_type": "input",
-                        "data_type": "int",
+                        "attribute_id": "images",
+                        "label": "Main images",
+                        "admin_only": "0",
+                        "html_type": "multiinput",
+                        "data_type": "varchar",
                         "is_super": "1",
-                        "is_system": "0"
-                    },
-                    {
-                        "attribute_id": "is_online",
-                        "value": "0",
-                        "label": "Online",
-                        "html_type": "boolean",
-                        "data_type": "int",
-                        "validation": "0|1",
-                        "is_super": "1",
-                        "is_system": "1"
+                        "is_system": "1",
+                        "value": [
+                            "https://phatdatcomputer.vn/upload/product/cap-sac-nhanh-hoco-u55-microusb-day-du-24a-12m1591925476.png"
+                        ]
                     },
                     {
                         "attribute_id": "is_new",
-                        "value": "1",
                         "label": "SP mới",
+                        "admin_only": "1",
                         "html_type": "boolean",
                         "data_type": "int",
                         "validation": "0|1",
                         "is_super": "1",
-                        "is_system": "1"
-                    },
-                    {
-                        "attribute_id": "images",
-                        "value": [
-                            "https://phatdatcomputer.vn/upload/product/cap-sac-nhanh-hoco-u55-microusb-day-du-24a-12m1591925476.png"
-                        ],
-                        "label": "Main images",
-                        "html_type": "multiinput",
-                        "data_type": "varchar",
-                        "is_super": "1",
-                        "is_system": "1"
+                        "is_system": "1",
+                        "value": 1
                     },
                     {
                         "attribute_id": "subsection",
-                        "value": [
-                            "charge_cable"
-                        ],
                         "label": "Tiểu mục",
+                        "admin_only": "1",
                         "html_type": "multiinput",
                         "data_type": "varchar",
                         "is_super": "1",
-                        "is_system": "1"
+                        "is_system": "1",
+                        "value": [
+                            "charge_cable"
+                        ]
                     },
                     {
-                        "attribute_id": "sup_link",
-                        "value": "https://phatdatcomputer.vn/san-pham/cap-sac-nhanh-hoco-u55-microusb-day-du-24a-12m",
-                        "label": "Supplier url",
+                        "attribute_id": "sup_price",
+                        "label": "Supplier price",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "int",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": 39000
+                    },
+                    {
+                        "attribute_id": "is_online",
+                        "label": "Online",
+                        "admin_only": "0",
+                        "html_type": "boolean",
+                        "data_type": "int",
+                        "validation": "0|1",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": 0
+                    },
+                    {
+                        "attribute_id": "name",
+                        "label": "Product name",
+                        "admin_only": "0",
                         "html_type": "input",
                         "data_type": "varchar",
                         "is_super": "1",
-                        "is_system": "0"
+                        "is_system": "1",
+                        "value": "Cáp sạc nhanh HOCO U55 MicroUSB (Dây dù, 2.4A, 1.2m)"
                     },
                     {
                         "attribute_id": "sup_name",
-                        "value": "Cáp sạc nhanh HOCO U55 MicroUSB (Dây dù, 2.4A, 1.2m)",
                         "label": "Supplier product name",
+                        "admin_only": "1",
                         "html_type": "input",
                         "data_type": "varchar",
                         "is_super": "1",
-                        "is_system": "0"
+                        "is_system": "0",
+                        "value": "Cáp sạc nhanh HOCO U55 MicroUSB (Dây dù, 2.4A, 1.2m)"
                     },
                     {
                         "attribute_id": "sup_warranty",
-                        "value": "12T",
                         "label": "Supplier warranty",
+                        "admin_only": "1",
                         "html_type": "input",
                         "data_type": "varchar",
                         "is_super": "1",
-                        "is_system": "0"
+                        "is_system": "0",
+                        "value": "12T"
                     },
                     {
                         "attribute_id": "thumbnail",
-                        "value": "https://phatdatcomputer.vn/upload/product/cap-sac-nhanh-hoco-u55-microusb-day-du-24a-12m1591925476.png",
                         "label": "Thumbnail",
+                        "admin_only": "0",
                         "html_type": "input",
                         "data_type": "varchar",
                         "is_super": "1",
-                        "is_system": "1"
+                        "is_system": "1",
+                        "value": "https://phatdatcomputer.vn/upload/product/cap-sac-nhanh-hoco-u55-microusb-day-du-24a-12m1591925476.png"
+                    },
+                    {
+                        "attribute_id": "sup_link",
+                        "label": "Supplier url",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": "https://phatdatcomputer.vn/san-pham/cap-sac-nhanh-hoco-u55-microusb-day-du-24a-12m"
                     }
                 ]
             }
@@ -1676,93 +2171,122 @@
                 "entity_id": "PR0018",
                 "product_id": "PR0018",
                 "type_id": "simple",
+                "created_at": 1614161045151,
+                "updated_at": 1614161045151,
+                "tier_price": 75000,
+                "available_quantity": 1,
+                "categories": [
+                    {
+                        "category_id": "charger",
+                        "position": 0
+                    }
+                ],
                 "attributes": [
                     {
-                        "attribute_id": "thumbnail",
-                        "value": "https://phatdatcomputer.vn/upload/product/cap-sac-nhanh-hoco-x51-typec-to-typec-50a-nhua-pvc-2m1607165014.png",
-                        "label": "Thumbnail",
-                        "html_type": "input",
-                        "data_type": "varchar",
-                        "is_super": "1",
-                        "is_system": "1"
-                    },
-                    {
-                        "attribute_id": "sup_warranty",
-                        "value": "12T",
-                        "label": "Supplier warranty",
-                        "html_type": "input",
-                        "data_type": "varchar",
-                        "is_super": "1",
-                        "is_system": "0"
-                    },
-                    {
-                        "attribute_id": "is_online",
-                        "value": "0",
-                        "label": "Online",
-                        "html_type": "boolean",
-                        "data_type": "int",
-                        "validation": "0|1",
-                        "is_super": "1",
-                        "is_system": "1"
-                    },
-                    {
-                        "attribute_id": "is_new",
-                        "value": "1",
-                        "label": "SP mới",
-                        "html_type": "boolean",
-                        "data_type": "int",
-                        "validation": "0|1",
-                        "is_super": "1",
-                        "is_system": "1"
-                    },
-                    {
-                        "attribute_id": "images",
-                        "value": [
-                            "https://phatdatcomputer.vn/upload/product/cap-sac-nhanh-hoco-x51-typec-to-typec-50a-nhua-pvc-2m1607165014.png"
-                        ],
-                        "label": "Main images",
+                        "attribute_id": "subsection",
+                        "label": "Tiểu mục",
+                        "admin_only": "1",
                         "html_type": "multiinput",
                         "data_type": "varchar",
                         "is_super": "1",
-                        "is_system": "1"
-                    },
-                    {
-                        "attribute_id": "subsection",
+                        "is_system": "1",
                         "value": [
                             "charge_cable"
-                        ],
-                        "label": "Tiểu mục",
-                        "html_type": "multiinput",
-                        "data_type": "varchar",
-                        "is_super": "1",
-                        "is_system": "1"
+                        ]
                     },
                     {
                         "attribute_id": "sup_name",
-                        "value": "Cáp sạc nhanh HOCO X51 Type-C To Type-C (5.0A, nhựa PVC, 2m)",
                         "label": "Supplier product name",
+                        "admin_only": "1",
                         "html_type": "input",
                         "data_type": "varchar",
                         "is_super": "1",
-                        "is_system": "0"
+                        "is_system": "0",
+                        "value": "Cáp sạc nhanh HOCO X51 Type-C To Type-C (5.0A, nhựa PVC, 2m)"
                     },
                     {
-                        "attribute_id": "sup_link",
-                        "value": "https://phatdatcomputer.vn/san-pham/cap-sac-nhanh-hoco-x51-typec-to-typec-50a-nhua-pvc-2m",
-                        "label": "Supplier url",
-                        "html_type": "input",
+                        "attribute_id": "images",
+                        "label": "Main images",
+                        "admin_only": "0",
+                        "html_type": "multiinput",
                         "data_type": "varchar",
                         "is_super": "1",
-                        "is_system": "0"
+                        "is_system": "1",
+                        "value": [
+                            "https://phatdatcomputer.vn/upload/product/cap-sac-nhanh-hoco-x51-typec-to-typec-50a-nhua-pvc-2m1607165014.png"
+                        ]
                     },
                     {
                         "attribute_id": "sup_price",
-                        "value": "75000",
                         "label": "Supplier price",
+                        "admin_only": "1",
                         "html_type": "input",
                         "data_type": "int",
                         "is_super": "1",
-                        "is_system": "0"
+                        "is_system": "0",
+                        "value": 75000
+                    },
+                    {
+                        "attribute_id": "sup_link",
+                        "label": "Supplier url",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": "https://phatdatcomputer.vn/san-pham/cap-sac-nhanh-hoco-x51-typec-to-typec-50a-nhua-pvc-2m"
+                    },
+                    {
+                        "attribute_id": "sup_warranty",
+                        "label": "Supplier warranty",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": "12T"
+                    },
+                    {
+                        "attribute_id": "is_online",
+                        "label": "Online",
+                        "admin_only": "0",
+                        "html_type": "boolean",
+                        "data_type": "int",
+                        "validation": "0|1",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": 0
+                    },
+                    {
+                        "attribute_id": "is_new",
+                        "label": "SP mới",
+                        "admin_only": "1",
+                        "html_type": "boolean",
+                        "data_type": "int",
+                        "validation": "0|1",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": 1
+                    },
+                    {
+                        "attribute_id": "thumbnail",
+                        "label": "Thumbnail",
+                        "admin_only": "0",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": "https://phatdatcomputer.vn/upload/product/cap-sac-nhanh-hoco-x51-typec-to-typec-50a-nhua-pvc-2m1607165014.png"
+                    },
+                    {
+                        "attribute_id": "name",
+                        "label": "Product name",
+                        "admin_only": "0",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": "Cáp sạc nhanh HOCO X51 Type-C To Type-C (5.0A, nhựa PVC, 2m)"
                     }
                 ]
             }
@@ -1774,93 +2298,122 @@
                 "entity_id": "PR0019",
                 "product_id": "PR0019",
                 "type_id": "simple",
+                "created_at": 1614161045151,
+                "updated_at": 1614161045151,
+                "tier_price": 46000,
+                "available_quantity": 1,
+                "categories": [
+                    {
+                        "category_id": "charger",
+                        "position": 0
+                    }
+                ],
                 "attributes": [
                     {
-                        "attribute_id": "sup_name",
-                        "value": "Cáp sạc nhanh HOCO U57 Lightning (Nhựa TPE, 2.4A, 1.2m)",
-                        "label": "Supplier product name",
-                        "html_type": "input",
-                        "data_type": "varchar",
-                        "is_super": "1",
-                        "is_system": "0"
-                    },
-                    {
-                        "attribute_id": "sup_link",
-                        "value": "https://phatdatcomputer.vn/san-pham/cap-sac-nhanh-hoco-u57-lightning-nhua-tpe-24a-12m",
-                        "label": "Supplier url",
-                        "html_type": "input",
-                        "data_type": "varchar",
-                        "is_super": "1",
-                        "is_system": "0"
-                    },
-                    {
-                        "attribute_id": "is_online",
-                        "value": "0",
-                        "label": "Online",
+                        "attribute_id": "is_new",
+                        "label": "SP mới",
+                        "admin_only": "1",
                         "html_type": "boolean",
                         "data_type": "int",
                         "validation": "0|1",
                         "is_super": "1",
-                        "is_system": "1"
+                        "is_system": "1",
+                        "value": 1
                     },
                     {
                         "attribute_id": "subsection",
-                        "value": [
-                            "charge_cable"
-                        ],
                         "label": "Tiểu mục",
+                        "admin_only": "1",
                         "html_type": "multiinput",
                         "data_type": "varchar",
                         "is_super": "1",
-                        "is_system": "1"
+                        "is_system": "1",
+                        "value": [
+                            "charge_cable"
+                        ]
+                    },
+                    {
+                        "attribute_id": "images",
+                        "label": "Main images",
+                        "admin_only": "0",
+                        "html_type": "multiinput",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": [
+                            "https://phatdatcomputer.vn/upload/product/cap-sac-nhanh-hoco-u57-iphone1569489238.jpeg"
+                        ]
+                    },
+                    {
+                        "attribute_id": "sup_link",
+                        "label": "Supplier url",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": "https://phatdatcomputer.vn/san-pham/cap-sac-nhanh-hoco-u57-lightning-nhua-tpe-24a-12m"
+                    },
+                    {
+                        "attribute_id": "sup_name",
+                        "label": "Supplier product name",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": "Cáp sạc nhanh HOCO U57 Lightning (Nhựa TPE, 2.4A, 1.2m)"
                     },
                     {
                         "attribute_id": "sup_warranty",
-                        "value": "12T",
                         "label": "Supplier warranty",
+                        "admin_only": "1",
                         "html_type": "input",
                         "data_type": "varchar",
                         "is_super": "1",
-                        "is_system": "0"
+                        "is_system": "0",
+                        "value": "12T"
                     },
                     {
                         "attribute_id": "thumbnail",
-                        "value": "https://phatdatcomputer.vn/upload/product/cap-sac-nhanh-hoco-u57-iphone1569489238.jpeg",
                         "label": "Thumbnail",
+                        "admin_only": "0",
                         "html_type": "input",
                         "data_type": "varchar",
                         "is_super": "1",
-                        "is_system": "1"
+                        "is_system": "1",
+                        "value": "https://phatdatcomputer.vn/upload/product/cap-sac-nhanh-hoco-u57-iphone1569489238.jpeg"
+                    },
+                    {
+                        "attribute_id": "name",
+                        "label": "Product name",
+                        "admin_only": "0",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": "Cáp sạc nhanh HOCO U57 Lightning (Nhựa TPE, 2.4A, 1.2m)"
                     },
                     {
                         "attribute_id": "sup_price",
-                        "value": "46000",
                         "label": "Supplier price",
+                        "admin_only": "1",
                         "html_type": "input",
                         "data_type": "int",
                         "is_super": "1",
-                        "is_system": "0"
+                        "is_system": "0",
+                        "value": 46000
                     },
                     {
-                        "attribute_id": "is_new",
-                        "value": "1",
-                        "label": "SP mới",
+                        "attribute_id": "is_online",
+                        "label": "Online",
+                        "admin_only": "0",
                         "html_type": "boolean",
                         "data_type": "int",
                         "validation": "0|1",
                         "is_super": "1",
-                        "is_system": "1"
-                    },
-                    {
-                        "attribute_id": "images",
-                        "value": [
-                            "https://phatdatcomputer.vn/upload/product/cap-sac-nhanh-hoco-u57-iphone1569489238.jpeg"
-                        ],
-                        "label": "Main images",
-                        "html_type": "multiinput",
-                        "data_type": "varchar",
-                        "is_super": "1",
-                        "is_system": "1"
+                        "is_system": "1",
+                        "value": 0
                     }
                 ]
             }
@@ -1872,93 +2425,122 @@
                 "entity_id": "PR0020",
                 "product_id": "PR0020",
                 "type_id": "simple",
+                "created_at": 1614161045151,
+                "updated_at": 1614161045151,
+                "tier_price": 46000,
+                "available_quantity": 1,
+                "categories": [
+                    {
+                        "category_id": "charger",
+                        "position": 0
+                    }
+                ],
                 "attributes": [
                     {
-                        "attribute_id": "sup_price",
-                        "value": "46000",
-                        "label": "Supplier price",
-                        "html_type": "input",
-                        "data_type": "int",
+                        "attribute_id": "subsection",
+                        "label": "Tiểu mục",
+                        "admin_only": "1",
+                        "html_type": "multiinput",
+                        "data_type": "varchar",
                         "is_super": "1",
-                        "is_system": "0"
-                    },
-                    {
-                        "attribute_id": "is_online",
-                        "value": "0",
-                        "label": "Online",
-                        "html_type": "boolean",
-                        "data_type": "int",
-                        "validation": "0|1",
-                        "is_super": "1",
-                        "is_system": "1"
+                        "is_system": "1",
+                        "value": [
+                            "charge_cable"
+                        ]
                     },
                     {
                         "attribute_id": "is_new",
-                        "value": "1",
                         "label": "SP mới",
+                        "admin_only": "1",
                         "html_type": "boolean",
                         "data_type": "int",
                         "validation": "0|1",
                         "is_super": "1",
-                        "is_system": "1"
+                        "is_system": "1",
+                        "value": 1
                     },
                     {
-                        "attribute_id": "subsection",
-                        "value": [
-                            "charge_cable"
-                        ],
-                        "label": "Tiểu mục",
-                        "html_type": "multiinput",
+                        "attribute_id": "name",
+                        "label": "Product name",
+                        "admin_only": "0",
+                        "html_type": "input",
                         "data_type": "varchar",
                         "is_super": "1",
-                        "is_system": "1"
+                        "is_system": "1",
+                        "value": "Cáp sạc nhanh HOCO U55 Type-C (Dây dù, 2.4A, 1.2m)"
                     },
                     {
                         "attribute_id": "sup_link",
-                        "value": "https://phatdatcomputer.vn/san-pham/cap-sac-nhanh-hoco-u55-typec-day-du-24a-12m",
                         "label": "Supplier url",
+                        "admin_only": "1",
                         "html_type": "input",
                         "data_type": "varchar",
                         "is_super": "1",
-                        "is_system": "0"
+                        "is_system": "0",
+                        "value": "https://phatdatcomputer.vn/san-pham/cap-sac-nhanh-hoco-u55-typec-day-du-24a-12m"
                     },
                     {
                         "attribute_id": "sup_name",
-                        "value": "Cáp sạc nhanh HOCO U55 Type-C (Dây dù, 2.4A, 1.2m)",
                         "label": "Supplier product name",
+                        "admin_only": "1",
                         "html_type": "input",
                         "data_type": "varchar",
                         "is_super": "1",
-                        "is_system": "0"
+                        "is_system": "0",
+                        "value": "Cáp sạc nhanh HOCO U55 Type-C (Dây dù, 2.4A, 1.2m)"
                     },
                     {
                         "attribute_id": "sup_warranty",
-                        "value": "12T",
                         "label": "Supplier warranty",
+                        "admin_only": "1",
                         "html_type": "input",
                         "data_type": "varchar",
                         "is_super": "1",
-                        "is_system": "0"
+                        "is_system": "0",
+                        "value": "12T"
+                    },
+                    {
+                        "attribute_id": "is_online",
+                        "label": "Online",
+                        "admin_only": "0",
+                        "html_type": "boolean",
+                        "data_type": "int",
+                        "validation": "0|1",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": 0
+                    },
+                    {
+                        "attribute_id": "sup_price",
+                        "label": "Supplier price",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "int",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": 46000
                     },
                     {
                         "attribute_id": "thumbnail",
-                        "value": "https://phatdatcomputer.vn/upload/product/cap-sac-nhanh-hoco-u55-typec-day-du-24a-12m1591925504.png",
                         "label": "Thumbnail",
+                        "admin_only": "0",
                         "html_type": "input",
                         "data_type": "varchar",
                         "is_super": "1",
-                        "is_system": "1"
+                        "is_system": "1",
+                        "value": "https://phatdatcomputer.vn/upload/product/cap-sac-nhanh-hoco-u55-typec-day-du-24a-12m1591925504.png"
                     },
                     {
                         "attribute_id": "images",
-                        "value": [
-                            "https://phatdatcomputer.vn/upload/product/cap-sac-nhanh-hoco-u55-typec-day-du-24a-12m1591925504.png"
-                        ],
                         "label": "Main images",
+                        "admin_only": "0",
                         "html_type": "multiinput",
                         "data_type": "varchar",
                         "is_super": "1",
-                        "is_system": "1"
+                        "is_system": "1",
+                        "value": [
+                            "https://phatdatcomputer.vn/upload/product/cap-sac-nhanh-hoco-u55-typec-day-du-24a-12m1591925504.png"
+                        ]
                     }
                 ]
             }
@@ -1970,93 +2552,122 @@
                 "entity_id": "PR0021",
                 "product_id": "PR0021",
                 "type_id": "simple",
+                "created_at": 1614161045151,
+                "updated_at": 1614161045151,
+                "tier_price": 45000,
+                "available_quantity": 1,
+                "categories": [
+                    {
+                        "category_id": "charger",
+                        "position": 0
+                    }
+                ],
                 "attributes": [
                     {
-                        "attribute_id": "thumbnail",
-                        "value": "https://phatdatcomputer.vn/upload/product/cap-sac-nhanh-hoco-u571569255216_250x250.jpg",
-                        "label": "Thumbnail",
-                        "html_type": "input",
+                        "attribute_id": "images",
+                        "label": "Main images",
+                        "admin_only": "0",
+                        "html_type": "multiinput",
                         "data_type": "varchar",
                         "is_super": "1",
-                        "is_system": "1"
-                    },
-                    {
-                        "attribute_id": "sup_price",
-                        "value": "45000",
-                        "label": "Supplier price",
-                        "html_type": "input",
-                        "data_type": "int",
-                        "is_super": "1",
-                        "is_system": "0"
-                    },
-                    {
-                        "attribute_id": "sup_warranty",
-                        "value": "12T",
-                        "label": "Supplier warranty",
-                        "html_type": "input",
-                        "data_type": "varchar",
-                        "is_super": "1",
-                        "is_system": "0"
-                    },
-                    {
-                        "attribute_id": "sup_name",
-                        "value": "Cáp sạc nhanh HOCO U57 MicroUSB (Nhựa TPE, 2.4A, 1.2m)",
-                        "label": "Supplier product name",
-                        "html_type": "input",
-                        "data_type": "varchar",
-                        "is_super": "1",
-                        "is_system": "0"
-                    },
-                    {
-                        "attribute_id": "sup_link",
-                        "value": "https://phatdatcomputer.vn/san-pham/cap-sac-nhanh-hoco-u57-microusb-nhua-tpe-24a-12m",
-                        "label": "Supplier url",
-                        "html_type": "input",
-                        "data_type": "varchar",
-                        "is_super": "1",
-                        "is_system": "0"
+                        "is_system": "1",
+                        "value": [
+                            "https://phatdatcomputer.vn/upload/product/cap-sac-nhanh-hoco-u571569255216.jpg"
+                        ]
                     },
                     {
                         "attribute_id": "subsection",
+                        "label": "Tiểu mục",
+                        "admin_only": "1",
+                        "html_type": "multiinput",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
                         "value": [
                             "charge_cable"
-                        ],
-                        "label": "Tiểu mục",
-                        "html_type": "multiinput",
-                        "data_type": "varchar",
-                        "is_super": "1",
-                        "is_system": "1"
-                    },
-                    {
-                        "attribute_id": "images",
-                        "value": [
-                            "https://phatdatcomputer.vn/upload/product/cap-sac-nhanh-hoco-u571569255216.jpg"
-                        ],
-                        "label": "Main images",
-                        "html_type": "multiinput",
-                        "data_type": "varchar",
-                        "is_super": "1",
-                        "is_system": "1"
-                    },
-                    {
-                        "attribute_id": "is_online",
-                        "value": "0",
-                        "label": "Online",
-                        "html_type": "boolean",
-                        "data_type": "int",
-                        "validation": "0|1",
-                        "is_super": "1",
-                        "is_system": "1"
+                        ]
                     },
                     {
                         "attribute_id": "is_new",
-                        "value": "1",
                         "label": "SP mới",
+                        "admin_only": "1",
                         "html_type": "boolean",
                         "data_type": "int",
                         "validation": "0|1",
                         "is_super": "1",
-                        "is_system": "1"
+                        "is_system": "1",
+                        "value": 1
+                    },
+                    {
+                        "attribute_id": "name",
+                        "label": "Product name",
+                        "admin_only": "0",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": "Cáp sạc nhanh HOCO U57 MicroUSB (Nhựa TPE, 2.4A, 1.2m)"
+                    },
+                    {
+                        "attribute_id": "sup_link",
+                        "label": "Supplier url",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": "https://phatdatcomputer.vn/san-pham/cap-sac-nhanh-hoco-u57-microusb-nhua-tpe-24a-12m"
+                    },
+                    {
+                        "attribute_id": "sup_name",
+                        "label": "Supplier product name",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": "Cáp sạc nhanh HOCO U57 MicroUSB (Nhựa TPE, 2.4A, 1.2m)"
+                    },
+                    {
+                        "attribute_id": "sup_warranty",
+                        "label": "Supplier warranty",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": "12T"
+                    },
+                    {
+                        "attribute_id": "thumbnail",
+                        "label": "Thumbnail",
+                        "admin_only": "0",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": "https://phatdatcomputer.vn/upload/product/cap-sac-nhanh-hoco-u571569255216_250x250.jpg"
+                    },
+                    {
+                        "attribute_id": "is_online",
+                        "label": "Online",
+                        "admin_only": "0",
+                        "html_type": "boolean",
+                        "data_type": "int",
+                        "validation": "0|1",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": 0
+                    },
+                    {
+                        "attribute_id": "sup_price",
+                        "label": "Supplier price",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "int",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": 45000
                     }
                 ]
             }
@@ -2068,93 +2679,122 @@
                 "entity_id": "PR0022",
                 "product_id": "PR0022",
                 "type_id": "simple",
+                "created_at": 1614161045151,
+                "updated_at": 1614161045151,
+                "tier_price": 47000,
+                "available_quantity": 1,
+                "categories": [
+                    {
+                        "category_id": "charger",
+                        "position": 0
+                    }
+                ],
                 "attributes": [
                     {
-                        "attribute_id": "thumbnail",
-                        "value": "https://phatdatcomputer.vn/upload/product/cap-sac-nhanh-hoco-u57-typec1569489370.jpeg",
-                        "label": "Thumbnail",
+                        "attribute_id": "sup_price",
+                        "label": "Supplier price",
+                        "admin_only": "1",
                         "html_type": "input",
-                        "data_type": "varchar",
-                        "is_super": "1",
-                        "is_system": "1"
-                    },
-                    {
-                        "attribute_id": "sup_name",
-                        "value": "Cáp sạc nhanh HOCO U57 Type-C (Nhựa TPE, 2.4A, 1.2m)",
-                        "label": "Supplier product name",
-                        "html_type": "input",
-                        "data_type": "varchar",
-                        "is_super": "1",
-                        "is_system": "0"
-                    },
-                    {
-                        "attribute_id": "sup_link",
-                        "value": "https://phatdatcomputer.vn/san-pham/cap-sac-nhanh-hoco-u57-typec-nhua-tpe-24a-12m",
-                        "label": "Supplier url",
-                        "html_type": "input",
-                        "data_type": "varchar",
-                        "is_super": "1",
-                        "is_system": "0"
-                    },
-                    {
-                        "attribute_id": "sup_warranty",
-                        "value": "12T",
-                        "label": "Supplier warranty",
-                        "html_type": "input",
-                        "data_type": "varchar",
-                        "is_super": "1",
-                        "is_system": "0"
-                    },
-                    {
-                        "attribute_id": "is_new",
-                        "value": "1",
-                        "label": "SP mới",
-                        "html_type": "boolean",
                         "data_type": "int",
-                        "validation": "0|1",
                         "is_super": "1",
-                        "is_system": "1"
-                    },
-                    {
-                        "attribute_id": "subsection",
-                        "value": [
-                            "charge_cable"
-                        ],
-                        "label": "Tiểu mục",
-                        "html_type": "multiinput",
-                        "data_type": "varchar",
-                        "is_super": "1",
-                        "is_system": "1"
-                    },
-                    {
-                        "attribute_id": "images",
-                        "value": [
-                            "https://phatdatcomputer.vn/upload/product/cap-sac-nhanh-hoco-u57-typec1569489370.jpeg"
-                        ],
-                        "label": "Main images",
-                        "html_type": "multiinput",
-                        "data_type": "varchar",
-                        "is_super": "1",
-                        "is_system": "1"
+                        "is_system": "0",
+                        "value": 47000
                     },
                     {
                         "attribute_id": "is_online",
-                        "value": "0",
                         "label": "Online",
+                        "admin_only": "0",
                         "html_type": "boolean",
                         "data_type": "int",
                         "validation": "0|1",
                         "is_super": "1",
-                        "is_system": "1"
+                        "is_system": "1",
+                        "value": 0
                     },
                     {
-                        "attribute_id": "sup_price",
-                        "value": "47000",
-                        "label": "Supplier price",
-                        "html_type": "input",
+                        "attribute_id": "is_new",
+                        "label": "SP mới",
+                        "admin_only": "1",
+                        "html_type": "boolean",
                         "data_type": "int",
+                        "validation": "0|1",
                         "is_super": "1",
-                        "is_system": "0"
+                        "is_system": "1",
+                        "value": 1
+                    },
+                    {
+                        "attribute_id": "name",
+                        "label": "Product name",
+                        "admin_only": "0",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": "Cáp sạc nhanh HOCO U57 Type-C (Nhựa TPE, 2.4A, 1.2m)"
+                    },
+                    {
+                        "attribute_id": "sup_link",
+                        "label": "Supplier url",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": "https://phatdatcomputer.vn/san-pham/cap-sac-nhanh-hoco-u57-typec-nhua-tpe-24a-12m"
+                    },
+                    {
+                        "attribute_id": "sup_warranty",
+                        "label": "Supplier warranty",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": "12T"
+                    },
+                    {
+                        "attribute_id": "thumbnail",
+                        "label": "Thumbnail",
+                        "admin_only": "0",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": "https://phatdatcomputer.vn/upload/product/cap-sac-nhanh-hoco-u57-typec1569489370.jpeg"
+                    },
+                    {
+                        "attribute_id": "subsection",
+                        "label": "Tiểu mục",
+                        "admin_only": "1",
+                        "html_type": "multiinput",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": [
+                            "charge_cable"
+                        ]
+                    },
+                    {
+                        "attribute_id": "sup_name",
+                        "label": "Supplier product name",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": "Cáp sạc nhanh HOCO U57 Type-C (Nhựa TPE, 2.4A, 1.2m)"
+                    },
+                    {
+                        "attribute_id": "images",
+                        "label": "Main images",
+                        "admin_only": "0",
+                        "html_type": "multiinput",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": [
+                            "https://phatdatcomputer.vn/upload/product/cap-sac-nhanh-hoco-u57-typec1569489370.jpeg"
+                        ]
                     }
                 ]
             }
@@ -2166,93 +2806,122 @@
                 "entity_id": "PR0023",
                 "product_id": "PR0023",
                 "type_id": "simple",
+                "created_at": 1614161045151,
+                "updated_at": 1614161045151,
+                "tier_price": 55000,
+                "available_quantity": 1,
+                "categories": [
+                    {
+                        "category_id": "charger",
+                        "position": 0
+                    }
+                ],
                 "attributes": [
                     {
-                        "attribute_id": "sup_name",
-                        "value": "Cáp sạc nhanh HOCO U74 MicroUSB (Dây vải bện, 1.2m, 2.4A)",
-                        "label": "Supplier product name",
-                        "html_type": "input",
+                        "attribute_id": "subsection",
+                        "label": "Tiểu mục",
+                        "admin_only": "1",
+                        "html_type": "multiinput",
                         "data_type": "varchar",
                         "is_super": "1",
-                        "is_system": "0"
-                    },
-                    {
-                        "attribute_id": "sup_link",
-                        "value": "https://phatdatcomputer.vn/san-pham/cap-sac-nhanh-hoco-u74-microusb-day-vai-ben-12m-24a",
-                        "label": "Supplier url",
-                        "html_type": "input",
-                        "data_type": "varchar",
-                        "is_super": "1",
-                        "is_system": "0"
+                        "is_system": "1",
+                        "value": [
+                            "charge_cable"
+                        ]
                     },
                     {
                         "attribute_id": "images",
-                        "value": [
-                            "https://phatdatcomputer.vn/upload/product/cap-sac-nhanh-hoco-u74-microusb-day-vai-ben-12m-24a1584016598.jpg"
-                        ],
                         "label": "Main images",
+                        "admin_only": "0",
                         "html_type": "multiinput",
                         "data_type": "varchar",
                         "is_super": "1",
-                        "is_system": "1"
+                        "is_system": "1",
+                        "value": [
+                            "https://phatdatcomputer.vn/upload/product/cap-sac-nhanh-hoco-u74-microusb-day-vai-ben-12m-24a1584016598.jpg"
+                        ]
                     },
                     {
                         "attribute_id": "is_new",
-                        "value": "1",
                         "label": "SP mới",
+                        "admin_only": "1",
                         "html_type": "boolean",
                         "data_type": "int",
                         "validation": "0|1",
                         "is_super": "1",
-                        "is_system": "1"
-                    },
-                    {
-                        "attribute_id": "sup_price",
-                        "value": "55000",
-                        "label": "Supplier price",
-                        "html_type": "input",
-                        "data_type": "int",
-                        "is_super": "1",
-                        "is_system": "0"
-                    },
-                    {
-                        "attribute_id": "is_online",
-                        "value": "0",
-                        "label": "Online",
-                        "html_type": "boolean",
-                        "data_type": "int",
-                        "validation": "0|1",
-                        "is_super": "1",
-                        "is_system": "1"
+                        "is_system": "1",
+                        "value": 1
                     },
                     {
                         "attribute_id": "thumbnail",
-                        "value": "https://phatdatcomputer.vn/upload/product/cap-sac-nhanh-hoco-u74-microusb-day-vai-ben-12m-24a1584016598_250x250.jpg",
                         "label": "Thumbnail",
+                        "admin_only": "0",
                         "html_type": "input",
                         "data_type": "varchar",
                         "is_super": "1",
-                        "is_system": "1"
+                        "is_system": "1",
+                        "value": "https://phatdatcomputer.vn/upload/product/cap-sac-nhanh-hoco-u74-microusb-day-vai-ben-12m-24a1584016598_250x250.jpg"
+                    },
+                    {
+                        "attribute_id": "is_online",
+                        "label": "Online",
+                        "admin_only": "0",
+                        "html_type": "boolean",
+                        "data_type": "int",
+                        "validation": "0|1",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": 0
+                    },
+                    {
+                        "attribute_id": "sup_price",
+                        "label": "Supplier price",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "int",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": 55000
+                    },
+                    {
+                        "attribute_id": "name",
+                        "label": "Product name",
+                        "admin_only": "0",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": "Cáp sạc nhanh HOCO U74 MicroUSB (Dây vải bện, 1.2m, 2.4A)"
+                    },
+                    {
+                        "attribute_id": "sup_link",
+                        "label": "Supplier url",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": "https://phatdatcomputer.vn/san-pham/cap-sac-nhanh-hoco-u74-microusb-day-vai-ben-12m-24a"
+                    },
+                    {
+                        "attribute_id": "sup_name",
+                        "label": "Supplier product name",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": "Cáp sạc nhanh HOCO U74 MicroUSB (Dây vải bện, 1.2m, 2.4A)"
                     },
                     {
                         "attribute_id": "sup_warranty",
-                        "value": "12T",
                         "label": "Supplier warranty",
+                        "admin_only": "1",
                         "html_type": "input",
                         "data_type": "varchar",
                         "is_super": "1",
-                        "is_system": "0"
-                    },
-                    {
-                        "attribute_id": "subsection",
-                        "value": [
-                            "charge_cable"
-                        ],
-                        "label": "Tiểu mục",
-                        "html_type": "multiinput",
-                        "data_type": "varchar",
-                        "is_super": "1",
-                        "is_system": "1"
+                        "is_system": "0",
+                        "value": "12T"
                     }
                 ]
             }
@@ -2264,93 +2933,122 @@
                 "entity_id": "PR0024",
                 "product_id": "PR0024",
                 "type_id": "simple",
+                "created_at": 1614161045151,
+                "updated_at": 1614161045151,
+                "tier_price": 57000,
+                "available_quantity": 1,
+                "categories": [
+                    {
+                        "category_id": "charger",
+                        "position": 0
+                    }
+                ],
                 "attributes": [
                     {
-                        "attribute_id": "subsection",
-                        "value": [
-                            "charge_cable"
-                        ],
-                        "label": "Tiểu mục",
-                        "html_type": "multiinput",
+                        "attribute_id": "thumbnail",
+                        "label": "Thumbnail",
+                        "admin_only": "0",
+                        "html_type": "input",
                         "data_type": "varchar",
                         "is_super": "1",
-                        "is_system": "1"
-                    },
-                    {
-                        "attribute_id": "is_online",
-                        "value": "0",
-                        "label": "Online",
-                        "html_type": "boolean",
-                        "data_type": "int",
-                        "validation": "0|1",
-                        "is_super": "1",
-                        "is_system": "1"
+                        "is_system": "1",
+                        "value": "https://phatdatcomputer.vn/upload/product/cap-sac-nhanh-hoco-u74-typec-day-vai-ben-12m-24a1584016564_250x250.jpg"
                     },
                     {
                         "attribute_id": "sup_warranty",
-                        "value": "12T",
                         "label": "Supplier warranty",
+                        "admin_only": "1",
                         "html_type": "input",
                         "data_type": "varchar",
                         "is_super": "1",
-                        "is_system": "0"
+                        "is_system": "0",
+                        "value": "12T"
                     },
                     {
                         "attribute_id": "sup_name",
-                        "value": "Cáp sạc nhanh HOCO U74 Type-C (Dây vải bện, 1.2m, 2.4A)",
                         "label": "Supplier product name",
+                        "admin_only": "1",
                         "html_type": "input",
                         "data_type": "varchar",
                         "is_super": "1",
-                        "is_system": "0"
+                        "is_system": "0",
+                        "value": "Cáp sạc nhanh HOCO U74 Type-C (Dây vải bện, 1.2m, 2.4A)"
                     },
                     {
                         "attribute_id": "sup_link",
-                        "value": "https://phatdatcomputer.vn/san-pham/cap-sac-nhanh-hoco-u74-typec-day-vai-ben-12m-24a",
                         "label": "Supplier url",
+                        "admin_only": "1",
                         "html_type": "input",
                         "data_type": "varchar",
                         "is_super": "1",
-                        "is_system": "0"
+                        "is_system": "0",
+                        "value": "https://phatdatcomputer.vn/san-pham/cap-sac-nhanh-hoco-u74-typec-day-vai-ben-12m-24a"
                     },
                     {
-                        "attribute_id": "thumbnail",
-                        "value": "https://phatdatcomputer.vn/upload/product/cap-sac-nhanh-hoco-u74-typec-day-vai-ben-12m-24a1584016564_250x250.jpg",
-                        "label": "Thumbnail",
+                        "attribute_id": "name",
+                        "label": "Product name",
+                        "admin_only": "0",
                         "html_type": "input",
                         "data_type": "varchar",
                         "is_super": "1",
-                        "is_system": "1"
+                        "is_system": "1",
+                        "value": "Cáp sạc nhanh HOCO U74 Type-C (Dây vải bện, 1.2m, 2.4A)"
+                    },
+                    {
+                        "attribute_id": "sup_price",
+                        "label": "Supplier price",
+                        "admin_only": "1",
+                        "html_type": "input",
+                        "data_type": "int",
+                        "is_super": "1",
+                        "is_system": "0",
+                        "value": 57000
                     },
                     {
                         "attribute_id": "is_new",
-                        "value": "1",
                         "label": "SP mới",
+                        "admin_only": "1",
                         "html_type": "boolean",
                         "data_type": "int",
                         "validation": "0|1",
                         "is_super": "1",
-                        "is_system": "1"
+                        "is_system": "1",
+                        "value": 1
                     },
                     {
-                        "attribute_id": "images",
-                        "value": [
-                            "https://phatdatcomputer.vn/upload/product/cap-sac-nhanh-hoco-u74-typec-day-vai-ben-12m-24a1584016564.jpg"
-                        ],
-                        "label": "Main images",
+                        "attribute_id": "is_online",
+                        "label": "Online",
+                        "admin_only": "0",
+                        "html_type": "boolean",
+                        "data_type": "int",
+                        "validation": "0|1",
+                        "is_super": "1",
+                        "is_system": "1",
+                        "value": 0
+                    },
+                    {
+                        "attribute_id": "subsection",
+                        "label": "Tiểu mục",
+                        "admin_only": "1",
                         "html_type": "multiinput",
                         "data_type": "varchar",
                         "is_super": "1",
-                        "is_system": "1"
+                        "is_system": "1",
+                        "value": [
+                            "charge_cable"
+                        ]
                     },
                     {
-                        "attribute_id": "sup_price",
-                        "value": "57000",
-                        "label": "Supplier price",
-                        "html_type": "input",
-                        "data_type": "int",
+                        "attribute_id": "images",
+                        "label": "Main images",
+                        "admin_only": "0",
+                        "html_type": "multiinput",
+                        "data_type": "varchar",
                         "is_super": "1",
-                        "is_system": "0"
+                        "is_system": "1",
+                        "value": [
+                            "https://phatdatcomputer.vn/upload/product/cap-sac-nhanh-hoco-u74-typec-day-vai-ben-12m-24a1584016564.jpg"
+                        ]
                     }
                 ]
             }
