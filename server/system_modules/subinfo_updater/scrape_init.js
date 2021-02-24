@@ -171,7 +171,7 @@ async function initProductDatabase () {
 
     // init build product search eav index
     let result = await search.buildProductSearchEavIndex();
-    await fs.writeJSON("./product_eav_index.json", result);
+    // await fs.writeJSON("./product_eav_index.json", result);
 
     console.log("execution time: ", (Date.now() - time), " ms")
     msClient.disconnect();
