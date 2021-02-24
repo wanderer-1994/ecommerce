@@ -1,3 +1,4 @@
+// const search = require("./search_with_index");
 const search = require("./search");
 const msClient = require("../mysql/mysql");
 const fs = require("fs-extra");
@@ -24,7 +25,7 @@ async function run () {
         ],
         searchPhrase: "Cáp sạc nhanh HOCO DU10 cai gi the ha ban ban dang lam gi the vay",
         searchDictionary: msClient.searchDictionary,
-        page: 3
+        page: 1
     };
     searchConfig.refinements.map((attribute, index) => {
         let match = msClient.productEav.find(m_item => m_item.attribute_id == attribute.attribute_id);
@@ -38,7 +39,8 @@ async function run () {
     searchConfig.refinements = searchConfig.refinements.filter(item => item !==  null);
     let searchResult = await search.search(searchConfig);
     console.log("Search took ", Date.now() - start, " ms")
-    await fs.writeJSON("./search_result_no_indexs.json", searchResult);
+    // await fs.writeJSON("./search_result_with_index.json", searchResult);
+    await fs.writeJSON("./search_result.json", searchResult);
     msClient.disconnect();
 };
 

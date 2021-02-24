@@ -1,7 +1,6 @@
 const mysqlutils = require("../mysql/mysqlutils");
 const fulltextSearch = require("./fulltextSearch");
 const msClient = require("../mysql/mysql");
-const { getProductEavTableName } = require("../product/product_eav_table");
 const { items_per_page } = require("../const/config");
 const productEntityInheritFields = ["product_id", "entity_id", "type_id", "created_at", "updated_at"];
 const productEntityPropsAsAttributes = [
@@ -61,49 +60,21 @@ function createSearchQueryDB ({ categories, entity_ids, refinements, searchPhras
     // ## search by attribute refinements
     let queryRefinement = "";
     if (refinements && refinements.length > 0) {
-        refinements.map((item, index) => {
-            let table_name = getProductEavTableName(item);
-            if (table_name) {
-                item.table = table_name;
-                item.query = `(\`eav\`.attribute_id ='${mysqlutils.escapeQuotes(item.attribute_id)}' AND \`eav\`.value IN ('${item.value.map(item => mysqlutils.escapeQuotes(item.toString())).join("\', \'")}'))`
-            } else {
-                refinements[index] = null;
-            }
-        });
-        refinements = refinements.filter(item => item !== null);
-        let table_grouping = {
-            product_eav_int: refinements.filter(item => item.table == "product_eav_int").map(item => item.query).join(" OR "),
-            product_eav_decimal: refinements.filter(item => item.table == "product_eav_decimal").map(item => item.query).join(" OR "),
-            product_eav_varchar: refinements.filter(item => item.table == "product_eav_varchar").map(item => item.query).join(" OR "),
-            product_eav_text: refinements.filter(item => item.table == "product_eav_text").map(item => item.query).join(" OR "),
-            product_eav_datetime: refinements.filter(item => item.table == "product_eav_datetime").map(item => item.query).join(" OR "),
-            product_eav_multi_value: refinements.filter(item => item.table == "product_eav_multi_value").map(item => item.query).join(" OR "),
-        };
-
-        let componentQueries = [];
-        Object.keys(table_grouping).forEach(key => {
-            if (table_grouping[key] !== "") {
-                componentQueries.push(
-                    `
-                    SELECT IF(\`pe\`.parent IS NOT NULL AND \`pe\`.parent != '', \`pe\`.parent, \`pe\`.entity_id) AS product_id, \`eav\`.attribute_id
-                    FROM \`ecommerce\`.\`${key}\` AS \`eav\`
-                    INNER JOIN \`ecommerce\`.product_entity AS \`pe\` ON \`pe\`.entity_id = \`eav\`.entity_id
-                    WHERE ${table_grouping[key]}
-                    `
-                )
-            }
-        })
-        if (componentQueries.length > 0) {
-            queryRefinement =
-            `
-            SELECT product_id, 10*${refinements.length} AS \`weight\`, \'attribute\' AS \`type\` FROM (
-                SELECT product_id, GROUP_CONCAT(attribute_id) AS attribute_ids FROM (
-                    ${componentQueries.join(" UNION ALL ")}
-                ) AS \`alias\` GROUP BY product_id
-            ) AS \`alias2\`
-            WHERE (${refinements.map(item => `FIND_IN_SET('${mysqlutils.escapeQuotes(item.attribute_id)}', \`alias2\`.attribute_ids)`).join(" AND ")})
-            `;
-        }
+        let refinementComponentQueries = refinements.map(item => {
+            return `(\`attribute_id\`='${mysqlutils.escapeQuotes(item.attribute_id)}' AND \`value\` IN ('${item.value.map(item => mysqlutils.escapeQuotes(item.toString())).join("\', \'")}'))`
+        }).join(" OR ");
+        
+        queryRefinement =
+        `
+        SELECT product_id, 10*${refinements.length} AS \`weight\`, \'attribute\' AS \`type\` FROM
+        (   SELECT product_id, GROUP_CONCAT(attribute_id) AS attribute_ids FROM
+            (   SELECT \`eav\`.product_id, \`eav\`.attribute_id
+                FROM \`ecommerce\`.\`product_eav_index\` AS \`eav\`
+                WHERE ${refinementComponentQueries}
+            ) AS \`alias\` GROUP BY product_id
+        ) AS \`alias2\`
+        WHERE (${refinements.map(item => `FIND_IN_SET('${mysqlutils.escapeQuotes(item.attribute_id)}', \`alias2\`.attribute_ids)`).join(" AND ")})
+        `;
     }
     // ## search by search phrase
     let querySearchPhrase = "";
