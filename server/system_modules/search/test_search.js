@@ -8,7 +8,7 @@ async function run () {
     let start = Date.now();
     let searchConfig = {
         categories: ["speaker", "phone_accessories", "charger"],
-        entity_ids: ["PR0010", "PR0001", "PR0029"],
+        entity_ids: ["PR0010", "PR0001"],
         refinements: [
             {
                 attribute_id: "subsection",
@@ -23,7 +23,7 @@ async function run () {
                 value: [36000]
             }
         ],
-        searchPhrase: "Cáp sạc nhanh HOCO DU10 cai gi the ha ban ban dang lam gi the vay",
+        searchPhrase: "Cáp sạc nhanh HOCO DU10 who i am wandering this wasteland",
         searchDictionary: msClient.searchDictionary,
         page: 1
     };

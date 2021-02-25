@@ -13,12 +13,9 @@ router.get("/product", async (req, res) => {
     // req.query= {page, categories, entity_ids, refinements, searchPhrase}
     // res.json({products: [], Alert: [], currentPage: number, totalPages: number})
     try{
-        let prod_attr_for_client =  ["prod_id", "prod_link", "sup_name", "prod_name", "prod_review", "prod_thumb", "prod_img",
-                                    "category", "warranty", "prod_price", "saleoff_percent", "prod_trend", "prod_description"];
-        let attrs_to_select = msClient.getSqlAttrToSelect(prod_attr_for_client);
         let refinements = search.extractRefinements(req);
         refinements.forEach((attribute, index) => {
-            let match = msClient.productEav.find(m_item => m_item.attribute_id == attribute.attribute_id);
+            let match = msClient.productEav.find(m_item => m_item.attribute_id == attribute.attribute_id && m_item.admin_only != 1);
             if (match) {
                 attribute.html_type = match.html_type;
                 attribute.data_type = match.data_type;
