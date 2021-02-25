@@ -4,11 +4,11 @@ const msClient = require("../mysql/mysql");
 const fs = require("fs-extra");
 
 async function run () {
-    await msClient.connectAsync();
+    
     let start = Date.now();
     let searchConfig = {
         categories: ["speaker", "phone_accessories", "charger"],
-        entity_ids: ["PR0010", "PR0001"],
+        // entity_ids: ["PR0010", "PR0001"],
         refinements: [
             {
                 attribute_id: "subsection",
@@ -18,10 +18,10 @@ async function run () {
                 attribute_id: "sup_warranty",
                 value: ["12T"]
             },
-            {
-                attribute_id: "sup_price",
-                value: [36000]
-            }
+            // {
+            //     attribute_id: "sup_price",
+            //     value: [36000]
+            // }
         ],
         searchPhrase: "Cáp sạc nhanh HOCO DU10 who i am wandering this wasteland",
         searchDictionary: msClient.searchDictionary,
@@ -38,10 +38,24 @@ async function run () {
     });
     searchConfig.refinements = searchConfig.refinements.filter(item => item !==  null);
     let searchResult = await search.search(searchConfig);
-    console.log("Search took ", Date.now() - start, " ms")
+    // console.log("Search took ", Date.now() - start, " ms")
     // await fs.writeJSON("./search_result_with_index.json", searchResult);
-    await fs.writeJSON("./search_result.json", searchResult);
-    msClient.disconnect();
+    // await fs.writeJSON("./search_result.json", searchResult);
+    
 };
 
-run();
+// run();
+(async () => {
+    await msClient.connectAsync();
+    let arr = [];
+    for(let i = 0; i < 500; i++) {
+        arr.push(i);
+    }
+    arr.forEach(async (item, index) => {
+        let start = Date.now();
+        let result = await run();
+        // let result = await fs.readJSON("./search_result.json");
+        console.log("Search ", index, " took ", Date.now() - start, " ms")
+    })
+    // msClient.disconnect();
+})()
