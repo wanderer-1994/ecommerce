@@ -42,7 +42,7 @@ async function run () {
     let searchResult = await search.search(searchConfig);
     // console.log("Search took ", Date.now() - start, " ms")
     // await fs.writeJSON("./search_result_with_index.json", searchResult);
-    // await fs.writeJSON("./search_result.json", searchResult);
+    await fs.writeJSON("./search_result.json", searchResult);
     
 };
 
