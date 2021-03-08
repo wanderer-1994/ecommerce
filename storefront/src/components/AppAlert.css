@@ -1,0 +1,93 @@
+@media all and (min-width: 901px){
+    .appAlert{
+        position: fixed;
+        width: 100%;
+        height: 100vh;
+        background-color: #ababab70;
+        z-index: 110;
+    }
+    .appAlert .appAlertWrapper{
+        width: 450px;
+        /* height: 300px; */
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translateX(-50%) translateY(-50%);
+        border-radius: 2px;
+        box-shadow: 0 3px 10px 0 #67676775;
+        background-color: white;
+        padding: 5px;
+    }
+    .appAlert .appAlertFooter{
+        position: absolute;
+        height: 50px;
+        width: calc(100% - 4px);
+        left: 2px;
+        bottom: 2px;
+        text-align: center;
+    }
+    .appAlert .appAlertFooter button{
+        width: calc(50% - 1px);
+        height: 50px;
+        border: 0px;
+        outline: none;
+        border-radius: 2px;
+        color: white;
+        cursor: pointer;
+        font-size: 16px;
+        font-family: cursive;
+    }
+    .appAlert .appAlertFooter .cancel{
+        margin-right: 2px;
+        background-color: #ababab;
+    }
+    .appAlert .appAlertFooter .submit{
+        background-color: #ff5722;
+    }
+}
+@media all and (max-width: 900px){
+    .appAlert{
+        position: fixed;
+        width: 100%;
+        height: 100vh;
+        background-color: #00000090;
+        z-index: 110;
+    }
+    .appAlert .appAlertWrapper{
+        width: 98%;
+        position: absolute;
+        top: 30%;
+        left: 50%;
+        transform: translateX(-50%) translateY(-50%);
+        border-radius: 2px;
+        box-shadow: 0 3px 10px 0 #67676775;
+        background-color: white;
+        padding: 5px;
+    }
+    .appAlert .appAlertFooter{
+        position: absolute;
+        height: 50px;
+        width: calc(100% - 4px);
+        left: 2px;
+        bottom: 2px;
+        text-align: center;
+    }
+    .appAlert .appAlertFooter button{
+        width: calc(50% - 1px);
+        height: 50px;
+        border: 0px;
+        outline: none;
+        border-radius: 2px;
+        color: white;
+        cursor: pointer;
+        font-size: 16px;
+        font-family: sans-serif;
+    }
+    .appAlert .appAlertFooter .cancel{
+        margin-right: 2px;
+        background-color: #ababab;
+    }
+    .appAlert .appAlertFooter .submit{
+        background-color: #ff5722;
+    }
+}
