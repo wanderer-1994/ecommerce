@@ -15,7 +15,7 @@ function App() {
         <Fragment>
             <Link to="/">Home</Link>
             <Link to="/prod">Product</Link>
-            <Link to="/cat">Cateogry</Link>
+            <Link to="/cat">Category</Link>
             <Link to="/search">Search</Link>
             <Link to="/404">404</Link>
             <Link to="/abc">Others</Link>

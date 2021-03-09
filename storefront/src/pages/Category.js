@@ -30,7 +30,7 @@ function renderProducts (products) {
                             <div className="prod-info">
                                 <div className="prod-name">{product.name || "..."}</div>
                                 <div className="price">
-                                    <span class="old">279,000đ</span>{product.tier_price ? product.tier_price.toLocaleString().replace(/\./g, ",") : "..."}đ
+                                    <span className="old">279,000đ</span>{product.tier_price ? product.tier_price.toLocaleString().replace(/\./g, ",") : "..."}đ
                                 </div>
                             </div>
                         </div>
