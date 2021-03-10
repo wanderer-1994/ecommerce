@@ -1,6 +1,6 @@
 async function getHomePageData () {
     return {
-        bannerImage: "http://127.0.0.1:5500/img/device-selector-banner-1920-width-optimised.jpg",
+        bannerImage: "https://i.pinimg.com/originals/78/61/73/7861735800c9086f638ae1421c706e08.jpg",
         categories: [
             {
                 category_id: "",
