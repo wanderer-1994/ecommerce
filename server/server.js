@@ -10,12 +10,12 @@ const {
     getReqGeneralVariables,
 } = require("./system_modules/middlewares/middlewares");
 
-const AdminRouter = require("./routes/user/AdminRouter");
+// const AdminRouter = require("./routes/user/AdminRouter");
 const CategoryRouter = require("./routes/user/CategoryRouter");
-const OrderRouter = require("./routes/user/orderRouter/OrderRouter");
+// const OrderRouter = require("./routes/user/orderRouter/OrderRouter");
 const ProductRouter = require("./routes/user/ProductRouter");
-const UserRouter = require("./routes/users/UserRouter");
-const Others = require("./routes/user/Others");
+// const UserRouter = require("./routes/users/UserRouter");
+// const Others = require("./routes/user/Others");
 
 async function appInit () {
     // connect database
@@ -33,12 +33,12 @@ async function appInit () {
     app.use(getReqGeneralVariables, getResGeneralVariables);
 
     const apiModules = [
-        AdminRouter,
+        // AdminRouter,
         CategoryRouter,
-        OrderRouter,
+        // OrderRouter,
         ProductRouter,
-        UserRouter,
-        Others
+        // UserRouter,
+        // Others
     ];
 
     app.use("/api", apiModules);
@@ -48,8 +48,8 @@ async function appInit () {
         // res.sendFile(__dirname + "/build/index.html");
     })
 
-    app.listen(80, () => {
-        console.log("listening port: ", 80)
+    app.listen(4000, () => {
+        console.log("listening port: ", 4000)
     })
 }
 

@@ -14,7 +14,52 @@ const productEntityPropsAsAttributes = [
         data_type: "int"
     }
 ];
-const attributeInheritFields = ["attribute_id", "label", "referred_target", "admin_only", "html_type", "data_type", "validation", "is_super", "is_system", "unit", "value"];
+const attributeInheritFields = [
+    {
+        attribute_id: "attribute_id",
+        data_type: "varchar"
+    },
+    {
+        attribute_id: "label",
+        data_type: "varchar"
+    },
+    {
+        attribute_id: "referred_target",
+        data_type: "varchar"
+    },
+    {
+        attribute_id: "admin_only",
+        data_type: "int"
+    },
+    {
+        attribute_id: "html_type",
+        data_type: "varchar"
+    },
+    {
+        attribute_id: "data_type",
+        data_type: "varchar"
+    },
+    {
+        attribute_id: "validation",
+        data_type: "varchar"
+    },
+    {
+        attribute_id: "is_super",
+        data_type: "int"
+    },
+    {
+        attribute_id: "is_system",
+        data_type: "int"
+    },
+    {
+        attribute_id: "unit",
+        data_type: "varchar"
+    },
+    {
+        attribute_id: "value",
+        data_type: "keep-as-is"
+    }
+];
 const multivalueAttributes = ["multiselect", "multiinput"];
 const productTypeIds = ["self", "parent", "variants"];
 
@@ -441,11 +486,11 @@ function modelizeProductsData (rawData) {
                             throw new Error("Invalid property name \"__item\". \"__item\" is framework preserved key.")
                         }
                         attributeInheritFields.forEach(field_item => {
-                            attr_item[field_item] = attr_item.__items[0][field_item] || attr_item[field_item];
+                            attr_item[field_item.attribute_id] = mysqlutils.convertDataType(attr_item.__items[0][field_item.attribute_id], field_item.data_type);
                         });
                         attr_item.value = mysqlutils.convertDataType(attr_item.value, attr_item.data_type);
                     }
-                    if(multivalueAttributes.indexOf(attr_item.html_type) != -1){
+                    if(multivalueAttributes.indexOf(attr_item.html_type) !== -1){
                         attr_item.value = [];
                         attr_item.__items.forEach(value_item => {
                             if (value_item) {

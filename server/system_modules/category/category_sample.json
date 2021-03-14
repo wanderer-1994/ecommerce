@@ -1,35 +1,241 @@
 [
     {
-        "entity_id": "storage",
+        "entity_id": "charger",
         "name": "Place holder",
         "parent": null,
-        "is_online": "1",
-        "position": 1,
+        "is_online": 1,
+        "position": null,
         "attributes": [
             {
-                "attribute_id": "title_caption",
-                "value": "Let's enjoy the music"
+                "attribute_id": "banner_image",
+                "label": "Banner Image",
+                "referred_target": null,
+                "admin_only": 0,
+                "html_type": "input",
+                "data_type": "varchar",
+                "validation": null,
+                "is_super": 0,
+                "is_system": 1,
+                "unit": null,
+                "value": "https://static.toiimg.com/photo/72975551.cms"
             },
             {
-                "attribute_id": "banner_image",
-                "value": "/banner_1.jpg"
+                "attribute_id": "introduction",
+                "label": "Introduction",
+                "referred_target": null,
+                "admin_only": 0,
+                "html_type": "input",
+                "data_type": "text",
+                "validation": null,
+                "is_super": 0,
+                "is_system": 1,
+                "unit": null,
+                "value": "Placeholder introduction"
+            },
+            {
+                "attribute_id": "title_caption",
+                "label": "Caption title",
+                "referred_target": null,
+                "admin_only": 0,
+                "html_type": "input",
+                "data_type": "text",
+                "validation": null,
+                "is_super": 0,
+                "is_system": 1,
+                "unit": null,
+                "value": "Placeholder title caption"
             }
         ]
     },
     {
-        "entity_id": "charger",
+        "entity_id": "phone_accessories",
         "name": "Place holder",
         "parent": null,
-        "is_online": "1",
-        "position": 1,
+        "is_online": 1,
+        "position": null,
         "attributes": [
             {
-                "attribute_id": "introduction",
-                "value": "These qualified sound accessories will leverage your music experience"
+                "attribute_id": "banner_image",
+                "label": "Banner Image",
+                "referred_target": null,
+                "admin_only": 0,
+                "html_type": "input",
+                "data_type": "varchar",
+                "validation": null,
+                "is_super": 0,
+                "is_system": 1,
+                "unit": null,
+                "value": "https://static.toiimg.com/photo/72975551.cms"
             },
             {
+                "attribute_id": "introduction",
+                "label": "Introduction",
+                "referred_target": null,
+                "admin_only": 0,
+                "html_type": "input",
+                "data_type": "text",
+                "validation": null,
+                "is_super": 0,
+                "is_system": 1,
+                "unit": null,
+                "value": "Placeholder introduction"
+            },
+            {
+                "attribute_id": "title_caption",
+                "label": "Caption title",
+                "referred_target": null,
+                "admin_only": 0,
+                "html_type": "input",
+                "data_type": "text",
+                "validation": null,
+                "is_super": 0,
+                "is_system": 1,
+                "unit": null,
+                "value": "Placeholder title caption"
+            }
+        ]
+    },
+    {
+        "entity_id": "sound_accessories",
+        "name": "Place holder",
+        "parent": null,
+        "is_online": 1,
+        "position": null,
+        "attributes": [
+            {
                 "attribute_id": "banner_image",
-                "value": "/banner_2.jpg"
+                "label": "Banner Image",
+                "referred_target": null,
+                "admin_only": 0,
+                "html_type": "input",
+                "data_type": "varchar",
+                "validation": null,
+                "is_super": 0,
+                "is_system": 1,
+                "unit": null,
+                "value": "https://static.toiimg.com/photo/72975551.cms"
+            },
+            {
+                "attribute_id": "introduction",
+                "label": "Introduction",
+                "referred_target": null,
+                "admin_only": 0,
+                "html_type": "input",
+                "data_type": "text",
+                "validation": null,
+                "is_super": 0,
+                "is_system": 1,
+                "unit": null,
+                "value": "Placeholder introduction"
+            },
+            {
+                "attribute_id": "title_caption",
+                "label": "Caption title",
+                "referred_target": null,
+                "admin_only": 0,
+                "html_type": "input",
+                "data_type": "text",
+                "validation": null,
+                "is_super": 0,
+                "is_system": 1,
+                "unit": null,
+                "value": "Placeholder title caption"
+            }
+        ]
+    },
+    {
+        "entity_id": "speaker",
+        "name": "Place holder",
+        "parent": null,
+        "is_online": 1,
+        "position": null,
+        "attributes": [
+            {
+                "attribute_id": "banner_image",
+                "label": "Banner Image",
+                "referred_target": null,
+                "admin_only": 0,
+                "html_type": "input",
+                "data_type": "varchar",
+                "validation": null,
+                "is_super": 0,
+                "is_system": 1,
+                "unit": null,
+                "value": "https://static.toiimg.com/photo/72975551.cms"
+            },
+            {
+                "attribute_id": "introduction",
+                "label": "Introduction",
+                "referred_target": null,
+                "admin_only": 0,
+                "html_type": "input",
+                "data_type": "text",
+                "validation": null,
+                "is_super": 0,
+                "is_system": 1,
+                "unit": null,
+                "value": "Placeholder introduction"
+            },
+            {
+                "attribute_id": "title_caption",
+                "label": "Caption title",
+                "referred_target": null,
+                "admin_only": 0,
+                "html_type": "input",
+                "data_type": "text",
+                "validation": null,
+                "is_super": 0,
+                "is_system": 1,
+                "unit": null,
+                "value": "Placeholder title caption"
+            }
+        ]
+    },
+    {
+        "entity_id": "storage",
+        "name": "Place holder",
+        "parent": null,
+        "is_online": 1,
+        "position": null,
+        "attributes": [
+            {
+                "attribute_id": "banner_image",
+                "label": "Banner Image",
+                "referred_target": null,
+                "admin_only": 0,
+                "html_type": "input",
+                "data_type": "varchar",
+                "validation": null,
+                "is_super": 0,
+                "is_system": 1,
+                "unit": null,
+                "value": "https://static.toiimg.com/photo/72975551.cms"
+            },
+            {
+                "attribute_id": "introduction",
+                "label": "Introduction",
+                "referred_target": null,
+                "admin_only": 0,
+                "html_type": "input",
+                "data_type": "text",
+                "validation": null,
+                "is_super": 0,
+                "is_system": 1,
+                "unit": null,
+                "value": "Placeholder introduction"
+            },
+            {
+                "attribute_id": "title_caption",
+                "label": "Caption title",
+                "referred_target": null,
+                "admin_only": 0,
+                "html_type": "input",
+                "data_type": "text",
+                "validation": null,
+                "is_super": 0,
+                "is_system": 1,
+                "unit": null,
+                "value": "Placeholder title caption"
             }
         ]
     }

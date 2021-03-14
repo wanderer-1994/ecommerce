@@ -4,7 +4,7 @@ const msClient = require("../../system_modules/mysql/mysql");
 const search = require("../../system_modules/search/search");
 const {
     createSystemErrMessage,
-} = require("../system_modules/functions");
+} = require("../../system_modules/functions");
 const {
     items_per_page
 } = require("../../system_modules/const/config");
