@@ -33,8 +33,8 @@ function Product () {
     useEffect(() => {
         async function fetchData () {
             try {
-                let products = await api.getProductDetail();
-                let product = products[0] || {};
+                let search = await api.searchProduct();
+                let product = search.products[0] || {};
                 setProduct(product);
             } catch (err) {
 
