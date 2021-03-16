@@ -11,9 +11,10 @@ const {
 } = require("./system_modules/middlewares/middlewares");
 
 // const AdminRouter = require("./routes/user/AdminRouter");
-const CategoryRouter = require("./routes/user/CategoryRouter");
+const userCategoryRouter = require("./routes/user/CategoryRouter");
+const adminCategoryRouter = require("./routes/admin/CategoryRouter");
 // const OrderRouter = require("./routes/user/orderRouter/OrderRouter");
-const ProductRouter = require("./routes/user/ProductRouter");
+const userProductRouter = require("./routes/user/ProductRouter");
 // const UserRouter = require("./routes/users/UserRouter");
 // const Others = require("./routes/user/Others");
 
@@ -32,16 +33,22 @@ async function appInit () {
     app.use(bodyParser.json());
     app.use(getReqGeneralVariables, getResGeneralVariables);
 
-    const apiModules = [
+    const userApiModules = [
         // AdminRouter,
-        CategoryRouter,
+        userCategoryRouter,
         // OrderRouter,
-        ProductRouter,
+        userProductRouter,
         // UserRouter,
         // Others
     ];
 
-    app.use("/api", apiModules);
+    const adminApiModules = [
+        adminCategoryRouter
+    ]
+
+    app.use("/api", userApiModules);
+
+    app.use("/api/admin", adminApiModules)
 
     app.get("/*", (req, res) => {
         res.sendFile("/APP/phukiendhqg/client/build/index.html");

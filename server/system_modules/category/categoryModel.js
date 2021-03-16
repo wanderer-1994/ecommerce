@@ -65,7 +65,7 @@ const categoryInheritAttributes = [
     }
 ];
 
-function modelizeCategoriesData (rawData) {
+function modelizeCategoriesData (rawData, option) {
     try {
         let categories = mysqlutils.groupByAttribute({
             rawData: rawData,
@@ -83,7 +83,7 @@ function modelizeCategoriesData (rawData) {
                 nullExcept: [null, ""]
             });
 
-            category.attributes.forEach(attr_item => {
+            category.attributes.forEach((attr_item, index) => {
                 categoryAttributeInheritFields.forEach(field_item => {
                     attr_item[field_item.attribute_id] = mysqlutils.convertDataType(attr_item.__items[0][field_item.attribute_id], field_item.data_type);
                 });
@@ -101,9 +101,11 @@ function modelizeCategoriesData (rawData) {
                     })
                 };
                 delete attr_item.__items;
-            })
-
+            });
             delete category.__items;
+            if (!option || !option.isAdmin) {
+                category.attributes = category.attributes.filter(item => item.admin_only != 1);
+            }
         })
         return categories;
     } catch (err) {

@@ -414,7 +414,7 @@ async function getDetailProducts (products) {
     return _products;
 }
 
-function modelizeProductsData (rawData) {
+function modelizeProductsData (rawData, option) {
     try {
         let products = mysqlutils.groupByAttribute({
             rawData: rawData,
@@ -504,6 +504,9 @@ function modelizeProductsData (rawData) {
                     delete attr_item.__items;
                 });
                 delete product_entity.__items;
+                if (!option || !option.isAdmin) {
+                    product_entity.attributes = product_entity.attributes.filter(item => item.admin_only != 1);
+                }
             });
             delete product.__items;
         })
