@@ -7,6 +7,13 @@ function getCategoryAttribute (category, attribute_id) {
     return null;
 };
 
+function structurizeCategories (categories) {
+    let result = [];
+    result = categories.filter(item => !item.parent).sort((a, b) => a.position - b.position);
+    return result;
+}
+
 module.exports = {
-    getCategoryAttribute
+    getCategoryAttribute,
+    structurizeCategories
 }

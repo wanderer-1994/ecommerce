@@ -3,27 +3,39 @@ async function getHomePageData () {
         bannerImage: "https://i.pinimg.com/originals/78/61/73/7861735800c9086f638ae1421c706e08.jpg",
         categories: [
             {
-                category_id: "",
+                entity_id: "",
                 name: "",
-                thumbnail: "",
+                parent: "",
+                is_online: 1,
+                position: null,
+                attributes: [],
                 feature_products: [1,2,3,4,5,6]
             },
             {
-                category_id: "",
+                entity_id: "",
                 name: "",
-                thumbnail: "",
+                parent: "",
+                is_online: 1,
+                position: null,
+                attributes: [],
                 feature_products: [1,2,3,4,5,6]
             },
             {
-                category_id: "",
+                entity_id: "",
                 name: "",
-                thumbnail: "",
+                parent: "",
+                is_online: 1,
+                position: null,
+                attributes: [],
                 feature_products: [1,2,3,4,5,6]
             },
             {
-                category_id: "",
+                entity_id: "",
                 name: "",
-                thumbnail: "",
+                parent: "",
+                is_online: 1,
+                position: null,
+                attributes: [],
                 feature_products: [1,2,3,4,5,6]
             }
         ],
@@ -738,12 +750,54 @@ async function searchProduct () {
     }
 }
 
-async function placeOrder (user, order) {
-
+async function placeOrder (user, products) {
+    return {
+        isSuccess: true
+    }
 }
 
 async function getOrderHistory (user) {
-
+ return [
+    {
+        user: {
+            order_id: "",
+            order_time: 1234567891234,
+            status: "",
+            shipping_status: "",
+            rcver_name: "",
+            rcver_tel: "",
+            address: "",
+        },
+        products: [
+            {
+                entity_id: "PR003",
+                prod_id: "PR002",
+                prod_name: "",
+                prod_thumb: "",
+                price: 23000,
+                discount_percent: null,
+                discount_direct: null,
+                warranty: null,
+                category: null,
+                variant: "",
+                quantity: 1,
+            },
+            {
+                entity_id: "PR001",
+                prod_id: "PR001",
+                prod_name: "",
+                prod_thumb: "",
+                price: 23000,
+                discount_percent: null,
+                discount_direct: null,
+                warranty: null,
+                category: null,
+                variant: "",
+                quantity: 2,
+            }
+        ]
+    }
+ ];
 }
 
 async function validateCart (prod_entities) {

@@ -192,6 +192,7 @@ CREATE TABLE `ecommerce`.`order_item` (
   `warranty` INT(13) NULL,
   `category` VARCHAR(255) NULL,
   `variant` VARCHAR(255) NULL,
+  `quantity` INT NOT NULL,
   PRIMARY KEY (`entity_id`)
 )
 
