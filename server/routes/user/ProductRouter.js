@@ -42,7 +42,8 @@ router.get("/product", async (req, res) => {
                 refinements: refinements,
                 searchPhrase: req.query.keyword,
                 searchDictionary: msClient.searchDictionary,
-                page: req.query.page
+                page: req.query.page,
+                isAdmin: false
             };
             let searchResult = await search.search(searchConfig);
             res.json(searchResult);

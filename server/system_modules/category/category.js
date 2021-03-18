@@ -11,22 +11,46 @@ async function saveCategoryEntity (category, option) {
     // eav_multi_text: "title_caption", "introduction"
 
     try {
+        // check if category exists for case update
+        if (option.mode === "UPDATE") {
+            let isEntityNotNull = category.entity_id !== null && category.entity_id !== "" && category.entity_id != undefined;
+            let sql_category_exist =
+            `
+            SELECT entity_id FROM \`ecommerce\`.category_entity
+            WHERE \`entity_id\` = ${isEntityNotNull ? `"${mysqlutils.escapeQuotes(category.entity_id)}"` : "NULL"};
+            `;
+            let match_category = await msClient.promiseQuery(sql_category_exist);
+            if (match_category.length === 0) throw new Error(`ERROR: category with entity_id '${category.entity_id}' is not exist`);
+        }
+
+        // main handling
         let sqltb_category_entity = [];
         attr_category_entity.forEach(item => {
-            if (category[item] !== null && category[item] !== "" && category[item] !== undefined) {
+            let isNotNull;
+            if (option && option.mode === "CREATE") {
+                isNotNull = category[item] !== null && category[item] !== "" && category[item] !== undefined;
+            } else if (option.mode === "UPDATE") {
+                isNotNull = item in category;
+            };
+            if (isNotNull) {
                 sqltb_category_entity.push(item);
             }
         });
+        if (sqltb_category_entity.indexOf("entity_id") === -1) throw new Error("ERROR: 'entity_id' is not specified");
         if (sqltb_category_entity.length > 0) {
             sqltb_category_entity =
             `
             INSERT INTO \`ecommerce\`.category_entity (${sqltb_category_entity.map(item => item).join(", ")})
-            VALUES ("${sqltb_category_entity.map(item => mysqlutils.escapeQuotes(category[item])).join(`", "`)}") AS new
+            VALUES (${sqltb_category_entity.map(item => {
+                if (category[item] === null || category[item] === "" || category[item] === undefined) {
+                    return "NULL";
+                } else {
+                    return `"${mysqlutils.escapeQuotes(category[item])}"`;
+                }
+            }).join(", ")}) AS new
             ${option && option.mode === "UPDATE" ? `ON DUPLICATE KEY UPDATE
             ${sqltb_category_entity.map(item => `${item} = new.${item}`).join(",\n")}` : ""};
             `;
-        } else {
-            return new Error("ERROR: category 'entity_id' is not specified");
         };
 
         let sql_eav_single_value = {

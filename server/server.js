@@ -13,8 +13,9 @@ const {
 // const AdminRouter = require("./routes/user/AdminRouter");
 const userCategoryRouter = require("./routes/user/CategoryRouter");
 const adminCategoryRouter = require("./routes/admin/CategoryRouter");
-// const OrderRouter = require("./routes/user/orderRouter/OrderRouter");
 const userProductRouter = require("./routes/user/ProductRouter");
+const adminProductRouter = require("./routes/admin/ProductRouter");
+// const OrderRouter = require("./routes/user/orderRouter/OrderRouter");
 // const UserRouter = require("./routes/users/UserRouter");
 // const Others = require("./routes/user/Others");
 
@@ -43,17 +44,18 @@ async function appInit () {
     ];
 
     const adminApiModules = [
-        adminCategoryRouter
+        adminCategoryRouter,
+        adminProductRouter
     ]
 
     app.use("/api", userApiModules);
 
     app.use("/api/admin", adminApiModules)
 
-    app.get("/*", (req, res) => {
-        res.sendFile("/APP/phukiendhqg/client/build/index.html");
-        // res.sendFile(__dirname + "/build/index.html");
-    })
+    // app.get("/*", (req, res) => {
+    //     res.sendFile("/APP/phukiendhqg/client/build/index.html");
+    //     // res.sendFile(__dirname + "/build/index.html");
+    // })
 
     app.listen(4000, () => {
         console.log("listening port: ", 4000)

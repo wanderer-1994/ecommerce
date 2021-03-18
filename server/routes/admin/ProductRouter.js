@@ -5,93 +5,116 @@ const { updateSupInfo } = require("../../system_modules/subinfo_updater/general_
 const {
     createSystemErrMessage,
     unescapeSelectedData
-} = require("../system_modules/functions");
+} = require("../../system_modules/functions");
 const {
     items_per_page
-} = require("../system_modules/const/config");
-const { checkAdminByCookie } = require("../system_modules/middlewares/middlewares");
+} = require("../../system_modules/const/config");
+const { saveProductEntity, deleteProductEntities } = require("../../system_modules/product/product");
+const search = require("../../system_modules/search/search");
 
-router.get("/product", checkAdminByCookie, async (req, res) => {
-    // return full data
-    // res.json({products: [], Alert: []})
+router.get("/product", async (req, res) => {
+    // req.query= {page, categories, entity_ids, refinements, searchPhrase}
+    // res.json({products: [], Alert: [], currentPage: number, totalPages: number})
     try{
-        if(!req.admin || !req.admin.admin_id) return res.redirect("/");
+        let refinements = search.extractRefinements(req);
+        refinements.forEach((attribute, index) => {
+            let match = msClient.productEav.find(m_item => m_item.attribute_id == attribute.attribute_id && m_item.admin_only != 1);
+            if (match) {
+                attribute.html_type = match.html_type;
+                attribute.data_type = match.data_type;
+            } else {
+                refinements[index] = null;
+            }
+        });
 
-        let sql_search_product = `SELECT * FROM phukiendhqg.product`;
-        let products = await msClient.promiseQuery(sql_search_product);
-        res.json({
-            products: products,
-        })
+        let isRefinementsValid = true;
+        refinements = refinements.filter(item => {
+            if (item === null) {
+                isRefinementsValid = false;
+                return false;
+            };
+            return true;
+        });
+
+        if (!isRefinementsValid) {
+            res.redirect("./abc");
+        } else {
+            let searchConfig = {
+                categories: req.query.categories ? req.query.categories.split("|") : null,
+                entity_ids: req.query.entity_ids ? req.query.entity_ids.split("|") : null,
+                refinements: refinements,
+                searchPhrase: req.query.keyword,
+                searchDictionary: msClient.searchDictionary,
+                page: req.query.page,
+                isAdmin: true
+            };
+            let searchResult = await search.search(searchConfig);
+            res.json(searchResult);
+        }
     }catch(err){
-        res.Alert.push(createSystemErrMessage(001));
-        res.json({Alert: res.Alert})
+        res.Alert.push(createSystemErrMessage(001))
+        res.json({Alert: res.Alert});
     }
 })
 
-router.post("/product", checkAdminByCookie, async (req, res) => {
-    // req.body:    {products: [product]}
+router.post("/product", async (req, res) => {
+    // req.body:    {product_entities: []}
     // product:     {prod_link, category}
     // res.json({isSuccess: boolean, Alert: []})
     try{
-        if(!req.admin || !req.admin.admin_id) return res.end();
-        
-        let products = req.body.products;
-        let attr_arr = [];
-        for(let i in products[0]){
-            attr_arr.push(i);
-        }
-        await msClient.insertRows("phukiendhqg.product", attr_arr, products);
-        res.json({isSuccess: true, Alert: res.Alert});
-    }catch(err){
-        res.Alert.push(createSystemErrMessage(001))
-        res.json({Alert: res.Alert})
-    }
+        let product_entities = req.body.product_entities || [];
+        let promises = [];
+        product_entities.forEach(entity => {
+            promises.push(saveProductEntity(entity, {mode: "CREATE"}));
+        });
+        Promise.all(promises).then(data => {
+            res.json(data);
+        }).catch(err => {
+            throw(err)
+        })
+     }catch(err){
+         res.Alert.push(createSystemErrMessage(001))
+         res.json({Alert: res.Alert})
+     }
 })
 
-router.put("/product", checkAdminByCookie, async (req, res) => {
-    // req.body:    {products: [product]}
+router.put("/product", async (req, res) => {
+    // req.body:    {product_entities: []}
     // res.json({isSuccess: boolean, products, Alert: []})
     try{
-        if(!req.admin || !req.admin.admin_id) return res.end();
-        let products = req.body.products;
-        if(!products || products.length < 1) return res.end();
-        // get product_ids for latter select statement
-        let product_ids = [];
-        products.forEach(prod_item => {
-            product_ids.push(prod_item.prod_id);
-        })
-        // handle update product
-        let attr_arr = [];
-        for(let i in products[0]){
-            attr_arr.push(i);
-        }
-        await msClient.updateRows("phukiendhqg.product", attr_arr, products);
-        let sql_reSelectProduct = `SELECT * FROM phukiendhqg.product WHERE prod_id IN (${msClient.getSqlInCondittion(product_ids)});`;
-        let updated_products = await msClient.promiseQuery(sql_reSelectProduct);
-        res.json({isSuccess: true, updated_products: updated_products, Alert: res.Alert});
+       let product_entities = req.body.product_entities || [];
+       let promises = [];
+       product_entities.forEach(entity => {
+           promises.push(saveProductEntity(entity, {mode: "UPDATE"}));
+       });
+       Promise.all(promises).then(data => {
+           res.json(data);
+       }).catch(err => {
+           throw(err)
+       })
     }catch(err){
         res.Alert.push(createSystemErrMessage(001))
         res.json({Alert: res.Alert})
     }
 })
 
-router.delete("/product", checkAdminByCookie, async (req, res) => {
-    // req.body:    {prod_ids: [prod_id]}
+router.delete("/product", async (req, res) => {
+    // req.body:    {entity_ids: []}
     // res.json({isSuccess: boolean, Alert: []})
     try{
-        if(!req.admin || !req.admin.admin_id) return res.end();
-        let product_id = req.query.product_id;
-        if(!product_id || product_id == "") return res.end();
-        await msClient.deleteRows("phukiendhqg.product", "prod_id", [product_id]);
-        res.json({isSuccess: true, Alert: res.Alert});
+        let entity_ids = req.entity_ids || [];
+        let result = await deleteProductEntities(entity_ids);
+        res.json({
+            isSuccess: true,
+            result: result
+        });
     }catch(err){
-        console.log(err);
         res.Alert.push(createSystemErrMessage(001))
         res.json({Alert: res.Alert})
     }
 })
 
-router.put("/product/initprod", checkAdminByCookie, async (req, res) => {
+router.put("/product/initprod", async (req, res) => {
     // req.body:    {product_ids: [prod_id]}
     // res.json({isSuccess: boolean, products, Alert: []})
     try{
@@ -157,7 +180,7 @@ router.put("/product/initprod", checkAdminByCookie, async (req, res) => {
     }
 })
 
-router.put("/product/supinfo", checkAdminByCookie, async (req, res) => {
+router.put("/product/supinfo", async (req, res) => {
     // req.body:    {product_ids: [prod_id]}
     // res.json({isSuccess: boolean, products, Alert: []})
     try{

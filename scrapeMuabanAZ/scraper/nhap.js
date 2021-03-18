@@ -1,4 +1,4 @@
-const request = require("request");
+const axios = require("axios");
 const cheerio = require("cheerio");
 const fs = require("fs-extra");
 const json2csvParser = require("json2csv").parse;
@@ -28,13 +28,16 @@ fs.readFile("./finalProduct/fields", "utf8", async (err, data) => {
     fs.writeFile("./finalProduct/trial100_final.csv", csv);
 })
 
-const request = require("request");
+const axios = require("axios");
 const cheerio = require("cheerio");
 const fs = require("fs-extra");
 
 let linkList = "";
 
-request("https://www.jondon.com/", (err, response, body) => {
+axios({
+    method: "GET",
+    url: "https://www.jondon.com/"
+}, response => {
     let $ = cheerio.load(body);
     let rawList = $("nav li.level1>a");
     for(let i = 0; i < rawList.length; i++){

@@ -337,7 +337,7 @@ function filterDistinctProductEntities (products) {
     return filtered;
 }
 
-async function getDetailProducts (products) {
+async function getDetailProducts (products, option) {
     if (products.length == 0) return [];
     let product_ids = products.map(item => `'${mysqlutils.escapeQuotes(item.product_id.toString())}'`).join(", ");
     let sql =
@@ -410,7 +410,7 @@ async function getDetailProducts (products) {
     ORDER BY \`pe\`.product_id, \`pe\`.entity_id
     `;
     let rawData = await msClient.promiseQuery(sql);
-    let _products = modelizeProductsData(rawData);
+    let _products = modelizeProductsData(rawData, {isAdmin: option.isAdmin});
     return _products;
 }
 
@@ -554,7 +554,7 @@ async function search (searchConfig) {
     let slice_start = (currentPage - 1)*items_per_page;
     let slice_end = currentPage*items_per_page;
     products = products.slice(slice_start, slice_end);
-    products = await getDetailProducts(products);
+    products = await getDetailProducts(products, {isAdmin: searchConfig && searchConfig.isAdmin ? searchConfig.isAdmin : null});
     return {
         currentPage: currentPage,
         totalPages: totalPages,

@@ -89,13 +89,14 @@ router.delete("/category", checkAdminByCookie, async (req, res) => {
     // req.body:    {category_ids: [category_id]}
     // res.json({isSuccess: boolean, Alert: []})
     try{
-        let category_ids = req.category_ids;
+        let category_ids = req.body.category_ids;
         let result = await deleteCategoryEntities(category_ids);
         res.json({
             isSuccess: true,
             result: result
         })
     }catch(err){
+        console.log(err);
         res.json({Alert: res.Alert.push(createSystemErrMessage(001))})
     }
 });

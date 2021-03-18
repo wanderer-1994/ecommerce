@@ -1,4 +1,4 @@
-const request = require("request");
+const axios = require("axios");
 const cheerio = require("cheerio");
 const fs = require("fs-extra");
 
@@ -12,172 +12,145 @@ const fs = require("fs-extra");
 //                  https://phatdatvinhvien.com/thumb/220x195/1/upload/product/2m-3555.jpg
 
 // daily update
-function get_phatdatcomQuotation(){
+async function get_phatdatcomQuotation(){
     // let required = ["prod_link", "sup_warranty", "prod_stock"]
-    return new Promise((resolve, reject) => {
-            console.log("get pdcom Quo");
-            request(
-                {
-                    method: "GET",
-                    rejectUnauthorized: false,
-                    url: "https://phatdatcomputer.vn/bang-gia/bang-gia-tat-ca-san-pham"
-                }, 
-                (err, response, body) => {
-                    try{
-                        let $ = cheerio.load(body);
-                        let products = [];
-                        let tb_rows = $(".content table").eq(2).find("tbody tr");
-                        for(let i = 0; i < tb_rows.length; i++){
-                            let tr_data = tb_rows.eq(i);
-                            let prod_link = tr_data.find("td").eq(4).find("p a").eq(0).attr("href");
-                            if(prod_link){
-                                let product = new Object;
-                                product.prod_link = prod_link;
-                                product.sup_warranty = tr_data.find("td").eq(2).find("p").text().replace(/\s/g,"");
-                                product.prod_stock = tr_data.find("td").eq(3).find("p").text();
-                                if(product.prod_stock.indexOf("CÒN HÀNG") > -1){
-                                    product.prod_stock = 1;
-                                }else{
-                                    product.prod_stock = 0;
-                                }
-                                products.push(product);
-                            }
-                        }
-                        resolve(products);
-                    }catch(err){
-                        err.err_code = "001";
-                        err.err_message = "get_phatdatcomQuotation";
-                        reject(err);
-                    }
+    console.log("get pdcom Quo");
+    let response = await axios({
+        method: "GET",
+        rejectUnauthorized: false,
+        url: "https://phatdatcomputer.vn/bang-gia/bang-gia-tat-ca-san-pham"
+    }); 
+    try{
+        let $ = cheerio.load(response.data);
+        let products = [];
+        let tb_rows = $(".content table").eq(2).find("tbody tr");
+        for(let i = 0; i < tb_rows.length; i++){
+            let tr_data = tb_rows.eq(i);
+            let prod_link = tr_data.find("td").eq(4).find("p a").eq(0).attr("href");
+            if(prod_link){
+                let product = new Object;
+                product.prod_link = prod_link;
+                product.sup_warranty = tr_data.find("td").eq(2).find("p").text().replace(/\s/g,"");
+                product.prod_stock = tr_data.find("td").eq(3).find("p").text();
+                if(product.prod_stock.indexOf("CÒN HÀNG") > -1){
+                    product.prod_stock = 1;
+                }else{
+                    product.prod_stock = 0;
                 }
-            )
-    })
-}
-
-function get_phatdatvvQuotation(){
-    // process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
-    // let required = ["prod_link", "sup_warranty", "prod_stock"]
-    return new Promise((resolve, reject) => {
-        console.log("get pdvv Quo");
-        request(
-            {
-                method: "GET",
-                // rejectUnauthorized: false,
-                url: "https://phatdatvinhvien.com/bao-gia.html"
-            }, 
-            (err, response, body) => {
-                try{
-                    let $ = cheerio.load(body);
-                    let products = [];
-                    let tb_rows = $("#main .sub_main table tbody tr");
-                    for(let i = 0; i < tb_rows.length; i++){
-                        let tr_data = tb_rows.eq(i);
-                        let prod_link = tr_data.find("td").eq(1).find(".xemthem_baogia a").eq(0).attr("href");
-                        if(prod_link){
-                            let product = new Object;
-                            product.prod_link = prod_link;
-                            if(product.prod_link.indexOf("phatdatvinhvien.com") < 0) 
-                                product.prod_link = "https://phatdatvinhvien.com/" + product.prod_link;
-                            product.sup_warranty = tr_data.find("td").eq(3).find(".baohanh").text().replace(/\s/g,"");
-                            product.prod_stock = 1;
-                            products.push(product);
-                        }
-                    }
-                    resolve(products);
-                }catch(err){
-                    err.err_code = "001";
-                    err.err_message = "get_phatdatcomQuotation";
-                    reject(err);
-                }
-            }
-        )
-    })
-}
-
-function get_pdcomProdDetail(prod_link){
-    // let required = ["prod_link", "sup_name", "sup_price"];
-    return new Promise((resolve, reject) => {
-        request(
-            {
-                method: "GET",
-                rejectUnauthorized: false,
-                url: prod_link
-            },
-            (err, response, body) => {
-                try{
-                    let $ = cheerio.load(body);
-                    let prodDetail = new Object;
-                    prodDetail.prod_link = prod_link;
-                    prodDetail.sup_name = $(".content .ct-r .ct-tit").text().replace(/^\s*/, "").replace(/\s*$/, "");
-                    prodDetail.sup_price = $(".content .ct-r .ct-sp-gia span").text().replace(/\D/g,"");
-                    prodDetail.sup_price = parseInt(prodDetail.sup_price);
-                    resolve(prodDetail);
-                }catch(err){
-                    reject(err);
-                }
-            }
-        )
-    })
-}
-
-function get_pdvvProdDetail(prod_link){
-    // let required = ["prod_link", "sup_name", "sup_price"];
-    return new Promise((resolve, reject) => {
-        request(
-            {
-                method: "GET",
-                // rejectUnauthorized: false,
-                url: prod_link
-            },
-            (err, response, body) => {
-                try{
-                    let $ = cheerio.load(body);
-                    let prodDetail = new Object;
-                    prodDetail.prod_link = prod_link;
-                    prodDetail.sup_name = $(".info_detail .name_detail").text().replace(/^\s*/, "").replace(/\s*$/, "");
-                    prodDetail.sup_price = $(".info_detail .gia_detail span").text().replace(/\D/g, "");
-                    prodDetail.sup_price = parseInt(prodDetail.sup_price);
-                    resolve(prodDetail);
-                }catch(err){
-                    reject(err);
-                }
-            }
-        )
-    })
-}
-
-function get_singleProdDetail(pdcomQuo, pdvvQuo, prod_link){
-    return new Promise( async (resolve, reject) => {
-        // let required = ["prod_link", "sup_name", "prod_stock", "sup_warranty", "sup_price"];
-        console.log("get  prodDetail: ", prod_link);
-        let trial = 1;
-        let max_trial = 5
-        while(trial <= max_trial){
-            try{
-                let prodDetail = new Object;
-                let prodDetail_Quo;
-                if(prod_link.indexOf("https://phatdatvinhvien.com") > -1){
-                    prodDetail = await get_pdvvProdDetail(prod_link);
-                    prodDetail_Quo = pdvvQuo.find(item => {return item.prod_link == prod_link});
-                }else if(prod_link.indexOf("https://phatdatcomputer.vn") > -1){
-                    prodDetail = await get_pdcomProdDetail(prod_link);
-                    prodDetail_Quo = pdcomQuo.find(item => {return item.prod_link == prod_link});
-                };
-                let Quo_update = ["sup_warranty", "prod_stock"];
-                if(!prodDetail_Quo) trial = max_trial + 1;
-                Quo_update.forEach(item => {
-                    prodDetail[item] = prodDetail_Quo[item];
-                })
-                trial = max_trial + 1;
-                resolve(prodDetail);
-            }catch(err){
-                if(trial >= max_trial){
-                    resolve("err");
-                }
-                trial += 1;
+                products.push(product);
             }
         }
-    })
+        return products;
+    }catch(err){
+        err.err_code = "001";
+        err.err_message = "get_phatdatcomQuotation";
+        throw err;
+    }
+}
+
+async function get_phatdatvvQuotation(){
+    // process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
+    // let required = ["prod_link", "sup_warranty", "prod_stock"]
+    console.log("get pdvv Quo");
+    let response = await axios({
+        method: "GET",
+        // rejectUnauthorized: false,
+        url: "https://phatdatvinhvien.com/bao-gia.html"
+    });
+    try{
+        let $ = cheerio.load(response.data);
+        let products = [];
+        let tb_rows = $("#main .sub_main table tbody tr");
+        for(let i = 0; i < tb_rows.length; i++){
+            let tr_data = tb_rows.eq(i);
+            let prod_link = tr_data.find("td").eq(1).find(".xemthem_baogia a").eq(0).attr("href");
+            if(prod_link){
+                let product = new Object;
+                product.prod_link = prod_link;
+                if(product.prod_link.indexOf("phatdatvinhvien.com") < 0) 
+                    product.prod_link = "https://phatdatvinhvien.com/" + product.prod_link;
+                product.sup_warranty = tr_data.find("td").eq(3).find(".baohanh").text().replace(/\s/g,"");
+                product.prod_stock = 1;
+                products.push(product);
+            }
+        }
+        return products;
+    }catch(err){
+        err.err_code = "001";
+        err.err_message = "get_phatdatcomQuotation";
+        throw err;
+    }
+}
+
+async function get_pdcomProdDetail(prod_link){
+    // let required = ["prod_link", "sup_name", "sup_price"];
+    let response = await axios({
+        method: "GET",
+        rejectUnauthorized: false,
+        url: prod_link
+    });
+    try{
+        let $ = cheerio.load(response.data);
+        let prodDetail = new Object;
+        prodDetail.prod_link = prod_link;
+        prodDetail.sup_name = $(".content .ct-r .ct-tit").text().replace(/^\s*/, "").replace(/\s*$/, "");
+        prodDetail.sup_price = $(".content .ct-r .ct-sp-gia span").text().replace(/\D/g,"");
+        prodDetail.sup_price = parseInt(prodDetail.sup_price);
+        return prodDetail;
+    }catch(err){
+        throw err;
+    }
+}
+
+async function get_pdvvProdDetail(prod_link){
+    // let required = ["prod_link", "sup_name", "sup_price"];
+    let response = await axios({
+        method: "GET",
+        // rejectUnauthorized: false,
+        url: prod_link
+    });
+    try{
+        let $ = cheerio.load(response.body);
+        let prodDetail = new Object;
+        prodDetail.prod_link = prod_link;
+        prodDetail.sup_name = $(".info_detail .name_detail").text().replace(/^\s*/, "").replace(/\s*$/, "");
+        prodDetail.sup_price = $(".info_detail .gia_detail span").text().replace(/\D/g, "");
+        prodDetail.sup_price = parseInt(prodDetail.sup_price);
+        return prodDetail;
+    }catch(err){
+        throw err;
+    }
+}
+
+async function get_singleProdDetail(pdcomQuo, pdvvQuo, prod_link){
+    console.log("get  prodDetail: ", prod_link);
+    let trial = 1;
+    let max_trial = 5
+    while(trial <= max_trial){
+        try{
+            let prodDetail = new Object;
+            let prodDetail_Quo;
+            if(prod_link.indexOf("https://phatdatvinhvien.com") > -1){
+                prodDetail = await get_pdvvProdDetail(prod_link);
+                prodDetail_Quo = pdvvQuo.find(item => {return item.prod_link == prod_link});
+            }else if(prod_link.indexOf("https://phatdatcomputer.vn") > -1){
+                prodDetail = await get_pdcomProdDetail(prod_link);
+                prodDetail_Quo = pdcomQuo.find(item => {return item.prod_link == prod_link});
+            };
+            let Quo_update = ["sup_warranty", "prod_stock"];
+            if(!prodDetail_Quo) trial = max_trial + 1;
+            Quo_update.forEach(item => {
+                prodDetail[item] = prodDetail_Quo[item];
+            })
+            trial = max_trial + 1;
+            return prodDetail;
+        }catch(err){
+            if(trial >= max_trial){
+                return "err";
+            }
+            trial += 1;
+        }
+    }
 }
 
 async function updateProductsData(){
@@ -236,86 +209,72 @@ async function updateProductsData(){
 }
 
 // initial products
-function pdcom_initialProduct(prod_link){
+async function pdcom_initialProduct(prod_link){
     // let required = ["prod_link", "prod_thumb", "prod_img"]
-    return new Promise((resolve, reject) => {
-        request(
-            {
-                method: "GET",
-                rejectUnauthorized: false,
-                url: prod_link
-            },
-            (err, response, body) => {
-                try{
-                    let $ = cheerio.load(body);
-                    let initialProd = new Object;
-                    initialProd.prod_link = prod_link;
-                    initialProd.prod_img = "https://phatdatcomputer.vn/" + $(".content .ct-l img").eq(0).attr("src");
-                    initialProd.prod_thumb = "";
-                    resolve(initialProd);
-                }catch(err){
-                    reject(err);
-                }
-            }
-        )
-    })
+    let response = await axios({
+        method: "GET",
+        rejectUnauthorized: false,
+        url: prod_link
+    });
+    try{
+        let $ = cheerio.load(response.data);
+        let initialProd = new Object;
+        initialProd.prod_link = prod_link;
+        initialProd.prod_img = "https://phatdatcomputer.vn/" + $(".content .ct-l img").eq(0).attr("src");
+        initialProd.prod_thumb = "";
+        return initialProd;
+    }catch(err){
+        throw err;
+    }
 }
 
-function pdvv_initialProduct(prod_link){
+async function pdvv_initialProduct(prod_link){
     // let required = ["prod_link", "prod_thumb", "prod_img"]
-    return new Promise((resolve, reject) => {
-        request(
-            {
-                method: "GET",
-                // rejectUnauthorized: false,
-                url: prod_link
-            },
-            (err, response, body) => {
-                try{
-                    let $ = cheerio.load(body);
-                    let initialProd = new Object;
-                    initialProd.prod_link = prod_link;
-                    initialProd.prod_img = "https://phatdatvinhvien.com/" + $(".main_img_detail img").attr("src");
-                    initialProd.prod_thumb = $(".list_sub_img_detail img").eq(0).attr("src");
-                    if(initialProd.prod_thumb){
-                        initialProd.prod_thumb = "https://phatdatvinhvien.com/" + initialProd.prod_thumb;
-                    }else{
-                        initialProd.prod_thumb = "";
-                    }
-                    resolve(initialProd);
-                }catch(err){
-                    reject(err);
-                }
-            }
-        )
-    })
-}
-
-function get_singleInitialProd(prod_link){
-    return new Promise( async (resolve, reject) => {
-        // let required = ["prod_link", "prod_thumb", "prod_img"]
-        console.log("get  initialProd: ", prod_link);
-        let trial = 1;
-        let max_trial = 5
-        while(trial <= max_trial){
-            try{
-                let initialProd = new Object;
-                if(prod_link.indexOf("https://phatdatvinhvien.com") > -1){
-                    initialProd = await pdvv_initialProduct(prod_link);
-                }else if(prod_link.indexOf("https://phatdatcomputer.vn") > -1){
-                    initialProd = await pdcom_initialProduct(prod_link);
-                };
-                // done
-                trial = max_trial + 1;
-                resolve(initialProd);
-            }catch(err){
-                if(trial >= max_trial){
-                    resolve("err");
-                }
-                trial += 1;
-            }
+    let response = await axios({
+        method: "GET",
+        // rejectUnauthorized: false,
+        url: prod_link
+    });
+    try{
+        let $ = cheerio.load(response.data);
+        let initialProd = new Object;
+        initialProd.prod_link = prod_link;
+        initialProd.prod_img = "https://phatdatvinhvien.com/" + $(".main_img_detail img").attr("src");
+        initialProd.prod_thumb = $(".list_sub_img_detail img").eq(0).attr("src");
+        if(initialProd.prod_thumb){
+            initialProd.prod_thumb = "https://phatdatvinhvien.com/" + initialProd.prod_thumb;
+        }else{
+            initialProd.prod_thumb = "";
         }
-    })
+        return initialProd;
+    }catch(err){
+        throw err;
+    }
+}
+
+async function get_singleInitialProd(prod_link){
+    // let required = ["prod_link", "prod_thumb", "prod_img"]
+    console.log("get  initialProd: ", prod_link);
+    let trial = 1;
+    let max_trial = 5
+    while(trial <= max_trial){
+        try{
+            let initialProd = new Object;
+            if(prod_link.indexOf("https://phatdatvinhvien.com") > -1){
+                initialProd = await pdvv_initialProduct(prod_link);
+            }else if(prod_link.indexOf("https://phatdatcomputer.vn") > -1){
+                initialProd = await pdcom_initialProduct(prod_link);
+            };
+            // done
+            trial = max_trial + 1;
+            return initialProd;
+        }catch(err){
+            if(trial >= max_trial){
+                return "err";
+            }
+            trial += 1;
+        }
+    }
 }
 
 async function initialProd(){
