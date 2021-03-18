@@ -13,6 +13,8 @@ function Category () {
         async function fetchCategory () {
             try {
                 let categories = await api.getCategories();
+                let structured = categoryModel.structurizeCategories(categories);
+                console.log(structured);
                 let category = categories.find(cat_item => cat_item.entity_id == category_id);
                 category.children = categories.filter(cat_item => cat_item.parent === category.entity_id).sort((a, b) => a.position - b.position);
                 setCategory(category);

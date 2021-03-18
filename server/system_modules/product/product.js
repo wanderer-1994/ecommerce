@@ -8,7 +8,7 @@ const attr_tier_price = ["entity_id", "price"];
 const attr_eav = ["entity_id", "attribute_id", "value"];
 const { getProductEavTableName } = require("./product_eav_table");
 
-async function saveProductEntity (product) {
+async function saveProductEntity (product, option) {
     // product_entity: "entity_id", "type_id", "created_at", "updated_at"
     // eav_varchar(255): "sup_link", "sup_name", "sup_warranty", "thumbnail"
     // eav_multi_value: "images", "subsection"
@@ -29,11 +29,11 @@ async function saveProductEntity (product) {
             `
             INSERT INTO \`ecommerce\`.product_entity (${sqltb_product_entity.map(item => item).join(", ")})
             VALUES ("${sqltb_product_entity.map(item => mysqlutils.escapeQuotes(product[item])).join(`", "`)}") AS new
-            ON DUPLICATE KEY UPDATE
-            ${sqltb_product_entity.map(item => `${item} = new.${item}`).join(",\n")};
+            ${option && option.mode === "UPDATE" ? `ON DUPLICATE KEY UPDATE
+            ${sqltb_product_entity.map(item => `${item} = new.${item}`).join(",\n")}` : ""};
             `;
         } else {
-            sqltb_product_entity = null;
+            return new Error("ERROR: product 'entity_id' is not specified");
         };
 
         let sql_product_category_assignment = null;
@@ -89,18 +89,20 @@ async function saveProductEntity (product) {
         }
         let sql_eav_multi_value = [];
 
-        product.attributes.forEach(attribute => {
+        (product.attributes || []).forEach(attribute => {
             let is_valid = false;
+            let match = msClient.productEav.find(m_item => m_item.attribute_id == attribute.attribute_id);
             let table_name = getProductEavTableName(attribute);
-            if (table_name == "product_eav_multi_value") {
+            if (match && table_name == "product_eav_multi_value") {
                 sql_eav_multi_value.push(attribute);
                 is_valid = true;
-            } else if (Object.keys(sql_eav_single_value).indexOf(table_name) != -1) {
+            } else if (match && Object.keys(sql_eav_single_value).indexOf(table_name) != -1) {
                 sql_eav_single_value[table_name].push(attribute);
                 is_valid = true;
             }
             if (!is_valid) {
-                console.log("Warning: skip attribute ", attribute);
+                let message = `Warning: skip attribute '${attribute.attribute_id}'`;
+                product.m_warning = product.m_warning ? product.m_warning.push(message) : [message];
             }
         });
 
@@ -114,7 +116,7 @@ async function saveProductEntity (product) {
                     WHERE entity_id = "${mysqlutils.escapeQuotes(product.entity_id)}"
                     AND attribute_id = "${mysqlutils.escapeQuotes(row_item.attribute_id)}";
                     `;
-                } else {
+                } else if (row_item.value !== undefined) {
                     sql_row_item =
                     `
                     INSERT INTO \`ecommerce\`.${tb_item} (${attr_eav.map(col_item => col_item).join(", ")})
@@ -180,6 +182,62 @@ async function saveProductEntity (product) {
     }
 }
 
+async function deleteProductEntities (product_ids) {
+    let tbs_to_delete = [
+        {
+            tb_name: "product_entity",
+            entity_column: "entity_id"
+        },
+        {
+            tb_name: "product_eav_int",
+            entity_column: "entity_id"
+        },
+        {
+            tb_name: "product_eav_decimal",
+            entity_column: "entity_id"
+        },
+        {
+            tb_name: "product_eav_varchar",
+            entity_column: "entity_id"
+        },
+        {
+            tb_name: "product_eav_text",
+            entity_column: "entity_id"
+        },
+        {
+            tb_name: "product_eav_datetime",
+            entity_column: "entity_id"
+        },
+        {
+            tb_name: "product_eav_multi_value",
+            entity_column: "entity_id"
+        },
+        {
+            tb_name: "product_category_assignment",
+            entity_column: "product_id"
+        },
+        {
+            tb_name: "inventory",
+            entity_column: "entity_id"
+        },
+        {
+            tb_name: "product_tier_price",
+            entity_column: "entity_id"
+        }
+    ];
+    let sql_delete_product =
+    `
+    START TRANSACTION;
+    ${tbs_to_delete.map(table => {
+        return `DELETE FROM \`ecommerce\`.${table.tb_name} WHERE \`${table.entity_column}\` IN (${product_ids.map(item => `"${mysqlutils.escapeQuotes(item)}"`).join(", ")});`
+    }).join("\n")}
+    COMMIT;
+    `
+    let result = await msClient.promiseQuery(sql_delete_product);
+    return result;
+}
+
 module.exports = {
-    saveProductEntity
+    saveProductEntity,
+    deleteProductEntities
 }

@@ -3,92 +3,9 @@ const mysqlutils = require("../mysql/mysqlutils");
 
 const attr_category_entity = ["entity_id", "name", "parent", "is_online", "position"];
 const attr_eav = ["entity_id", "attribute_id", "value"];
-const attr_eav_table = [
-    {
-        html_type: "boolean",
-        data_type: "ANY",
-        table: "category_eav_int"
-    },
-    {
-        html_type: "multiinput",
-        data_type: "ANY",
-        table: "category_eav_multi_value"
-    },
-    {
-        html_type: "multiselect",
-        data_type: "ANY",
-        table: "category_eav_multi_value"
-    },
-    {
-        html_type: "password",
-        data_type: "ANY",
-        table: "category_eav_varchar"
-    },
-    // 
-    {
-        html_type: "input",
-        data_type: "int",
-        table: "category_eav_int"
-    },
-    {
-        html_type: "input",
-        data_type: "decimal",
-        table: "category_eav_decimal"
-    },
-    {
-        html_type: "input",
-        data_type: "varchar",
-        table: "category_eav_varchar"
-    },
-    {
-        html_type: "input",
-        data_type: "text",
-        table: "category_eav_text"
-    },
-    {
-        html_type: "input",
-        data_type: "html",
-        table: "category_eav_text"
-    },
-    {
-        html_type: "input",
-        data_type: "datetime",
-        table: "category_eav_datetime"
-    },
-    // 
-    {
-        html_type: "select",
-        data_type: "int",
-        table: "category_eav_int"
-    },
-    {
-        html_type: "select",
-        data_type: "decimal",
-        table: "category_eav_decimal"
-    },
-    {
-        html_type: "select",
-        data_type: "varchar",
-        table: "category_eav_varchar"
-    },
-    {
-        html_type: "select",
-        data_type: "text",
-        table: "category_eav_text"
-    },
-    {
-        html_type: "select",
-        data_type: "html",
-        table: "category_eav_text"
-    },
-    {
-        html_type: "select",
-        data_type: "datetime",
-        table: "category_eav_datetime"
-    },
-]
+const { getCategoryEavTableName } = require("./category_eav_table");
 
-async function saveCategoryEntity (category) {
+async function saveCategoryEntity (category, option) {
     // category_entity: "entity_id", "name", "is_online", "position"
     // eav_varchar(255): "banner_image"
     // eav_multi_text: "title_caption", "introduction"
@@ -105,11 +22,11 @@ async function saveCategoryEntity (category) {
             `
             INSERT INTO \`ecommerce\`.category_entity (${sqltb_category_entity.map(item => item).join(", ")})
             VALUES ("${sqltb_category_entity.map(item => mysqlutils.escapeQuotes(category[item])).join(`", "`)}") AS new
-            ON DUPLICATE KEY UPDATE
-            ${sqltb_category_entity.map(item => `${item} = new.${item}`).join(",\n")};
+            ${option && option.mode === "UPDATE" ? `ON DUPLICATE KEY UPDATE
+            ${sqltb_category_entity.map(item => `${item} = new.${item}`).join(",\n")}` : ""};
             `;
         } else {
-            sqltb_category_entity = null;
+            return new Error("ERROR: category 'entity_id' is not specified");
         };
 
         let sql_eav_single_value = {
@@ -121,25 +38,20 @@ async function saveCategoryEntity (category) {
         }
         let sql_eav_multi_value = [];
 
-        category.attributes.forEach(attribute => {
+        (category.attributes || []).forEach(attribute => {
             let is_valid = false;
-            let table_indicator = attr_eav_table.find(item => {
-                return (
-                    item.html_type == attribute.html_type &&
-                    (item.data_type == attribute.data_type || item.data_type == "ANY")
-                )
-            });
-            if (table_indicator) {
-                if (table_indicator.table == "category_eav_multi_value") {
-                    sql_eav_multi_value.push(attribute);
-                    is_valid = true;
-                } else if (Object.keys(sql_eav_single_value).indexOf(table_indicator.table) != -1) {
-                    sql_eav_single_value[table_indicator.table].push(attribute);
-                    is_valid = true;
-                }
+            let table_name = getCategoryEavTableName(attribute);
+            let match = msClient.categoryEav.find(m_item => m_item.attribute_id == attribute.attribute_id);
+            if (match && table_name == "category_eav_multi_value") {
+                sql_eav_multi_value.push(attribute);
+                is_valid = true;
+            } else if (match && Object.keys(sql_eav_single_value).indexOf(table_name) != -1) {
+                sql_eav_single_value[table_name].push(attribute);
+                is_valid = true;
             }
             if (!is_valid) {
-                console.log("Warning: skip attribute ", attribute);
+                let message = `Warning: skip attribute '${attribute.attribute_id}'`;
+                category.m_warning = category.m_warning ? category.m_warning.push(message) : [message];
             }
         });
 
@@ -153,7 +65,7 @@ async function saveCategoryEntity (category) {
                     WHERE entity_id = "${mysqlutils.escapeQuotes(category.entity_id)}"
                     AND attribute_id = "${mysqlutils.escapeQuotes(row_item.attribute_id)}";
                     `;
-                } else {
+                } else if (row_item.value !== undefined) {
                     sql_row_item =
                     `
                     INSERT INTO \`ecommerce\`.${tb_item} (${attr_eav.map(col_item => col_item).join(", ")})
@@ -216,6 +128,54 @@ async function saveCategoryEntity (category) {
     }
 }
 
+async function deleteCategoryEntities (category_ids) {
+    let tbs_to_delete = [
+        {
+            tb_name: "category_entity",
+            entity_column: "entity_id"
+        },
+        {
+            tb_name: "category_eav_int",
+            entity_column: "entity_id"
+        },
+        {
+            tb_name: "category_eav_decimal",
+            entity_column: "entity_id"
+        },
+        {
+            tb_name: "category_eav_varchar",
+            entity_column: "entity_id"
+        },
+        {
+            tb_name: "category_eav_text",
+            entity_column: "entity_id"
+        },
+        {
+            tb_name: "category_eav_datetime",
+            entity_column: "entity_id"
+        },
+        {
+            tb_name: "category_eav_multi_value",
+            entity_column: "entity_id"
+        },
+        {
+            tb_name: "product_category_assignment",
+            entity_column: "category_id"
+        }
+    ];
+    let sql_delete_category =
+    `
+    START TRANSACTION;
+    ${tbs_to_delete.map(table => {
+        return `DELETE FROM \`ecommerce\`.${table.tb_name} WHERE \`${table.entity_column}\` IN (${category_ids.map(item => `"${mysqlutils.escapeQuotes(item)}"`).join(", ")});`
+    }).join("\n")}
+    COMMIT;
+    `
+    let result = await msClient.promiseQuery(sql_delete_category);
+    return result;
+}
+
 module.exports = {
-    saveCategoryEntity
+    saveCategoryEntity,
+    deleteCategoryEntities
 }

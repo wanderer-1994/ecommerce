@@ -7,9 +7,16 @@ function getCategoryAttribute (category, attribute_id) {
     return null;
 };
 
-function structurizeCategories (categories) {
+function structurizeCategories (categories, parent_id) {
     let result = [];
-    result = categories.filter(item => !item.parent).sort((a, b) => a.position - b.position);
+    if (!parent_id) {
+        result = categories.filter(item => !item.parent).sort((a, b) => a.position - b.position);
+    } else {
+        result = categories.filter(item => item.parent === parent_id).sort((a, b) => a.position - b.position);
+    };
+    result.forEach(item => {
+        item.children = structurizeCategories(categories, item.entity_id);
+    });
     return result;
 }
 

@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const msClient = require("../system_modules/mysql/mysql");
-const { updateSupInfo } = require("../system_modules/subinfo_updater/general_updater");
+const msClient = require("../../system_modules/mysql/mysql");
+const { updateSupInfo } = require("../../system_modules/subinfo_updater/general_updater");
 const {
     createSystemErrMessage,
     unescapeSelectedData
