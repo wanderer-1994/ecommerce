@@ -63,6 +63,7 @@ async function saveCategoryEntity (category, option) {
         let sql_eav_multi_value = [];
 
         (category.attributes || []).forEach(attribute => {
+            // check if category_eav table has the attribute_id && data_type and html_type is valid
             let is_valid = false;
             let table_name = getCategoryEavTableName(attribute);
             let match = msClient.categoryEav.find(m_item => m_item.attribute_id == attribute.attribute_id);
@@ -74,8 +75,12 @@ async function saveCategoryEntity (category, option) {
                 is_valid = true;
             }
             if (!is_valid) {
-                let message = `Warning: skip attribute '${attribute.attribute_id}'`;
-                category.m_warning = category.m_warning ? category.m_warning.push(message) : [message];
+                let message = `Warning: skip invalid attribute '${attribute.attribute_id}'`;
+                if (category.m_warning) {
+                    category.m_warning.push(message);
+                } else {
+                    category.m_warning = [message];
+                }
             }
         });
 
@@ -104,24 +109,30 @@ async function saveCategoryEntity (category, option) {
         });
 
         sql_eav_multi_value.forEach((row_item, index) => {
-            let sql_row_item =
-            `
-            DELETE FROM \`ecommerce\`.category_eav_multi_value
-            WHERE entity_id = "${mysqlutils.escapeQuotes(category.entity_id)}"
-            AND attribute_id = "${mysqlutils.escapeQuotes(row_item.attribute_id)}";
-            `;
-            if (Array.isArray(row_item.value) && row_item.value.length > 0) {
-                sql_row_item +=
+            let sql_row_item = null;
+            if (row_item.value !== undefined) {
+                sql_row_item =
                 `
-                INSERT INTO \`ecommerce\`.category_eav_multi_value (${attr_eav.map(col_item => col_item).join(", ")})
-                VALUES
-                ${row_item.value
-                    .map(
-                        value_item => `("${mysqlutils.escapeQuotes(category.entity_id)}", "${mysqlutils.escapeQuotes(row_item.attribute_id)}", "${mysqlutils.escapeQuotes(value_item)}")`
-                    )
-                    .join(",\n")
-                };
+                DELETE FROM \`ecommerce\`.category_eav_multi_value
+                WHERE entity_id = "${mysqlutils.escapeQuotes(category.entity_id)}"
+                AND attribute_id = "${mysqlutils.escapeQuotes(row_item.attribute_id)}";
                 `;
+            }
+            if (Array.isArray(row_item.value)) {
+                row_item.value = row_item.value.filter(v_item => v_item !== undefined && v_item !== null && v_item !== "");
+                if (row_item.value.length > 0) {
+                    sql_row_item +=
+                    `
+                    INSERT INTO \`ecommerce\`.category_eav_multi_value (${attr_eav.map(col_item => col_item).join(", ")})
+                    VALUES
+                    ${row_item.value
+                        .map(
+                            value_item => `("${mysqlutils.escapeQuotes(category.entity_id)}", "${mysqlutils.escapeQuotes(row_item.attribute_id)}", "${mysqlutils.escapeQuotes(value_item)}")`
+                        )
+                        .join(",\n")
+                    };
+                    `;
+                }
             }
             sql_eav_multi_value[index] = sql_row_item;
         })
