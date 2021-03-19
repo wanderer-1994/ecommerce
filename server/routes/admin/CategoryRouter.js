@@ -1,11 +1,10 @@
 const express = require("express");
 const msClient = require("../../system_modules/mysql/mysql");
-const mysqlutils = require("../../system_modules/mysql/mysqlutils");
 const router = express.Router();
 const { checkAdminByCookie } = require("../../system_modules/middlewares/middlewares");
 const { createSystemErrMessage } = require("../../system_modules/functions");
 const { modelizeCategoriesData } = require("../../system_modules/category/categoryModel");
-const { saveCategoryEntity, deleteCategoryEntities } = require("../../system_modules/category/category");
+const categoryMgr = require("../../system_modules/category/categoryMgr");
 
 router.get("/category", async (req, res) => {
     try{
@@ -53,7 +52,7 @@ router.post("/category", async (req, res) => {
         let categories = req.body.categories;
         for (let i = 0; i < categories.length; i++) {
             try {
-                await saveCategoryEntity(categories[i], {mode: "CREATE"});
+                await categoryMgr.saveCategoryEntity(categories[i], {mode: "CREATE"});
                 categories[i].isSuccess = true;
             } catch (err) {
                 categories[i].isSuccess = false;
@@ -72,7 +71,7 @@ router.put("/category", async (req, res) => {
         let categories = req.body.categories;
         for (let i = 0; i < categories.length; i++) {
             try {
-                await saveCategoryEntity(categories[i], {mode: "UPDATE"});
+                await categoryMgr.saveCategoryEntity(categories[i], {mode: "UPDATE"});
                 categories[i].isSuccess = true;
             } catch (err) {
                 categories[i].isSuccess = false;
@@ -90,7 +89,7 @@ router.delete("/category", checkAdminByCookie, async (req, res) => {
     // res.json({isSuccess: boolean, Alert: []})
     try{
         let category_ids = req.body.category_ids;
-        let result = await deleteCategoryEntities(category_ids);
+        let result = await categoryMgr.deleteCategoryEntities(category_ids);
         res.json({
             isSuccess: true,
             result: result

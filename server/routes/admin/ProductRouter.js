@@ -9,7 +9,7 @@ const {
 const {
     items_per_page
 } = require("../../system_modules/const/config");
-const { saveProductEntity, deleteProductEntities } = require("../../system_modules/product/product");
+const productMgr = require("../../system_modules/product/productMgr");
 const search = require("../../system_modules/search/search");
 
 router.get("/product", async (req, res) => {
@@ -65,7 +65,7 @@ router.post("/product", async (req, res) => {
         let product_entities = req.body.product_entities || [];
         let promises = [];
         product_entities.forEach(entity => {
-            promises.push(saveProductEntity(entity, {mode: "CREATE"}));
+            promises.push(productMgr.saveProductEntity(entity, {mode: "CREATE"}));
         });
         Promise.all(promises).then(data => {
             res.json(data);
@@ -85,7 +85,7 @@ router.put("/product", async (req, res) => {
        let product_entities = req.body.product_entities || [];
        let promises = [];
        product_entities.forEach(entity => {
-           promises.push(saveProductEntity(entity, {mode: "UPDATE"}));
+           promises.push(productMgr.saveProductEntity(entity, {mode: "UPDATE"}));
        });
        Promise.all(promises).then(data => {
            res.json(data);
@@ -103,7 +103,7 @@ router.delete("/product", async (req, res) => {
     // res.json({isSuccess: boolean, Alert: []})
     try{
         let entity_ids = req.entity_ids || [];
-        let result = await deleteProductEntities(entity_ids);
+        let result = await productMgr.deleteProductEntities(entity_ids);
         res.json({
             isSuccess: true,
             result: result
