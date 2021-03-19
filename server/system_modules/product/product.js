@@ -18,9 +18,29 @@ async function saveProductEntity (product, option) {
     // product_tier_price: "tier_price"
 
     try {
+        if (product.entity_id === null || product.entity_id === "" && product.entity_id === undefined) throw new Error("ERROR: 'entity_id' is not specified");
+
+        // check if product exist for case update
+        if (option.mode === "UPDATE") {
+            let sql_product_exist =
+            `
+            SELECT entity_id FROM \`ecommerce\`.product_entity
+            WHERE \`entity_id\` = "${mysqlutils.escapeQuotes(category.entity_id)}";
+            `;
+            let match_product = await msClient.promiseQuery(sql_product_exist);
+            if (match_product.length === 0) throw new Error(`ERROR: category with entity_id '${product.entity_id}' is not exist`);
+        };
+
+        // main handling
         let sqltb_product_entity = [];
         attr_product_entity.forEach(item => {
-            if (product[item] !== null && product[item] !== "" && product[item] !== undefined) {
+            let isNotNull;
+            if (option.mode === "CREATE") {
+                isNotNull = product[item] !== null && product[item] !== "" && product[item] !== undefined;
+            } else if (option.mode === "UPDATE") {
+                isNotNull = item in product;
+            }
+            if (isNotNull) {
                 sqltb_product_entity.push(item);
             }
         });
@@ -28,15 +48,19 @@ async function saveProductEntity (product, option) {
             sqltb_product_entity =
             `
             INSERT INTO \`ecommerce\`.product_entity (${sqltb_product_entity.map(item => item).join(", ")})
-            VALUES ("${sqltb_product_entity.map(item => mysqlutils.escapeQuotes(product[item])).join(`", "`)}") AS new
-            ${option && option.mode === "UPDATE" ? `ON DUPLICATE KEY UPDATE
+            VALUES (${sqltb_product_entity.map(item => {
+                if (product[item] === null || product[item] === "" || product[item] === undefined) {
+                    return "NULL";
+                } else {
+                    return `"${mysqlutils.escapeQuotes(product[item])}"`;
+                }
+            }).join(", ")}) AS new
+            ${option.mode === "UPDATE" ? `ON DUPLICATE KEY UPDATE
             ${sqltb_product_entity.map(item => `${item} = new.${item}`).join(",\n")}` : ""};
             `;
-        } else {
-            return new Error("ERROR: product 'entity_id' is not specified");
-        };
+        }
 
-        let sql_product_category_assignment = null;
+        let sql_product_category_assignment;
         if (Array.isArray(product.categories)) {
             product.categories = product.categories.filter(item => (
                 "category_id" in item && (item.position == null || typeof(item.position) == "number")
@@ -58,7 +82,7 @@ async function saveProductEntity (product, option) {
             }
         }
 
-        let sql_inventory = null;
+        let sql_inventory;
         if (typeof(product.available_quantity) == "number") {
             sql_inventory =
             `
@@ -69,7 +93,7 @@ async function saveProductEntity (product, option) {
             `;
         }
 
-        let sql_price = null;
+        let sql_price;
         if (typeof(product.tier_price) == "number") {
             sql_price =
             `
@@ -90,9 +114,10 @@ async function saveProductEntity (product, option) {
         let sql_eav_multi_value = [];
 
         (product.attributes || []).forEach(attribute => {
+            // check if product_eav table has the attribute_id && data_type and html_type is valid
             let is_valid = false;
-            let match = msClient.productEav.find(m_item => m_item.attribute_id == attribute.attribute_id);
             let table_name = getProductEavTableName(attribute);
+            let match = msClient.productEav.find(m_item => m_item.attribute_id == attribute.attribute_id);
             if (match && table_name == "product_eav_multi_value") {
                 sql_eav_multi_value.push(attribute);
                 is_valid = true;
@@ -101,13 +126,20 @@ async function saveProductEntity (product, option) {
                 is_valid = true;
             }
             if (!is_valid) {
-                let message = `Warning: skip attribute '${attribute.attribute_id}'`;
-                product.m_warning = product.m_warning ? product.m_warning.push(message) : [message];
+                let message = `Warning: skip invalid attribute '${attribute.attribute_id}'`;
+                if (product.m_warning) {
+                    product.m_warning.push(message);
+                } else {
+                    product.m_warning = [message];
+                }
             }
         });
 
         Object.keys(sql_eav_single_value).forEach(tb_item => {
             sql_eav_single_value[tb_item].forEach((row_item, index) => {
+                // case value in ("" or null): delete that attribute value of product
+                // case value = undefined (no value property in attribute object): no update
+                // case value in (number or string): update attribute value for product
                 let sql_row_item;
                 if (row_item.value === null || row_item.value === "") {
                     sql_row_item =
@@ -131,24 +163,31 @@ async function saveProductEntity (product, option) {
         });
 
         sql_eav_multi_value.forEach((row_item, index) => {
-            let sql_row_item =
-            `
-            DELETE FROM \`ecommerce\`.product_eav_multi_value
-            WHERE entity_id = "${mysqlutils.escapeQuotes(product.entity_id)}"
-            AND attribute_id = "${mysqlutils.escapeQuotes(row_item.attribute_id)}";
-            `;
-            if (Array.isArray(row_item.value) && row_item.value.length > 0) {
-                sql_row_item +=
+            // same rule as single_value_attributes
+            let sql_row_item;
+            if (row_item.value !== undefined) {
+                sql_row_item =
                 `
-                INSERT INTO \`ecommerce\`.product_eav_multi_value (${attr_eav.map(col_item => col_item).join(", ")})
-                VALUES
-                ${row_item.value
-                    .map(
-                        value_item => `("${mysqlutils.escapeQuotes(product.entity_id)}", "${mysqlutils.escapeQuotes(row_item.attribute_id)}", "${mysqlutils.escapeQuotes(value_item)}")`
-                    )
-                    .join(",\n")
-                };
+                DELETE FROM \`ecommerce\`.product_eav_multi_value
+                WHERE entity_id = "${mysqlutils.escapeQuotes(product.entity_id)}"
+                AND attribute_id = "${mysqlutils.escapeQuotes(row_item.attribute_id)}";
                 `;
+            }
+            if (Array.isArray(row_item.value)) {
+                row_item.value = row_item.value.filter(v_item => v_item !== undefined && v_item !== null && v_item !== "");
+                if (row_item.value.length > 0) {
+                    sql_row_item +=
+                    `
+                    INSERT INTO \`ecommerce\`.product_eav_multi_value (${attr_eav.map(col_item => col_item).join(", ")})
+                    VALUES
+                    ${row_item.value
+                        .map(
+                            value_item => `("${mysqlutils.escapeQuotes(product.entity_id)}", "${mysqlutils.escapeQuotes(row_item.attribute_id)}", "${mysqlutils.escapeQuotes(value_item)}")`
+                        )
+                        .join(",\n")
+                    };
+                    `;
+                }
             }
             sql_eav_multi_value[index] = sql_row_item;
         })
@@ -169,7 +208,7 @@ async function saveProductEntity (product, option) {
         `
         START TRANSACTION;
         ${assembled_sql_update_product
-            .filter(item => (item != null && item != ""))
+            .filter(item => (item !== null && item !== "" && item !== undefined))
             .join("")
         }
         COMMIT;

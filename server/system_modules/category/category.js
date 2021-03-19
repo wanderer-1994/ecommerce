@@ -11,13 +11,14 @@ async function saveCategoryEntity (category, option) {
     // eav_multi_text: "title_caption", "introduction"
 
     try {
+        if (category.entity_id === null || category.entity_id === "" && category.entity_id === undefined) throw new Error("ERROR: 'entity_id' is not specified");
         // check if category exists for case update
+
         if (option.mode === "UPDATE") {
-            let isEntityNotNull = category.entity_id !== null && category.entity_id !== "" && category.entity_id != undefined;
             let sql_category_exist =
             `
             SELECT entity_id FROM \`ecommerce\`.category_entity
-            WHERE \`entity_id\` = ${isEntityNotNull ? `"${mysqlutils.escapeQuotes(category.entity_id)}"` : "NULL"};
+            WHERE \`entity_id\` = "${mysqlutils.escapeQuotes(category.entity_id)}";
             `;
             let match_category = await msClient.promiseQuery(sql_category_exist);
             if (match_category.length === 0) throw new Error(`ERROR: category with entity_id '${category.entity_id}' is not exist`);
@@ -27,7 +28,7 @@ async function saveCategoryEntity (category, option) {
         let sqltb_category_entity = [];
         attr_category_entity.forEach(item => {
             let isNotNull;
-            if (option && option.mode === "CREATE") {
+            if (option.mode === "CREATE") {
                 isNotNull = category[item] !== null && category[item] !== "" && category[item] !== undefined;
             } else if (option.mode === "UPDATE") {
                 isNotNull = item in category;
@@ -36,7 +37,6 @@ async function saveCategoryEntity (category, option) {
                 sqltb_category_entity.push(item);
             }
         });
-        if (sqltb_category_entity.indexOf("entity_id") === -1) throw new Error("ERROR: 'entity_id' is not specified");
         if (sqltb_category_entity.length > 0) {
             sqltb_category_entity =
             `
@@ -48,7 +48,7 @@ async function saveCategoryEntity (category, option) {
                     return `"${mysqlutils.escapeQuotes(category[item])}"`;
                 }
             }).join(", ")}) AS new
-            ${option && option.mode === "UPDATE" ? `ON DUPLICATE KEY UPDATE
+            ${option.mode === "UPDATE" ? `ON DUPLICATE KEY UPDATE
             ${sqltb_category_entity.map(item => `${item} = new.${item}`).join(",\n")}` : ""};
             `;
         };
@@ -86,6 +86,9 @@ async function saveCategoryEntity (category, option) {
 
         Object.keys(sql_eav_single_value).forEach(tb_item => {
             sql_eav_single_value[tb_item].forEach((row_item, index) => {
+                // case value in ("" or null): delete that attribute value of product
+                // case value = undefined (no value property in attribute object): no update
+                // case value in (number or string): update attribute value for product
                 let sql_row_item;
                 if (row_item.value === null || row_item.value === "") {
                     sql_row_item =
@@ -109,7 +112,8 @@ async function saveCategoryEntity (category, option) {
         });
 
         sql_eav_multi_value.forEach((row_item, index) => {
-            let sql_row_item = null;
+            // same rule as single_value_attributes
+            let sql_row_item;
             if (row_item.value !== undefined) {
                 sql_row_item =
                 `
@@ -150,7 +154,7 @@ async function saveCategoryEntity (category, option) {
         `
         START TRANSACTION;
         ${assembled_sql_update_category
-            .filter(item => (item != null && item != ""))
+            .filter(item => (item !== null && item !== "" && item !== undefined))
             .join("")
         }
         COMMIT;
