@@ -1,7 +1,43 @@
 const msClient = require("../mysql/mysql");
 const mysqlutils = require("../mysql/mysqlutils");
 
-const attr_category_entity = ["entity_id", "name", "parent", "is_online", "position"];
+const attr_category_entity = [
+    {
+        column: "entity_id",
+        valueInvalidMessage: `'entity_id' must be none-empty string`,
+        validation_function: function (value) {
+            return typeof(value) === "string" && value.length > 0;
+        }
+    },
+    {
+        column: "name",
+        valueInvalidMessage: `'name' must be none-empty string`,
+        validation_function: function (value) {
+            return typeof(value) === "string" && value.length > 0;
+        }
+    },
+    {
+        column: "parent",
+        valueInvalidMessage: `'parent' must be none-empty string or left empty`,
+        validation_function: function (value) {
+            return typeof(value) === "string" && value.length > 0;
+        }
+    },
+    {
+        column: "is_online",
+        valueInvalidMessage: `'is_online' must be number 0|1 or left empty`,
+        validation_function: function (value) {
+            return value === 1 || value === 0;
+        }
+    },
+    {
+        column: "position",
+        valueInvalidMessage: `'position' must be non-negative number (type int) or left empty`,
+        validation_function: function (value) {
+            return typeof(value) === "number" && value >= 0 && value === parseInt(value);
+        }
+    }
+];
 const attr_eav = ["entity_id", "attribute_id", "value"];
 const { getCategoryEavTableName } = require("./category_eav_table");
 
@@ -21,17 +57,44 @@ async function saveCategoryEntity (category, option) {
             WHERE \`entity_id\` = "${mysqlutils.escapeQuotes(category.entity_id)}";
             `;
             let match_category = await msClient.promiseQuery(sql_category_exist);
-            if (match_category.length === 0) throw new Error(`ERROR: category with entity_id '${category.entity_id}' is not exist`);
+            if (match_category.length === 0) throw new Error(`ERROR: category with entity_id '${category.entity_id}' not exist`);
         }
 
         // main handling
+        let isUserFailure = false;
+        let messageUserFailure = "ERROR:";
+
+        // check category parent exist
+        if (category.parent !== null && category.parent !== "" && category.parent !== undefined && typeof(category.parent) == "string") {
+            let sql_check_parent_exist =
+            `
+            SELECT \`entity_id\` FROM \`ecommerce\`.category_entity WHERE \`entity_id\` = "${mysqlutils.escapeQuotes(category.parent)}";
+            `;
+            let parent = await msClient.promiseQuery(sql_check_parent_exist);
+            if (parent.length === 0) {
+                isUserFailure = true;
+                messageUserFailure += `\n\t Invalid parent category: category with entity_id '${category.parent}' not exist.`
+            }
+        };
+
+        let entityValidation = validateCategoryEntity(category);
+        if (entityValidation.m_warning) {
+            category.m_warning = category.m_warning ? category.m_warning += `\n\t ${entityValidation.m_warning}` : `ERROR:\n\t ${entityValidation.m_warning}`;
+        };
+        if(entityValidation.m_failure) {
+            messageUserFailure += entityValidation.m_failure;
+        }
+        if (!entityValidation.isValid) {
+            isUserFailure = true;
+        };
+        
         let sqltb_category_entity = [];
         attr_category_entity.forEach(item => {
             let isNotNull;
             if (option.mode === "CREATE") {
-                isNotNull = category[item] !== null && category[item] !== "" && category[item] !== undefined;
+                isNotNull = category[item.column] !== null && category[item.column] !== "" && category[item.column] !== undefined;
             } else if (option.mode === "UPDATE") {
-                isNotNull = item in category;
+                isNotNull = item.column in category;
             };
             if (isNotNull) {
                 sqltb_category_entity.push(item);
@@ -40,16 +103,16 @@ async function saveCategoryEntity (category, option) {
         if (sqltb_category_entity.length > 0) {
             sqltb_category_entity =
             `
-            INSERT INTO \`ecommerce\`.category_entity (${sqltb_category_entity.map(item => item).join(", ")})
+            INSERT INTO \`ecommerce\`.category_entity (${sqltb_category_entity.map(item => item.column).join(", ")})
             VALUES (${sqltb_category_entity.map(item => {
-                if (category[item] === null || category[item] === "" || category[item] === undefined) {
+                if (category[item.column] === null || category[item.column] === "" || category[item.column] === undefined) {
                     return "NULL";
                 } else {
-                    return `"${mysqlutils.escapeQuotes(category[item])}"`;
+                    return `"${mysqlutils.escapeQuotes(category[item.column])}"`;
                 }
             }).join(", ")}) AS new
             ${option.mode === "UPDATE" ? `ON DUPLICATE KEY UPDATE
-            ${sqltb_category_entity.map(item => `${item} = new.${item}`).join(",\n")}` : ""};
+            ${sqltb_category_entity.map(item => `${item.column} = new.${item.column}`).join(",\n")}` : ""};
             `;
         };
 
@@ -64,25 +127,33 @@ async function saveCategoryEntity (category, option) {
 
         (category.attributes || []).forEach(attribute => {
             // check if category_eav table has the attribute_id && data_type and html_type is valid
-            let is_valid = false;
-            let table_name = getCategoryEavTableName(attribute);
+            let is_exist_attribute = false;
             let match = msClient.categoryEav.find(m_item => m_item.attribute_id == attribute.attribute_id);
-            if (match && table_name == "category_eav_multi_value") {
-                sql_eav_multi_value.push(attribute);
-                is_valid = true;
-            } else if (match && Object.keys(sql_eav_single_value).indexOf(table_name) != -1) {
-                sql_eav_single_value[table_name].push(attribute);
-                is_valid = true;
+            attribute.data_type = match ? match.data_type : null;
+            attribute.html_type = match ? match.html_type : null;
+            attribute.validation = match ? match.validation : null;
+            let table_name = getCategoryEavTableName(attribute);
+            let isValueValid = validateCategoryAttributeValue(attribute, table_name);
+            if (match && !isValueValid) {
+                isUserFailure = true;
+                messageUserFailure += `\n\t Invalid value for attribute '${attribute.attribute_id}'`;
+                return;
             }
-            if (!is_valid) {
-                let message = `Warning: skip invalid attribute '${attribute.attribute_id}'`;
-                if (category.m_warning) {
-                    category.m_warning.push(message);
-                } else {
-                    category.m_warning = [message];
-                }
+            if (match && table_name == "category_eav_multi_value" && isValueValid) {
+                sql_eav_multi_value.push(attribute);
+                is_exist_attribute = true;
+            } else if (match && Object.keys(sql_eav_single_value).indexOf(table_name) != -1 && isValueValid) {
+                sql_eav_single_value[table_name].push(attribute);
+                is_exist_attribute = true;
+            }
+            if (!is_exist_attribute) {
+                category.m_warning = category.m_warning ? category.m_warning += `\n\t Skip invalid attribute '${attribute.attribute_id}'` : `ERROR:\n\t Skip invalid attribute '${attribute.attribute_id}'`;
             }
         });
+
+        if (isUserFailure) {
+            throw new Error(messageUserFailure);
+        };
 
         Object.keys(sql_eav_single_value).forEach(tb_item => {
             sql_eav_single_value[tb_item].forEach((row_item, index) => {
@@ -212,6 +283,59 @@ async function deleteCategoryEntities (category_ids) {
     `
     let result = await msClient.promiseQuery(sql_delete_category);
     return result;
+}
+
+function validateCategoryEntity (category) {
+    let isValid = true;
+    let m_failure = "";
+    attr_category_entity.forEach(property => {
+        if (category[property.column] !== null && category[property.column] !== "" && category[property.column] !== undefined) {
+            if (!property.validation_function(category[property.column])) {
+                isValid = false;
+                m_failure += `\n\t Invalid entity property: ${property.valueInvalidMessage}.`
+            }
+        }
+    });
+    return {
+        isValid: isValid,
+        m_failure: m_failure
+    };
+}
+
+function validateCategoryAttributeValue (attribute, table_name) {
+    if (!table_name) return false;
+    let isValuesValid = true;
+    if (table_name === "category_eav_multi_value") {
+        // case attribute value is of type multi_value: value must be in (null, "", undefined, or a an empty array or array contains valid and not null value)
+        if (attribute.value !== null && attribute.value !== "" && attribute.value !== undefined && !Array.isArray(attribute.value)) {
+            isValuesValid = false;
+        } else if (Array.isArray(attribute.value)) {
+            for (let i = 0; i < attribute.value.length; i ++) {
+                if (attribute.value[i] === null || attribute.value[i] === "" || attribute.value[i] === undefined) {
+                    isValuesValid = false;
+                } else {
+                    isValuesValid = mysqlutils.validateAttributeValue({
+                        value: attribute.value[i],
+                        data_type: attribute.data_type,
+                        html_type: attribute.html_type,
+                        validation: attribute.validation
+                    })
+                };
+                if (!isValuesValid) break;
+            }
+        }
+    } else {
+        // case attribute value is of type single_value: value must in (null, "", undefined, or a valid value)
+        if (attribute.value !== null && attribute.value !== "" && attribute.value !== undefined) {
+            isValuesValid = mysqlutils.validateAttributeValue({
+                value: attribute.value,
+                data_type: attribute.data_type,
+                html_type: attribute.html_type,
+                validation: attribute.validation
+            })
+        }
+    };
+    return isValuesValid;
 }
 
 module.exports = {

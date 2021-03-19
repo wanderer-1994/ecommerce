@@ -1,3 +1,7 @@
+const data_type_int = ['int', 'datetime'];
+const data_type_decimal = ['decimal'];
+const data_type_text = ['varchar', 'text', 'html'];
+
 function separateSQL (text) {
     if(!text || typeof(text) !== 'string') return [];
     let sqls = text.split(/^#+.*\n$/);
@@ -111,11 +115,33 @@ function convertDataType (value, data_type) {
     return value;
 }
 
+function validateAttributeValue ({value, data_type, html_type, validation}) {
+    if (validation) {
+        let regex = new RegExp(validation);
+        if (!regex.test(value.toString())) return false;
+    }
+    if (html_type === "boolean") {
+        return value === 1 || value === 0;
+    };
+    if (data_type_int.indexOf(data_type) !== -1) {
+        return typeof(value) === "number" && value === parseInt(value);
+    };
+    if (data_type_decimal.indexOf(data_type) !== -1) {
+        return typeof(value) === "number";
+    };
+    if (data_type_text.indexOf(data_type) !== -1) {
+        return typeof(value) === "string";
+    };
+    // if no data_type specified, always return true
+    return true;
+}
+
 module.exports = {
     separateSQL,
     groupByAttribute,
     escapeQuotes,
     buildProductEavIndexJson,
     isAttributeSearchable,
-    convertDataType
+    convertDataType,
+    validateAttributeValue
 }
