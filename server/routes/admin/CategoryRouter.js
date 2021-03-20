@@ -5,6 +5,9 @@ const { checkAdminByCookie } = require("../../system_modules/middlewares/middlew
 const { createSystemErrMessage } = require("../../system_modules/functions");
 const { modelizeCategoriesData } = require("../../system_modules/category/categoryModel");
 const categoryMgr = require("../../system_modules/category/categoryMgr");
+const categoryEavRouter = require("./CategoryEavRouter");
+
+router.use("/category", categoryEavRouter);
 
 router.get("/category", async (req, res) => {
     try{

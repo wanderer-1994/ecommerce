@@ -11,6 +11,9 @@ const {
 } = require("../../system_modules/const/config");
 const productMgr = require("../../system_modules/product/productMgr");
 const search = require("../../system_modules/search/search");
+const productEavRouter = require("./ProductEavRouter");
+
+router.use("/product", productEavRouter);
 
 router.get("/product", async (req, res) => {
     // req.query= {page, categories, entity_ids, refinements, searchPhrase}
