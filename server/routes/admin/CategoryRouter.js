@@ -50,16 +50,24 @@ router.post("/category", async (req, res) => {
     // req.body:    {categories: [category]}
     try{
         let categories = req.body.categories;
-        for (let i = 0; i < categories.length; i++) {
-            try {
-                await categoryMgr.saveCategoryEntity(categories[i], {mode: "CREATE"});
-                categories[i].isSuccess = true;
-            } catch (err) {
-                categories[i].isSuccess = false;
-                categories[i].m_failure = err.toString();
-            }
-        };
-        res.json(categories);
+        let promises = [];
+        categories.forEach(entity => {
+            promises.push(
+                categoryMgr.saveCategoryEntity(categories[i], {mode: "CREATE"})
+                .then(() => {
+                    entity.isSuccess = true;
+                })
+                .catch(err => {
+                    entity.isSuccess = false;
+                    entity.m_failure = err.message;
+                })
+            )
+        });
+        Promise.all(promises).then(() => {
+            res.json({
+                categories: categories
+            })
+        });
     }catch(err){
         res.json({Alert: res.Alert.push(createSystemErrMessage(001))})
     }
@@ -69,16 +77,24 @@ router.put("/category", async (req, res) => {
     // req.body:    {categories: [category]}
     try{
         let categories = req.body.categories;
-        for (let i = 0; i < categories.length; i++) {
-            try {
-                await categoryMgr.saveCategoryEntity(categories[i], {mode: "UPDATE"});
-                categories[i].isSuccess = true;
-            } catch (err) {
-                categories[i].isSuccess = false;
-                categories[i].m_failure = err.toString();
-            }
-        };
-        res.json(categories);
+        let promises = [];
+        categories.forEach(entity => {
+            promises.push(
+                categoryMgr.saveCategoryEntity(categories[i], {mode: "UPDATE"})
+                .then(() => {
+                    entity.isSuccess = true;
+                })
+                .catch(err => {
+                    entity.isSuccess = false;
+                    entity.m_failure = err.message;
+                })
+            )
+        });
+        Promise.all(promises).then(() => {
+            res.json({
+                categories: categories
+            })
+        });
     }catch(err){
         res.json({Alert: res.Alert.push(createSystemErrMessage(001))})
     }

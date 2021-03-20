@@ -61,7 +61,7 @@ async function saveProductEntity (product, option) {
             let sql_product_exist =
             `
             SELECT entity_id FROM \`ecommerce\`.product_entity
-            WHERE \`entity_id\` = "${mysqlutils.escapeQuotes(category.entity_id)}";
+            WHERE \`entity_id\` = "${mysqlutils.escapeQuotes(product.entity_id)}";
             `;
             let match_product = await msClient.promiseQuery(sql_product_exist);
             if (match_product.length === 0) throw new Error(`ERROR: category with entity_id '${product.entity_id}' is not exist`);
@@ -141,7 +141,7 @@ async function saveProductEntity (product, option) {
                     messageUserFailure += `\n\t Invalid category assignment`;
                     break;
                 };
-                let validation = validateProductCategoryAssignment(product.categories);
+                let validation = await validateProductCategoryAssignment(product.categories);
                 if (validation.m_warning) {
                     product.m_warning = product.m_warning ? product.m_warning += `\n\t ${validation.m_warning}` : `ERROR:\n\t ${validation.m_warning}`;
                 };
@@ -492,7 +492,7 @@ async function validateProductCategoryAssignment (category_assignments) {
         };
         if ("action" in item && item.action !== "ASSIGN" && item.action !== "UNASSIGN") {
             isValid = false;
-            m_failure += `\n\t Invalid assignment for category_id '${item.category_id}: 'action' must be 'ASSIGN' or 'UNASSIGN'.`;
+            m_failure += `\n\t Invalid assignment for category_id '${item.category_id}': 'action' must be 'ASSIGN' or 'UNASSIGN'.`;
         };
         if (
             "position" in item &&
@@ -504,12 +504,13 @@ async function validateProductCategoryAssignment (category_assignments) {
             isValid = false;
             m_failure += `\n\t Invalid assignment for category_id '${item.category_id}: position must be a number or left empty.`;
         };
-        let duplicate = category_assignments.find(m_item => m_item.category_id === item.category_id);
-        if (duplicate) {
+        let duplicate = category_assignments.filter(m_item => m_item.category_id === item.category_id);
+        if (duplicate.length !== 1) {
             isValid = false;
             m_failure += `\n\t Invalid assignment for category_id '${item.category_id}: duplicate 'category_id' in category list.`;
         }
     });
+    
     if (!isValid) {
         return {
             isValid: false,
@@ -518,16 +519,16 @@ async function validateProductCategoryAssignment (category_assignments) {
     };
     let sql_check_category_exist =
     `
-    SELECT \`entity\` FROM \`ecommerce\`.category_entity
+    SELECT \`entity_id\` FROM \`ecommerce\`.category_entity
     WHERE \`entity_id\` IN (${category_assignments.map(item => `"${mysqlutils.escapeQuotes(item.category_id)}"`).join(", ")});
     `
     let available_categories = await msClient.promiseQuery(sql_check_category_exist);
     category_assignments.forEach(item => {
-        if (available_categories.indexOf(item.category_id) === -1) {
+        if (!available_categories.find(m_item => m_item.entity_id === item.category_id)) {
             isValid = false;
             m_failure += `\n\t Invalid assignment for category_id '${item.category_id}: category_id not exist.`;
         }
-    })
+    });
     return {
         isValid: isValid,
         m_failure: m_failure

@@ -65,12 +65,21 @@ router.post("/product", async (req, res) => {
         let product_entities = req.body.product_entities || [];
         let promises = [];
         product_entities.forEach(entity => {
-            promises.push(productMgr.saveProductEntity(entity, {mode: "CREATE"}));
+            promises.push(
+                productMgr.saveProductEntity(entity, {mode: "CREATE"})
+                .then(() => {
+                    entity.isSuccess = true;
+                })
+                .catch(err => {
+                    entity.isSuccess = false;
+                    entity.m_failure = err.message;
+                })
+            );
         });
-        Promise.all(promises).then(data => {
-            res.json(data);
-        }).catch(err => {
-            throw(err)
+        Promise.all(promises).then(() => {
+            res.json({
+                product_entities: product_entities
+            });
         })
      }catch(err){
          res.Alert.push(createSystemErrMessage(001))
@@ -82,16 +91,25 @@ router.put("/product", async (req, res) => {
     // req.body:    {product_entities: []}
     // res.json({isSuccess: boolean, products, Alert: []})
     try{
-       let product_entities = req.body.product_entities || [];
-       let promises = [];
-       product_entities.forEach(entity => {
-           promises.push(productMgr.saveProductEntity(entity, {mode: "UPDATE"}));
-       });
-       Promise.all(promises).then(data => {
-           res.json(data);
-       }).catch(err => {
-           throw(err)
-       })
+        let product_entities = req.body.product_entities || [];
+        let promises = [];
+        product_entities.forEach(entity => {
+            promises.push(
+                productMgr.saveProductEntity(entity, {mode: "UPDATE"})
+                .then(() => {
+                    entity.isSuccess = true;
+                })
+                .catch(err => {
+                    entity.isSuccess = false;
+                    entity.m_failure = err.message;
+                })
+            );
+        });
+        Promise.all(promises).then(() => {
+            res.json({
+                product_entities: product_entities
+            });
+        });
     }catch(err){
         res.Alert.push(createSystemErrMessage(001))
         res.json({Alert: res.Alert})
