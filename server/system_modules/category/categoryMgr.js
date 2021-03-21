@@ -77,7 +77,7 @@ async function saveCategoryEntity (category, option) {
             }
         };
 
-        let entityValidation = validateCategoryEntity(category);
+        let entityValidation = validateCategoryModel(category);
         if (entityValidation.m_warning) {
             category.m_warning = category.m_warning ? category.m_warning += `\n\t ${entityValidation.m_warning}` : `ERROR:\n\t ${entityValidation.m_warning}`;
         };
@@ -285,7 +285,7 @@ async function deleteCategoryEntities (category_ids) {
     return result;
 }
 
-function validateCategoryEntity (category) {
+function validateCategoryModel (category) {
     let isValid = true;
     let m_failure = "";
     attr_category_entity.forEach(property => {

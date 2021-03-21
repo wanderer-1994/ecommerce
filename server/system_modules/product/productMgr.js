@@ -121,6 +121,8 @@ async function saveProductEntity (product, option) {
             ${option.mode === "UPDATE" ? `ON DUPLICATE KEY UPDATE
             ${sqltb_product_entity.map(item => `${item.column} = new.${item.column}`).join(",\n")}` : ""};
             `;
+        } else {
+            sqltb_product_entity = null;
         }
 
         let sql_product_category_assignment;

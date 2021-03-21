@@ -5,13 +5,9 @@ const categoryEavMgr = require("../../system_modules/category/categoryEavMgr");
 
 router.get("/eav", async (req, res) => {
     try {
-        let sql_get_category_eav =
-        `
-        SELECT * FROM \`ecommerce\`.category_eav;
-        `;
-        let result = await msClient.promiseQuery(sql_get_category_eav);
+        let category_eavs = await categoryEavMgr.getCategoryEavs();
         res.json({
-            category_eav: result
+            category_eavs: category_eavs
         })
     } catch (err) {
         res.json({
@@ -20,7 +16,7 @@ router.get("/eav", async (req, res) => {
     }
 });
 
-router.post("/eav", (req, res) => {
+router.post("/eav", async (req, res) => {
     try {
         let category_eavs = Array.isArray(req.body.category_eavs) ? req.body.category_eavs : [];
         let promises = [];
@@ -36,7 +32,8 @@ router.post("/eav", (req, res) => {
                 })
             )
         });
-        Promise.all(promises).then(() => {
+        Promise.all(promises).then(async () => {
+            msClient.categoryEav = await categoryEavMgr.getCategoryEavs();
             res.json({
                 category_eavs: category_eavs
             })
@@ -48,7 +45,7 @@ router.post("/eav", (req, res) => {
     }
 });
 
-router.put("/eav", (req, res) => {
+router.put("/eav", async (req, res) => {
     try {
         let category_eavs = Array.isArray(req.body.category_eavs) ? req.body.category_eavs : [];
         let promises = [];
@@ -64,7 +61,8 @@ router.put("/eav", (req, res) => {
                 })
             )
         });
-        Promise.all(promises).then(() => {
+        Promise.all(promises).then(async () => {
+            msClient.categoryEav = await categoryEavMgr.getCategoryEavs();
             res.json({
                 category_eavs: category_eavs
             })
@@ -76,10 +74,11 @@ router.put("/eav", (req, res) => {
     }
 });
 
-router.delete("/eav", (req, res) => {
+router.delete("/eav", async (req, res) => {
     try {
         let category_eav_ids = Array.isArray(req.body.category_eav_ids) ? req.body.category_eav_ids : [];
         let result = await categoryEavMgr.deleteCategoryEavs(category_eav_ids);
+        msClient.categoryEav = await categoryEavMgr.getCategoryEavs();
         res.json({
             isSuccess: true,
             result: result
