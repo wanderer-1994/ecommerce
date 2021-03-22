@@ -7,10 +7,15 @@ import Sidebar from "./components/Sidebar";
 function App() {
     return (
         <Fragment>
-            <Sidebar />
-            <div className="main" style={{"--width": "230px"}}>
+            <Route path="*" component={Sidebar} />
+            <div className="main">
                 <Switch>
-                    {routes.map((item, index) =>  <Route exact key={index} path={item.path} component={item.component} />)}
+                    {
+                        routes.map((item, index) =>  
+                        <Route exact key={index} path={item.path} render={
+                            () => <item.component title={item.title || ""} />
+                        } />)
+                    }
                 </Switch>
             </div>
         </Fragment>

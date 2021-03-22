@@ -1,7 +1,11 @@
-.side-bar {
+body {
     --width: 230px;
+    --oriWidth: 230px;
+    --transition: 0.3s;
+}
+.side-bar {
     width: var(--width);
-    transition: width .5s linear;
+    transition: width var(--transition) linear;
     height: 100vh;
     position: relative;
     display: inline-block;
@@ -11,10 +15,8 @@
 .side-bar .wrapper {
     width: calc(100% - 15px);
     height: 100%;
-    padding-top: 35px;
     border-right: 1px solid #ababab50;
-    transition: width .5s linear;
-    padding-left: 15px;
+    transition: width var(--transition) linear;
     overflow-x: hidden;
     height: 100%;
     transition: background-color 0s;
@@ -23,11 +25,35 @@
 .side-bar.close .wrapper {
     background-color: #ababab;
     transition: background-color 0s;
-    transition-delay: .5s;
+    transition-delay: var(--transition);
+}
+.side-bar .wrapper .logo {
+    width: 100%;
+    height: 50px;
+    background-image: url(https://cdn.thukyluat.vn/nhch-images//CauHoi_Hinh/9eb6abaa-8cda-456c-ad66-26ba4da23ffe.jpg);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: 40%;
+    margin-bottom: 10px;
 }
 .side-bar a {
     display: block;
-    width: 100vw;
+    width: calc(var(--oriWidth) - 30px);
+    height: 25px;
+    line-height: 25px;
+    padding-left: 15px;
+    background-color: #ababab;
+    margin: auto;
+    margin-bottom: 3px;
+    text-decoration: none;
+    border-radius: 3px;
+    transition: background-color .5s;
+}
+.side-bar a:active {
+    color: green;
+}
+.side-bar a.active {
+    background-color: #787878;
 }
 .side-bar .switch-icon {
     position: absolute;
@@ -42,11 +68,11 @@
     border-radius: 3px;
 }
 .side-bar .switch-icon svg {
-    transform: rotateZ(-180deg);
-    transition: transform .5s linear;
+    transform: rotateY(180deg);
+    transition: transform 1s ease-in-out;
     width: 100%;
     height: 100%;
 }
 .side-bar.close .switch-icon svg {
-    transform: rotateZ(0deg);
+    transform: rotateY(0deg);
 }

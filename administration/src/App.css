@@ -1,8 +1,44 @@
 .main {
-    --width: 230px;
     display: inline-block;
     padding-left: 5px;
     width: calc(100% - var(--width));
-    height: 100vh;
-    transition: width .5s linear;
+    height: calc(100vh - 4px);
+    transition: width var(--transition) linear;
+    overflow-y: scroll;
+}
+body::-webkit-scrollbar {
+    display: none;
+}
+.main .title {
+    position: relative;
+    height: 50px;
+    padding-top: 10px;
+    border-bottom: 2px solid #efefef;
+    position: sticky;
+    top: 0px;
+    width: 100%;
+    background-color: #ffffff;
+}
+.add-new {
+    display: inline-block;
+    text-align: center;
+    min-width: 70px;
+    padding: 0px 7px 0px 7px;
+    height: 35px;
+    line-height: 35px;
+    background-color: #3fb85b;
+    color: #ffffff;
+    border-radius: 3px;
+    text-decoration: none;
+    position: absolute;
+    right: 3px;
+    top: 50%;
+    transform: translateY(-50%);
+    box-shadow: 3px 3px 3px #28a74540, -3px -3px 3px #28a74540, 3px -3px 3px #28a74540, -3px 3px 3px #28a74540;
+}
+.add-new:hover {
+    background-color: #28a745;
+}
+.content {
+    height: 200vh;
 }

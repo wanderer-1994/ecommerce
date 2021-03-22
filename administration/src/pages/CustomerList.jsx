@@ -1,6 +1,13 @@
-function CustomerList () {
+import { Link } from "react-router-dom";
+
+function CustomerList (props) {
     return (
-        <div className="customer-list">Customer list</div>
+        <div className="customer-list">
+            <div className="title">
+                <h3>{props.title}</h3>
+                <Link className="add-new" to="/create/customer">New Customer</Link>
+            </div>
+        </div>
     )
 }
 

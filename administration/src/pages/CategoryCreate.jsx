@@ -1,6 +1,6 @@
-function WarrantyList (props) {
+function CategoryCreate (props) {
     return (
-        <div className="warranty-list">
+        <div className="category-create">
             <div className="title">
                 <h3>{props.title}</h3>
             </div>
@@ -8,4 +8,4 @@ function WarrantyList (props) {
     )
 }
 
-export default WarrantyList;
+export default CategoryCreate;
