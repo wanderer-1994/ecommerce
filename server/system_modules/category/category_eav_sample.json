@@ -36,10 +36,22 @@
             "is_system": 0,
             "unit": null,
             "options": [
-                "AU",
-                "UK",
-                "US",
-                "VI"
+                {
+                    "option_value": "AU",
+                    "sort_order": 4
+                },
+                {
+                    "option_value": "UK",
+                    "sort_order": 2
+                },
+                {
+                    "option_value": "US",
+                    "sort_order": 1
+                },
+                {
+                    "option_value": "VI",
+                    "sort_order": 3
+                }
             ]
         },
         {
@@ -54,9 +66,18 @@
             "is_system": 1,
             "unit": null,
             "options": [
-                "old school",
-                "street walk",
-                "young"
+                {
+                    "option_value": "old school",
+                    "sort_order": 1
+                },
+                {
+                    "option_value": "street walk",
+                    "sort_order": 3
+                },
+                {
+                    "option_value": "young",
+                    "sort_order": 2
+                }
             ]
         },
         {

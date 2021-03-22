@@ -133,7 +133,7 @@ msClient.connectAsync = async () => {
             }else{
                 msClient.searchDictionary = await msClient.getSearchDictionary();
                 msClient.productEav = await msClient.getProductEav();
-                msClient.categoryEav = await msClient.getCategoryEav()
+                msClient.categoryEav = await msClient.getCategoryEav();
                 resolve();
                 persist = setInterval(() => {
                     msClient.query("SELECT 1;");
