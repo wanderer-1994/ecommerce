@@ -113,22 +113,19 @@ async function initProductDatabase () {
         })
         product.attributes = product.attributes.filter(item => item !== null);
     });
-    for (let i = 0; i < init_products.length; i++) {
-        await productMgr.saveProductEntity(init_products[i])
-    };
 
     // init category
     let init_categories = [];
     init_products.forEach(product => {
         if (Array.isArray(product.categories)) {
             product.categories.map(cat_item => {
-                let match = init_categories.find(m_item => m_item.category_id == cat_item.category_id);
+                let match = init_categories.find(m_item => m_item.entity_id == cat_item.category_id);
                 if (!match) {
                     let new_category = {
                         entity_id: cat_item.category_id,
                         name: "Place holder",
                         parent: null,
-                        is_online: "1",
+                        is_online: 1,
                         position: null,
                         attributes: [
                             {
@@ -166,7 +163,11 @@ async function initProductDatabase () {
     });
 
     for (let i = 0; i < init_categories.length; i++) {
-        await categoryMgr.saveCategoryEntity(init_categories[i])
+        await categoryMgr.saveCategoryEntity(init_categories[i], {mode: "CREATE"})
+    };
+
+    for (let i = 0; i < init_products.length; i++) {
+        await productMgr.saveProductEntity(init_products[i], {mode: "CREATE"})
     };
 
     // init build product search eav index

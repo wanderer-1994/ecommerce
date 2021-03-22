@@ -56,7 +56,7 @@ router.post("/category", async (req, res) => {
         let promises = [];
         categories.forEach(entity => {
             promises.push(
-                categoryMgr.saveCategoryEntity(categories[i], {mode: "CREATE"})
+                categoryMgr.saveCategoryEntity(entity, {mode: "CREATE"})
                 .then(() => {
                     entity.isSuccess = true;
                 })
@@ -83,7 +83,7 @@ router.put("/category", async (req, res) => {
         let promises = [];
         categories.forEach(entity => {
             promises.push(
-                categoryMgr.saveCategoryEntity(categories[i], {mode: "UPDATE"})
+                categoryMgr.saveCategoryEntity(entity, {mode: "UPDATE"})
                 .then(() => {
                     entity.isSuccess = true;
                 })
