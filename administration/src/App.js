@@ -1,25 +1,20 @@
-import logo from './logo.svg';
+import { Fragment } from "react";
+import { Switch, Route } from "react-router-dom";
 import './App.css';
+import routes from "./routes";
+import Sidebar from "./components/Sidebar";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <Fragment>
+            <Sidebar />
+            <div className="main" style={{"--width": "230px"}}>
+                <Switch>
+                    {routes.map((item, index) =>  <Route exact key={index} path={item.path} component={item.component} />)}
+                </Switch>
+            </div>
+        </Fragment>
+    );
 }
 
 export default App;

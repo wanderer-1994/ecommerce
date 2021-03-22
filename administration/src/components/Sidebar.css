@@ -1,0 +1,52 @@
+.side-bar {
+    --width: 230px;
+    width: var(--width);
+    transition: width .5s linear;
+    height: 100vh;
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+    user-select: none;
+}
+.side-bar .wrapper {
+    width: calc(100% - 15px);
+    height: 100%;
+    padding-top: 35px;
+    border-right: 1px solid #ababab50;
+    transition: width .5s linear;
+    padding-left: 15px;
+    overflow-x: hidden;
+    height: 100%;
+    transition: background-color 0s;
+    transition-delay: 0s;
+}
+.side-bar.close .wrapper {
+    background-color: #ababab;
+    transition: background-color 0s;
+    transition-delay: .5s;
+}
+.side-bar a {
+    display: block;
+    width: 100vw;
+}
+.side-bar .switch-icon {
+    position: absolute;
+    top: 3px;
+    right: -3px;
+    width: 35px;
+    height: 35px;
+    cursor: pointer;
+    color: #787878;
+    background-color: #efefef;
+    border: 1px solid #ababab;
+    border-radius: 3px;
+}
+.side-bar .switch-icon svg {
+    transform: rotateZ(-180deg);
+    transition: transform .5s linear;
+    width: 100%;
+    height: 100%;
+}
+.side-bar.close .switch-icon svg {
+    transform: rotateZ(0deg);
+}
