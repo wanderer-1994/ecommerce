@@ -1,0 +1,75 @@
+{
+    "category_eavs": [
+        {
+            "attribute_id": "banner_image",
+            "label": "Banner Image",
+            "referred_target": null,
+            "admin_only": 0,
+            "html_type": "input",
+            "data_type": "varchar",
+            "validation": null,
+            "is_super": 0,
+            "is_system": 1,
+            "unit": null
+        },
+        {
+            "attribute_id": "introduction",
+            "label": "Introduction",
+            "referred_target": null,
+            "admin_only": 0,
+            "html_type": "input",
+            "data_type": "text",
+            "validation": null,
+            "is_super": 0,
+            "is_system": 1,
+            "unit": null
+        },
+        {
+            "attribute_id": "site_locales",
+            "label": "Site locales",
+            "referred_target": null,
+            "admin_only": 0,
+            "html_type": "select",
+            "data_type": "varchar",
+            "validation": null,
+            "is_super": 0,
+            "is_system": 0,
+            "unit": null,
+            "options": [
+                "AU",
+                "UK",
+                "US",
+                "VI"
+            ]
+        },
+        {
+            "attribute_id": "style_fashion",
+            "label": "Style fashion",
+            "referred_target": null,
+            "admin_only": 0,
+            "html_type": "multiselect",
+            "data_type": "text",
+            "validation": null,
+            "is_super": 0,
+            "is_system": 1,
+            "unit": null,
+            "options": [
+                "old school",
+                "street walk",
+                "young"
+            ]
+        },
+        {
+            "attribute_id": "title_caption",
+            "label": "Caption title",
+            "referred_target": null,
+            "admin_only": 0,
+            "html_type": "input",
+            "data_type": "text",
+            "validation": null,
+            "is_super": 0,
+            "is_system": 1,
+            "unit": null
+        }
+    ]
+}

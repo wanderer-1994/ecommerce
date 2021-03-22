@@ -27,6 +27,7 @@ router.post("/eav", async (req, res) => {
                     item.isSuccess = true;
                 })
                 .catch(err => {
+                    console.log(err);
                     item.isSuccess = false;
                     item.m_failure = err.message;
                 })

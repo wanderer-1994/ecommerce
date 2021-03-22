@@ -88,7 +88,7 @@ async function getCategoryEavs () {
         SELECT \`ce\`.*, \`ceo\`.value AS \`option_value\`
         FROM \`ecommerce\`.category_eav AS \`ce\`
         LEFT JOIN \`ecommerce\`.category_eav_option AS \`ceo\`
-        ON \`ce\`.html_type IN ('multiinput', 'select', 'multiselect') AND \`ce\`.attribute_id = \`ceo\`.attribute_id;
+        ON \`ce\`.html_type IN ('select', 'multiselect') AND \`ce\`.attribute_id = \`ceo\`.attribute_id;
         `;
         let rawData = await msClient.promiseQuery(sql_get_category_eav);
         let category_eavs = modelizeCategoryEavs(rawData);
@@ -105,13 +105,13 @@ async function saveCategoryEav (category_eav, option) {
             category_eav.m_warning = `WARNING: \n\t ${validation.m_warning}`;
         }
         if (!validation.isValid) {
-            throw new Error( `ERROR: \n\t ${m_failure}`);
+            throw new Error( `ERROR: \n\t ${validation.m_failure}`);
         };
 
         // check if category_eav exist for case update
         if (option.mode === "UPDATE") {
             let match = msClient.categoryEav.find(m_item => m_item.attribute_id === category_eav.attribute_id);
-            if (!match === 0) throw new Error(`ERROR: category_eav with attribute_id '${category_eav.attribute_id}' not exist`);
+            if (!match) throw new Error(`ERROR: category_eav with attribute_id '${category_eav.attribute_id}' not exist`);
             category_eav.html_type = category_eav.html_type || match.html_type;
             category_eav.data_type = category_eav.data_type || match.data_type;
         };
@@ -149,17 +149,24 @@ async function saveCategoryEav (category_eav, option) {
         let sql_eav_option;
         switch (option.mode) {
             default:
+                if (['select', 'multiselect'].indexOf(category_eav.html_type) === -1) {
+                    sql_eav_option =
+                    `
+                    DELETE FROM \`ecommerce\`.category_eav_option WHERE \`attribute_id\` = "${mysqlutils.escapeQuotes(category_eav.attribute_id)}";
+                    `;
+                    break;
+                }
                 if (!("options" in category_eav) && option.mode === "UPDATE") break;
                 sql_eav_option =
                 `
                 DELETE FROM \`ecommerce\`.category_eav_option WHERE \`attribute_id\` = "${mysqlutils.escapeQuotes(category_eav.attribute_id)}";
                 `;
-                if (category.options && category_eav.options.length > 0 && ['multiinput', 'select', 'multiselect'].indexOf(category_eav.html_type) !== -1) {
+                if (category_eav.options && category_eav.options.length > 0 && ['select', 'multiselect'].indexOf(category_eav.html_type) !== -1) {
                     sql_eav_option +=
                     `
                     INSERT INTO \`ecommerce\`.category_eav_option (${category_eav_option_columns.map(col_item => col_item.column).join(", ")})
                     VALUES
-                    ${category_eav.options.map(opt_item => `("${mysqlutils.escapeQuotes(category_eav.attruibute_id)}" , "${mysqlutils.escapeQuotes(opt_item)}")`).join(",\n")}
+                    ${category_eav.options.map(opt_item => `("${mysqlutils.escapeQuotes(category_eav.attribute_id)}" , "${mysqlutils.escapeQuotes(opt_item)}")`).join(",\n")}
                     AS new
                     ON DUPLICATE KEY UPDATE 
                     ${category_eav_option_columns.map(col_item => `${col_item.column} = new.${col_item.column}`).join(",\n")};
@@ -194,7 +201,7 @@ async function deleteCategoryEavs (category_eav_ids, option) {
                 isValid = false;
             }
         });
-        if (!isValid) throw new Error("ERROR: category 'entity_id' must not be non-empty string ro number.");
+        if (!isValid) throw new Error("ERROR: category 'entity_id' must not be non-empty string or number.");
         let tbs_to_delete = [
             {
                 tb_name: "category_eav",
@@ -255,7 +262,7 @@ function modelizeCategoryEavs (rawData) {
             category_eav_columns.forEach(col_item => {
                 eav[col_item.column] = eav.__items[0][col_item.column];
             });
-            if (['multiinput', 'select', 'multiselect'].indexOf(eav.html_type) !== -1) {
+            if (['select', 'multiselect'].indexOf(eav.html_type) !== -1) {
                 eav.options = [];
                 (eav.__items || []).forEach(option => {
                     if (option.option_value !== null && option.option_value !== "" && option.option_value !== undefined) {
@@ -265,7 +272,16 @@ function modelizeCategoryEavs (rawData) {
             };
         };
         delete eav.__items;
+    });
+
+    category_eavs.forEach(eav => {
+        ["admin_only", "is_super", "is_system"].forEach(col_item => {
+            if (eav[col_item] !== null && eav[col_item] !== "" && eav[col_item] !== undefined) {
+                eav[col_item] = parseInt(eav[col_item]);
+            }
+        })
     })
+
     return category_eavs;
 }
 
@@ -285,9 +301,9 @@ function validateCategoryEavModel (category_eav) {
         }
     });
     if ("options" in category_eav) {
-        if (['multiinput', 'select', 'multiselect'].indexOf(category_eav.html_type) !== -1) {
+        if (['select', 'multiselect'].indexOf(category_eav.html_type) === -1) {
             isValid = false;
-            m_failure += `'options' can only applied for html_type ('multiinput', 'select', 'multiselect').`;
+            m_failure += `'options' can only applied for html_type ('select', 'multiselect').`;
         };
         if (!Array.isArray(category_eav.options)) {
             isValid = false;
