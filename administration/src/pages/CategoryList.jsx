@@ -79,8 +79,11 @@ function CategoryList (props) {
         }
         return (
             <Fragment key={index} >
-                <tr className="tb-row-item protected" style={{"--paddingleft": `${level * 10}px`}}>
-                    <td className="td_input null ord"><input disabled value={index + 1} /></td>
+                <tr className="tb-row-item protected">
+                    <td className="td_input null ord"><input disabled value={++total} /></td>
+                    <td className="td_input null ord" style={{"--paddingleft": `${level * 10}px`}}>
+                        <input disabled value={level + 1} />
+                    </td>
                     {category_entity_columns.map((col_item, index) => {
                         let value = cat_item[col_item.column];
                         let className = "";
@@ -147,7 +150,9 @@ function CategoryList (props) {
                 : null}
             </Fragment>
         )
-    }
+    };
+
+    let total = 0;
 
     return (
         <div className="category-list">
@@ -159,6 +164,7 @@ function CategoryList (props) {
                 <table>
                     <thead>
                         <tr>
+                            <th>ORD</th>
                             <th>LEVEL</th>
                             {category_entity_columns.map((col_item, index) => {
                                 return <th key={index}>{col_item.column_name}</th>
