@@ -40,5 +40,32 @@ body::-webkit-scrollbar {
     background-color: #28a745;
 }
 .content {
-    height: 200vh;
+    /* height: 200vh; */
 }
+.td_input {
+    /* background-color: #efefef; */
+    border-bottom: 1px solid #ababab80;
+    border-left: 1px solid #ababab80;
+}
+.td_input.right input {
+    text-align: right;
+}
+.td_input.center input {
+    text-align: center;
+}
+.td_input.left input {
+    text-align: left;
+}
+.td_input input {
+    padding: 3px 5px 3px 5px;
+    width: 100%;
+    height: 100%;
+    min-height: 30px;
+    background-color: #ffffff00;
+    border: none;
+}
+/* input.readOnly {
+    pointer-events: none;
+    background-color: #efefef;
+    border: 1px solid #ababab
+} */

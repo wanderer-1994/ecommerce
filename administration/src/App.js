@@ -1,12 +1,23 @@
-import { Fragment } from "react";
+import { connect } from "react-redux";
+import { Fragment, useEffect } from "react";
 import { Switch, Route } from "react-router-dom";
 import './App.css';
 import routes from "./routes";
 import Sidebar from "./components/Sidebar";
+import AppLoading from "./components/AppLoading";
 
-function App() {
+function App(props) {
+    useEffect(() => {
+        setTimeout(() => {
+            props.dispatch({
+                type: "APPLOADING",
+                payload: false
+            })
+        }, 1000)
+    })
     return (
         <Fragment>
+            <AppLoading/>
             <Route path="*" component={Sidebar} />
             <div className="main">
                 <Switch>
@@ -22,4 +33,10 @@ function App() {
     );
 }
 
-export default App;
+function mapStateToProps (state) {
+    return {
+        appLoading: state.appLoading
+    }
+}
+
+export default connect(mapStateToProps)(App);

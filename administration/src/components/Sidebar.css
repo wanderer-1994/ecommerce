@@ -28,6 +28,7 @@ body {
     transition-delay: var(--transition);
 }
 .side-bar .wrapper .logo {
+    display: block;
     width: 100%;
     height: 50px;
     background-image: url(https://cdn.thukyluat.vn/nhch-images//CauHoi_Hinh/9eb6abaa-8cda-456c-ad66-26ba4da23ffe.jpg);
@@ -36,7 +37,7 @@ body {
     background-position: 40%;
     margin-bottom: 10px;
 }
-.side-bar a {
+.side-bar .navitem {
     display: block;
     width: calc(var(--oriWidth) - 30px);
     height: 25px;
@@ -49,10 +50,10 @@ body {
     border-radius: 3px;
     transition: background-color .5s;
 }
-.side-bar a:active {
+.side-bar .navitem:active {
     color: green;
 }
-.side-bar a.active {
+.side-bar .navitem.active {
     background-color: #787878;
 }
 .side-bar .switch-icon {

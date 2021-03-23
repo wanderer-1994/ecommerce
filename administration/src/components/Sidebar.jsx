@@ -11,7 +11,7 @@ function Sidebar (props) {
                 <div className="switch-icon" onClick={(event) => toggleSidebar(event)}><ArrowRight /></div>
             </div>
             <div className="wrapper">
-                <div className="logo"></div>
+                <Link className="logo" to="/"></Link>
                 {
                     routes
                     .filter(item => item.showOnSidebar)
@@ -19,7 +19,7 @@ function Sidebar (props) {
                         <Link
                             key={index}
                             to={item.path}
-                            className={props.location.pathname === item.path ? "active" : ""}
+                            className={`navitem ${props.location.pathname === item.path ? "active" : ""}`}
                         >{item.ref_name}</Link>)
                 }
             </div>
