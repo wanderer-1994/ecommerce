@@ -6,9 +6,11 @@
     transition: width var(--transition) linear;
     overflow-y: scroll;
 }
+
 body::-webkit-scrollbar {
     display: none;
 }
+
 .main .title {
     position: relative;
     height: 50px;
@@ -19,6 +21,7 @@ body::-webkit-scrollbar {
     width: 100%;
     background-color: #ffffff;
 }
+
 .add-new {
     display: inline-block;
     text-align: center;
@@ -36,26 +39,40 @@ body::-webkit-scrollbar {
     transform: translateY(-50%);
     box-shadow: 3px 3px 3px #28a74540, -3px -3px 3px #28a74540, 3px -3px 3px #28a74540, -3px 3px 3px #28a74540;
 }
+
 .add-new:hover {
     background-color: #28a745;
 }
+
 .content {
     /* height: 200vh; */
 }
-.td_input {
-    /* background-color: #efefef; */
-    border-bottom: 1px solid #ababab80;
-    border-left: 1px solid #ababab80;
+
+
+/* table css */
+
+th {
+    background-color: #cdcdcd;
+    height: 35px;
 }
+
+.td_input {
+    border-bottom: 1px solid #ababab80;
+    border-left: 1px solid #ffffff;
+}
+
 .td_input.right input {
     text-align: right;
 }
+
 .td_input.center input {
     text-align: center;
 }
+
 .td_input.left input {
     text-align: left;
 }
+
 .td_input input {
     padding: 3px 5px 3px 5px;
     width: 100%;
@@ -64,8 +81,76 @@ body::-webkit-scrollbar {
     background-color: #ffffff00;
     border: none;
 }
-/* input.readOnly {
-    pointer-events: none;
-    background-color: #efefef;
-    border: 1px solid #ababab
-} */
+
+.td_input.null {
+    background-color: #cdcdcd50;
+}
+
+.td_input a input {
+    cursor: pointer;
+    text-decoration: underline;
+    color: #007bff;
+}
+
+.tb-row-item td.ord {
+    padding-left: var(--paddingleft);
+}
+
+.td_input.ord {
+    max-width: 100px;
+}
+
+.td_action {
+    padding-left: 20px;
+}
+
+.td_action button {
+    margin-left: 3px;
+    margin-top: 3px;
+    padding: 3px 5px 3px 5px;
+    font-size: 12px;
+    border: none;
+    border-radius: 2px;
+    min-width: 50px;
+    outline: none;
+    cursor: pointer;
+    color: #dedeee;
+}
+
+tr .edit {
+    display: inline-block;
+}
+
+tr .save,
+tr .cancel {
+    display: none;
+}
+
+tr.onEdit .edit {
+    display: none;
+}
+
+tr.onEdit .td_action .save,
+tr.onEdit .td_action .cancel {
+    display: inline-block;
+}
+
+.button:hover {
+    filter: brightness(150%);
+}
+
+.button:active {
+    filter: brightness(120%);
+}
+
+.button.edit {
+    background-color: #007bff;
+}
+
+.button.save {
+    background-color: #ffc107;
+}
+
+.button.cancel {
+    background-color: #6c757d;
+}

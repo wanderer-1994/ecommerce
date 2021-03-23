@@ -13,7 +13,7 @@ function App(props) {
                 type: "APPLOADING",
                 payload: false
             })
-        }, 1000)
+        }, 10)
     })
     return (
         <Fragment>

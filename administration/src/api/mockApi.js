@@ -1,74 +1,71 @@
 import categoryModel from "../objectModels/CategoryModel";
 
 // auth
-async function adminAuth (authInfo) {
+async function adminAuth(authInfo) {
 
 }
 
-async function adminLogout (admin_cookie) {
+async function adminLogout(admin_cookie) {
 
 }
 
-async function adminSearchProduct () {
+async function adminSearchProduct() {
 
 }
 
 // product
-async function addProducts () {
+async function addProducts() {
 
 }
 
-async function updateProducts () {
+async function updateProducts() {
 
 }
 
-async function deleteProducts () {
+async function deleteProducts() {
 
 }
 
-async function initProducts () {
+async function initProducts() {
 
 }
 
-async function updateSupInfo () {
+async function updateSupInfo() {
 
 }
 
 // order
-async function adminSearchOrder (searchConfig) {
+async function adminSearchOrder(searchConfig) {
 
 }
 
-async function adminUpdateOrders (orders) {
+async function adminUpdateOrders(orders) {
 
 }
 
 // category
-async function getCategories () {
+async function getCategories() {
     try {
         let response = {
-            "categories": [
-                {
+            "categories": [{
                     "entity_id": "adapter",
                     "name": "Adapter",
                     "parent": "cables",
                     "is_online": 1,
                     "position": null,
-                    "attributes": [
-                        {
-                            "attribute_id": "banner_image",
-                            "label": "Banner Image",
-                            "referred_target": null,
-                            "admin_only": 0,
-                            "html_type": "input",
-                            "data_type": "varchar",
-                            "validation": null,
-                            "is_super": 0,
-                            "is_system": 1,
-                            "unit": null,
-                            "value": "https://id-live-01.slatic.net/p/fa4215d316e0046945b9ac8d2025fd41.jpg"
-                        }
-                    ]
+                    "attributes": [{
+                        "attribute_id": "banner_image",
+                        "label": "Banner Image",
+                        "referred_target": null,
+                        "admin_only": 0,
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "validation": null,
+                        "is_super": 0,
+                        "is_system": 1,
+                        "unit": null,
+                        "value": "https://id-live-01.slatic.net/p/fa4215d316e0046945b9ac8d2025fd41.jpg"
+                    }]
                 },
                 {
                     "entity_id": "cables",
@@ -76,21 +73,19 @@ async function getCategories () {
                     "parent": "charger",
                     "is_online": 1,
                     "position": null,
-                    "attributes": [
-                        {
-                            "attribute_id": "banner_image",
-                            "label": "Banner Image",
-                            "referred_target": null,
-                            "admin_only": 0,
-                            "html_type": "input",
-                            "data_type": "varchar",
-                            "validation": null,
-                            "is_super": 0,
-                            "is_system": 1,
-                            "unit": null,
-                            "value": "https://product.hstatic.net/1000297956/product/71ine4dujtl._sl1500__e9712c14f15348ccb9abd893d79e07b4_master.jpg"
-                        }
-                    ]
+                    "attributes": [{
+                        "attribute_id": "banner_image",
+                        "label": "Banner Image",
+                        "referred_target": null,
+                        "admin_only": 0,
+                        "html_type": "input",
+                        "data_type": "varchar",
+                        "validation": null,
+                        "is_super": 0,
+                        "is_system": 1,
+                        "unit": null,
+                        "value": "https://product.hstatic.net/1000297956/product/71ine4dujtl._sl1500__e9712c14f15348ccb9abd893d79e07b4_master.jpg"
+                    }]
                 },
                 {
                     "entity_id": "charger",
@@ -98,8 +93,7 @@ async function getCategories () {
                     "parent": null,
                     "is_online": 1,
                     "position": null,
-                    "attributes": [
-                        {
+                    "attributes": [{
                             "attribute_id": "banner_image",
                             "label": "Banner Image",
                             "referred_target": null,
@@ -146,8 +140,7 @@ async function getCategories () {
                     "parent": null,
                     "is_online": 1,
                     "position": null,
-                    "attributes": [
-                        {
+                    "attributes": [{
                             "attribute_id": "banner_image",
                             "label": "Banner Image",
                             "referred_target": null,
@@ -194,8 +187,7 @@ async function getCategories () {
                     "parent": null,
                     "is_online": 1,
                     "position": null,
-                    "attributes": [
-                        {
+                    "attributes": [{
                             "attribute_id": "banner_image",
                             "label": "Banner Image",
                             "referred_target": null,
@@ -242,8 +234,7 @@ async function getCategories () {
                     "parent": null,
                     "is_online": 1,
                     "position": null,
-                    "attributes": [
-                        {
+                    "attributes": [{
                             "attribute_id": "banner_image",
                             "label": "Banner Image",
                             "referred_target": null,
@@ -290,8 +281,7 @@ async function getCategories () {
                     "parent": null,
                     "is_online": 1,
                     "position": null,
-                    "attributes": [
-                        {
+                    "attributes": [{
                             "attribute_id": "banner_image",
                             "label": "Banner Image",
                             "referred_target": null,
