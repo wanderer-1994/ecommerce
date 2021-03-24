@@ -6,10 +6,10 @@ const initState = {
 
 function reducer (state = initState, action) {
     switch (action.type) {
-        case "APPLOADING":
+        case "APP_LOADING":
             return { ...state, appLoading: action.payload };
-        case "B":
-            return state;
+        case "APP_ALERT":
+            return {...state, appAlert: action.payload};
         default:
             return state;
     }

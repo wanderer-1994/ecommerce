@@ -5,19 +5,19 @@ import './App.css';
 import routes from "./routes";
 import Sidebar from "./components/Sidebar";
 import AppLoading from "./components/AppLoading";
+import AppAlert from "./components/AppAlert";
+import * as appFunction from "./utils/appFunction";
 
 function App(props) {
     useEffect(() => {
         setTimeout(() => {
-            props.dispatch({
-                type: "APPLOADING",
-                payload: false
-            })
+            appFunction.appLoading(false);
         }, 10)
     })
     return (
         <Fragment>
             <AppLoading/>
+            <AppAlert/>
             <Route path="*" component={Sidebar} />
             <div className="main">
                 <Switch>
@@ -34,9 +34,7 @@ function App(props) {
 }
 
 function mapStateToProps (state) {
-    return {
-        appLoading: state.appLoading
-    }
+    return {}
 }
 
 export default connect(mapStateToProps)(App);

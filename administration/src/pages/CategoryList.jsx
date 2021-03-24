@@ -2,6 +2,8 @@ import { Fragment, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import * as api from "../api/mockApi";
 import $ from "jquery";
+import * as appFunction from "../utils/appFunction";
+import CategoryModel from "../objectModels/CategoryModel";
 
 const category_entity_columns = [
     {
@@ -26,7 +28,12 @@ const category_entity_columns = [
         column: "is_online",
         column_name: "Online",
         data_type: "number",
-        align: "center"
+        align: "center",
+        f_convert_value: value => {
+            if (value === 1 || value === true) return 1;
+            if (value === 0 || value === false) return 0;
+            return value;
+        }
     },
     {
         column: "position",
@@ -69,6 +76,16 @@ function CategoryList (props) {
         }
         toggleEdit(event, false);
     }
+
+    async function saveCategory (entity_id) {
+        let match = (category_list.temp || []).find(item => item.entity_id === entity_id);
+        if (!match) {
+            return appFunction.appAlert(true);
+        };
+        match = JSON.parse(JSON.stringify(match));
+        delete match.attributes;
+        let validation = CategoryModel.validateCategoryModel(match);
+    };
 
     function renderCategory ({cat_item, index, level}) {
         if (category_list.temp) {
@@ -132,6 +149,7 @@ function CategoryList (props) {
                         >Cancel</button>
                         <button
                             tabIndex={-1} className="save button"
+                            onClick={() => saveCategory(cat_item.entity_id)}
                         >Save</button>
                     </td>
                 </tr>
