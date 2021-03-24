@@ -1,5 +1,5 @@
 body {
-    --width: 230px;
+    --width: 30px;
     --oriWidth: 230px;
     --transition: 0.3s;
 }
@@ -19,6 +19,7 @@ body {
     transition: width var(--transition) linear;
     overflow-x: hidden;
     height: 100%;
+    background-color: #ffffff;
     transition: background-color 0s;
     transition-delay: 0s;
 }
@@ -26,6 +27,11 @@ body {
     background-color: #ababab;
     transition: background-color 0s;
     transition-delay: var(--transition);
+}
+.side-bar.open-hover .wrapper {
+    background-color: #ffffff;
+    transition: background-color 0s;
+    transition-delay: 0s;
 }
 .side-bar .wrapper .logo {
     display: block;

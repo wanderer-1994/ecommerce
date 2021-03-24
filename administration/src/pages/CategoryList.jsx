@@ -64,7 +64,7 @@ function CategoryList (props) {
     function cancelEdit (event, entity_id) {
         let match = (category_list.temp || []).find(item => item.entity_id === entity_id);
         if (match) {
-            category_list.temp = category_list.temp.filter(item => item != match);
+            category_list.temp = category_list.temp.filter(item => item !== match);
             setCategoryList({...category_list, temp: category_list.temp});
         }
         toggleEdit(event, false);
@@ -72,7 +72,7 @@ function CategoryList (props) {
 
     function renderCategory ({cat_item, index, level}) {
         if (category_list.temp) {
-            let match = category_list.temp.find(item => item.entity_id == cat_item.entity_id);
+            let match = category_list.temp.find(item => item.entity_id === cat_item.entity_id);
             if (match) {
                 cat_item = match;
             };
