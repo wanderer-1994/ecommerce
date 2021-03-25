@@ -1,7 +1,12 @@
 const category_entity_columns = [{
         column: "entity_id",
         valueInvalidMessage: `'entity_id' must be none-empty string`,
-        f_convert_value: function(value) {},
+        f_convert_value: function(value) {
+            if (typeof(value) === "string" || typeof(value) === "number") {
+                return value.toString();
+            };
+            return value;
+        },
         f_validation: function(value) {
             return typeof(value) === "string" && value.length > 0;
         }
@@ -9,7 +14,6 @@ const category_entity_columns = [{
     {
         column: "name",
         valueInvalidMessage: `'name' must be none-empty string`,
-        f_convert_value: function(value) {},
         f_validation: function(value) {
             return typeof(value) === "string" && value.length > 0;
         }
@@ -17,7 +21,6 @@ const category_entity_columns = [{
     {
         column: "parent",
         valueInvalidMessage: `'parent' must be none-empty string or left empty`,
-        f_convert_value: function(value) {},
         f_validation: function(value) {
             return typeof(value) === "string" && value.length > 0;
         }
@@ -26,8 +29,9 @@ const category_entity_columns = [{
         column: "is_online",
         valueInvalidMessage: `'is_online' must be number true|false or 1|0 or left empty`,
         f_convert_value: value => {
-            if (value === 1 || value === true) return 1;
-            if (value === 0 || value === false) return 0;
+            // input type number still return string!!
+            if (value == 1 || value === true) return 1;
+            if (value == 0 || value === false) return 0;
             return value;
         },
         f_validation: function(value) {
@@ -37,7 +41,12 @@ const category_entity_columns = [{
     {
         column: "position",
         valueInvalidMessage: `'position' must be non-negative number (type int) or left empty`,
-        f_convert_value: function(value) {},
+        f_convert_value: function(value) {
+            if (parseInt(value) == value) {
+                return parseInt(value);
+            };
+            return value;
+        },
         f_validation: function(value) {
             return typeof(value) === "number" && value >= 0 && value === parseInt(value);
         }
@@ -94,16 +103,23 @@ function validateCategoryModel(category) {
     let isValid = true;
     let m_failure = "";
     category_entity_columns.forEach(property => {
-        let value = category[property.column];
-        value = property.f_convert_value ? property.f_convert_value(value) : value;
-        if (value !== null && value !== "" && value !== undefined) {
-            if (!property.f_validation(category[property.column])) {
-                isValid = false;
-                console.log("here 4", property.column, " - ", category[property.column], category)
-                m_failure += `\n\t Invalid entity property: ${property.valueInvalidMessage}.`
-            }
-        } else {
-            delete category[property.column];
+        switch (category[property.column]) {
+            case undefined:
+                delete category[property.column];
+                break;
+            case null:
+            case "":
+                break;
+            default:
+                if (property.f_convert_value) {
+                    category[property.column] = property.f_convert_value(category[property.column]);
+                };
+                if (!property.f_validation(category[property.column])) {
+                    isValid = false;
+                    console.log("here 4", property.column, " - ", category[property.column], category)
+                    m_failure += `\n\t Invalid entity property: ${property.valueInvalidMessage}.`
+                }
+                break;
         };
     });
     switch (category.attributes) {
@@ -137,14 +153,19 @@ function validateCategoryModel(category) {
                 };
                 if (attr_item.value === null || attr_item.value === "") continue;
                 category_eav_columns.forEach(col_item => {
-                    let value = attr_item[col_item.column];
-                    if (value !== null && value !== "" && value !== undefined) {
-                        if (!col_item.f_validation(value)) {
-                            isValid = false;
-                            console.log("here 3")
-                            m_failure += `\n\t ${col_item.valueInvalidMessage}`;
-                        }
+                    switch (attr_item[col_item.column]) {
+                        case null: case "": case undefined:
+                            break;
+                        default:
+                            break;
                     }
+                    // if (value !== null && value !== "" && value !== undefined) {
+                    //     if (!col_item.f_validation(value)) {
+                    //         isValid = false;
+                    //         console.log("here 3")
+                    //         m_failure += `\n\t ${col_item.valueInvalidMessage}`;
+                    //     }
+                    // }
                 })
             };
             break;

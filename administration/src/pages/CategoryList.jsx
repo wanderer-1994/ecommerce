@@ -10,25 +10,49 @@ const category_entity_columns = [
         column: "entity_id",
         column_name: "ID",
         data_type: "text",
-        align: "left"
+        align: "left",
+        td_style: {
+            minWidth: "70px"
+        },
+        th_style: {
+            minWidth: "70px"
+        }
     },
     {
         column: "name",
         column_name: "Name",
         data_type: "text",
-        align: "left"
+        align: "left",
+        td_style: {
+            minWidth: "100px"
+        },
+        th_style: {
+            minWidth: "100px"
+        }
     },
     {
         column: "parent",
         column_name: "Parent",
         data_type: "text",
-        align: "left"
+        align: "left",
+        td_style: {
+            minWidth: "100px"
+        },
+        th_style: {
+            minWidth: "100px"
+        }
     },
     {
         column: "is_online",
         column_name: "Online",
         data_type: "number",
         align: "center",
+        td_style: {
+            width: "80px"
+        },
+        th_style: {
+            width: "80px"
+        },
         f_convert_value: value => {
             if (value === 1 || value === true) return 1;
             if (value === 0 || value === false) return 0;
@@ -39,9 +63,24 @@ const category_entity_columns = [
         column: "position",
         column_name: "Position",
         data_type: "number",
-        align: "right"
+        align: "right",
+        td_style: {
+            width: "80px"
+        },
+        th_style: {
+            width: "80px"
+        }
     }
-]
+];
+
+const thead_style = {
+    backgroundColor: "#cdcdcd",
+    height: "35px"
+};
+
+const tr_style = {
+    height: "35px"
+};
 
 function CategoryList (props) {
     const [category_list, setCategoryList] = useState({});
@@ -91,8 +130,9 @@ function CategoryList (props) {
                 message: validation.m_failure
             })
         };
-        let result = await api.updateCategories([match]);
-        console.log("response ", result);
+        console.log("valid")
+        // let result = await api.updateCategories([match]);
+        // console.log("response ", result);
     };
 
     function renderCategory ({cat_item, index, level}) {
@@ -104,7 +144,7 @@ function CategoryList (props) {
         }
         return (
             <Fragment key={index} >
-                <tr className="tb-row-item protected">
+                <tr className="tb-row-item protected" style={tr_style}>
                     <td className="td_input null ord"><input disabled value={++total} /></td>
                     <td className="td_input null ord" style={{"--paddingleft": `${level * 10}px`}}>
                         <input disabled value={level + 1} />
@@ -119,7 +159,7 @@ function CategoryList (props) {
                             className += " editable";
                         };
                         return (
-                            <td className={`td_input ${col_item.align} ${className}`} key={index}>
+                            <td style={col_item.td_style} className={`td_input ${col_item.align} ${className}`} key={index}>
                                 {col_item.column === "entity_id" ?
                                 (
                                     <Link to={`/category/${cat_item.entity_id}`} target="_blank">
@@ -189,11 +229,11 @@ function CategoryList (props) {
             <div className="content">
                 <table>
                     <thead>
-                        <tr>
+                        <tr style={thead_style}>
                             <th>ORD</th>
                             <th>LEVEL</th>
                             {category_entity_columns.map((col_item, index) => {
-                                return <th key={index}>{col_item.column_name}</th>
+                                return <th key={index} style={col_item.th_style}>{col_item.column_name}</th>
                             })}
                         </tr>
                     </thead>
