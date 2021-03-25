@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import * as api from "../api/mockApi";
 import $ from "jquery";
 import * as appFunction from "../utils/appFunction";
-import CategoryModel from "../objectModels/CategoryModel";
+import * as CategoryModel from "../objectModels/CategoryModel";
 
 const category_entity_columns = [
     {
@@ -122,17 +122,16 @@ function CategoryList (props) {
             return appFunction.appAlert(true);
         };
         match = JSON.parse(JSON.stringify(match));
+        delete match.children;
         delete match.attributes;
         let validation = CategoryModel.validateCategoryModel(match);
         if (!validation.isValid) {
-            console.log("!invalid")
             return appFunction.appAlert({
                 message: validation.m_failure
             })
         };
-        console.log("valid")
-        // let result = await api.updateCategories([match]);
-        // console.log("response ", result);
+        let result = await api.updateCategories([match]);
+        console.log("response ", result);
     };
 
     function renderCategory ({cat_item, index, level}) {
@@ -164,7 +163,7 @@ function CategoryList (props) {
                                 (
                                     <Link to={`/category/${cat_item.entity_id}`} target="_blank">
                                         <input
-                                            disabled={true} type={col_item.data_type} value={value || ""}
+                                            disabled={true} type={col_item.data_type} value={(value === null || value === "" || value === undefined) ? "" : value}
                                             onChange={(event) => {changeCategoryEntity({
                                                 entity_id: cat_item.entity_id,
                                                 column: col_item.column,
@@ -175,7 +174,7 @@ function CategoryList (props) {
                                 )
                                 : (
                                     <input
-                                        disabled={true} type={col_item.data_type} value={value || ""}
+                                        disabled={true} type={col_item.data_type} value={(value === null || value === "" || value === undefined) ? "" : value}
                                         onChange={(event) => {changeCategoryEntity({
                                             entity_id: cat_item.entity_id,
                                             column: col_item.column,

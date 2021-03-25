@@ -1,5 +1,5 @@
 import axios from "axios";
-import categoryModel from "../objectModels/CategoryModel";
+import * as categoryModel from "../objectModels/CategoryModel";
 
 // auth
 async function adminAuth(authInfo) {
