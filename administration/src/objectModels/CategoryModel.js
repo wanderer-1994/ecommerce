@@ -1,4 +1,4 @@
-import * as eavValidation from "../eav/eavValidation";
+import * as eavValidation from "./eav/eavValidation";
 
 const category_entity_columns = [{
         column: "entity_id",
@@ -146,7 +146,7 @@ function validateCategoryModel (category) {
                 break;
         };
     });
-    
+
     switch (category.attributes) {
         case null:
         case "":
