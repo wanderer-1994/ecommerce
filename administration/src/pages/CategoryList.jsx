@@ -75,9 +75,9 @@ function CategoryList (props) {
             setCategoryList({...category_list, temp: category_list.temp});
         }
         toggleEdit(event, false);
-    }
+    };
 
-    async function saveCategory (entity_id) {
+    async function updateCategory (entity_id) {
         let match = (category_list.temp || []).find(item => item.entity_id === entity_id);
         if (!match) {
             return appFunction.appAlert(true);
@@ -85,6 +85,14 @@ function CategoryList (props) {
         match = JSON.parse(JSON.stringify(match));
         delete match.attributes;
         let validation = CategoryModel.validateCategoryModel(match);
+        if (!validation.isValid) {
+            console.log("!invalid")
+            return appFunction.appAlert({
+                message: validation.m_failure
+            })
+        };
+        let result = await api.updateCategories([match]);
+        console.log("response ", result);
     };
 
     function renderCategory ({cat_item, index, level}) {
@@ -149,7 +157,7 @@ function CategoryList (props) {
                         >Cancel</button>
                         <button
                             tabIndex={-1} className="save button"
-                            onClick={() => saveCategory(cat_item.entity_id)}
+                            onClick={() => updateCategory(cat_item.entity_id)}
                         >Save</button>
                     </td>
                 </tr>
@@ -215,6 +223,6 @@ function toggleEdit (event, isOn) {
         $(event.target).parents("tr").eq(0).removeClass("onEdit");
         $(event.target).parents("tr").eq(0).find(".editable input").attr("disabled", true);
     }
-}
+};
 
 export default CategoryList;

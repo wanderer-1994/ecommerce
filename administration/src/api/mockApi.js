@@ -1,3 +1,4 @@
+import axios from "axios";
 import categoryModel from "../objectModels/CategoryModel";
 
 // auth
@@ -46,6 +47,16 @@ async function adminUpdateOrders(orders) {
 // category
 async function getCategories() {
     try {
+        let response = await axios({
+            method: "GET",
+            url: "http://localhost:4000/api/admin/category"
+        });
+        let data = response.data;
+        data.structured = categoryModel.structurizeCategories(data.categories || []);
+        console.log("live api: getCategories");
+        return data;
+    } catch (err) {
+        console.log("mocking: getCategories");
         let response = {
             "categories": [{
                     "entity_id": "adapter",
@@ -326,8 +337,22 @@ async function getCategories() {
         };
         response.structured = categoryModel.structurizeCategories(response.categories || []);
         return response;
+    }
+}
+
+async function updateCategories(categories) {
+    try {
+        let response = await axios({
+            method: "PUT",
+            url: "http://localhost:4000/api/admin/category",
+            data: {
+                categories: categories
+            }
+        });
+        console.log("live api: updateCategories");
+        return response.data;
     } catch (err) {
-        throw err;
+
     }
 }
 
@@ -342,5 +367,6 @@ export {
     updateSupInfo,
     adminSearchOrder,
     adminUpdateOrders,
-    getCategories
+    getCategories,
+    updateCategories
 }
