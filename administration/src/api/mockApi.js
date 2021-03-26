@@ -356,6 +356,10 @@ async function updateCategories(categories) {
     }
 }
 
+function deleteCategories (entity_ids) {
+
+}
+
 export {
     adminAuth,
     adminLogout,
@@ -368,5 +372,6 @@ export {
     adminSearchOrder,
     adminUpdateOrders,
     getCategories,
-    updateCategories
+    updateCategories,
+    deleteCategories
 }

@@ -2,7 +2,6 @@ import { connect } from "react-redux";
 import "./AppAlert.css";
 import * as appFunction from "../utils/appFunction";
 import $ from "jquery";
-import { useEffect } from "react";
 
 const iconList = [
     { name: "warning", icon: "!" },
@@ -11,7 +10,7 @@ const iconList = [
     { name: "danger", icon: "!!!" },
 ]
 
-const appAlertModel = {
+const appAlertModel = { // eslint-disable-line
     icon: "warning",
     showConfirm: true,
     title: <div style={{color: "red"}}>Title</div>,
@@ -40,15 +39,15 @@ function AppAlert (props) {
     let alertIcon;
     if (appAlert && appAlert.icon) {
         let match = iconList.find(item => item.name === appAlert.icon);
-        if (match) alertIcon = match.icon;
+        if (match) alertIcon = match;
     };
     return (
         <div className={`app-alert ${appAlert ? "" : "inactive"}`}>
             <div className="alert-wrapper"
                 style={appAlert && appAlert.showConfirm ? { paddingBottom: "55px" } : null}
             >
-                <div className="header">
-                    {alertIcon ? <div className="icon">{alertIcon}</div> : null}
+                <div className={`header ${alertIcon ? alertIcon.name : ""}`}>
+                    {alertIcon ? <div className={`icon ${alertIcon.name}`}>{alertIcon.icon}</div> : null}
                     {appAlert && appAlert.title ? <div className="title">{appAlert.title}</div> : null}
                 </div>
                 {appAlert && appAlert.message ? <div className="message">{appAlert.message}</div> : null}

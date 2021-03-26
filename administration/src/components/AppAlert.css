@@ -1,3 +1,9 @@
+body {
+    --colorDanger: #dc3545;
+    --colorSuccess: #28a745;
+    --colorInfo: #007bff;
+    --colorWarning: #ffc107;
+}
 .app-alert {
     position: absolute;
     width: 100%;
@@ -6,8 +12,6 @@
     left: 0px;
     background-color: #af1e1e50;
     font-size: 20px;
-    text-align: center;
-    line-height: 100vh;
     z-index: 1000;
     user-select: none;
     overflow: hidden;
@@ -24,8 +28,6 @@
 /*  */
 @media all and (min-width: 901px){
     .app-alert .alert-wrapper{
-        width: 450px;
-        /* height: 300px; */
         position: absolute;
         top: 50%;
         left: 50%;
@@ -35,6 +37,58 @@
         background-color: white;
         padding: 5px;
     }
+    .app-alert .header {
+        text-align: left;
+        height: 55px;
+        border-bottom: 1px solid #34343450;
+    }
+    .app-alert .header.success {
+        color: var(--colorSuccess);
+    }
+    .app-alert .header.info {
+        color: var(--colorInfo);
+    }
+    .app-alert .header.warning {
+        color: var(--colorWarning);
+    }
+    .app-alert .header.danger {
+        color: var(--colorDanger);
+    }
+    .app-alert .header .icon {
+        border: 1px solid;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        text-align: center;
+        font-size: 30px;
+        line-height: 50px;
+        display: inline-block;
+        margin-left: 5px;
+        vertical-align: middle;
+    }
+    .app-alert .header .icon.success {
+        border-color: var(--colorSuccess);
+    }
+    .app-alert .header .icon.info {
+        border-color: var(--colorInfo);
+    }
+    .app-alert .header .icon.warning {
+        border-color: var(--colorWarning);
+    }
+    .app-alert .header .icon.danger {
+        border-color: var(--colorDanger);
+    }
+    .app-alert .header .title {
+        display: inline-block;
+        margin-left: 10px;
+        vertical-align: middle;
+        padding-top: 5px;
+    }
+    .app-alert .message {
+        padding: 10px;
+        min-height: 100px;
+        min-width: 375px;
+    }
     .app-alert .alert-footer{
         position: absolute;
         height: 50px;
@@ -42,6 +96,7 @@
         left: 2px;
         bottom: 2px;
         text-align: center;
+        border-top: 1px solid #34343450;
     }
     .app-alert .alert-footer button{
         width: calc(50% - 1px);

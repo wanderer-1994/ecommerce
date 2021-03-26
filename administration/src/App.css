@@ -111,6 +111,10 @@ body::-webkit-scrollbar {
     color: #dedeee;
 }
 
+tr {
+    transition: background-color 1s linear;
+}
+
 tr .edit {
     display: inline-block;
 }
@@ -120,8 +124,14 @@ tr .cancel {
     display: none;
 }
 
-tr.onEdit .edit {
+tr.onEdit .td_action .edit,
+tr.onEdit .td_action .delete {
     display: none;
+}
+
+tr.hightlight {
+    background-color: #3fb85b !important;
+    transition: background-color 0s;
 }
 
 tr.onEdit .td_action .save,
@@ -141,10 +151,19 @@ tr.onEdit .td_action .cancel {
     background-color: #007bff;
 }
 
+.button.delete {
+    background-color: #dc3545;
+}
+
 .button.save {
     background-color: #ffc107;
 }
 
 .button.cancel {
     background-color: #6c757d;
+}
+
+.button.disabled {
+    filter: grayscale(100%);
+    pointer-events: none;
 }
