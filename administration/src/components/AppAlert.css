@@ -20,3 +20,84 @@
     opacity: 0;
     transition: opacity .5s linear, width 0s linear .5s, height 0s linear .5s;
 }
+
+/*  */
+@media all and (min-width: 901px){
+    .app-alert .alert-wrapper{
+        width: 450px;
+        /* height: 300px; */
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translateX(-50%) translateY(-50%);
+        border-radius: 2px;
+        box-shadow: 0 3px 10px 0 #67676775;
+        background-color: white;
+        padding: 5px;
+    }
+    .app-alert .alert-footer{
+        position: absolute;
+        height: 50px;
+        width: calc(100% - 4px);
+        left: 2px;
+        bottom: 2px;
+        text-align: center;
+    }
+    .app-alert .alert-footer button{
+        width: calc(50% - 1px);
+        height: 50px;
+        border: 0px;
+        outline: none;
+        border-radius: 2px;
+        color: white;
+        cursor: pointer;
+        font-size: 16px;
+        font-family: cursive;
+    }
+    .app-alert .alert-footer .cancel{
+        margin-right: 2px;
+        background-color: #ababab;
+    }
+    .app-alert .alert-footer .submit{
+        background-color: #ff5722;
+    }
+}
+@media all and (max-width: 900px){
+    .app-alert .alert-wrapper{
+        width: 98%;
+        position: absolute;
+        top: 30%;
+        left: 50%;
+        transform: translateX(-50%) translateY(-50%);
+        border-radius: 2px;
+        box-shadow: 0 3px 10px 0 #67676775;
+        background-color: white;
+        padding: 5px;
+    }
+    .app-alert .alert-footer{
+        position: absolute;
+        height: 50px;
+        width: calc(100% - 4px);
+        left: 2px;
+        bottom: 2px;
+        text-align: center;
+    }
+    .app-alert .alert-footer button{
+        width: calc(50% - 1px);
+        height: 50px;
+        border: 0px;
+        outline: none;
+        border-radius: 2px;
+        color: white;
+        cursor: pointer;
+        font-size: 16px;
+        font-family: sans-serif;
+    }
+    .app-alert .alert-footer .cancel{
+        margin-right: 2px;
+        background-color: #ababab;
+    }
+    .app-alert .alert-footer .submit{
+        background-color: #ff5722;
+    }
+}

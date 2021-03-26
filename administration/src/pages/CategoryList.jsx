@@ -113,10 +113,11 @@ function CategoryList (props) {
             category_list.temp = category_list.temp.filter(item => item !== match);
             setCategoryList({...category_list, temp: category_list.temp});
         }
-        toggleEdit(event, false);
+        toggleEdit(event.target, false);
     };
 
     async function updateCategory (entity_id) {
+        console.log("123");
         let match = (category_list.temp || []).find(item => item.entity_id === entity_id);
         if (!match) {
             return appFunction.appAlert(true);
@@ -131,7 +132,35 @@ function CategoryList (props) {
             })
         };
         let result = await api.updateCategories([match]);
-        console.log("response ", result);
+        if (result && result.categories && result.categories[0] && result.categories[0].isSuccess) {
+            appFunction.appAlert({
+                icon: "success",
+                title: <div style={{color: "red"}}>Success</div>,
+                message: <div style={{color: "#ababab"}}>{`Update success for category: ${result.categories[0].name}`}</div>,
+                timeOut: 200,
+                onTimeOut: function () {
+                    api.getCategories()
+                    .then(data => {
+                        category_list.temp = category_list.temp.filter(item => item.entity_id !== entity_id);
+                        setCategoryList({
+                            ...category_list, ...data
+                        });
+                        let target = $(".tb-row-item td.key");
+                        for (let i = 0; i < target.length; i ++) {
+                            if((target.eq(i).find("input").val() == entity_id)) {
+                                target = target[i];
+                                break;
+                            };
+                        };
+                        console.log(target);
+                        // toggleEdit(target, false);
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    })
+                }
+            })
+        }
     };
 
     function renderCategory ({cat_item, index, level}) {
@@ -156,6 +185,8 @@ function CategoryList (props) {
                         }
                         if (col_item.column !== "entity_id") {
                             className += " editable";
+                        } else {
+                            className += " key";
                         };
                         return (
                             <td style={col_item.td_style} className={`td_input ${col_item.align} ${className}`} key={index}>
@@ -188,7 +219,7 @@ function CategoryList (props) {
                     <td className="td_action">
                         <button
                             tabIndex={-1} className="edit button"
-                            onClick={(event) => {toggleEdit(event, true)}}
+                            onClick={(event) => {toggleEdit(event.target, true)}}
                         >Edit</button>
                         <button
                             tabIndex={-1} className="cancel button"
@@ -196,7 +227,7 @@ function CategoryList (props) {
                         >Cancel</button>
                         <button
                             tabIndex={-1} className="save button"
-                            onClick={() => updateCategory(cat_item.entity_id)}
+                            onClick={(event) => updateCategory(cat_item.entity_id, event)}
                         >Save</button>
                     </td>
                 </tr>
@@ -254,13 +285,13 @@ function CategoryList (props) {
     )
 };
 
-function toggleEdit (event, isOn) {
+function toggleEdit (target, isOn) {
     if (isOn) {
-        $(event.target).parents("tr").eq(0).addClass("onEdit");
-        $(event.target).parents("tr").eq(0).find(".editable input").attr("disabled", false);
+        $(target).parents("tr").eq(0).addClass("onEdit");
+        $(target).parents("tr").eq(0).find(".editable input").attr("disabled", false);
     } else {
-        $(event.target).parents("tr").eq(0).removeClass("onEdit");
-        $(event.target).parents("tr").eq(0).find(".editable input").attr("disabled", true);
+        $(target).parents("tr").eq(0).removeClass("onEdit");
+        $(target).parents("tr").eq(0).find(".editable input").attr("disabled", true);
     }
 };
 

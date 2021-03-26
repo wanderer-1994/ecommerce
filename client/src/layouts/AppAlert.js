@@ -7,10 +7,10 @@ import { open_appAlert } from "../utils/appFunction";
 import $ from "jquery";
 
 const iconList = [
-    { name: "warning", icon: "W" },
+    { name: "warning", icon: "!" },
     { name: "success", icon: "S" },
-    { name: "info", icon: "I" },
-    { name: "danger", icon: "D" },
+    { name: "info", icon: "i" },
+    { name: "danger", icon: "!!!" },
 ]
 
 class AppAlert extends React.Component {
