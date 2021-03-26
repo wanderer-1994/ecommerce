@@ -53,14 +53,18 @@ function AppAlert (props) {
                 {appAlert && appAlert.message ? <div className="message">{appAlert.message}</div> : null}
                 {appAlert  &&  appAlert.showConfirm ? (
                     <div className="alert-footer">
-                        <button
-                            className="cancel"
-                            onClick={() => onClickCancel(appAlert)}
-                        >{appAlert.cancelTitle || "Thoát"}</button>
-                        <button
-                            className="submit"
-                            onClick={() => onClickSubmit(appAlert)}
-                        >{appAlert.submitTitle || "Đồng ý"}</button>
+                        {appAlert.cancelTitle ?
+                            <button
+                                className="cancel"
+                                onClick={() => onClickCancel(appAlert)}
+                            >{appAlert.cancelTitle || "Thoát"}</button>
+                        : null}
+                        {appAlert.submitTitle ?
+                            <button
+                                className="submit"
+                                onClick={() => onClickSubmit(appAlert)}
+                            >{appAlert.submitTitle || "Đồng ý"}</button>
+                        : null}
                     </div>
                 ) : null}
             </div>

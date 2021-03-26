@@ -26,10 +26,8 @@ function Sidebar (props) {
     }, []);
     return (
         <div className="side-bar">
-            <div>
-                <div className="switch-icon" onClick={toggleSidebar}><ArrowRight /></div>
-            </div>
             <div className="wrapper">
+                <div className="switch-icon" onClick={toggleSidebar}><ArrowRight /></div>
                 <Link className="logo" to="/"></Link>
                 {
                     routes

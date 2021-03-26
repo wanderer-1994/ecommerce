@@ -1,6 +1,8 @@
 import axios from "axios";
 import * as categoryModel from "../objectModels/CategoryModel";
 
+axios.defaults.baseURL = "http://localhost:4000";
+
 // auth
 async function adminAuth(authInfo) {
 
@@ -49,7 +51,7 @@ async function getCategories() {
     try {
         let response = await axios({
             method: "GET",
-            url: "http://localhost:4000/api/admin/category"
+            url: "/api/admin/category"
         });
         let data = response.data;
         data.structured = categoryModel.structurizeCategories(data.categories || []);
@@ -344,20 +346,137 @@ async function updateCategories(categories) {
     try {
         let response = await axios({
             method: "PUT",
-            url: "http://localhost:4000/api/admin/category",
+            url: "/api/admin/category",
             data: {
                 categories: categories
             }
         });
         console.log("live api: updateCategories");
+        response.data.categories[0].isSuccess = false;
+        response.data.categories[0].m_failure = "You have error in your sql syntax!";
         return response.data;
     } catch (err) {
 
     }
 }
 
-function deleteCategories (entity_ids) {
+async function deleteCategories (entity_ids) {
+    try {
+        let response = await axios({
+            method: "DELETE",
+            url: "/api/admin/category",
+            data: {
+                category_ids: ["abc", "def"]
+            }
+        });
+        response.data.isSuccess = false;
+        response.data.m_failure = "You have error in your sql syntax!";
+        console.log("live api: updateCategories");
+        return response.data;
+    } catch (err) {
+        console.log("mocking: deleteCategories");
+        let response = {
+            isSuccess: true
+        };
+        return response
+    }
+}
 
+// category eav
+async function getCategoryEavs () {
+    try {
+        let response = await axios({
+            method: "GET",
+            url: "/api/admin/category/eav"
+        });
+        console.log("live api: getCategoryEavs")
+        return response.data.category_eavs;
+    } catch (err) {
+        console.log("mocking: getCategoryEavs");
+        let response = {
+            "category_eavs": [
+                {
+                    "attribute_id": "banner_image",
+                    "label": "Banner Image",
+                    "referred_target": null,
+                    "admin_only": 0,
+                    "html_type": "input",
+                    "data_type": "varchar",
+                    "validation": null,
+                    "is_super": 0,
+                    "is_system": 1,
+                    "unit": null
+                },
+                {
+                    "attribute_id": "introduction",
+                    "label": "Introduction",
+                    "referred_target": null,
+                    "admin_only": 0,
+                    "html_type": "input",
+                    "data_type": "text",
+                    "validation": null,
+                    "is_super": 0,
+                    "is_system": 1,
+                    "unit": null
+                },
+                {
+                    "attribute_id": "site_locales",
+                    "label": "Available in locales",
+                    "referred_target": null,
+                    "admin_only": 0,
+                    "html_type": "select",
+                    "data_type": "varchar",
+                    "validation": null,
+                    "is_super": 0,
+                    "is_system": 0,
+                    "unit": null,
+                    "options": [
+                        {
+                            "option_value": "AU",
+                            "sort_order": 4
+                        },
+                        {
+                            "option_value": "UK",
+                            "sort_order": 3
+                        },
+                        {
+                            "option_value": "US",
+                            "sort_order": 2
+                        },
+                        {
+                            "option_value": "VI",
+                            "sort_order": 1
+                        }
+                    ]
+                },
+                {
+                    "attribute_id": "style_fashion",
+                    "label": "Style fashion",
+                    "referred_target": null,
+                    "admin_only": 0,
+                    "html_type": "input",
+                    "data_type": "int",
+                    "validation": "^[1,2,3]$",
+                    "is_super": 0,
+                    "is_system": 0,
+                    "unit": "pcs"
+                },
+                {
+                    "attribute_id": "title_caption",
+                    "label": "Caption title",
+                    "referred_target": null,
+                    "admin_only": 0,
+                    "html_type": "input",
+                    "data_type": "text",
+                    "validation": null,
+                    "is_super": 0,
+                    "is_system": 1,
+                    "unit": null
+                }
+            ]
+        };
+        return response.category_eavs;
+    }
 }
 
 export {
@@ -373,5 +492,6 @@ export {
     adminUpdateOrders,
     getCategories,
     updateCategories,
-    deleteCategories
+    deleteCategories,
+    getCategoryEavs
 }

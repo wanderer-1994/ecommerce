@@ -88,6 +88,7 @@ body {
         padding: 10px;
         min-height: 100px;
         min-width: 375px;
+        color: #565656;
     }
     .app-alert .alert-footer{
         position: absolute;
@@ -96,7 +97,6 @@ body {
         left: 2px;
         bottom: 2px;
         text-align: center;
-        border-top: 1px solid #34343450;
     }
     .app-alert .alert-footer button{
         width: calc(50% - 1px);

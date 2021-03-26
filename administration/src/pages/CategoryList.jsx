@@ -150,11 +150,15 @@ function CategoryList (props) {
             appFunction.appAlert({
                 icon: "success",
                 title: <div>Success</div>,
-                message: <div style={{color: "#ababab"}}>{`Update success for category: ${result.categories[0].name}`}</div>,
-                showConfirm: true,
-                cancelTitle: "Cancel",
-                submitTitle: "Submit",
-                // timeOut: 200,
+                message: (
+                    <div>
+                        <span>Update success for category: </span>
+                        <span style={{color: "var(--colorSuccess)", textDecoration: "underline"}}>
+                            {result.categories[0].name}
+                        </span>
+                    </div>
+                ),
+                timeOut: 1000,
                 onTimeOut: () => {
                     api.getCategories()
                     .then(data => {
@@ -178,6 +182,33 @@ function CategoryList (props) {
                     .catch(err => {
                         console.log(err);
                     })
+                }
+            });
+        } else {
+            let m_failure = result && result.categories && result.categories[0] && result.categories[0] ? result.categories[0].m_failure : "";
+            appFunction.appAlert({
+                icon: "danger",
+                title: <div>Action incomplete!</div>,
+                message: (
+                    <div>
+                        <span>Could not update: </span>
+                        <span style={{color: "var(--colorDanger)", textDecoration: "underline"}}>
+                            {match.name}
+                        </span>
+                        <span> !</span>
+                        <div style={{marginTop: "10px", fontSize: "14px", color: "#000000", fontStyle: "italic", textDecoration: "underline"}}>
+                            Error log:
+                        </div>
+                        <div style={{marginTop: "5px", fontSize: "12px", color: "#000000", fontStyle: "italic"}}>
+                            {m_failure}
+                        </div>
+                    </div>
+                ),
+                showConfirm: true,
+                submitTitle: "OK",
+                onClickSubmit: () => {
+                    $(event.target).parent().find("button").removeClass("disabled");
+                    $(event.target).parent().find("button").attr("disabled", false);
                 }
             });
         }
@@ -186,39 +217,83 @@ function CategoryList (props) {
     async function deleteCategory (entity_id, event) {
         $(event.target).parent().find("button").addClass("disabled");
         $(event.target).parent().find("button").attr("disabled", true);
-        let result = await api.deleteCategories([entity_id]);
-        if (result && result.isSuccess) {
-            appFunction.appAlert({
-                icon: "success",
-                title: <div style={{color: "red"}}>Success</div>,
-                message: <div style={{color: "#ababab"}}>{`Delete success for category: ${entity_id}`}</div>,
-                timeOut: 200,
-                onTimeOut: () => {
-                    api.getCategories()
-                    .then(data => {
-                        category_list.temp = category_list.temp.filter(item => item.entity_id !== entity_id);
-                        setCategoryList({
-                            ...category_list, ...data
-                        });
-                        setTimeout(() => {
-                            let target = $(".tb-row-item td.key input");
-                            for (let i = 0; i < target.length; i++) {
-                                if (target.eq(i).val() == entity_id) { // eslint-disable-line
-                                    target = target.eq(i).parents(".tb-row-item")[0];
-                                    break;
-                                };
-                            };
-                            blinkRow(target);
-                        }, 50);
-                        $(event.target).parent().find("button").removeClass("disabled");
-                        $(event.target).parent().find("button").attr("disabled", false);
-                    })
-                    .catch(err => {
-                        console.log(err);
-                    })
+        let category_name;
+        let match = category_list.categories.find(item => item.entity_id === entity_id);
+        if (match) {
+            category_name = match.name;
+        };
+        appFunction.appAlert({
+            icon: "info",
+            title: <div>Confirm action</div>,
+            message: (
+                <div>
+                    <span>Do you want to delete following category ?</span>
+                    <br />
+                    <span style={{color: "var(--colorDanger)", textDecoration: "underline", textAlign: "center", marginTop: "10px", display: "block"}}>
+                        {category_name} ({entity_id})
+                    </span>
+                </div>
+            ),
+            showConfirm: true,
+            cancelTitle: "CANCEL",
+            submitTitle: "DELETE",
+            onClickCancel: () => {
+                $(event.target).parent().find("button").removeClass("disabled");
+                $(event.target).parent().find("button").attr("disabled", false);
+            },
+            onClickSubmit: async () => {
+                let result = await api.deleteCategories([entity_id]);
+                if (result && result.isSuccess) {
+                    appFunction.appAlert({
+                        icon: "success",
+                        title: <div>Success</div>,
+                        message: (
+                            <div>
+                                <span>Category: </span>
+                                <span style={{color: "var(--colorSuccess)", textDecoration: "underline"}}>
+                                    {category_name}
+                                </span>
+                                <span> deleted!</span>
+                            </div>
+                        ),
+                        timeOut: 1000,
+                        onTimeOut: () => {
+                            category_list.categories = category_list.categories.filter(item => item.entity_id !== entity_id);
+                            category_list.structured = CategoryModel.structurizeCategories(category_list.categories);
+                            setCategoryList({...category_list});
+                            $(event.target).parent().find("button").removeClass("disabled");
+                            $(event.target).parent().find("button").attr("disabled", false);
+                        }
+                    });
+                } else {
+                    appFunction.appAlert({
+                        icon: "danger",
+                        title: <div>Action incomplete!</div>,
+                        message: (
+                            <div>
+                                <span>Could not delete: </span>
+                                <span style={{color: "var(--colorDanger)", textDecoration: "underline"}}>
+                                    {category_name}
+                                </span>
+                                <span> !</span>
+                                <div style={{marginTop: "10px", fontSize: "14px", color: "#000000", fontStyle: "italic", textDecoration: "underline"}}>
+                                    Error log:
+                                </div>
+                                <div style={{marginTop: "5px", fontSize: "12px", color: "#000000", fontStyle: "italic"}}>
+                                    {result.m_failure}
+                                </div>
+                            </div>
+                        ),
+                        showConfirm: true,
+                        submitTitle: "OK",
+                        onClickSubmit: () => {
+                            $(event.target).parent().find("button").removeClass("disabled");
+                            $(event.target).parent().find("button").attr("disabled", false);
+                        }
+                    });
                 }
-            });
-        }
+            }
+        });
     }
 
     function renderCategory ({cat_item, index, level}) {

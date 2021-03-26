@@ -139,6 +139,10 @@ tr.onEdit .td_action .cancel {
     display: inline-block;
 }
 
+.button {
+    user-select: none;
+}
+
 .button:hover {
     filter: brightness(150%);
 }
