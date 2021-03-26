@@ -33,8 +33,8 @@ const category_entity_columns = [{
         f_convert_value: value => {
             // input type number still return string!!
             // using value == "0" instead of value == 0 to prevent case 0 == ""
-            if (value == "1" || value === true) return 1;
-            if (value == "0" || value === false) return 0;
+            if (value == "1" || value === true) return 1; // eslint-disable-line
+            if (value == "0" || value === false) return 0; // eslint-disable-line
             return value;
         },
         f_validation: function(value) {
@@ -45,7 +45,7 @@ const category_entity_columns = [{
         column: "position",
         valueInvalidMessage: `'position' must be non-negative number (type int) or left empty`,
         f_convert_value: function(value) {
-            if (parseInt(value) == value) {
+            if (parseInt(value) == value) { // eslint-disable-line
                 return parseInt(value);
             };
             return value;
@@ -172,6 +172,7 @@ function validateCategoryModel (category) {
                     continue;
                 };
                 if (attr_item.value === null || attr_item.value === "") continue;
+                /*eslint-disable */
                 category_eav_columns.forEach(col_item => {
                     switch (attr_item[col_item.column]) {
                         case null:
@@ -200,6 +201,7 @@ function validateCategoryModel (category) {
                             break;
                     }
                 })
+                /*eslint-enable */
             };
             break;
     };
