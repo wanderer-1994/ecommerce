@@ -127,3 +127,49 @@ textarea.multiinput_item {
     padding-top: 15px;
     padding-bottom: 20px;
 }
+
+/* button */
+button.large {
+    min-width: 70px;
+    padding: 0px 7px 0px 7px;
+    height: 35px;
+    line-height: 35px;
+    outline: none;
+    border: 0px;
+    color: #ffffff;
+    border-radius: 3px;
+    user-select: none;
+    cursor: pointer;
+    filter: brightness(90%);
+}
+button.float {
+    position: absolute;
+    top: 8px;
+    right: 20px;
+}
+button.large:hover {
+    filter: brightness(100%);
+}
+button.large:active {
+    filter: brightness(90%);
+}
+button.large.disabled {
+    filter: grayscale(100%);
+    pointer-events: none;
+}
+button.large.success {
+    background-color: var(--colorSuccess);
+    box-shadow: 5px 5px 20px -10px var(--colorSuccess), -5px -5px 20px -10px var(--colorSuccess), 5px -5px 20px -10px var(--colorSuccess), -5px 5px 20px -10px var(--colorSuccess);
+}
+button.large.danger {
+    background-color: var(--colorDanger);
+    box-shadow: 5px 5px 20px -10px var(--colorDanger), -5px -5px 20px -10px var(--colorDanger), 5px -5px 20px -10px var(--colorDanger), -5px 5px 20px -10px var(--colorDanger);
+}
+button.large.warning {
+    background-color: var(--colorWarning);
+    box-shadow: 5px 5px 20px -10px var(--colorWarning), -5px -5px 20px -10px var(--colorWarning), 5px -5px 20px -10px var(--colorWarning), -5px 5px 20px -10px var(--colorWarning);
+}
+button.large.info {
+    background-color: var(--colorInfo);
+    box-shadow: 5px 5px 20px -10px var(--colorInfo), -5px -5px 20px -10px var(--colorInfo), 5px -5px 20px -10px var(--colorInfo), -5px 5px 20px -10px var(--colorInfo);
+}

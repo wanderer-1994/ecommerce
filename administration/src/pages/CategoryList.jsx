@@ -362,19 +362,19 @@ function CategoryList (props) {
                     })}
                     <td className="td_action">
                         <button
-                            tabIndex={-1} className="edit button"
+                            tabIndex={-1} className="edit tb_button"
                             onClick={(event) => {toggleEdit(cat_item, true)}}
                         >Edit</button>
                         <button
-                            tabIndex={-1} className="delete button"
+                            tabIndex={-1} className="delete tb_button"
                             onClick={(event) => {deleteCategory(cat_item.entity_id, event)}}
                         >Delete</button>
                         <button
-                            tabIndex={-1} className="cancel button"
+                            tabIndex={-1} className="cancel tb_button"
                             onClick={(event) => {toggleEdit(cat_item, false)}}
                         >Cancel</button>
                         <button
-                            tabIndex={-1} className="save button"
+                            tabIndex={-1} className="save tb_button"
                             onClick={(event) => updateCategory(cat_item.entity_id, event)}
                         >Save</button>
                     </td>

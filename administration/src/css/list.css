@@ -88,3 +88,38 @@ tr.onEdit .td_action .save,
 tr.onEdit .td_action .cancel {
     display: inline-block;
 }
+
+/* button css */
+
+.tb_button {
+    user-select: none;
+}
+
+.tb_button:hover {
+    filter: brightness(150%);
+}
+
+.tb_button:active {
+    filter: brightness(120%);
+}
+
+.tb_button.edit {
+    background-color: #007bff;
+}
+
+.tb_button.delete {
+    background-color: #dc3545;
+}
+
+.tb_button.save {
+    background-color: #ffc107;
+}
+
+.tb_button.cancel {
+    background-color: #6c757d;
+}
+
+.tb_button.disabled {
+    filter: grayscale(100%);
+    pointer-events: none;
+}

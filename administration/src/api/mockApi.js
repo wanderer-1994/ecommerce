@@ -342,6 +342,32 @@ async function getCategories() {
     }
 }
 
+async function createCategories (categories) {
+    try {
+        let response = await axios({
+            method: "POST",
+            url: "/api/admin/category",
+            data: {
+                categories: categories
+            }
+        });
+        console.log("live api: createCategories");
+        // response.data.categories[0].isSuccess = false;
+        // response.data.categories[0].m_failure = "You have error in your sql syntax!";
+        return response.data;
+    } catch (err) {
+        console.log("mocking: createCategories")
+        let response = {
+            data: {
+                categories: [{}]
+            }
+        };
+        response.data.categories[0].isSuccess = true;
+        response.data.categories[0].m_failure = "You have error in your sql syntax!";
+        return response.data;
+    }
+}
+
 async function updateCategories(categories) {
     try {
         let response = await axios({
@@ -356,7 +382,14 @@ async function updateCategories(categories) {
         response.data.categories[0].m_failure = "You have error in your sql syntax!";
         return response.data;
     } catch (err) {
-
+        let response = {
+            data: {
+                categories: [{}]
+            }
+        };
+        response.data.categories[0].isSuccess = false;
+        response.data.categories[0].m_failure = "You have error in your sql syntax!";
+        return response.data;
     }
 }
 
@@ -547,5 +580,6 @@ export {
     getCategories,
     updateCategories,
     deleteCategories,
-    getCategoryEavs
+    getCategoryEavs,
+    createCategories
 }

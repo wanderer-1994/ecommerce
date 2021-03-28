@@ -46,39 +46,3 @@ body::-webkit-scrollbar {
 .content {
     /* height: 200vh; */
 }
-
-
-/* button css */
-
-.button {
-    user-select: none;
-}
-
-.button:hover {
-    filter: brightness(150%);
-}
-
-.button:active {
-    filter: brightness(120%);
-}
-
-.button.edit {
-    background-color: #007bff;
-}
-
-.button.delete {
-    background-color: #dc3545;
-}
-
-.button.save {
-    background-color: #ffc107;
-}
-
-.button.cancel {
-    background-color: #6c757d;
-}
-
-.button.disabled {
-    filter: grayscale(100%);
-    pointer-events: none;
-}

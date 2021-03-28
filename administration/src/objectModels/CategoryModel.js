@@ -140,7 +140,6 @@ function validateCategoryModel (category) {
                 };
                 if (!col_item.f_validation(category[col_item.column])) {
                     isValid = false;
-                    console.log("here 4", col_item.column, " - ", category[col_item.column], category)
                     m_failure += `\n\t Invalid entity property: ${col_item.valueInvalidMessage}.`
                 }
                 break;

@@ -1,15 +1,17 @@
-import { Fragment, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import * as api from "../api/mockApi";
 import * as eavUtils from "../objectModels/eavUtils";
 import "../css/detail.css";
 import * as appFunction from "../utils/appFunction";
 import $ from "jquery";
 import EavRender from "../components/EavRender";
+import * as CategoryModel from "../objectModels/CategoryModel";
 
 const category_entity_columns = [
     {
         column: "entity_id",
         column_name: "ID",
+        required: true,
         render: ({ self, state, setState }) => {
             return (
                 <input type="text" value={state[self.column] || ""} onChange={event => setState({ ...state, [self.column]: event.target.value })} />
@@ -19,6 +21,7 @@ const category_entity_columns = [
     {
         column: "name",
         column_name: "Name",
+        required: true,
         render: ({ self, state, setState }) => {
             return (
                 <input type="text" value={state[self.column] || ""} onChange={event => setState({ ...state, [self.column]: event.target.value })} />
@@ -147,11 +150,122 @@ function CategoryCreate(props) {
             .catch(err => {
                 console.log(err);
             })
-    }, [])
+    }, []);
+
+    async function submitCreateCategory (event) {
+        $(event.target).addClass("disabled");
+        $(event.target).attr("disabled", true);
+        let copy_category = JSON.parse(JSON.stringify(category));
+        Object.keys(copy_category).forEach(key => {
+            if (copy_category[key] === null || copy_category[key] === "" || copy_category[key] === undefined) {
+                delete copy_category[key];
+            }
+        });
+        if (Array.isArray(copy_category.attributes)) {
+            copy_category.attributes.forEach((attr_item, index) => {
+                if (Array.isArray(attr_item.value)) {
+                    attr_item.value = attr_item.value.filter(v_item => v_item !== null && v_item !== "" && v_item !== undefined);
+                }
+                if (
+                    attr_item.value === null ||
+                    attr_item.value === "" ||
+                    attr_item.value === undefined ||
+                    (Array.isArray(attr_item.value) && attr_item.value.length === 0)
+                ) {
+                    copy_category.attributes[index] = null;
+                } else {
+                    let matchEav = categoryEavs.find(eav => eav.attribute_id === attr_item.attribute_id);
+                    if (!matchEav) {
+                        copy_category.attributes[index] = null;
+                    } else {
+                        copy_category.attributes[index] = {...matchEav, ...attr_item};
+                    }
+                }
+            });
+            copy_category.attributes = copy_category.attributes.filter(item => item !== null);
+            if (copy_category.attributes.length === 0) {
+                delete copy_category.attributes;
+            }
+        };
+        let validation = CategoryModel.validateCategoryModel(copy_category);
+        category_entity_columns
+        .filter(col_item => col_item.required === true)
+        .forEach(col_item => {
+            if (!copy_category[col_item.column] || copy_category[col_item.column].length === 0) {
+                validation.isValid = false;
+                validation.m_failure = `'${col_item.column_name}' must not be empty!\n\t` + (validation.m_failure || "")
+            }
+        });
+        if (!validation.isValid) {
+            return appFunction.appAlert({
+                icon: "warning",
+                title: <div>Invalid input</div>,
+                message: <div style={{whiteSpace: "pre-line"}}>{validation.m_failure}</div>,
+                showConfirm: true,
+                submitTitle: "OK",
+                onClickSubmit: () => {
+                    $(event.target).removeClass("disabled");
+                    $(event.target).attr("disabled", false);
+                }
+            })
+        };
+        let result = await api.createCategories([copy_category]);
+        if (result && result.categories && result.categories[0] && result.categories[0].isSuccess) {
+            appFunction.appAlert({
+                icon: "success",
+                title: <div>Success</div>,
+                message: (
+                    <div>
+                        <span>Successfully create category : </span>
+                        <span style={{color: "var(--colorSuccess)", textDecoration: "underline"}}>
+                            {result.categories[0].name}
+                        </span>
+                    </div>
+                ),
+                timeOut: 1000,
+                onTimeOut: () => {
+                    setCategory({});
+                    $(event.target).removeClass("disabled");
+                    $(event.target).attr("disabled", false);
+                }
+            });
+        } else {
+            let m_failure = result && result.categories && result.categories[0] && result.categories[0] ? result.categories[0].m_failure : "";
+            appFunction.appAlert({
+                icon: "danger",
+                title: <div>Action incomplete!</div>,
+                message: (
+                    <div>
+                        <span>Could not create category: </span>
+                        <span style={{color: "var(--colorDanger)", textDecoration: "underline"}}>
+                            {copy_category.name}
+                        </span>
+                        <span> !</span>
+                        <div style={{marginTop: "10px", fontSize: "14px", color: "#000000", fontStyle: "italic", textDecoration: "underline"}}>
+                            Error log:
+                        </div>
+                        <div style={{marginTop: "5px", fontSize: "12px", color: "#000000", fontStyle: "italic"}}>
+                            {m_failure}
+                        </div>
+                    </div>
+                ),
+                showConfirm: true,
+                submitTitle: "OK",
+                onClickSubmit: () => {
+                    $(event.target).removeClass("disabled");
+                    $(event.target).attr("disabled", false);
+                }
+            });
+        }
+    }
+
     return (
         <div className="category-create">
             <div className="title">
                 <h3>{props.title}</h3>
+                <button className="success float large"
+                    onClick={submitCreateCategory}
+                >Submit</button>
             </div>
             <div className="content">
                 <div className="entity-id">
