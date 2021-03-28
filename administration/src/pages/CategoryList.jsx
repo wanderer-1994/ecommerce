@@ -338,12 +338,7 @@ function CategoryList (props) {
                                 (
                                     <Link to={`/category/${cat_item.entity_id}`} target="_blank">
                                         <input
-                                            disabled={!isOnEdit} type={col_item.data_type} value={(value === null || value === "" || value === undefined) ? "" : value}
-                                            onChange={(event) => {changeCategoryEntity({
-                                                entity_id: cat_item.entity_id,
-                                                column: col_item.column,
-                                                value: event.target.value
-                                            })}}
+                                            disabled type={col_item.data_type} value={(value === null || value === "" || value === undefined) ? "" : value}
                                         />
                                     </Link>
                                 )
