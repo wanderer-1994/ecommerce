@@ -466,9 +466,63 @@ async function getCategoryEavs () {
                     "label": "Caption title",
                     "referred_target": null,
                     "admin_only": 0,
-                    "html_type": "input",
+                    "html_type": "multiselect",
                     "data_type": "text",
                     "validation": null,
+                    "is_super": 0,
+                    "is_system": 1,
+                    "unit": null,
+                    "options": [
+                        {
+                            "option_value": "D",
+                            "sort_order": 4
+                        },
+                        {
+                            "option_value": "C",
+                            "sort_order": 3
+                        },
+                        {
+                            "option_value": "B",
+                            "sort_order": 2
+                        },
+                        {
+                            "option_value": "A",
+                            "sort_order": 1
+                        }
+                    ]
+                },
+                {
+                    "attribute_id": "password",
+                    "label": "User password",
+                    "referred_target": null,
+                    "admin_only": 0,
+                    "html_type": "password",
+                    "data_type": "varchar",
+                    "validation": null,
+                    "is_super": 0,
+                    "is_system": 1,
+                    "unit": null
+                },
+                {
+                    "attribute_id": "is_special",
+                    "label": "Special occasion",
+                    "referred_target": null,
+                    "admin_only": 0,
+                    "html_type": "boolean",
+                    "data_type": "int",
+                    "validation": null,
+                    "is_super": 0,
+                    "is_system": 1,
+                    "unit": null
+                },
+                {
+                    "attribute_id": "img_gallery",
+                    "label": "Gallery",
+                    "referred_target": null,
+                    "admin_only": 0,
+                    "html_type": "multiinput",
+                    "data_type": "html",
+                    "validation": "^http\\:\\/\\/\\S+$",
                     "is_super": 0,
                     "is_system": 1,
                     "unit": null

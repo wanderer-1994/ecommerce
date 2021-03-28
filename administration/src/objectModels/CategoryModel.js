@@ -29,12 +29,12 @@ const category_entity_columns = [{
     },
     {
         column: "is_online",
-        valueInvalidMessage: `'is_online' must be number true|false or 1|0 or left empty`,
+        valueInvalidMessage: `'is_online' must be true|false or 1|0 or left empty`,
         f_convert_value: value => {
             // input type number still return string!!
             // using value == "0" instead of value == 0 to prevent case 0 == ""
-            if (value == "1" || value === true) return 1; // eslint-disable-line
-            if (value == "0" || value === false) return 0; // eslint-disable-line
+            if (value == "1" || value === true || value === "true") return 1; // eslint-disable-line
+            if (value == "0" || value === false || value === "false") return 0; // eslint-disable-line
             return value;
         },
         f_validation: function(value) {

@@ -1,0 +1,90 @@
+/* table css */
+
+.td_input {
+    border-bottom: 1px solid #ababab80;
+    border-left: 1px solid #ffffff;
+}
+
+.td_input.right input {
+    text-align: right;
+}
+
+.td_input.center input {
+    text-align: center;
+}
+
+.td_input.left input {
+    text-align: left;
+}
+
+.td_input input {
+    padding: 3px 5px 3px 5px;
+    width: 100%;
+    height: 100%;
+    overflow-x: scroll;
+    background-color: #ffffff00;
+    border: none;
+}
+
+.td_input.null {
+    background-color: #cdcdcd50;
+}
+
+.td_input a input {
+    cursor: pointer;
+    text-decoration: underline;
+    color: #007bff;
+}
+
+.tb-row-item td.ord {
+    padding-left: var(--paddingleft);
+}
+
+.td_input.ord {
+    max-width: 70px;
+}
+
+.td_action {
+    padding-left: 20px;
+}
+
+.td_action button {
+    margin-left: 3px;
+    margin-top: 3px;
+    padding: 3px 5px 3px 5px;
+    font-size: 12px;
+    border: none;
+    border-radius: 2px;
+    min-width: 50px;
+    outline: none;
+    cursor: pointer;
+    color: #dedeee;
+}
+
+tr {
+    transition: background-color 1s linear;
+}
+
+tr .edit {
+    display: inline-block;
+}
+
+tr .save,
+tr .cancel {
+    display: none;
+}
+
+tr.onEdit .td_action .edit,
+tr.onEdit .td_action .delete {
+    display: none;
+}
+
+tr.hightlight {
+    background-color: #3fb85b !important;
+    transition: background-color 0s;
+}
+
+tr.onEdit .td_action .save,
+tr.onEdit .td_action .cancel {
+    display: inline-block;
+}

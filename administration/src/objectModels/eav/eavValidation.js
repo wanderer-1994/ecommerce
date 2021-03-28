@@ -9,6 +9,9 @@ function converAttributeValue ({ value, data_type, html_type }) {
             if (value == "0" || value === false) return 0;
             if (value == "1" || value === true) return 1;
             return value;
+        case "password":
+            if (typeof(value) === "string" || typeof(value) === "number") return value.toString();
+            return value;
         case "multiselect":
         case "multiinput":
             if (!Array.isArray(value)) {
@@ -48,6 +51,9 @@ function validateAttributeValue ({ value, data_type, html_type, validation }) {
     if (html_type === "boolean") {
         return value === 1 || value === 0;
     };
+    if (html_type === "password") {
+        return typeof(value) === "string";
+    }
     if (data_type_int.indexOf(data_type) !== -1) {
         return typeof(value) === "number" && value === parseInt(value);
     };

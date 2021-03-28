@@ -4,6 +4,7 @@ import * as api from "../api/mockApi";
 import * as appFunction from "../utils/appFunction";
 import * as CategoryModel from "../objectModels/CategoryModel";
 import $ from "jquery";
+import "../css/list.css";
 
 const category_entity_columns = [
     {
@@ -45,7 +46,7 @@ const category_entity_columns = [
     {
         column: "is_online",
         column_name: "Online",
-        data_type: "number",
+        data_type: "text",
         align: "center",
         td_style: {
             width: "80px"
@@ -62,7 +63,7 @@ const category_entity_columns = [
     {
         column: "position",
         column_name: "Position",
-        data_type: "number",
+        data_type: "text",
         align: "right",
         td_style: {
             width: "80px"
@@ -142,7 +143,15 @@ function CategoryList (props) {
         let validation = CategoryModel.validateCategoryModel(match);
         if (!validation.isValid) {
             return appFunction.appAlert({
-                message: validation.m_failure
+                icon: "warning",
+                title: <div>Invalid input</div>,
+                message: <div style={{whiteSpace: "pre-line"}}>{validation.m_failure}</div>,
+                showConfirm: true,
+                submitTitle: "OK",
+                onClickSubmit: () => {
+                    $(event.target).parent().find("button").removeClass("disabled");
+                    $(event.target).parent().find("button").attr("disabled", false);
+                }
             })
         };
         let result = await api.updateCategories([match]);

@@ -1,0 +1,129 @@
+/* input_tag input_value css */
+.entity-column {
+    vertical-align: top;
+}
+
+.input_tag {
+    margin-top: 5px;
+    display: inline-block;
+    margin-right: 5px;
+    vertical-align: top;
+}
+
+.input_value {
+    margin-top: 5px;
+    display: inline-block;
+    vertical-align: bottom;
+    /* min-height to keep checkbox vertical-aligned with input_tag */
+    min-height: 24px;
+}
+
+.input_tag input {
+    padding: 5px 10px 5px 10px;
+    max-width: 150px;
+    font-style: italic;
+}
+
+.input_value input {
+    padding: 5px 10px 5px 10px;
+    vertical-align: middle;
+}
+
+.input_value .alert_message {
+    color: var(--colorDanger);
+    font-size: 13px;
+    margin-top: 3px;
+    margin-bottom: 5px;
+    display: none;
+}
+
+.input_value .alert_message.hide {
+    display: block;
+}
+
+.alert_message span.hightlight {
+    color: var(--colorSuccess);
+    font-style: italic;
+    text-decoration: underline;
+}
+
+.input_value .multiinput_remove {
+    border: 1px solid var(--colorDanger);
+    border-radius: 3px;
+    width: 25px;
+    height: 25px;
+    color: #ffffff;
+    background-color: var(--colorDanger);
+    vertical-align: top;
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+.input_value .multiinput_remove:hover {
+    filter: brightness(120%);
+}
+
+input.multiinput_item,
+textarea.multiinput_item {
+    margin-bottom: 5px;
+}
+
+.input_value .multiinput_add {
+    border: 1px solid var(--colorSuccess);
+    border-radius: 3px;
+    width: 25px;
+    height: 25px;
+    color: #ffffff;
+    background-color: var(--colorSuccess);
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+.input_value .multiinput_add:hover {
+    filter: brightness(120%);
+}
+
+.input_value textarea {
+    padding: 5px 10px 5px 10px;
+    vertical-align: middle;
+}
+
+.input_value select {
+    border-color: #ababab;
+    padding: 5px 10px 5px 10px;
+    border-radius: 2px;
+    outline: none;
+    cursor: pointer;
+    width: 182px;
+}
+
+.input_value select:hover {
+    filter: brightness(130%);
+}
+
+.input_value select option {
+    padding: 5px 10px 5px 10px;
+    display: block;
+}
+
+.input_tag.left input,
+.input_value.left input {
+    text-align: left;
+}
+
+.input_tag.center input,
+.input_value.center input {
+    text-align: center;
+}
+
+.input_tag.right input,
+.input_value.right input {
+    text-align: right;
+}
+
+/* entity_column */
+.entity-id {
+    border-bottom: 1px solid #007bff60;
+    padding-top: 15px;
+    padding-bottom: 20px;
+}
