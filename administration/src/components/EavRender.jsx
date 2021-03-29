@@ -19,8 +19,12 @@ const eav_html_type = [
             if (eav_definition.data_type === "text" || eav_definition.data_type === "html") {
                 component_type = "textarea";
             }
+            let isNull = false;
+            if (eav_value.value === null || eav_value.value === "" || eav_value.value === undefined) {
+                isNull = true;
+            }
             return (
-                <InputOrTextarea component_type={component_type} type="text" value={eav_value.value || ""} 
+                <InputOrTextarea className={isNull ? "null" : ""} component_type={component_type} type="text" value={eav_value.value || ""} 
                     onChange={event => {
                         let value = eavValidation.converAttributeValue({
                             value: event.target.value,
@@ -65,9 +69,13 @@ const eav_html_type = [
             return (
                 <Fragment>
                     {eav_value.value.map((v_item, index) => {
+                        let isNull = false;
+                        if (v_item === null || v_item === "" || v_item === undefined) {
+                            isNull = true;
+                        }
                         return (
                             <Fragment key={index}>
-                                <InputOrTextarea component_type={component_type} className="multiinput_item" type="text" value={v_item || ""} 
+                                <InputOrTextarea className={isNull ? "null" : ""} component_type={component_type} className="multiinput_item" type="text" value={v_item || ""} 
                                     onChange={event => {
                                         let value = eavValidation.converAttributeValue({
                                             value: event.target.value,
@@ -120,6 +128,7 @@ const eav_html_type = [
             let selected = eav_value.value || "";
             return (
                 <select
+                    className={selected ? "" : null}
                     value={selected ? selected.entity_id : ""}
                     onChange={(event) => {
                         if (event.target.value != "") {
@@ -159,6 +168,7 @@ const eav_html_type = [
             if (!Array.isArray(selected)) selected = [];
             return (
                 <select multiple
+                    className={selected.length > 0 ? "" : "null"}
                     value={selected ? selected : null}
                     onChange={(event) => {
                         let selected = Array.from(event.target.selectedOptions, option => option.value);
@@ -198,8 +208,12 @@ const eav_html_type = [
     {
         html_type: "password",
         render: ({ eav_definition, eav_value, state, setState }) => {
+            let isNull = false;
+            if (eav_value.value === null || eav_value.value === "" || eav_value.value === undefined) {
+                isNull = true;
+            }
             return (
-                <input type="password" value={eav_value.value || ""} 
+                <input className={isNull ? "null" : ""} type="password" value={eav_value.value || ""} 
                     onChange={event => {
                         let value = eavValidation.converAttributeValue({
                             value: event.target.value,

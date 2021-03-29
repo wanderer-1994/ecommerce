@@ -425,6 +425,11 @@ async function deleteProductEntities (product_ids) {
     ${tbs_to_delete.map(table => {
         return `DELETE FROM \`ecommerce\`.${table.tb_name} WHERE \`${table.entity_column}\` IN (${product_ids.map(item => `"${mysqlutils.escapeQuotes(item)}"`).join(", ")});`
     }).join("\n")}
+    UPDATE \`ecommerce\`.product_entity SET parent = NULL WHERE entity_id IN (
+        SELECT entity_id FROM (
+            SELECT entity_id FROM \`ecommerce\`.product_entity WHERE parent IN (${product_ids.map(item => `"${mysqlutils.escapeQuotes(item)}"`).join(", ")})
+        ) as temp
+    );
     COMMIT;
     `
     let result = await msClient.promiseQuery(sql_delete_product);

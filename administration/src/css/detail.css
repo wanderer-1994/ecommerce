@@ -83,6 +83,14 @@ textarea.multiinput_item {
     filter: brightness(120%);
 }
 
+.input_value textarea.null,
+.input_value input.null,
+.input_value select.null {
+    background-color: #cdcdcd50;
+    border-color: #cdcdcd90;
+    border-radius: 2px;
+}
+
 .input_value textarea {
     padding: 5px 10px 5px 10px;
     vertical-align: middle;

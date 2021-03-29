@@ -1,5 +1,6 @@
 import axios from "axios";
 import * as categoryModel from "../objectModels/CategoryModel";
+import * as eavUtils from "../objectModels/eavUtils";
 
 axios.defaults.baseURL = "http://localhost:4000";
 
@@ -54,6 +55,12 @@ async function getCategories() {
             url: "/api/admin/category"
         });
         let data = response.data;
+        data.categories.sort((a, b) => {
+            if (a.name && b.name) return (a.name - b.name);
+            if (!a.name && !b.name) return 0;
+            if (a.name) return 0;
+            return 1;
+        });
         data.structured = categoryModel.structurizeCategories(data.categories || []);
         console.log("live api: getCategories");
         return data;
@@ -352,8 +359,6 @@ async function createCategories (categories) {
             }
         });
         console.log("live api: createCategories");
-        // response.data.categories[0].isSuccess = false;
-        // response.data.categories[0].m_failure = "You have error in your sql syntax!";
         return response.data;
     } catch (err) {
         console.log("mocking: createCategories")
@@ -378,8 +383,6 @@ async function updateCategories(categories) {
             }
         });
         console.log("live api: updateCategories");
-        response.data.categories[0].isSuccess = false;
-        response.data.categories[0].m_failure = "You have error in your sql syntax!";
         return response.data;
     } catch (err) {
         let response = {
@@ -399,11 +402,9 @@ async function deleteCategories (entity_ids) {
             method: "DELETE",
             url: "/api/admin/category",
             data: {
-                category_ids: ["abc", "def"]
+                category_ids: entity_ids
             }
         });
-        response.data.isSuccess = false;
-        response.data.m_failure = "You have error in your sql syntax!";
         console.log("live api: updateCategories");
         return response.data;
     } catch (err) {
@@ -422,7 +423,8 @@ async function getCategoryEavs () {
             method: "GET",
             url: "/api/admin/category/eav"
         });
-        console.log("live api: getCategoryEavs")
+        console.log("live api: getCategoryEavs");
+        response.data.category_eavs = eavUtils.sortEavByPosition(response.data.category_eavs);
         return response.data.category_eavs;
     } catch (err) {
         console.log("mocking: getCategoryEavs");
@@ -562,6 +564,7 @@ async function getCategoryEavs () {
                 }
             ]
         };
+        response.category_eavs = eavUtils.sortEavByPosition(response.category_eavs);
         return response.category_eavs;
     }
 }

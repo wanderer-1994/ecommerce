@@ -24,7 +24,7 @@ function App(props) {
                     {
                         routes.map((item, index) =>  
                         <Route exact key={index} path={item.path} render={
-                            () => <item.component title={item.title || ""} />
+                            (props) => <item.component {...props} title={item.title || ""} />
                         } />)
                     }
                 </Switch>

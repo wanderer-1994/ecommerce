@@ -267,9 +267,12 @@ function CategoryList (props) {
                         ),
                         timeOut: 1000,
                         onTimeOut: () => {
-                            category_list.categories = category_list.categories.filter(item => item.entity_id !== entity_id);
-                            category_list.structured = CategoryModel.structurizeCategories(category_list.categories);
-                            setCategoryList({...category_list});
+                            api.getCategories()
+                                .then(data => {
+                                    setCategoryList({
+                                        ...category_list, ...data
+                                    });
+                                })
                             $(event.target).parent().find("button").removeClass("disabled");
                             $(event.target).parent().find("button").attr("disabled", false);
                         }

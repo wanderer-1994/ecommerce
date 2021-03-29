@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import * as api from "../api/mockApi";
-import * as eavUtils from "../objectModels/eavUtils";
 import "../css/detail.css";
 import * as appFunction from "../utils/appFunction";
 import $ from "jquery";
@@ -13,8 +12,10 @@ const category_entity_columns = [
         column_name: "ID",
         required: true,
         render: ({ self, state, setState }) => {
+            let isNull = false;
+            if (state[self.column] === null || state[self.column] === "" || state[self.column] === undefined) isNull = true;
             return (
-                <input type="text" value={state[self.column] || ""} onChange={event => setState({ ...state, [self.column]: event.target.value })} />
+                <input className={isNull ? "null" : ""} type="text" value={state[self.column] || ""} onChange={event => setState({ ...state, [self.column]: event.target.value })} />
             )
         }
     },
@@ -23,8 +24,10 @@ const category_entity_columns = [
         column_name: "Name",
         required: true,
         render: ({ self, state, setState }) => {
+            let isNull = false;
+            if (state[self.column] === null || state[self.column] === "" || state[self.column] === undefined) isNull = true;
             return (
-                <input type="text" value={state[self.column] || ""} onChange={event => setState({ ...state, [self.column]: event.target.value })} />
+                <input className={isNull ? "null" : ""} type="text" value={state[self.column] || ""} onChange={event => setState({ ...state, [self.column]: event.target.value })} />
             )
         }
     },
@@ -35,6 +38,7 @@ const category_entity_columns = [
             let selected = parentOptions.find(item => item.entity_id === state.parent);
             return (
                 <select
+                    className={selected ? "" : "null"}
                     value={selected ? selected.entity_id : ""}
                     onChange={(event) => setState({...state, [self.column]: event.target.value})}
                 >
@@ -55,8 +59,10 @@ const category_entity_columns = [
         column_name: "Position",
         f_validation: (value) => (value === "" || value === "-") || (parseInt(value) == value && parseInt(value) >= 0),
         render: ({ self, state, setState }) => {
+            let isNull = false;
+            if (state[self.column] === null || state[self.column] === "" || state[self.column] === undefined) isNull = true;
             return (
-                <input type="text" value={state[self.column] || ""}
+                <input className={isNull ? "null" : ""} type="text" value={state[self.column] || ""}
                     onChange={event => {
                         if (!self.f_validation(event.target.value)) {
                             let invalid_message = `<span class="hightlight">${self.column_name}</span> must be non-negative number!`;
@@ -113,17 +119,6 @@ function CategoryCreate(props) {
     useEffect(() => {
         api.getCategoryEavs()
             .then(category_eavs => {
-                category_eavs = eavUtils.sortEavByPosition(category_eavs);
-                category_eavs.forEach(item => {
-                    if (item.options) {
-                        item.options.sort((a, b) => {
-                            if (!a.sort_order && !b.sort_order) return 0;
-                            if (a.sort_order && b.sort_order) return parseInt(a.sort_order) - parseInt(b.sort_order);
-                            if (a.sort_order) return 0;
-                            return 1;
-                        })
-                    }
-                })
                 setCategoryEavs(category_eavs || []);
             })
             .catch(err => {
@@ -132,19 +127,6 @@ function CategoryCreate(props) {
         api.getCategories()
             .then(data => {
                 let categories = data.categories || [];
-                categories.sort((a, b) => {
-                    if (a.name && b.name) return (a.name - b.name);
-                    if (!a.name && !b.name) return 0;
-                    if (a.name) return 0;
-                    return 1;
-                });
-                categories.forEach(item => {
-                    Object.keys(item).forEach(key => {
-                        if (["entity_id", "name"].indexOf(key) === -1) {
-                            delete item[key];
-                        }
-                    })
-                });
                 setParentOptions(categories);
             })
             .catch(err => {
@@ -229,6 +211,14 @@ function CategoryCreate(props) {
                     $(event.target).attr("disabled", false);
                 }
             });
+            api.getCategories()
+            .then(data => {
+                let categories = data.categories || [];
+                setParentOptions(categories);
+            })
+            .catch(err => {
+                console.log(err);
+            })
         } else {
             let m_failure = result && result.categories && result.categories[0] && result.categories[0] ? result.categories[0].m_failure : "";
             appFunction.appAlert({

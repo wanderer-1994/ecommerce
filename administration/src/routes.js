@@ -33,7 +33,8 @@ const routes = [
         component: CategoryDetail,
         ref_name: "Category detail",
         showOnNavbar: false,
-        showOnSidebar: false
+        showOnSidebar: false,
+        title: "Category Detail"
     },
     {
         path: "/category",
