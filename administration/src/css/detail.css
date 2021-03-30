@@ -167,17 +167,17 @@ button.large.disabled {
 }
 button.large.success {
     background-color: var(--colorSuccess);
-    box-shadow: 5px 5px 20px -10px var(--colorSuccess), -5px -5px 20px -10px var(--colorSuccess), 5px -5px 20px -10px var(--colorSuccess), -5px 5px 20px -10px var(--colorSuccess);
+    box-shadow: 5px 5px 20px -10px var(--colorSuccess), 5px 5px 20px -10px var(--colorSuccess), 5px 5px 20px -10px var(--colorSuccess);
 }
 button.large.danger {
     background-color: var(--colorDanger);
-    box-shadow: 5px 5px 20px -10px var(--colorDanger), -5px -5px 20px -10px var(--colorDanger), 5px -5px 20px -10px var(--colorDanger), -5px 5px 20px -10px var(--colorDanger);
+    box-shadow: 5px 5px 20px -10px var(--colorDanger), 5px 5px 20px -10px var(--colorDanger), 5px 5px 20px -10px var(--colorDanger);
 }
 button.large.warning {
     background-color: var(--colorWarning);
-    box-shadow: 5px 5px 20px -10px var(--colorWarning), -5px -5px 20px -10px var(--colorWarning), 5px -5px 20px -10px var(--colorWarning), -5px 5px 20px -10px var(--colorWarning);
+    box-shadow: 5px 5px 20px -10px var(--colorWarning), 5px 5px 20px -10px var(--colorWarning), 5px 5px 20px -10px var(--colorWarning);
 }
 button.large.info {
     background-color: var(--colorInfo);
-    box-shadow: 5px 5px 20px -10px var(--colorInfo), -5px -5px 20px -10px var(--colorInfo), 5px -5px 20px -10px var(--colorInfo), -5px 5px 20px -10px var(--colorInfo);
+    box-shadow: 5px 5px 20px -10px var(--colorInfo), 5px 5px 20px -10px var(--colorInfo), 5px 5px 20px -10px var(--colorInfo);
 }

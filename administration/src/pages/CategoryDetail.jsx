@@ -1,19 +1,20 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, Fragment } from "react";
 import * as api from "../api/mockApi";
 import "../css/detail.css";
 import * as appFunction from "../utils/appFunction";
 import $ from "jquery";
 import EavRender from "../components/EavRender";
 import * as CategoryModel from "../objectModels/CategoryModel";
+import { Link } from "react-router-dom";
 
 const category_entity_columns = [
     {
         column: "entity_id",
         column_name: "ID",
         required: true,
-        render: ({ self, state, setState }) => {
+        render: ({ self, state, setState, secure_key }) => {
             return (
-                <input type="text" value={state[self.column] || ""} onChange={event => setState({ ...state, [self.column]: event.target.value })} />
+                <input disabled={secure_key ? true : false} type="text" value={state[self.column] || ""} onChange={event => setState({ ...state, [self.column]: event.target.value })} />
             )
         }
     },
@@ -106,81 +107,241 @@ const default_category = {
 }
 
 function CategoryDetail (props) {
-    console.log(props.match.params.entity_id);
 
-    const [category, setCategory] = useState(default_category);
+    const [ori_category, setOriCategory] = useState(JSON.parse(JSON.stringify(default_category)));
+    const [category, setCategory] = useState(JSON.parse(JSON.stringify(default_category)));
     const [categoryEavs, setCategoryEavs] = useState([]);
     const [parentOptions, setParentOptions] = useState([]);
+    const [isLoaded, setIsLoaded] = useState(0);
 
     useEffect(() => {
-        api.getCategories()
+        let promises = [];
+        promises.push(
+            api.getCategories().then(data => {
+                let categories = data.categories || [];
+                let category = data.categories.find(item => item.entity_id == props.match.params.entity_id) || default_category;
+                categories = categories.filter(item => item.entity_id !== category.entity_id && item.parent !== category.entity_id);
+                setParentOptions(categories);
+                setCategory(JSON.parse(JSON.stringify(category)));
+                setOriCategory(JSON.parse(JSON.stringify(category)));
+            }).catch(err => {
+                console.log(err);
+            })
+        )
+        promises.push(
+            api.getCategoryEavs().then(category_eavs => {
+                setCategoryEavs(category_eavs || []);
+            }).catch(err => {
+                console.log(err);
+            })
+        );
+        Promise.all(promises).then(() => {
+            setIsLoaded(1);
+        })
+    }, [props.match.params.entity_id]);
+
+    async function submitUpdateCategory (event) {
+        $(event.target).addClass("disabled");
+        $(event.target).attr("disabled", true);
+        let copy_category = JSON.parse(JSON.stringify(category));
+        delete copy_category.children;
+        Object.keys(copy_category).forEach(key => {
+            if (copy_category[key] === ori_category[key] && key !== "entity_id" && key !== "name") {
+                delete copy_category[key];
+            }
+        });
+        if (Array.isArray(copy_category.attributes)) {
+            copy_category.attributes.forEach((attr_item, index) => {
+                if (Array.isArray(attr_item.value)) {
+                    attr_item.value = attr_item.value.filter(v_item => v_item !== null && v_item !== "" && v_item !== undefined);   
+                };
+                if (attr_item.value === undefined) {
+                    copy_category.attributes[index] = null;
+                    return;
+                };
+                let ori_match = (ori_category.attributes || []).find(item => item.attribute_id === attr_item.attribute_id);
+                if (ori_match && (JSON.stringify(attr_item.value) === JSON.stringify(ori_match.value))) {
+                    copy_category.attributes[index] = null;
+                    return;
+                }
+                if (
+                    !ori_match &&
+                    (   attr_item.value === null ||
+                        attr_item.value === "" ||
+                        attr_item.value === undefined ||
+                        attr_item.value.length === 0
+                    )
+                ) {
+                    copy_category.attributes[index] = null;
+                    return;
+                }
+                let matchEav = categoryEavs.find(eav => eav.attribute_id === attr_item.attribute_id);
+                if (!matchEav) {
+                    copy_category.attributes[index] = null;
+                } else {
+                    copy_category.attributes[index] = {...matchEav, ...attr_item};
+                };
+            });
+            copy_category.attributes = copy_category.attributes.filter(item => item !== null);
+            if (copy_category.attributes.length === 0) {
+                delete copy_category.attributes;
+            }
+        };
+        let validation = CategoryModel.validateCategoryModel(copy_category);
+        category_entity_columns
+            .filter(col_item => col_item.required === true)
+            .forEach(col_item => {
+                if (
+                    copy_category[col_item.column] === null ||
+                    copy_category[col_item.column] === "" ||
+                    copy_category[col_item.column] === undefined ||
+                    copy_category[col_item.column].length === 0
+                ) {
+                    validation.isValid = false;
+                    validation.m_failure = `'${col_item.column}' must not be empty!\n\t` + (validation.m_failure || "");
+                };
+            })
+        if (Object.keys(copy_category).length === 2 && copy_category.name === ori_category.name) {
+            validation.isValid = false;
+            validation.m_failure = `Please make changes before save!\n\t` + (validation.m_failure || "");
+            return appFunction.appAlert({
+                icon: "info",
+                title: <div>No changes detected</div>,
+                message: <div style={{whiteSpace: "pre-line"}}>{validation.m_failure}</div>,
+                timeOut: 700,
+                onTimeOut: () => {
+                    $(event.target).removeClass("disabled");
+                    $(event.target).attr("disabled", false);
+                }
+            })
+        };
+        if (!validation.isValid) {
+            return appFunction.appAlert({
+                icon: "warning",
+                title: <div>Invalid input</div>,
+                message: <div style={{whiteSpace: "pre-line"}}>{validation.m_failure}</div>,
+                showConfirm: true,
+                submitTitle: "OK",
+                onClickSubmit: () => {
+                    $(event.target).removeClass("disabled");
+                    $(event.target).attr("disabled", false);
+                }
+            })
+        };
+        let data = await api.updateCategories([copy_category]);
+        let result = data && data.categories ? data.categories[0] : {};
+        if (result.isSuccess) {
+            appFunction.appAlert({
+                icon: "success",
+                title: <div>Success</div>,
+                message: (
+                    <div>
+                        <span>Successfully update category : </span>
+                        <span style={{color: "var(--colorSuccess)", textDecoration: "underline"}}>
+                            {result.name}
+                        </span>
+                    </div>
+                ),
+                timeOut: 1000,
+                onTimeOut: () => {
+                    $(event.target).removeClass("disabled");
+                    $(event.target).attr("disabled", false);
+                }
+            });
+            api.getCategories()
             .then(data => {
                 let categories = data.categories || [];
+                let category = data.categories.find(item => item.entity_id == props.match.params.entity_id) || default_category;
+                categories = categories.filter(item => item.entity_id !== category.entity_id && item.parent !== category.entity_id);
                 setParentOptions(categories);
-                let category = data.categories.find(item => item.entity_id == props.match.params.entity_id);
-                if (!category) {
-                    category = default_category
-                } else {
-                    category = JSON.parse(JSON.stringify(category));
-                };
-                setParentOptions(categories);
-                setCategory(category);
+                setCategory(JSON.parse(JSON.stringify(category)));
+                setOriCategory(JSON.parse(JSON.stringify(category)));
             })
             .catch(err => {
                 console.log(err);
             })
-        api.getCategoryEavs()
-            .then(category_eavs => {
-                setCategoryEavs(category_eavs || []);
-            })
-            .catch(err => {
-                console.log(err);
+        } else {
+            appFunction.appAlert({
+                icon: "danger",
+                title: <div>Action incomplete!</div>,
+                message: (
+                    <div>
+                        <span>Could not update category: </span>
+                        <span style={{color: "var(--colorDanger)", textDecoration: "underline"}}>
+                            {category.name}
+                        </span>
+                        <span> !</span>
+                        <div style={{marginTop: "10px", fontSize: "14px", color: "#000000", fontStyle: "italic", textDecoration: "underline"}}>
+                            Error log:
+                        </div>
+                        <div style={{marginTop: "5px", fontSize: "12px", color: "#000000", fontStyle: "italic"}}>
+                            {result.m_failure || ""}
+                        </div>
+                    </div>
+                ),
+                showConfirm: true,
+                submitTitle: "OK",
+                onClickSubmit: () => {
+                    $(event.target).removeClass("disabled");
+                    $(event.target).attr("disabled", false);
+                }
             });
-    }, [props.match.params.entity_id]);
+        }
+    }
 
     return (
         <div className="category-detail">
             <div className="title">
                 <h3>{props.title}{category && category.name ? <span>: <span style={{fontStyle: "italic", color: "var(--colorSuccess)"}}>{category.name}</span></span> : ""}</h3>
                 <button className="warning float large"
-                    onClick={() => {}}
-                >Submit</button>
+                    onClick={submitUpdateCategory}
+                >Update</button>
+                <Link to="/category/charger">ab</Link>
             </div>
             <div className="content">
-                <div className="entity-id">
-                    {category_entity_columns.map((col_item, index) => {
-                        return (
-                            <div key={index} className="entity-column" style={{ display: "inline-block", marginRight: "10px" }}>
-                                <span className="input_tag left">
-                                    <input title={col_item.column} disabled type="text" value={col_item.column_name} />
-                                </span>
-                                <span className="input_value center">
-                                    {col_item.render({
-                                        self: col_item,
-                                        state: category,
-                                        setState: setCategory,
-                                        parentOptions: parentOptions,
-                                        setParentOptions: setParentOptions
-                                    })}
-                                    <div className="alert_message hide"></div>
-                                </span>
-                            </div>
-                        )
-                    })}
-                </div>
-                <div className="entity-eav">
-                    {categoryEavs.map((eav_item, index) => {
-                        let eav_value = (category.attributes || []).find(item => item.attribute_id === eav_item.attribute_id);
-                        if (!eav_value) {
-                            eav_value = {
-                                attribute_id: eav_item.attribute_id
-                            };
-                            if (!Array.isArray(category.attributes)) category.attributes = [];
-                            category.attributes.push(eav_value);
-                        }
-                        return <EavRender key={index} eav_definition={eav_item} eav_value={eav_value} state={category} setState={setCategory} />
-                    })}
-                </div>
+                {isLoaded && !ori_category.entity_id ? (
+                    <div style={{marginTop: "20px", fontSize: "20px", fontStyle: "italic"}}>
+                        No category with id <span style={{color: "var(--colorWarning)", textDecoration: "underline"}}>{props.match.params.entity_id}</span> found !!!
+                    </div>
+                ) : (
+                    <Fragment>
+                        <div className="entity-id">
+                            {category_entity_columns.map((col_item, index) => {
+                                return (
+                                    <div key={index} className="entity-column" style={{ display: "inline-block", marginRight: "10px" }}>
+                                        <span className="input_tag left">
+                                            <input title={col_item.column} disabled type="text" value={col_item.column_name} />
+                                        </span>
+                                        <span className="input_value center">
+                                            {col_item.render({
+                                                self: col_item,
+                                                state: category,
+                                                setState: setCategory,
+                                                parentOptions: parentOptions,
+                                                setParentOptions: setParentOptions,
+                                                secure_key: true
+                                            })}
+                                            <div className="alert_message hide"></div>
+                                        </span>
+                                    </div>
+                                )
+                            })}
+                        </div>
+                        <div className="entity-eav">
+                            {categoryEavs.map((eav_item, index) => {
+                                let eav_value = (category.attributes || []).find(item => item.attribute_id === eav_item.attribute_id);
+                                if (!eav_value) {
+                                    eav_value = {
+                                        attribute_id: eav_item.attribute_id
+                                    };
+                                    if (!Array.isArray(category.attributes)) category.attributes = [];
+                                    category.attributes.push(eav_value);
+                                }
+                                return <EavRender key={index} eav_definition={eav_item} eav_value={eav_value} state={category} setState={setCategory} />
+                            })}
+                        </div>
+                    </Fragment>
+                )}
             </div>
         </div>
     )

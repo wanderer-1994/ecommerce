@@ -107,13 +107,13 @@ const default_category = {
     entity_id: "",
     name: "",
     parent: "",
-    is_online: "",
+    is_online: 0,
     position: "",
     attributes: []
 }
 
 function CategoryCreate(props) {
-    const [category, setCategory] = useState(default_category);
+    const [category, setCategory] = useState(JSON.parse(JSON.stringify(default_category)));
     const [categoryEavs, setCategoryEavs] = useState([]);
     const [parentOptions, setParentOptions] = useState([]);
     useEffect(() => {
@@ -131,13 +131,14 @@ function CategoryCreate(props) {
             })
             .catch(err => {
                 console.log(err);
-            })
+            });
     }, []);
 
     async function submitCreateCategory (event) {
         $(event.target).addClass("disabled");
         $(event.target).attr("disabled", true);
         let copy_category = JSON.parse(JSON.stringify(category));
+        delete copy_category.children;
         Object.keys(copy_category).forEach(key => {
             if (copy_category[key] === null || copy_category[key] === "" || copy_category[key] === undefined) {
                 delete copy_category[key];
@@ -206,7 +207,7 @@ function CategoryCreate(props) {
                 ),
                 timeOut: 1000,
                 onTimeOut: () => {
-                    setCategory({});
+                    setCategory(JSON.parse(JSON.stringify(default_category)));
                     $(event.target).removeClass("disabled");
                     $(event.target).attr("disabled", false);
                 }

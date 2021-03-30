@@ -129,7 +129,7 @@ const eav_html_type = [
             return (
                 <select
                     className={selected ? "" : null}
-                    value={selected ? selected.entity_id : ""}
+                    value={selected ? selected : ""}
                     onChange={(event) => {
                         if (event.target.value != "") {
                             let option = eav_definition.options.find(item => item.option_value == event.target.value);
