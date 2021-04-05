@@ -569,6 +569,68 @@ async function getCategoryEavs () {
     }
 }
 
+async function updateCategoryEavs (eavs) {
+    try {
+        let response = await axios({
+            method: "PUT",
+            url: "/api/admin/category/eav",
+            data: {
+                category_eavs: eavs
+            }
+        });
+        console.log("live api: updateCategoryEavs");
+        return response.data
+    } catch (err) {
+        console.log("mocking: updateCategoryEavs");
+        eavs.forEach(item => item.isSuccess = true);
+        let response = {
+            category_eavs: eavs
+        };
+        return response;
+    }
+}
+
+async function deleteCategoryEavs (eav_ids) {
+    try {
+        let response = await axios({
+            method: "DELETE",
+            url: "/api/admin/category/eav",
+            data: {
+                category_eav_ids: eav_ids
+            }
+        });
+        console.log("live api: deleteCategoryEavs");
+        return response.data
+    } catch (err) {
+        console.log("mocking: deleteCategoryEavs");
+        let response = {
+            isSuccess: true
+        };
+        return response;
+    }
+}
+
+async function createCategoryEavs (eavs) {
+    try {
+        let response = await axios({
+            method: "POST",
+            url: "/api/admin/category/eav",
+            data: {
+                category_eavs: eavs
+            }
+        });
+        console.log("live api: createCategoryEavs");
+        return response.data
+    } catch (err) {
+        console.log("mocking: createCategoryEavs");
+        eavs.forEach(item => item.isSuccess = true);
+        let response = {
+            category_eavs: eavs
+        };
+        return response;
+    }
+}
+
 export {
     adminAuth,
     adminLogout,
@@ -583,6 +645,9 @@ export {
     getCategories,
     updateCategories,
     deleteCategories,
+    createCategories,
     getCategoryEavs,
-    createCategories
+    updateCategoryEavs,
+    deleteCategoryEavs,
+    createCategoryEavs
 }

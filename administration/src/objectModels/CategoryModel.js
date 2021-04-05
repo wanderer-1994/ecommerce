@@ -1,70 +1,42 @@
 import * as eavValidation from "./eav/eavValidation";
+import database_data_type from "./database_data_type";
 
 const category_entity_columns = [{
         column: "entity_id",
         valueInvalidMessage: `'entity_id' must be none-empty string`,
-        f_convert_value: function(value) {
-            if (typeof(value) === "string" || typeof(value) === "number") {
-                return value.toString();
-            };
-            return value;
-        },
-        f_validation: function(value) {
-            return typeof(value) === "string" && value.length > 0;
-        }
+        f_convert_value: database_data_type["NONE_EMPTY_STRING"].f_convert_value,
+        f_validation: database_data_type["NONE_EMPTY_STRING"].f_validation
     },
     {
         column: "name",
         valueInvalidMessage: `'name' must be none-empty string`,
-        f_validation: function(value) {
-            return typeof(value) === "string" && value.length > 0;
-        }
+        f_validation: database_data_type["NONE_EMPTY_STRING"].f_validation
     },
     {
         column: "parent",
         valueInvalidMessage: `'parent' must be none-empty string or left empty`,
-        f_validation: function(value) {
-            return typeof(value) === "string" && value.length > 0;
-        }
+        f_validation: database_data_type["NONE_EMPTY_STRING"].f_validation
     },
     {
         column: "is_online",
         valueInvalidMessage: `'is_online' must be true|false or 1|0 or left empty`,
-        f_convert_value: value => {
-            // input type number still return string!!
-            // using value == "0" instead of value == 0 to prevent case 0 == ""
-            if (value == "1" || value === true || value === "true") return 1; // eslint-disable-line
-            if (value == "0" || value === false || value === "false") return 0; // eslint-disable-line
-            return value;
-        },
-        f_validation: function(value) {
-            return value === 1 || value === 0;
-        }
+        f_convert_value: database_data_type["BOOLEAN"].f_convert_value,
+        f_validation: database_data_type["BOOLEAN"].f_validation
     },
     {
         column: "position",
         valueInvalidMessage: `'position' must be non-negative number (type int) or left empty`,
-        f_convert_value: function(value) {
-            if (parseInt(value) == value) { // eslint-disable-line
-                return parseInt(value);
-            };
-            return value;
-        },
-        f_validation: function(value) {
-            return typeof(value) === "number" && value >= 0 && value === parseInt(value);
-        }
+        f_convert_value: database_data_type["NONE_NEGATIVE_INT"].f_convert_value,
+        f_validation: database_data_type["NONE_NEGATIVE_INT"].f_validation
     }
 ];
 
 const category_eav_columns = [{
         column: "attribute_id",
         f_convert_value: function({ value }) {
-            if (typeof(value) === "string" || typeof(value) === "number") {
-                return value.toString();
-            };
-            return value;
+            return database_data_type["NONE_EMPTY_STRING"].f_convert_value(value);
         },
-        f_validation: ({ value }) => { return typeof(value) === "string" && value.length > 0 },
+        f_validation: ({ value }) => { return database_data_type["NONE_EMPTY_STRING"].f_validation(value) },
         valueInvalidMessage: "'attribute_id' must be none-empty string."
     },
     {
@@ -111,15 +83,40 @@ function getCategoryAttribute(category, attribute_id) {
 };
 
 function structurizeCategories(categories, parent_id) {
-    let result = [];
-    if (!parent_id) {
-        result = categories.filter(item => !item.parent).sort((a, b) => a.position - b.position);
-    } else {
-        result = categories.filter(item => item.parent === parent_id).sort((a, b) => a.position - b.position);
-    };
-    result.forEach(item => {
-        item.children = structurizeCategories(categories, item.entity_id);
-    });
+    this.initStructure = (categories, parent_id) => {
+        let result = [];
+        if (!parent_id) {
+            result = categories.filter(item => !item.parent).sort((a, b) => a.position - b.position);
+        } else {
+            result = categories.filter(item => {
+                // isIncluded prevent forever looping when recursive parent assignment occurred
+                let isIncluded = item.__isIncluded;
+                if (item.entity_id !== parent_id && item.parent === parent_id) {
+                    item.__isIncluded = true;
+                }
+                return item.entity_id !== parent_id && item.parent === parent_id && !isIncluded;
+            }).sort((a, b) => a.position - b.position);
+        };
+        result.forEach(item => {
+            if (typeof(item.entity_id) === "string" || typeof(item.entity_id) === "number" && item.entity_id.toString().length > 0) {
+                item.children = this.initStructure(categories, item.entity_id);
+            }
+        });
+        return result;
+    }
+    let result = this.initStructure(categories, parent_id);
+    // process invalid parent assignments
+    let cat_with_invalid_parent = categories.filter(item => item.parent && !item.__isIncluded);
+    cat_with_invalid_parent.forEach(item => {
+        if (typeof(item.entity_id) === "string" || typeof(item.entity_id) === "number" && item.entity_id.toString().length > 0) {
+            item.children = this.initStructure(categories, item.entity_id);
+        }
+    })
+    cat_with_invalid_parent = cat_with_invalid_parent.filter(item => item.__isIncluded !== true);
+    result.push(...cat_with_invalid_parent);
+    categories.forEach(item => {
+        delete item.__isIncluded;
+    })
     return result;
 }
 

@@ -5,16 +5,15 @@ import * as appFunction from "../utils/appFunction";
 import $ from "jquery";
 import EavRender from "../components/EavRender";
 import * as CategoryModel from "../objectModels/CategoryModel";
-import { Link } from "react-router-dom";
 
 const category_entity_columns = [
     {
         column: "entity_id",
         column_name: "ID",
         required: true,
-        render: ({ self, state, setState, secure_key }) => {
+        render: ({ self, state, setState }) => {
             return (
-                <input disabled={secure_key ? true : false} type="text" value={state[self.column] || ""} onChange={event => setState({ ...state, [self.column]: event.target.value })} />
+                <input disabled={true} type="text" value={state[self.column] || ""} />
             )
         }
     },
@@ -143,10 +142,14 @@ function CategoryDetail (props) {
     async function submitUpdateCategory (event) {
         $(event.target).addClass("disabled");
         $(event.target).attr("disabled", true);
+        let required_fields = category_entity_columns.filter(item => item.required === true).map(item => item.column);
         let copy_category = JSON.parse(JSON.stringify(category));
         delete copy_category.children;
         Object.keys(copy_category).forEach(key => {
-            if (copy_category[key] === ori_category[key] && key !== "entity_id" && key !== "name") {
+            if (
+                copy_category[key] === ori_category[key] &&
+                required_fields.indexOf(key) === -1
+            ) {
                 delete copy_category[key];
             }
         });
@@ -169,7 +172,7 @@ function CategoryDetail (props) {
                     (   attr_item.value === null ||
                         attr_item.value === "" ||
                         attr_item.value === undefined ||
-                        attr_item.value.length === 0
+                        attr_item.value.toString().replace(/^\s+|\s+$/g, "").length === 0
                     )
                 ) {
                     copy_category.attributes[index] = null;
@@ -188,32 +191,38 @@ function CategoryDetail (props) {
             }
         };
         let validation = CategoryModel.validateCategoryModel(copy_category);
-        category_entity_columns
-            .filter(col_item => col_item.required === true)
-            .forEach(col_item => {
+        required_fields.forEach(column => {
                 if (
-                    copy_category[col_item.column] === null ||
-                    copy_category[col_item.column] === "" ||
-                    copy_category[col_item.column] === undefined ||
-                    copy_category[col_item.column].length === 0
+                    copy_category[column] === null ||
+                    copy_category[column] === "" ||
+                    copy_category[column] === undefined ||
+                    copy_category[column].length === 0
                 ) {
                     validation.isValid = false;
-                    validation.m_failure = `'${col_item.column}' must not be empty!\n\t` + (validation.m_failure || "");
+                    validation.m_failure = `'${column}' must not be empty!\n\t` + (validation.m_failure || "");
                 };
             })
-        if (Object.keys(copy_category).length === 2 && copy_category.name === ori_category.name) {
-            validation.isValid = false;
-            validation.m_failure = `Please make changes before save!\n\t` + (validation.m_failure || "");
-            return appFunction.appAlert({
-                icon: "info",
-                title: <div>No changes detected</div>,
-                message: <div style={{whiteSpace: "pre-line"}}>{validation.m_failure}</div>,
-                timeOut: 700,
-                onTimeOut: () => {
-                    $(event.target).removeClass("disabled");
-                    $(event.target).attr("disabled", false);
+        if (Object.keys(copy_category).length === required_fields.length) {
+            let isChanged = false;
+            required_fields.forEach(column => {
+                if (copy_category[column] !== ori_category[column]) {
+                    isChanged = true;
                 }
-            })
+            });
+            if (!isChanged) {
+                validation.isValid = false;
+                validation.m_failure = `Please make changes before save!\n\t` + (validation.m_failure || "");
+                return appFunction.appAlert({
+                    icon: "info",
+                    title: <div>No changes detected</div>,
+                    message: <div style={{whiteSpace: "pre-line"}}>{validation.m_failure}</div>,
+                    timeOut: 700,
+                    onTimeOut: () => {
+                        $(event.target).removeClass("disabled");
+                        $(event.target).attr("disabled", false);
+                    }
+                })
+            }
         };
         if (!validation.isValid) {
             return appFunction.appAlert({
@@ -296,7 +305,6 @@ function CategoryDetail (props) {
                 <button className="warning float large"
                     onClick={submitUpdateCategory}
                 >Update</button>
-                <Link to="/category/charger">ab</Link>
             </div>
             <div className="content">
                 {isLoaded && !ori_category.entity_id ? (
@@ -318,8 +326,7 @@ function CategoryDetail (props) {
                                                 state: category,
                                                 setState: setCategory,
                                                 parentOptions: parentOptions,
-                                                setParentOptions: setParentOptions,
-                                                secure_key: true
+                                                setParentOptions: setParentOptions
                                             })}
                                             <div className="alert_message hide"></div>
                                         </span>

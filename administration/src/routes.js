@@ -57,7 +57,8 @@ const routes = [
         component: CategoryEavDetail,
         ref_name: "Category eav detail",
         showOnNavbar: false,
-        showOnSidebar: false
+        showOnSidebar: false,
+        title: "Category atribute detail"
     },
     {
         path: "/eav/category",

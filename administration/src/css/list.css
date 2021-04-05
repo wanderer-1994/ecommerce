@@ -1,5 +1,14 @@
 /* table css */
 
+.tb_list thead tr {
+    background-color: #cdcdcd;
+    height: 35px;
+}
+
+.tb_list tbody tr {
+    height: 35px;
+}
+
 .td_input {
     border-bottom: 1px solid #ababab80;
     border-left: 1px solid #ffffff;

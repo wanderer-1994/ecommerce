@@ -74,15 +74,6 @@ const category_entity_columns = [
     }
 ];
 
-const thead_style = {
-    backgroundColor: "#cdcdcd",
-    height: "35px"
-};
-
-const tr_style = {
-    height: "35px"
-};
-
 function CategoryList (props) {
     const [category_list, setCategoryList] = useState({});
 
@@ -113,12 +104,12 @@ function CategoryList (props) {
         } else {
             match[column] = value;
         }
-        setCategoryList({...category_list, temp: category_list.temp});
+        setCategoryList({...category_list});
     };
 
     function toggleEdit (cat_item, isOn) {
         if (!isOn) {
-            category_list.temp = category_list.temp.filter(item => item.entity_id !== cat_item.entity_id);
+            category_list.temp = (category_list.temp || []).filter(item => item.entity_id !== cat_item.entity_id);
         } else {
             cat_item = JSON.parse(JSON.stringify(cat_item));
             if (!category_list.temp) {
@@ -319,9 +310,7 @@ function CategoryList (props) {
         };
         return (
             <Fragment key={index} >
-                <tr className={`tb-row-item ${isOnEdit ? "onEdit" : ""}`}
-                    style={tr_style}
-                >
+                <tr className={`tb-row-item ${isOnEdit ? "onEdit" : ""}`}>
                     <td className="td_input null ord"><input disabled value={++total} /></td>
                     <td className="td_input null ord" style={{"--paddingleft": `${level * 10}px`}}>
                         <input disabled value={level + 1} />
@@ -403,9 +392,9 @@ function CategoryList (props) {
                 <Link className="add-new" to="/create/category">New Category</Link>
             </div>
             <div className="content">
-                <table>
+                <table className="tb_list">
                     <thead>
-                        <tr style={thead_style}>
+                        <tr>
                             <th>ORD</th>
                             <th>LEVEL</th>
                             {category_entity_columns.map((col_item, index) => {
