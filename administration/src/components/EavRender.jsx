@@ -69,10 +69,7 @@ const eav_html_type = [
             return (
                 <Fragment>
                     {eav_value.value.map((v_item, index) => {
-                        let isNull = false;
-                        if (v_item === null || v_item === "" || v_item === undefined) {
-                            isNull = true;
-                        }
+                        let isNull = v_item === null || v_item === "" || v_item === undefined;
                         return (
                             <Fragment key={index}>
                                 <InputOrTextarea className={isNull ? "null" : ""} component_type={component_type} className="multiinput_item" type="text" value={v_item || ""} 

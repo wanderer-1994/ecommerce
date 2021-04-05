@@ -108,19 +108,32 @@ async function saveProductEntity (product, option) {
             }
         });
         if (sqltb_product_entity.length > 0) {
-            sqltb_product_entity =
-            `
-            INSERT INTO \`ecommerce\`.product_entity (${sqltb_product_entity.map(item => item.column).join(", ")})
-            VALUES (${sqltb_product_entity.map(item => {
-                if (product[item.column] === null || product[item.column] === "" || product[item.column] === undefined) {
-                    return "NULL";
+            if (option.mode === "CREATE") {
+                sqltb_product_entity =
+                `
+                INSERT INTO \`ecommerce\`.product_entity (${sqltb_product_entity.map(col_item => col_item.column).join(", ")})
+                VALUES (${sqltb_product_entity.map(col_item => {
+                    if (product[col_item.column] === null || product[col_item.column] === "" || product[col_item.column] === undefined) {
+                        return "NULL";
+                    } else {
+                        return `"${mysqlutils.escapeQuotes(product[col_item.column])}"`;
+                    }
+                }).join(", ")});
+                `;
+            } else if (option.mode === "UPDATE") {
+                if (sqltb_product_entity.length <= 1) {
+                    sqltb_product_entity = null;
                 } else {
-                    return `"${mysqlutils.escapeQuotes(product[item.column])}"`;
+                    sqltb_product_entity =
+                    `
+                    UPDATE \`ecommerce\`.product_entity SET ${sqltb_product_entity.map(col_item => {
+                        if (col_item.column === "entity_id") return null;
+                        return `${col_item.column} = "${mysqlutils.escapeQuotes(product[col_item.column])}"`
+                    }).filter(item => item !== null).join(", ")}
+                    WHERE entity_id = "${mysqlutils.escapeQuotes(product.entity_id)}";
+                    `;
                 }
-            }).join(", ")}) AS new
-            ${option.mode === "UPDATE" ? `ON DUPLICATE KEY UPDATE
-            ${sqltb_product_entity.map(item => `${item.column} = new.${item.column}`).join(",\n")}` : ""};
-            `;
+            }
         } else {
             sqltb_product_entity = null;
         }

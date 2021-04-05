@@ -314,6 +314,7 @@ function CategoryDetail (props) {
                 ) : (
                     <Fragment>
                         <div className="entity-id">
+                            <h4 className="section-title">Entity ID</h4>
                             {category_entity_columns.map((col_item, index) => {
                                 return (
                                     <div key={index} className="entity-column" style={{ display: "inline-block", marginRight: "10px" }}>
@@ -335,6 +336,7 @@ function CategoryDetail (props) {
                             })}
                         </div>
                         <div className="entity-eav">
+                            <h4 className="section-title">Attributes</h4>
                             {categoryEavs.map((eav_item, index) => {
                                 let eav_value = (category.attributes || []).find(item => item.attribute_id === eav_item.attribute_id);
                                 if (!eav_value) {

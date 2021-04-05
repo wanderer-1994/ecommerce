@@ -132,19 +132,32 @@ async function saveProductEav (product_eav, option) {
             }
         });
         if (sql_product_eav_entity.length > 0) {
-            sql_product_eav_entity =
-            `
-            INSERT INTO \`ecommerce\`.product_eav (${sql_product_eav_entity.map(item => item.column).join(", ")})
-            VALUES (${sql_product_eav_entity.map(item => {
-                if (product_eav[item.column] === null || product_eav[item.column] === "" || product_eav[item.column] === undefined) {
-                    return "NULL";
+            if (option.mode === "CREATE") {
+                sql_product_eav_entity =
+                `
+                INSERT INTO \`ecommerce\`.product_eav (${sql_product_eav_entity.map(col_item => col_item.column).join(", ")})
+                VALUES (${sql_product_eav_entity.map(col_item => {
+                    if (product_eav[col_item.column] === null || product_eav[col_item.column] === "" || product_eav[col_item.column] === undefined) {
+                        return "NULL";
+                    } else {
+                        return `"${mysqlutils.escapeQuotes(product_eav[col_item.column])}"`;
+                    }
+                }).join(", ")});
+                `;
+            } else if (option.mode === "UPDATE") {
+                if (sql_product_eav_entity.length <= 1) {
+                    sql_product_eav_entity = null;
                 } else {
-                    return `"${mysqlutils.escapeQuotes(product_eav[item.column])}"`;
+                    sql_product_eav_entity =
+                    `
+                    UPDATE \`ecommerce\`.product_eav SET ${sql_product_eav_entity.map(col_item => {
+                        if (col_item.column === "attribute_id") return null;
+                        return `${col_item.column} = "${mysqlutils.escapeQuotes(product_eav[col_item.column])}"`
+                    }).filter(item => item !== null).join(", ")}
+                    WHERE attribute_id = "${mysqlutils.escapeQuotes(product_eav.attribute_id)}";
+                    `
                 }
-            }).join(", ")}) AS new
-            ${option.mode === "UPDATE" ? `ON DUPLICATE KEY UPDATE
-            ${sql_product_eav_entity.map(item => `${item.column} = new.${item.column}`).join(",\n")}` : ""};
-            `;
+            }
         } else {
             sql_product_eav_entity = null;
         };

@@ -132,19 +132,32 @@ async function saveCategoryEav (category_eav, option) {
             }
         });
         if (sql_category_eav_entity.length > 0) {
-            sql_category_eav_entity =
-            `
-            INSERT INTO \`ecommerce\`.category_eav (${sql_category_eav_entity.map(item => item.column).join(", ")})
-            VALUES (${sql_category_eav_entity.map(item => {
-                if (category_eav[item.column] === null || category_eav[item.column] === "" || category_eav[item.column] === undefined) {
-                    return "NULL";
+            if (option.mode === "CREATE") {
+                sql_category_eav_entity =
+                `
+                INSERT INTO \`ecommerce\`.category_eav (${sql_category_eav_entity.map(col_item => col_item.column).join(", ")})
+                VALUES (${sql_category_eav_entity.map(col_item => {
+                    if (category_eav[col_item.column] === null || category_eav[col_item.column] === "" || category_eav[col_item.column] === undefined) {
+                        return "NULL";
+                    } else {
+                        return `"${mysqlutils.escapeQuotes(category_eav[col_item.column])}"`;
+                    }
+                }).join(", ")});
+                `;
+            } else if (option.mode === "UPDATE") {
+                if (sql_category_eav_entity.length <= 1) {
+                    sql_category_eav_entity = null;
                 } else {
-                    return `"${mysqlutils.escapeQuotes(category_eav[item.column])}"`;
+                    sql_category_eav_entity =
+                    `
+                    UPDATE \`ecommerce\`.category_eav SET ${sql_category_eav_entity.map(col_item => {
+                        if (col_item.column === "attribute_id") return null;
+                        return `${col_item.column} = "${mysqlutils.escapeQuotes(category_eav[col_item.column])}"`
+                    }).filter(item => item !== null).join(", ")}
+                    WHERE attribute_id = "${mysqlutils.escapeQuotes(category_eav.attribute_id)}";
+                    `
                 }
-            }).join(", ")}) AS new
-            ${option.mode === "UPDATE" ? `ON DUPLICATE KEY UPDATE
-            ${sql_category_eav_entity.map(item => `${item.column} = new.${item.column}`).join(",\n")}` : ""};
-            `;
+            }
         } else {
             sql_category_eav_entity = null;
         };

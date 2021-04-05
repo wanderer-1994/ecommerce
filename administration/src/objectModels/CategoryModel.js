@@ -82,36 +82,33 @@ function getCategoryAttribute(category, attribute_id) {
     return null;
 };
 
-function structurizeCategories(categories, parent_id) {
-    this.initStructure = (categories, parent_id) => {
+function structurizeCategories(categories, parent) {
+    this.initStructure = (categories, parent) => {
         let result = [];
-        if (!parent_id) {
+        if (!parent) {
             result = categories.filter(item => !item.parent).sort((a, b) => a.position - b.position);
         } else {
             result = categories.filter(item => {
                 // isIncluded prevent forever looping when recursive parent assignment occurred
                 let isIncluded = item.__isIncluded;
-                if (item.entity_id !== parent_id && item.parent === parent_id) {
+                // prevent case self assignment: item.entity_id !== parent.entity_id
+                // prevent case recursive assignment: item.entity_id !== parent.parent
+                if (item.parent === parent.entity_id && item.entity_id !== parent.entity_id && item.entity_id !== parent.parent) {
                     item.__isIncluded = true;
                 }
-                return item.entity_id !== parent_id && item.parent === parent_id && !isIncluded;
+                return item.entity_id !== parent.entity_id && item.parent === parent.entity_id && !isIncluded && item.entity_id !== parent.parent;
             }).sort((a, b) => a.position - b.position);
         };
         result.forEach(item => {
             if (typeof(item.entity_id) === "string" || typeof(item.entity_id) === "number" && item.entity_id.toString().length > 0) {
-                item.children = this.initStructure(categories, item.entity_id);
+                item.children = this.initStructure(categories, item);
             }
         });
         return result;
     }
-    let result = this.initStructure(categories, parent_id);
+    let result = this.initStructure(categories, parent);
     // process invalid parent assignments
     let cat_with_invalid_parent = categories.filter(item => item.parent && !item.__isIncluded);
-    cat_with_invalid_parent.forEach(item => {
-        if (typeof(item.entity_id) === "string" || typeof(item.entity_id) === "number" && item.entity_id.toString().length > 0) {
-            item.children = this.initStructure(categories, item.entity_id);
-        }
-    })
     cat_with_invalid_parent = cat_with_invalid_parent.filter(item => item.__isIncluded !== true);
     result.push(...cat_with_invalid_parent);
     categories.forEach(item => {

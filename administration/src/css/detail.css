@@ -133,7 +133,7 @@ textarea.multiinput_item {
 .entity-id {
     border-bottom: 1px solid #007bff60;
     padding-top: 15px;
-    padding-bottom: 20px;
+    padding-bottom: 40px;
 }
 
 /* button */
@@ -180,4 +180,23 @@ button.large.warning {
 button.large.info {
     background-color: var(--colorInfo);
     box-shadow: 5px 5px 20px -10px var(--colorInfo), 5px 5px 20px -10px var(--colorInfo), 5px 5px 20px -10px var(--colorInfo);
+}
+
+/* entity-id section */
+.entity-id .section-title {
+    color: #ababab;
+    width: 100px;
+    padding-left: 0px;
+    background-color: #ffffff;
+}
+
+/* detail section */
+.entity-eav .section-title,
+.entity-option .section-title {
+    color: #ababab;
+    width: 100px;
+    padding: 10px;
+    padding-left: 0px;
+    margin-top: -20px;
+    background-color: #ffffff;
 }

@@ -1,7 +1,8 @@
 const msClient = require("../mysql/mysql");
 const mysqlutils = require("../mysql/mysqlutils");
 
-const attr_category_entity = [
+const category_entity_columns = [
+    // always declaire PRIMARY_KEY column first
     {
         column: "entity_id",
         valueInvalidMessage: `'entity_id' must be none-empty string`,
@@ -47,7 +48,8 @@ async function saveCategoryEntity (category, option) {
     // eav_multi_text: "title_caption", "introduction"
 
     try {
-        if (category.entity_id === null || category.entity_id === "" && category.entity_id === undefined) throw new Error("ERROR: 'entity_id' is not specified");
+        if (category.entity_id === null || category.entity_id === "" && category.entity_id === undefined)
+            throw new Error(`ERROR: 'entity_id' is not specified`);
         // check if category exists for case update
 
         if (option.mode === "UPDATE") {
@@ -66,14 +68,36 @@ async function saveCategoryEntity (category, option) {
 
         // check category parent exist
         if (category.parent !== null && category.parent !== "" && category.parent !== undefined && typeof(category.parent) == "string") {
-            let sql_check_parent_exist =
+            if (category.parent === category.entity_id) throw new Error(`ERROR: Invalid self parent assignment for category '${category.entity_id}'`);
+            let sql_check_parent_exist_n_recursive =
             `
-            SELECT \`entity_id\` FROM \`ecommerce\`.category_entity WHERE \`entity_id\` = "${mysqlutils.escapeQuotes(category.parent)}";
+            WITH RECURSIVE \`cte\` (entity_id, parent) AS (
+                SELECT \`entity_id\`, \`parent\`
+                FROM \`ecommerce\`.category_entity
+                WHERE \`entity_id\` = "${mysqlutils.escapeQuotes(category.parent)}"
+                UNION ALL
+                SELECT p.entity_id, p.parent
+                FROM \`ecommerce\`.category_entity AS \`p\`
+                INNER JOIN \`cte\` ON \`p\`.entity_id = \`cte\`.parent
+            )
+            SELECT * FROM \`cte\`;
             `;
-            let parent = await msClient.promiseQuery(sql_check_parent_exist);
-            if (parent.length === 0) {
+            let parents = await msClient.promiseQuery(sql_check_parent_exist_n_recursive);
+            if (parents.length === 0) {
                 isUserFailure = true;
                 messageUserFailure += `\n\t Invalid parent category: category with entity_id '${category.parent}' not exist.`
+            };
+            if (parents.length > 0) {
+                let is_recursive_assigned = false;
+                parents.forEach(parent_item => {
+                    if (parent_item.parent && parent_item.parent.toString() === category.entity_id.toString()) {
+                        is_recursive_assigned = true;
+                    }
+                });
+                if (is_recursive_assigned) {
+                    isUserFailure = true;
+                    messageUserFailure += `\n\t Invalid recursive parent assignment: could not assign child category to be parent.`
+                }
             }
         };
 
@@ -89,31 +113,44 @@ async function saveCategoryEntity (category, option) {
         };
         
         let sqltb_category_entity = [];
-        attr_category_entity.forEach(item => {
+        category_entity_columns.forEach(col_item => {
             let isNotNull;
             if (option.mode === "CREATE") {
-                isNotNull = category[item.column] !== null && category[item.column] !== "" && category[item.column] !== undefined;
+                isNotNull = category[col_item.column] !== null && category[col_item.column] !== "" && category[col_item.column] !== undefined;
             } else if (option.mode === "UPDATE") {
-                isNotNull = item.column in category;
+                isNotNull = col_item.column in category;
             };
             if (isNotNull) {
-                sqltb_category_entity.push(item);
+                sqltb_category_entity.push(col_item);
             }
         });
         if (sqltb_category_entity.length > 0) {
-            sqltb_category_entity =
-            `
-            INSERT INTO \`ecommerce\`.category_entity (${sqltb_category_entity.map(item => item.column).join(", ")})
-            VALUES (${sqltb_category_entity.map(item => {
-                if (category[item.column] === null || category[item.column] === "" || category[item.column] === undefined) {
-                    return "NULL";
+            if (option.mode === "CREATE") {
+                sqltb_category_entity =
+                `
+                INSERT INTO \`ecommerce\`.category_entity (${sqltb_category_entity.map(col_item => col_item.column).join(", ")})
+                VALUES (${sqltb_category_entity.map(col_item => {
+                    if (category[col_item.column] === null || category[col_item.column] === "" || category[col_item.column] === undefined) {
+                        return "NULL";
+                    } else {
+                        return `"${mysqlutils.escapeQuotes(category[col_item.column])}"`;
+                    }
+                }).join(", ")});
+                `;
+            } else if (option.mode === "UPDATE") {
+                if (sqltb_category_entity.length <= 1) {
+                    sqltb_category_entity = null;
                 } else {
-                    return `"${mysqlutils.escapeQuotes(category[item.column])}"`;
+                    sqltb_category_entity =
+                    `
+                    UPDATE \`ecommerce\`.category_entity SET ${sqltb_category_entity.map(col_item => {
+                        if (col_item.column === "entity_id") return null;
+                        return `${col_item.column} = "${mysqlutils.escapeQuotes(category[col_item.column])}"`
+                    }).filter(item => item !== null).join(", ")}
+                    WHERE entity_id = "${mysqlutils.escapeQuotes(category.entity_id)}";
+                    `
                 }
-            }).join(", ")}) AS new
-            ${option.mode === "UPDATE" ? `ON DUPLICATE KEY UPDATE
-            ${sqltb_category_entity.map(item => `${item.column} = new.${item.column}`).join(",\n")}` : ""};
-            `;
+            }
         };
 
         let sql_eav_single_value = {
@@ -293,7 +330,7 @@ async function deleteCategoryEntities (category_ids) {
 function validateCategoryModel (category) {
     let isValid = true;
     let m_failure = "";
-    attr_category_entity.forEach(property => {
+    category_entity_columns.forEach(property => {
         if (category[property.column] !== null && category[property.column] !== "" && category[property.column] !== undefined) {
             if (!property.validation_function(category[property.column])) {
                 isValid = false;

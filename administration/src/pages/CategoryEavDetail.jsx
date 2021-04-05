@@ -4,6 +4,10 @@ import "../css/detail.css";
 import * as appFunction from "../utils/appFunction";
 import $ from "jquery";
 import * as EavModel from "../objectModels/EavModel";
+import InputOrTextarea from "../components/InputOrTexarea";
+import * as eavValidation from '../objectModels/eav/eavValidation';
+import Clear from "@material-ui/icons/Clear";
+import Add from "@material-ui/icons/Add";
 
 const html_types = [
     {
@@ -225,10 +229,9 @@ function CategoryEavDetail (props) {
     useEffect(() => {
         api.getCategoryEavs().then(category_eavs => {
             let eav = category_eavs.find(item => item.attribute_id == props.match.params.entity_id) || {};
-            eav = JSON.parse(JSON.stringify(eav));
             setEavList(category_eavs || []);
-            setEav(eav);
-            setOriEav(eav);
+            setEav(JSON.parse(JSON.stringify(eav)));
+            setOriEav(JSON.parse(JSON.stringify(eav)));
             setIsLoaded(1);
         }).catch(err => {
             console.log(err);
@@ -383,6 +386,7 @@ function CategoryEavDetail (props) {
                 ) : (
                     <Fragment>
                         <div className="entity-id">
+                            <h4 className="section-title">Entity ID</h4>
                             {eav_entity_columns.map((col_item, index) => {
                                 return (
                                     <div key={index} className="entity-column" style={{ display: "inline-block", marginRight: "10px" }}>
@@ -401,19 +405,78 @@ function CategoryEavDetail (props) {
                                 )
                             })}
                         </div>
-                        {/* <div className="entity-option">
-                            {categoryEavs.map((eav_item, index) => {
-                                let eav_value = (category.attributes || []).find(item => item.attribute_id === eav_item.attribute_id);
-                                if (!eav_value) {
-                                    eav_value = {
-                                        attribute_id: eav_item.attribute_id
-                                    };
-                                    if (!Array.isArray(category.attributes)) category.attributes = [];
-                                    category.attributes.push(eav_value);
-                                }
-                                return <EavRender key={index} eav_definition={eav_item} eav_value={eav_value} state={category} setState={setCategory} />
-                            })}
-                        </div> */}
+                        {["select", "multiselect"].indexOf(eav.html_type) !== -1 ? (
+                            <Fragment>
+                                <div className="entity-option">
+                                    <h4 className="section-title">Options</h4>
+                                    <span className="input_value left"
+                                        style={{width: "calc(100% - 170px)"}}
+                                    >
+                                        {(function () {
+                                            if (!Array.isArray(eav.options) || eav.options.length === 0) {
+                                                eav.options = [{option_value: ""}];
+                                            }
+                                            let component_type = "input";
+                                            if (eav.data_type === "text" || eav.data_type === "html") {
+                                                component_type = "textarea";
+                                            };
+                                            return (
+                                                <Fragment>
+                                                    {eav.options.map((v_item, index) => {
+                                                        let isNull = !v_item || v_item.option_value === null || v_item.option_value === "" || v_item.option_value === undefined;
+                                                        return (
+                                                            <Fragment key={index}>
+                                                                <InputOrTextarea className={isNull ? "null" : ""} component_type={component_type} className="multiinput_item" type="text" value={v_item.option_value || ""} 
+                                                                    onChange={event => {
+                                                                        let value = eavValidation.converAttributeValue({
+                                                                            value: event.target.value,
+                                                                            data_type: eav.data_type,
+                                                                            html_type: eav.html_type
+                                                                        });
+                                                                        let validation = eavValidation.validateAttributeValue({
+                                                                            value: value,
+                                                                            data_type: eav.data_type,
+                                                                            html_type: eav.html_type,
+                                                                            validation: eav.validation
+                                                                        });
+                                                                        if (event.target.value != "" && !validation) {
+                                                                            let invalid_message = `<span class="hightlight">${eav.label}</span> must be of type <span class="hightlight">${eav.data_type}</span>
+                                                                                ${eav.validation ? `<span> and match regex </span><span class="hightlight">${eav.validation}</span>` : "" } !`;
+                                                                            $(event.target).parent(".input_value").find(".alert_message").html(invalid_message);
+                                                                            $(event.target).css("color", "var(--colorDanger)");
+                                                                            $(event.target).removeClass("hide");
+                                                                        } else {
+                                                                            $(event.target).parent(".input_value").find(".alert_message").html("");
+                                                                            $(event.target).css("color", "");
+                                                                            $(event.target).addClass("hide");
+                                                                        }
+                                                                        eav.options[index].option_value = event.target.value;
+                                                                        setEav({...eav})
+                                                                    }}
+                                                                    style={{width: "calc(100% - 40px)"}}
+                                                                />
+                                                                {eav.options.length > 1 ? (
+                                                                    <Clear className="multiinput_remove" onClick={() => {
+                                                                        eav.options.splice(index, 1);
+                                                                        setEav({...eav});
+                                                                    }} />
+                                                                ): null}
+                                                                <br/>
+                                                            </Fragment>
+                                                        )
+                                                    })}
+                                                    <Add className="multiinput_add" onClick={() => {
+                                                        eav.options.push({option_value: ""});
+                                                        setEav({...eav});
+                                                    }} />
+                                                </Fragment>
+                                            )
+                                        })()}
+                                        <div className="alert_message hide"></div>
+                                    </span>
+                                </div>
+                            </Fragment>
+                        ) : null}
                     </Fragment>
                 )}
             </div>
