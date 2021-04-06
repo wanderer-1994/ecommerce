@@ -339,6 +339,13 @@ function CategoryEavList (props) {
                             $(event.target).parent().find("button").attr("disabled", false);
                         }
                     });
+                    api.getCategoryEavs()
+                        .then(data => {
+                            setEavList({category_eavs: data});
+                        })
+                        .catch(err => {
+                            console.log(err);
+                        })
                 } else {
                     appFunction.appAlert({
                         icon: "danger",

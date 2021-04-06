@@ -340,6 +340,13 @@ function ProductEavList (props) {
                             $(event.target).parent().find("button").attr("disabled", false);
                         }
                     });
+                    api.getProductEavs()
+                        .then(data => {
+                            setEavList({product_eavs: data});
+                        })
+                        .catch(err => {
+                            console.log(err);
+                        })
                 } else {
                     appFunction.appAlert({
                         icon: "danger",
