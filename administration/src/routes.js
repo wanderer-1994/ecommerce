@@ -58,7 +58,7 @@ const routes = [
         ref_name: "Category eav detail",
         showOnNavbar: false,
         showOnSidebar: false,
-        title: "Category atribute detail"
+        title: "Category attribute detail"
     },
     {
         path: "/eav/category",
@@ -150,7 +150,8 @@ const routes = [
         component: ProductEavDetail,
         ref_name: "Product eav detail",
         showOnNavbar: false,
-        showOnSidebar: false
+        showOnSidebar: false,
+        title: "Product attribute detail"
     },
     {
         path: "/eav/product",

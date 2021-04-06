@@ -76,7 +76,7 @@ const option_columns = [
             self.valueInvalidMessage = "";
             if (value === null || value === "" || value === undefined) return true;
             if (!eavValidation.validateAttributeValue({ value, data_type, html_type, validation })) {
-                self.valueInvalidMessage += `\n\t invalid option_value '${value}' of type '${data_type}' & html_type '${html_type}' & validation '${validation}'.`;
+                self.valueInvalidMessage += `\n\t invalid option_value '${value}' of type '${data_type}'${validation ? ` & validation '${validation}'` : ""}.`;
                 return false;
             };
             return true;

@@ -8,6 +8,7 @@ import InputOrTextarea from "../components/InputOrTexarea";
 import * as eavValidation from '../objectModels/eav/eavValidation';
 import Clear from "@material-ui/icons/Clear";
 import Add from "@material-ui/icons/Add";
+import database_data_type from "../objectModels/database_data_type";
 
 const html_types = [
     {
@@ -28,11 +29,13 @@ const html_types = [
     },
     {
         html_type: 'password',
-        displayName: "Password"
+        displayName: "Password",
+        force_data_type: "varchar"
     },
     {
         html_type: 'boolean',
-        displayName: "Boolean"
+        displayName: "Boolean",
+        force_data_type: "int"
     }
 ];
 
@@ -67,8 +70,7 @@ const eav_entity_columns = [
     {
         column: "attribute_id",
         column_name: "ID",
-        required: true,
-        render: ({ self, state, setState }) => {
+        render: ({ self, state }) => {
             return (
                 <input disabled={true} type="text" value={state[self.column] || ""} />
             )
@@ -77,10 +79,20 @@ const eav_entity_columns = [
     {
         column: "label",
         column_name: "Label",
-        required: true,
+        f_validation: database_data_type["NONE_EMPTY_STRING"].f_validation,
         render: ({ self, state, setState }) => {
+            self.invalid_message = "";
+            let isNullValue = (state[self.column] === null || state[self.column] === "" || state[self.column] === undefined) ? "null" : "";
+            if (state[self.column] !== undefined && !self.f_validation(state[self.column])) {
+                self.invalid_message = (
+                    <span>
+                        <span className="hightlight">{self.column_name}</span>
+                        <span> must not be empty!</span>
+                    </span>
+                )
+            }
             return (
-                <input type="text" value={state[self.column] || ""} onChange={event => setState({ ...state, [self.column]: event.target.value })} />
+                <input className={isNullValue} type="text" value={state[self.column] || ""} onChange={event => setState({ ...state, [self.column]: event.target.value })} />
             )
         }
     },
@@ -88,8 +100,9 @@ const eav_entity_columns = [
         column: "referred_target",
         column_name: "Referred target",
         render: ({ self, state, setState }) => {
+            let isNullValue = (state[self.column] === null || state[self.column] === "" || state[self.column] === undefined) ? "null" : "";
             return (
-                <input type="text" value={state[self.column] || ""} onChange={event => setState({ ...state, [self.column]: event.target.value })} />
+                <input className={isNullValue} type="text" value={state[self.column] || ""} onChange={event => setState({ ...state, [self.column]: event.target.value })} />
             )
         }
     },
@@ -97,10 +110,27 @@ const eav_entity_columns = [
         column: "html_type",
         column_name: "Html type",
         render: ({ self, state, setState }) => {
+            let isNullValue = (state[self.column] === null || state[self.column] === "" || state[self.column] === undefined) ? "null" : "";
+            self.invalid_message = "";
+            if (state[self.column] !== undefined && html_types.map(item => item.html_type).indexOf(state[self.column]) === -1) {
+                self.invalid_message = (
+                    <span>
+                        <span className="hightlight">{self.column_name}</span>
+                        <span> must not be empty!</span>
+                    </span>
+                )
+            }
             return (
-                <select
+                <select className={isNullValue}
                     value={state.html_type || ""}
-                    onChange={(event) => setState({...state, [self.column]: event.target.value})}
+                    onChange={(event) => {
+                        let force_data_type = (html_types.find(item => item.html_type === event.target.value) || {}).force_data_type;
+                        if (force_data_type) {
+                            state.data_type = force_data_type;
+                        };
+                        state[self.column] = event.target.value;
+                        setState({...state})
+                    }}
                 >
                     <option value="">-------------------------------</option>
                     {html_types.map((item, index) => {
@@ -118,8 +148,19 @@ const eav_entity_columns = [
         column: "data_type",
         column_name: "Data type",
         render: ({ self, state, setState }) => {
+            let isNullValue = (state[self.column] === null || state[self.column] === "" || state[self.column] === undefined) ? "null" : "";
+            self.invalid_message = "";
+            if (state[self.column] !== undefined && data_types.map(item => item.data_type).indexOf(state[self.column]) === -1) {
+                self.invalid_message = (
+                    <span>
+                        <span className="hightlight">{self.column_name}</span>
+                        <span> must not be empty!</span>
+                    </span>
+                )
+            }
+            let force_data_type = (html_types.find(item => item.html_type === state.html_type) || {}).force_data_type;
             return (
-                <select
+                <select className={isNullValue} disabled={force_data_type ? true : false}
                     value={state.data_type || ""}
                     onChange={(event) => setState({...state, [self.column]: event.target.value})}
                 >
@@ -139,8 +180,9 @@ const eav_entity_columns = [
         column: "validation",
         column_name: "regex validation",
         render: ({ self, state, setState }) => {
+            let isNullValue = (state[self.column] === null || state[self.column] === "" || state[self.column] === undefined) ? "null" : "";
             return (
-                <input type="text" value={state[self.column] || ""} onChange={event => setState({ ...state, [self.column]: event.target.value })} />
+                <input className={isNullValue} type="text" value={state[self.column] || ""} onChange={event => setState({ ...state, [self.column]: event.target.value })} />
             )
         }
     },
@@ -148,15 +190,15 @@ const eav_entity_columns = [
         column: "unit",
         column_name: "Unit",
         render: ({ self, state, setState }) => {
+            let isNullValue = (state[self.column] === null || state[self.column] === "" || state[self.column] === undefined) ? "null" : "";
             return (
-                <input type="text" value={state[self.column] || ""} onChange={event => setState({ ...state, [self.column]: event.target.value })} />
+                <input className={isNullValue} type="text" value={state[self.column] || ""} onChange={event => setState({ ...state, [self.column]: event.target.value })} />
             )
         }
     },
     {
         column: "admin_only",
         column_name: "Admin only",
-        f_validation: (value) => (value === "" || value === "-") || (parseInt(value) == value && parseInt(value) >= 0),
         render: ({ self, state, setState }) => {
             let value = state[self.column];
             if (value === true || value == 1) {
@@ -223,13 +265,11 @@ function CategoryEavDetail (props) {
 
     const [ori_eav, setOriEav] = useState({});
     const [eav, setEav] = useState({});
-    const [eav_list, setEavList] = useState([]);
     const [isLoaded, setIsLoaded] = useState(0);
 
     useEffect(() => {
         api.getCategoryEavs().then(category_eavs => {
             let eav = category_eavs.find(item => item.attribute_id == props.match.params.entity_id) || {};
-            setEavList(category_eavs || []);
             setEav(JSON.parse(JSON.stringify(eav)));
             setOriEav(JSON.parse(JSON.stringify(eav)));
             setIsLoaded(1);
@@ -241,61 +281,45 @@ function CategoryEavDetail (props) {
     async function submitUpdateEav (event) {
         $(event.target).addClass("disabled");
         $(event.target).attr("disabled", true);
-        let required_fields = eav_entity_columns.filter(item => item.required === true).map(item => item.column);
         let copy_eav = JSON.parse(JSON.stringify(eav));
         Object.keys(copy_eav).forEach(key => {
-            if (
-                copy_eav[key] === ori_eav[key] &&
-                required_fields.indexOf(key) === -1
-            ) {
+            if (copy_eav[key] === ori_eav[key] && key !== "attribute_id") {
                 delete copy_eav[key];
             }
         });
         if (Array.isArray(copy_eav.options)) {
-            copy_eav.options.forEach((option_item, index) => {
-                if (option_item.value === null || option_item.value === "" || option_item.value === undefined) {
+            copy_eav.options.forEach((opt_item, index) => {
+                if (opt_item.option_value === null || opt_item.option_value === "" || opt_item.option_value === undefined) {
                     copy_eav.options[index] = null;
                     return;
                 };
             });
             copy_eav.options = copy_eav.options.filter(item => item !== null);
-            if (copy_eav.options.length === 0) {
-                delete copy_eav.options;
-            }
+            copy_eav.options.forEach((item, index) => item.sort_order = index + 1)
         };
-        let validation = EavModel.validateEavModel(copy_eav);
-        required_fields.forEach(column => {
-                if (
-                    copy_eav[column] === null ||
-                    copy_eav[column] === "" ||
-                    copy_eav[column] === undefined ||
-                    copy_eav[column].toString().replace(/^\s+|\s+$/g, "").length === 0
-                ) {
-                    validation.isValid = false;
-                    validation.m_failure = `'${column}' must not be empty!\n\t` + (validation.m_failure || "");
-                };
-            });
-        if (Object.keys(copy_eav).length === required_fields.length) {
-            let isChanged = false;
-            required_fields.forEach(column => {
-                if (copy_eav[column] !== ori_eav[column]) {
-                    isChanged = true;
+        if (JSON.stringify(copy_eav.options) === JSON.stringify(ori_eav.options)) delete copy_eav.options;
+        let validation = EavModel.validateEavModel({
+            ...copy_eav,
+            html_type: copy_eav.html_type || eav.html_type,
+            data_type: copy_eav.data_type || eav.data_type
+        });
+        if (copy_eav.attribute_id === null || copy_eav.attribute_id.toString().replace(/^\s+|\s+$/g, "").length === 0 || copy_eav.attribute_id === undefined) {
+            validation.isValid = false;
+            validation.m_failure = `'attribute_id' must not be empty!\n\t` + (validation.m_failure || "");
+        };
+        if (Object.keys(copy_eav).length === 1) {
+            validation.isValid = false;
+            validation.m_failure = `Please make changes before save!\n\t` + (validation.m_failure || "");
+            return appFunction.appAlert({
+                icon: "info",
+                title: <div>No changes detected</div>,
+                message: <div style={{whiteSpace: "pre-line"}}>{validation.m_failure}</div>,
+                timeOut: 700,
+                onTimeOut: () => {
+                    $(event.target).removeClass("disabled");
+                    $(event.target).attr("disabled", false);
                 }
-            });
-            if (!isChanged) {
-                validation.isValid = false;
-                validation.m_failure = `Please make changes before save!\n\t` + (validation.m_failure || "");
-                return appFunction.appAlert({
-                    icon: "info",
-                    title: <div>No changes detected</div>,
-                    message: <div style={{whiteSpace: "pre-line"}}>{validation.m_failure}</div>,
-                    timeOut: 700,
-                    onTimeOut: () => {
-                        $(event.target).removeClass("disabled");
-                        $(event.target).attr("disabled", false);
-                    }
-                })
-            }
+            })
         };
         if (!validation.isValid) {
             return appFunction.appAlert({
@@ -320,7 +344,7 @@ function CategoryEavDetail (props) {
                     <div>
                         <span>Successfully update attribute : </span>
                         <span style={{color: "var(--colorSuccess)", textDecoration: "underline"}}>
-                            {result.label}
+                            {eav.label}
                         </span>
                     </div>
                 ),
@@ -331,10 +355,8 @@ function CategoryEavDetail (props) {
                 }
             });
             api.getCategoryEavs()
-            .then(data => {
-                let category_eavs = data.category_eavs || [];
-                let eav = data.category_eavs.find(item => item.attribute_id == props.match.params.attribute_id) || {};
-                setEavList(category_eavs);
+            .then(category_eavs => {
+                let eav = category_eavs.find(item => item.attribute_id == props.match.params.entity_id) || {};
                 setEav(JSON.parse(JSON.stringify(eav)));
                 setOriEav(JSON.parse(JSON.stringify(eav)));
             })
@@ -399,7 +421,7 @@ function CategoryEavDetail (props) {
                                                 state: eav,
                                                 setState: setEav
                                             })}
-                                            <div className="alert_message hide"></div>
+                                            <div className="alert_message hide">{col_item.invalid_message}</div>
                                         </span>
                                     </div>
                                 )
@@ -424,32 +446,32 @@ function CategoryEavDetail (props) {
                                                 <Fragment>
                                                     {eav.options.map((v_item, index) => {
                                                         let isNull = !v_item || v_item.option_value === null || v_item.option_value === "" || v_item.option_value === undefined;
+                                                        // validation message
+                                                        let invalid_message = "";
+                                                        let converted_value = eavValidation.converAttributeValue({
+                                                            value: v_item.option_value,
+                                                            data_type: eav.data_type,
+                                                            html_type: eav.html_type
+                                                        });
+                                                        let validation = eavValidation.validateAttributeValue({
+                                                            value: converted_value,
+                                                            data_type: eav.data_type,
+                                                            html_type: eav.html_type,
+                                                            validation: eav.validation
+                                                        });
+                                                        if (v_item.option_value != "" && !validation) {
+                                                            invalid_message =
+                                                            <span>
+                                                                Option must be of type <span className="hightlight">{eav.data_type}</span>
+                                                                {eav.validation ? <span><span> and match regex </span><span className="hightlight">{eav.validation}</span></span> : "" } !
+                                                            </span>
+                                                        }
                                                         return (
-                                                            <Fragment key={index}>
+                                                            <div className="input_value" key={index}
+                                                                style={{display: "block"}}
+                                                            >
                                                                 <InputOrTextarea className={isNull ? "null" : ""} component_type={component_type} className="multiinput_item" type="text" value={v_item.option_value || ""} 
                                                                     onChange={event => {
-                                                                        let value = eavValidation.converAttributeValue({
-                                                                            value: event.target.value,
-                                                                            data_type: eav.data_type,
-                                                                            html_type: eav.html_type
-                                                                        });
-                                                                        let validation = eavValidation.validateAttributeValue({
-                                                                            value: value,
-                                                                            data_type: eav.data_type,
-                                                                            html_type: eav.html_type,
-                                                                            validation: eav.validation
-                                                                        });
-                                                                        if (event.target.value != "" && !validation) {
-                                                                            let invalid_message = `<span class="hightlight">${eav.label}</span> must be of type <span class="hightlight">${eav.data_type}</span>
-                                                                                ${eav.validation ? `<span> and match regex </span><span class="hightlight">${eav.validation}</span>` : "" } !`;
-                                                                            $(event.target).parent(".input_value").find(".alert_message").html(invalid_message);
-                                                                            $(event.target).css("color", "var(--colorDanger)");
-                                                                            $(event.target).removeClass("hide");
-                                                                        } else {
-                                                                            $(event.target).parent(".input_value").find(".alert_message").html("");
-                                                                            $(event.target).css("color", "");
-                                                                            $(event.target).addClass("hide");
-                                                                        }
                                                                         eav.options[index].option_value = event.target.value;
                                                                         setEav({...eav})
                                                                     }}
@@ -462,7 +484,11 @@ function CategoryEavDetail (props) {
                                                                     }} />
                                                                 ): null}
                                                                 <br/>
-                                                            </Fragment>
+                                                                <div
+                                                                    className={`alert_message ${invalid_message ? "hide" : ""}`}
+                                                                    style={invalid_message ? {color: "var(--colorDanger)"} : {}}
+                                                                >{invalid_message}</div>
+                                                            </div>
                                                         )
                                                     })}
                                                     <Add className="multiinput_add" onClick={() => {
@@ -472,7 +498,6 @@ function CategoryEavDetail (props) {
                                                 </Fragment>
                                             )
                                         })()}
-                                        <div className="alert_message hide"></div>
                                     </span>
                                 </div>
                             </Fragment>

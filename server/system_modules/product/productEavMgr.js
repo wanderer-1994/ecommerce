@@ -103,6 +103,7 @@ async function getProductEavs () {
 
 async function saveProductEav (product_eav, option) {
     try {
+        console.log(product_eav);
         let validation = validateProductEavModel(product_eav);
         if (validation.m_warning) {
             product_eav.m_warning = `WARNING: \n\t ${validation.m_warning}`;
@@ -112,11 +113,9 @@ async function saveProductEav (product_eav, option) {
         };
 
         // check if product_eav exist for case update
+        let match = msClient.productEav.find(m_item => m_item.attribute_id === product_eav.attribute_id) || {};
         if (option.mode === "UPDATE") {
-            let match = msClient.productEav.find(m_item => m_item.attribute_id === product_eav.attribute_id);
-            if (!match) throw new Error(`ERROR: product_eav with attribute_id '${product_eav.attribute_id}' not exist`);
-            product_eav.html_type = product_eav.html_type || match.html_type;
-            product_eav.data_type = product_eav.data_type || match.data_type;
+            if (match.attribute_id === undefined) throw new Error(`ERROR: product_eav with attribute_id '${product_eav.attribute_id}' not exist`);
         };
 
         let sql_product_eav_entity = [];
@@ -152,7 +151,10 @@ async function saveProductEav (product_eav, option) {
                     `
                     UPDATE \`ecommerce\`.product_eav SET ${sql_product_eav_entity.map(col_item => {
                         if (col_item.column === "attribute_id") return null;
-                        return `${col_item.column} = "${mysqlutils.escapeQuotes(product_eav[col_item.column])}"`
+                        return `${col_item.column} = ${
+                            product_eav[col_item.column] === null || product_eav[col_item.column] === "" || product_eav[col_item.column] === undefined ?
+                            "NULL" :
+                            `"${mysqlutils.escapeQuotes(product_eav[col_item.column])}"`}`
                     }).filter(item => item !== null).join(", ")}
                     WHERE attribute_id = "${mysqlutils.escapeQuotes(product_eav.attribute_id)}";
                     `
@@ -165,7 +167,7 @@ async function saveProductEav (product_eav, option) {
         let sql_eav_option;
         switch (option.mode) {
             default:
-                if (['select', 'multiselect'].indexOf(product_eav.html_type) === -1) {
+                if (['select', 'multiselect'].indexOf(product_eav.html_type || match.html_type) === -1) {
                     sql_eav_option =
                     `
                     DELETE FROM \`ecommerce\`.product_eav_option WHERE \`attribute_id\` = "${mysqlutils.escapeQuotes(product_eav.attribute_id)}";
@@ -177,7 +179,7 @@ async function saveProductEav (product_eav, option) {
                 `
                 DELETE FROM \`ecommerce\`.product_eav_option WHERE \`attribute_id\` = "${mysqlutils.escapeQuotes(product_eav.attribute_id)}";
                 `;
-                if (product_eav.options && product_eav.options.length > 0 && ['select', 'multiselect'].indexOf(product_eav.html_type) !== -1) {
+                if (product_eav.options && product_eav.options.length > 0) {
                     sql_eav_option +=
                     `
                     INSERT INTO \`ecommerce\`.product_eav_option (${product_eav_option_columns.map(col_item => col_item.column).join(", ")})
@@ -307,6 +309,7 @@ function modelizeProductEavs (rawData) {
 function validateProductEavModel (product_eav) {
     let isValid = true;
     let m_failure = "";
+    let match_eav_definition = msClient.productEav.find(m_item => m_item.attribute_id === product_eav.attribute_id) || {};
     if (["number", "string"].indexOf(typeof(product_eav.attribute_id)) === -1 || product_eav.attribute_id.toString().length === 0) {
         isValid = false;
         m_failure += `'attribute_id' must not be empty.`
@@ -320,7 +323,7 @@ function validateProductEavModel (product_eav) {
         }
     });
     if ("options" in product_eav) {
-        if (['select', 'multiselect'].indexOf(product_eav.html_type) === -1) {
+        if (['select', 'multiselect'].indexOf(product_eav.html_type || match_eav_definition.html_type) === -1) {
             isValid = false;
             m_failure += `'options' can only applied for html_type ('select', 'multiselect').`;
         };
@@ -344,8 +347,8 @@ function validateProductEavModel (product_eav) {
                 };
                 let is_data_valid = mysqlutils.validateAttributeValue({
                     value: opt_item.option_value,
-                    data_type: product_eav.data_type,
-                    html_type: product_eav.html_type
+                    data_type: product_eav.data_type || match_eav_definition.data_type,
+                    html_type: product_eav.html_type || match_eav_definition.html_type
                 });
                 if (!is_data_valid) {
                     isValid = false;

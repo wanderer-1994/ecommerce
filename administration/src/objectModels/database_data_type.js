@@ -7,7 +7,7 @@ const database_data_type = {
             return value;
         },
         f_validation: function(value) {
-            return typeof(value) === "string" && value.length > 0;
+            return typeof(value) === "string" && value.replace(/^\s+|\s+$/g, "").length > 0;
         }
     },
     "BOOLEAN": {

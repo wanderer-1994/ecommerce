@@ -112,11 +112,9 @@ async function saveCategoryEav (category_eav, option) {
         };
 
         // check if category_eav exist for case update
+        let match = msClient.categoryEav.find(m_item => m_item.attribute_id === category_eav.attribute_id) || {};
         if (option.mode === "UPDATE") {
-            let match = msClient.categoryEav.find(m_item => m_item.attribute_id === category_eav.attribute_id);
-            if (!match) throw new Error(`ERROR: category_eav with attribute_id '${category_eav.attribute_id}' not exist`);
-            category_eav.html_type = category_eav.html_type || match.html_type;
-            category_eav.data_type = category_eav.data_type || match.data_type;
+            if (match.attribute_id === undefined) throw new Error(`ERROR: category_eav with attribute_id '${category_eav.attribute_id}' not exist`);
         };
 
         let sql_category_eav_entity = [];
@@ -152,7 +150,10 @@ async function saveCategoryEav (category_eav, option) {
                     `
                     UPDATE \`ecommerce\`.category_eav SET ${sql_category_eav_entity.map(col_item => {
                         if (col_item.column === "attribute_id") return null;
-                        return `${col_item.column} = "${mysqlutils.escapeQuotes(category_eav[col_item.column])}"`
+                        return `${col_item.column} = ${
+                            category_eav[col_item.column] === null || category_eav[col_item.column] === "" || category_eav[col_item.column] === undefined ?
+                            "NULL" :
+                            `"${mysqlutils.escapeQuotes(category_eav[col_item.column])}"`}`
                     }).filter(item => item !== null).join(", ")}
                     WHERE attribute_id = "${mysqlutils.escapeQuotes(category_eav.attribute_id)}";
                     `
@@ -165,7 +166,7 @@ async function saveCategoryEav (category_eav, option) {
         let sql_eav_option;
         switch (option.mode) {
             default:
-                if (['select', 'multiselect'].indexOf(category_eav.html_type) === -1) {
+                if (['select', 'multiselect'].indexOf(category_eav.html_type || match.html_type) === -1) {
                     sql_eav_option =
                     `
                     DELETE FROM \`ecommerce\`.category_eav_option WHERE \`attribute_id\` = "${mysqlutils.escapeQuotes(category_eav.attribute_id)}";
@@ -177,7 +178,7 @@ async function saveCategoryEav (category_eav, option) {
                 `
                 DELETE FROM \`ecommerce\`.category_eav_option WHERE \`attribute_id\` = "${mysqlutils.escapeQuotes(category_eav.attribute_id)}";
                 `;
-                if (category_eav.options && category_eav.options.length > 0 && ['select', 'multiselect'].indexOf(category_eav.html_type) !== -1) {
+                if (category_eav.options && category_eav.options.length > 0) {
                     sql_eav_option +=
                     `
                     INSERT INTO \`ecommerce\`.category_eav_option (${category_eav_option_columns.map(col_item => col_item.column).join(", ")})
@@ -307,6 +308,7 @@ function modelizeCategoryEavs (rawData) {
 function validateCategoryEavModel (category_eav) {
     let isValid = true;
     let m_failure = "";
+    let match_eav_definition = msClient.categoryEav.find(m_item => m_item.attribute_id === category_eav.attribute_id) || {};
     if (["number", "string"].indexOf(typeof(category_eav.attribute_id)) === -1 || category_eav.attribute_id.toString().length === 0) {
         isValid = false;
         m_failure += `'attribute_id' must not be empty.`
@@ -320,7 +322,7 @@ function validateCategoryEavModel (category_eav) {
         }
     });
     if ("options" in category_eav) {
-        if (['select', 'multiselect'].indexOf(category_eav.html_type) === -1) {
+        if (['select', 'multiselect'].indexOf(category_eav.html_type || match_eav_definition.html_type) === -1) {
             isValid = false;
             m_failure += `'options' can only applied for html_type ('select', 'multiselect').`;
         };
@@ -344,8 +346,8 @@ function validateCategoryEavModel (category_eav) {
                 };
                 let is_data_valid = mysqlutils.validateAttributeValue({
                     value: opt_item.option_value,
-                    data_type: category_eav.data_type,
-                    html_type: category_eav.html_type
+                    data_type: category_eav.data_type || match_eav_definition.data_type,
+                    html_type: category_eav.html_type || match_eav_definition.html_type
                 });
                 if (!is_data_valid) {
                     isValid = false;

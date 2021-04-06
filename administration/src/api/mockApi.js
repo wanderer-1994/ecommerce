@@ -631,6 +631,250 @@ async function createCategoryEavs (eavs) {
     }
 }
 
+// product
+
+// product eav
+// category eav
+async function getProductEavs () {
+    try {
+        let response = await axios({
+            method: "GET",
+            url: "/api/admin/product/eav"
+        });
+        console.log("live api: getProductEavs");
+        response.data.product_eavs = eavUtils.sortEavByPosition(response.data.product_eavs);
+        return response.data.product_eavs;
+    } catch (err) {
+        console.log("mocking: getProductEavs");
+        let response = {
+            "product_eavs": [
+                {
+                    "attribute_id": "images",
+                    "label": "Main Images",
+                    "referred_target": "cell phone S",
+                    "admin_only": 0,
+                    "html_type": "multiinput",
+                    "data_type": "varchar",
+                    "validation": null,
+                    "is_super": 0,
+                    "is_system": 0,
+                    "unit": "pcs"
+                },
+                {
+                    "attribute_id": "is_new",
+                    "label": "SP mới",
+                    "referred_target": null,
+                    "admin_only": 1,
+                    "html_type": "boolean",
+                    "data_type": "int",
+                    "validation": "0|1",
+                    "is_super": 1,
+                    "is_system": 1,
+                    "unit": null
+                },
+                {
+                    "attribute_id": "is_online",
+                    "label": "Online",
+                    "referred_target": null,
+                    "admin_only": 0,
+                    "html_type": "boolean",
+                    "data_type": "int",
+                    "validation": "0|1",
+                    "is_super": 1,
+                    "is_system": 1,
+                    "unit": null
+                },
+                {
+                    "attribute_id": "is_sale",
+                    "label": "For sale",
+                    "referred_target": null,
+                    "admin_only": 1,
+                    "html_type": "boolean",
+                    "data_type": "int",
+                    "validation": "0|1",
+                    "is_super": 0,
+                    "is_system": 0,
+                    "unit": null
+                },
+                {
+                    "attribute_id": "name",
+                    "label": "Product name",
+                    "referred_target": null,
+                    "admin_only": 0,
+                    "html_type": "input",
+                    "data_type": "varchar",
+                    "validation": null,
+                    "is_super": 1,
+                    "is_system": 1,
+                    "unit": null
+                },
+                {
+                    "attribute_id": "subsection",
+                    "label": "Tiểu mục",
+                    "referred_target": null,
+                    "admin_only": 1,
+                    "html_type": "multiinput",
+                    "data_type": "varchar",
+                    "validation": null,
+                    "is_super": 1,
+                    "is_system": 1,
+                    "unit": null
+                },
+                {
+                    "attribute_id": "sup_link",
+                    "label": "Supplier url",
+                    "referred_target": null,
+                    "admin_only": 1,
+                    "html_type": "input",
+                    "data_type": "varchar",
+                    "validation": null,
+                    "is_super": 1,
+                    "is_system": 0,
+                    "unit": null
+                },
+                {
+                    "attribute_id": "sup_name",
+                    "label": "Supplier product name",
+                    "referred_target": null,
+                    "admin_only": 1,
+                    "html_type": "input",
+                    "data_type": "varchar",
+                    "validation": null,
+                    "is_super": 1,
+                    "is_system": 0,
+                    "unit": null
+                },
+                {
+                    "attribute_id": "sup_price",
+                    "label": "Supplier price",
+                    "referred_target": null,
+                    "admin_only": 1,
+                    "html_type": "input",
+                    "data_type": "int",
+                    "validation": null,
+                    "is_super": 1,
+                    "is_system": 0,
+                    "unit": null
+                },
+                {
+                    "attribute_id": "sup_warranty",
+                    "label": "Supplier warranty",
+                    "referred_target": null,
+                    "admin_only": 1,
+                    "html_type": "input",
+                    "data_type": "varchar",
+                    "validation": null,
+                    "is_super": 1,
+                    "is_system": 0,
+                    "unit": null
+                },
+                {
+                    "attribute_id": "thumbnail",
+                    "label": "Thumbnail",
+                    "referred_target": null,
+                    "admin_only": 0,
+                    "html_type": "input",
+                    "data_type": "varchar",
+                    "validation": null,
+                    "is_super": 1,
+                    "is_system": 1,
+                    "unit": null
+                },
+                {
+                    "attribute_id": "timbre",
+                    "label": "Âm's vực",
+                    "referred_target": null,
+                    "admin_only": 0,
+                    "html_type": "multiselect",
+                    "data_type": "varchar",
+                    "validation": null,
+                    "is_super": 1,
+                    "is_system": 0,
+                    "unit": null,
+                    "options": [
+                        {
+                            "option_value": "trebel",
+                            "sort_order": 1
+                        },
+                        {
+                            "option_value": "mid",
+                            "sort_order": 2
+                        },
+                        {
+                            "option_value": "bass",
+                            "sort_order": 1
+                        }
+                    ]
+                }
+            ]
+        };
+        response.product_eavs = eavUtils.sortEavByPosition(response.product_eavs);
+        return response.product_eavs;
+    }
+}
+
+async function updateProductEavs (eavs) {
+    try {
+        let response = await axios({
+            method: "PUT",
+            url: "/api/admin/product/eav",
+            data: {
+                product_eavs: eavs
+            }
+        });
+        console.log("live api: updateProductEavs");
+        return response.data
+    } catch (err) {
+        console.log("mocking: updateProductEavs");
+        eavs.forEach(item => item.isSuccess = true);
+        let response = {
+            product_eavs: eavs
+        };
+        return response;
+    }
+}
+
+async function deleteProductEavs (eav_ids) {
+    try {
+        let response = await axios({
+            method: "DELETE",
+            url: "/api/admin/product/eav",
+            data: {
+                product_eav_ids: eav_ids
+            }
+        });
+        console.log("live api: deleteProductEavs");
+        return response.data
+    } catch (err) {
+        console.log("mocking: deleteProductEavs");
+        let response = {
+            isSuccess: true
+        };
+        return response;
+    }
+}
+
+async function createProductEavs (eavs) {
+    try {
+        let response = await axios({
+            method: "POST",
+            url: "/api/admin/product/eav",
+            data: {
+                product_eavs: eavs
+            }
+        });
+        console.log("live api: createProductEavs");
+        return response.data
+    } catch (err) {
+        console.log("mocking: createProductEavs");
+        eavs.forEach(item => item.isSuccess = true);
+        let response = {
+            product_eavs: eavs
+        };
+        return response;
+    }
+}
+
 export {
     adminAuth,
     adminLogout,
@@ -649,5 +893,9 @@ export {
     getCategoryEavs,
     updateCategoryEavs,
     deleteCategoryEavs,
-    createCategoryEavs
+    createCategoryEavs,
+    getProductEavs,
+    updateProductEavs,
+    deleteProductEavs,
+    createProductEavs
 }
