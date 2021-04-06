@@ -103,7 +103,6 @@ async function getProductEavs () {
 
 async function saveProductEav (product_eav, option) {
     try {
-        console.log(product_eav);
         let validation = validateProductEavModel(product_eav);
         if (validation.m_warning) {
             product_eav.m_warning = `WARNING: \n\t ${validation.m_warning}`;
