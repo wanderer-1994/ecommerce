@@ -3,7 +3,7 @@ import * as api from "../api/mockApi";
 import "../css/detail.css";
 import * as appFunction from "../utils/appFunction";
 import $ from "jquery";
-import EavRender from "../components/EavRender";
+import EavAttributeRender from "../components/EavAttributeRender";
 import * as CategoryModel from "../objectModels/CategoryModel";
 
 const category_entity_columns = [
@@ -292,7 +292,7 @@ function CategoryCreate(props) {
                             if (!Array.isArray(category.attributes)) category.attributes = [];
                             category.attributes.push(eav_value);
                         }
-                        return <EavRender key={index} eav_definition={eav_item} eav_value={eav_value} state={category} setState={setCategory} />
+                        return <EavAttributeRender key={index} eav_definition={eav_item} eav_value={eav_value} state={category} setState={setCategory} />
                     })}
                 </div>
             </div>

@@ -1,4 +1,4 @@
-import database_data_type from "../../objectModels/database_data_type";
+import database_data_type from "../objectModels/database_data_type";
 
 const html_types = [
     {

@@ -3,7 +3,7 @@
 import { Fragment } from "react";
 import * as eavValidation from "../objectModels/eav/eavValidation";
 import $ from "jquery";
-import InputOrTextarea from "../components/InputOrTexarea";
+import InputOrTextarea from "./InputOrTexarea";
 import Clear from "@material-ui/icons/Clear";
 import Add from "@material-ui/icons/Add";
 
@@ -260,7 +260,7 @@ const eav_html_type = [
     }
 ]
 
-function EavRender ({ eav_definition, eav_value, state, setState }) {
+function EavAttributeRender ({ eav_definition, eav_value, state, setState }) {
     let render_type = eav_html_type.find(item => item.html_type === eav_definition.html_type);
     return (
         <Fragment>
@@ -281,4 +281,4 @@ function EavRender ({ eav_definition, eav_value, state, setState }) {
     )
 }
 
-export default EavRender;
+export default EavAttributeRender;
