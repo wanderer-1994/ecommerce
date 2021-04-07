@@ -115,7 +115,7 @@ function convertDataType (value, data_type) {
     return value;
 }
 
-function validateAttributeValue ({value, data_type, html_type, validation}) {
+function validateValue ({value, data_type, html_type, validation}) {
     if (validation) {
         let regex = new RegExp(validation);
         if (!regex.test(value.toString())) return false;
@@ -143,5 +143,5 @@ module.exports = {
     buildProductEavIndexJson,
     isAttributeSearchable,
     convertDataType,
-    validateAttributeValue
+    validateValue
 }

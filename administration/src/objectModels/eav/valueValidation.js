@@ -3,7 +3,7 @@ const data_type_decimal = ['decimal'];
 const data_type_text = ['varchar', 'text', 'html'];
 
 // convert to appropriate data type since html input always returns string
-function converAttributeValue ({ value, data_type, html_type }) {
+function converValue ({ value, data_type, html_type }) {
     switch (html_type) {
         case "boolean":
             if (value == "0" || value === false) return 0;
@@ -43,7 +43,7 @@ function converAttributeValue ({ value, data_type, html_type }) {
     }
 }
 
-function validateAttributeValue ({ value, data_type, html_type, validation }) {
+function validateValue ({ value, data_type, html_type, validation }) {
     if (validation) {
         let regex = new RegExp(validation);
         if (!regex.test(value.toString())) return false;
@@ -68,6 +68,6 @@ function validateAttributeValue ({ value, data_type, html_type, validation }) {
 }
 
 export {
-    converAttributeValue,
-    validateAttributeValue
+    converValue,
+    validateValue
 }

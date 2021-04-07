@@ -1,4 +1,4 @@
-import * as eavValidation from "./eav/eavValidation";
+import * as valueValidation from "./eav/valueValidation";
 import database_data_type from "./database_data_type";
 
 const category_entity_columns = [{
@@ -41,7 +41,7 @@ const category_eav_columns = [{
     },
     {
         column: "value",
-        f_convert_value: eavValidation.converAttributeValue,
+        f_convert_value: valueValidation.converValue,
         f_validation: ({ attribute_id, value, data_type, html_type, validation, self }) => {
             self.valueInvalidMessage = "";
             if (value === null || value === "" || value === undefined) return true;
@@ -53,7 +53,7 @@ const category_eav_columns = [{
                 let isValid = true;
                 let invalid_values = [];
                 value.forEach(v_item => {
-                    if (!eavValidation.validateAttributeValue({ value: v_item, data_type, html_type, validation })) {
+                    if (!valueValidation.validateValue({ value: v_item, data_type, html_type, validation })) {
                         isValid = false;
                         invalid_values.push(v_item);
                     }
@@ -63,7 +63,7 @@ const category_eav_columns = [{
                 };
                 return isValid;
             };
-            if (!eavValidation.validateAttributeValue({ value, data_type, html_type, validation })) {
+            if (!valueValidation.validateValue({ value, data_type, html_type, validation })) {
                 self.valueInvalidMessage += `\n\t attribute '${attribute_id}' has invalid value.`;
                 return false;
             };

@@ -344,7 +344,7 @@ function validateCategoryEavModel (category_eav) {
                         return;
                     }
                 };
-                let is_data_valid = mysqlutils.validateAttributeValue({
+                let is_data_valid = mysqlutils.validateValue({
                     value: opt_item.option_value,
                     data_type: category_eav.data_type || match_eav_definition.data_type,
                     html_type: category_eav.html_type || match_eav_definition.html_type

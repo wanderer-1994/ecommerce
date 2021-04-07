@@ -1,6 +1,6 @@
 import { Fragment } from "react";
 import InputOrTextarea from "../components/InputOrTexarea";
-import * as eavValidation from '../objectModels/eav/eavValidation';
+import * as valueValidation from '../objectModels/eav/valueValidation';
 import Clear from "@material-ui/icons/Clear";
 import Add from "@material-ui/icons/Add";
 import { eav_entity_columns } from "../common/eavCommon";
@@ -50,12 +50,12 @@ function EavEntityRender ({ mode, eav, setEav }) {
                                             let isNull = !v_item || v_item.option_value === null || v_item.option_value === "" || v_item.option_value === undefined;
                                             // validation message
                                             let invalid_message = "";
-                                            let converted_value = eavValidation.converAttributeValue({
+                                            let converted_value = valueValidation.converValue({
                                                 value: v_item.option_value,
                                                 data_type: eav.data_type,
                                                 html_type: eav.html_type
                                             });
-                                            let validation = eavValidation.validateAttributeValue({
+                                            let validation = valueValidation.validateValue({
                                                 value: converted_value,
                                                 data_type: eav.data_type,
                                                 html_type: eav.html_type,

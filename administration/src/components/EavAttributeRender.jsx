@@ -1,7 +1,7 @@
 // html_types: 'input', 'multiinput', 'select', 'multiselect', 'password', 'boolean'
 // data_types: 'int', 'decimal', 'varchar', 'text', 'html', 'datetime'
 import { Fragment } from "react";
-import * as eavValidation from "../objectModels/eav/eavValidation";
+import * as valueValidation from "../objectModels/eav/valueValidation";
 import $ from "jquery";
 import InputOrTextarea from "./InputOrTexarea";
 import Clear from "@material-ui/icons/Clear";
@@ -26,12 +26,12 @@ const eav_html_type = [
             return (
                 <InputOrTextarea className={isNull ? "null" : ""} component_type={component_type} type="text" value={eav_value.value || ""} 
                     onChange={event => {
-                        let value = eavValidation.converAttributeValue({
+                        let value = valueValidation.converValue({
                             value: event.target.value,
                             data_type: eav_definition.data_type,
                             html_type: eav_definition.html_type
                         });
-                        let validation = eavValidation.validateAttributeValue({
+                        let validation = valueValidation.validateValue({
                             value: value,
                             data_type: eav_definition.data_type,
                             html_type: eav_definition.html_type,
@@ -74,12 +74,12 @@ const eav_html_type = [
                             <Fragment key={index}>
                                 <InputOrTextarea className={isNull ? "null" : ""} component_type={component_type} className="multiinput_item" type="text" value={v_item || ""} 
                                     onChange={event => {
-                                        let value = eavValidation.converAttributeValue({
+                                        let value = valueValidation.converValue({
                                             value: event.target.value,
                                             data_type: eav_definition.data_type,
                                             html_type: eav_definition.html_type
                                         });
-                                        let validation = eavValidation.validateAttributeValue({
+                                        let validation = valueValidation.validateValue({
                                             value: value,
                                             data_type: eav_definition.data_type,
                                             html_type: eav_definition.html_type,
@@ -212,12 +212,12 @@ const eav_html_type = [
             return (
                 <input className={isNull ? "null" : ""} type="password" value={eav_value.value || ""} 
                     onChange={event => {
-                        let value = eavValidation.converAttributeValue({
+                        let value = valueValidation.converValue({
                             value: event.target.value,
                             data_type: eav_definition.data_type,
                             html_type: eav_definition.html_type
                         });
-                        let validation = eavValidation.validateAttributeValue({
+                        let validation = valueValidation.validateValue({
                             value: value,
                             data_type: eav_definition.data_type,
                             html_type: eav_definition.html_type,

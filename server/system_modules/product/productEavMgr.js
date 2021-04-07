@@ -344,7 +344,7 @@ function validateProductEavModel (product_eav) {
                         return;
                     }
                 };
-                let is_data_valid = mysqlutils.validateAttributeValue({
+                let is_data_valid = mysqlutils.validateValue({
                     value: opt_item.option_value,
                     data_type: product_eav.data_type || match_eav_definition.data_type,
                     html_type: product_eav.html_type || match_eav_definition.html_type

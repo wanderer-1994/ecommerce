@@ -356,7 +356,7 @@ function validateCategoryAttributeValue (attribute, table_name) {
                 if (attribute.value[i] === null || attribute.value[i] === "" || attribute.value[i] === undefined) {
                     isValuesValid = false;
                 } else {
-                    isValuesValid = mysqlutils.validateAttributeValue({
+                    isValuesValid = mysqlutils.validateValue({
                         value: attribute.value[i],
                         data_type: attribute.data_type,
                         html_type: attribute.html_type,
@@ -369,7 +369,7 @@ function validateCategoryAttributeValue (attribute, table_name) {
     } else {
         // case attribute value is of type single_value: value must in (null, "", undefined, or a valid value)
         if (attribute.value !== null && attribute.value !== "" && attribute.value !== undefined) {
-            isValuesValid = mysqlutils.validateAttributeValue({
+            isValuesValid = mysqlutils.validateValue({
                 value: attribute.value,
                 data_type: attribute.data_type,
                 html_type: attribute.html_type,

@@ -1,6 +1,6 @@
 // attribute_id, label, referred_target, admin_only, html_type, data_type, vaidation, is_super, is_system, unit
 import database_data_type from "./database_data_type";
-import * as eavValidation from "./eav/eavValidation";
+import * as valueValidation from "./eav/valueValidation";
 const eav_columns = [
     {
         column: "attribute_id",
@@ -71,11 +71,11 @@ const eav_columns = [
 const option_columns = [
     {
         column: "option_value",
-        f_convert_value: eavValidation.converAttributeValue,
+        f_convert_value: valueValidation.converValue,
         f_validation: ({ value, data_type, html_type, validation, self }) => {
             self.valueInvalidMessage = "";
             if (value === null || value === "" || value === undefined) return true;
-            if (!eavValidation.validateAttributeValue({ value, data_type, html_type, validation })) {
+            if (!valueValidation.validateValue({ value, data_type, html_type, validation })) {
                 self.valueInvalidMessage += `\n\t invalid option_value '${value}' of type '${data_type}'${validation ? ` & validation '${validation}'` : ""}.`;
                 return false;
             };
