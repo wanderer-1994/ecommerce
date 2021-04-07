@@ -176,7 +176,7 @@ function CategoryEavCreate (props) {
                                                 html_type: eav.html_type,
                                                 validation: eav.validation
                                             });
-                                            if (v_item.option_value != "" && !validation) {
+                                            if (v_item.option_value != "" && !validation) { // eslint-disable-line
                                                 invalid_message =
                                                 <span>
                                                     Option must be of type <span className="hightlight">{eav.data_type}</span>
@@ -187,7 +187,7 @@ function CategoryEavCreate (props) {
                                                 <div className="input_value" key={index}
                                                     style={{display: "block"}}
                                                 >
-                                                    <InputOrTextarea className={isNull ? "null" : ""} component_type={component_type} className="multiinput_item" type="text" value={v_item.option_value || ""} 
+                                                    <InputOrTextarea className={`multiinput_item${isNull ? " null" : ""}`} component_type={component_type} type="text" value={v_item.option_value || ""} 
                                                         onChange={event => {
                                                             eav.options[index].option_value = event.target.value;
                                                             setEav({...eav})

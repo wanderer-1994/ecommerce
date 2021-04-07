@@ -209,7 +209,7 @@ const eav_entity_columns = [
         column_name: "Admin only",
         render: ({ self, state, setState }) => {
             let value = state[self.column];
-            if (value === true || value == 1) {
+            if (value === true || value == 1) { // eslint-disable-line
                 value = 1;
             } else {
                 value = 0;
@@ -230,7 +230,7 @@ const eav_entity_columns = [
         column_name: "Is super",
         render: ({ self, state, setState }) => {
             let value = state[self.column];
-            if (value === true || value == 1) {
+            if (value === true || value == 1) { // eslint-disable-line
                 value = 1;
             } else {
                 value = 0;
@@ -251,7 +251,7 @@ const eav_entity_columns = [
         column_name: "Is system",
         render: ({ self, state, setState }) => {
             let value = state[self.column];
-            if (value === true || value == 1) {
+            if (value === true || value == 1) { // eslint-disable-line
                 value = 1;
             } else {
                 value = 0;

@@ -18,7 +18,7 @@ function ProductEavDetail (props) {
 
     useEffect(() => {
         api.getProductEavs().then(product_eavs => {
-            let eav = product_eavs.find(item => item.attribute_id == props.match.params.entity_id) || {};
+            let eav = product_eavs.find(item => item.attribute_id == props.match.params.entity_id) || {}; // eslint-disable-line
             setEav(JSON.parse(JSON.stringify(eav)));
             setOriEav(JSON.parse(JSON.stringify(eav)));
             setIsLoaded(1);
@@ -106,7 +106,7 @@ function ProductEavDetail (props) {
             });
             api.getProductEavs()
             .then(product_eavs => {
-                let eav = product_eavs.find(item => item.attribute_id == props.match.params.entity_id) || {};
+                let eav = product_eavs.find(item => item.attribute_id == props.match.params.entity_id) || {}; // eslint-disable-line
                 setEav(JSON.parse(JSON.stringify(eav)));
                 setOriEav(JSON.parse(JSON.stringify(eav)));
             })
@@ -210,7 +210,7 @@ function ProductEavDetail (props) {
                                                             html_type: eav.html_type,
                                                             validation: eav.validation
                                                         });
-                                                        if (v_item.option_value != "" && !validation) {
+                                                        if (v_item.option_value != "" && !validation) { // eslint-disable-line
                                                             invalid_message =
                                                             <span>
                                                                 Option must be of type <span className="hightlight">{eav.data_type}</span>
@@ -221,7 +221,7 @@ function ProductEavDetail (props) {
                                                             <div className="input_value" key={index}
                                                                 style={{display: "block"}}
                                                             >
-                                                                <InputOrTextarea className={isNull ? "null" : ""} component_type={component_type} className="multiinput_item" type="text" value={v_item.option_value || ""} 
+                                                                <InputOrTextarea className={`multiinput_item${isNull ? " null" : ""}`} component_type={component_type} type="text" value={v_item.option_value || ""} 
                                                                     onChange={event => {
                                                                         eav.options[index].option_value = event.target.value;
                                                                         setEav({...eav})
