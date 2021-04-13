@@ -18,7 +18,7 @@ const product_entity_columns = [
         column: "type_id",
         valueInvalidMessage: `'type_id' must be enum (simple|master|variant|grouped|bundle)`,
         f_convert_value: database_data_type["NONE_EMPTY_STRING"].f_convert_value,
-        f_validation: function (value) {['simple', 'master', 'variant', 'grouped', 'bundle'].indexOf(value) !== -1}
+        f_validation: (value) => ['simple', 'master', 'variant', 'grouped', 'bundle'].indexOf(value) !== -1
     },
     {
         column: "parent",
@@ -248,9 +248,9 @@ function validateProductModel (product) {
             break;
     };
 
-    if (isValid && Array.isArray(category.attributes)) {
+    if (isValid && Array.isArray(product.attributes)) {
         // delete remnant fields of eav attributes
-        category.attributes.forEach(attribute => {
+        product.attributes.forEach(attribute => {
             Object.keys(attribute).forEach(key => {
                 if (["attribute_id", "value"].indexOf(key) === -1) {
                     delete attribute[key];

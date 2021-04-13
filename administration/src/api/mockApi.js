@@ -18,15 +18,35 @@ async function adminSearchProduct() {
 }
 
 // product
-async function createProducts() {
+async function createProductEntities () {
 
 }
 
-async function updateProducts() {
-
+async function updateProductEntities (product_entities) {
+    try {
+        let response = await axios({
+            method: "PUT",
+            url: "/api/admin/product",
+            data: {
+                product_entities: product_entities
+            }
+        });
+        console.log("live api: updateproductEntities");
+        return response.data;
+    } catch (err) {
+        console.log("mocking: updateProductEntities");
+        return {
+            "product_entities": [
+                {
+                    ...product_entities[0],
+                    "isSuccess": true
+                }
+            ]
+        }
+    }
 }
 
-async function deleteProducts(entity_ids) {
+async function deleteProductEntities (entity_ids) {
     try {
         let response = await axios({
             method: "DELETE",
@@ -949,9 +969,9 @@ export {
     adminAuth,
     adminLogout,
     adminSearchProduct,
-    createProducts,
-    updateProducts,
-    deleteProducts,
+    createProductEntities,
+    updateProductEntities,
+    deleteProductEntities,
     getProductEntityOnly,
     initProducts,
     updateSupInfo,
