@@ -6,7 +6,7 @@ const {
     createSystemErrMessage,
 } = require("../../system_modules/functions");
 const {
-    items_per_page
+    psize
 } = require("../../system_modules/const/config");
 
 router.get("/product", async (req, res) => {

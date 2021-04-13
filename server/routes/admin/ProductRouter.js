@@ -7,7 +7,7 @@ const {
     unescapeSelectedData
 } = require("../../system_modules/functions");
 const {
-    items_per_page
+    psize
 } = require("../../system_modules/const/config");
 const productMgr = require("../../system_modules/product/productMgr");
 const search = require("../../system_modules/search/search");
@@ -19,6 +19,32 @@ router.get("/product", async (req, res) => {
     // req.query= {page, categories, entity_ids, refinements, searchPhrase}
     // res.json({products: [], Alert: [], currentPage: number, totalPages: number})
     try{
+        // admin get entity_only
+        if (req.query.entity_only === "true") {
+            let page = req.query.page;
+            let items = req.query.psize;
+            if (parseInt(page) != page || page < 1) {
+                page = 1;
+            };
+            if (parseInt(items) != items || items < 1) {
+                items = psize;
+            };
+            page = parseInt(page);
+            items = parseInt(items);
+            let searchResult = await productMgr.getProductEntityOnly({
+                entity_ids: (req.query.entity_ids || "").split("|").filter(item => item.replace(/^\s+|\s+$/g, "") !== ""),
+                searchConfig: {
+                    searchPhrase: (req.query.keyword || "").replace(/^\s+|\s+$/g, "")
+                },
+                pagination: {
+                    page: page,
+                    psize: items
+                }
+            });
+            return res.json(searchResult)
+        };
+
+        // admin get full product attributes
         let refinements = search.extractRefinements(req);
         refinements.forEach((attribute, index) => {
             let match = msClient.productEav.find(m_item => m_item.attribute_id == attribute.attribute_id && m_item.admin_only != 1);
@@ -55,6 +81,7 @@ router.get("/product", async (req, res) => {
             res.json(searchResult);
         }
     }catch(err){
+        console.log(err);
         res.Alert.push(createSystemErrMessage(001))
         res.json({Alert: res.Alert});
     }
@@ -123,7 +150,7 @@ router.delete("/product", async (req, res) => {
     // req.body:    {entity_ids: []}
     // res.json({isSuccess: boolean, Alert: []})
     try{
-        let entity_ids = req.entity_ids || [];
+        let entity_ids = req.body.product_ids || [];
         let result = await productMgr.deleteProductEntities(entity_ids);
         res.json({
             isSuccess: true,

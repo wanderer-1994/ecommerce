@@ -502,7 +502,7 @@ async function searchProduct () {
         "totalPages": 1,
         "totalFound": 1,
         "send": 1,
-        "items_per_page": 24,
+        "psize": 24,
         "products": [
             {
                 "product_id": "PR0001",

@@ -2,7 +2,7 @@ const mysqlutils = require("../mysql/mysqlutils");
 const fulltextSearch = require("./fulltextSearch");
 const msClient = require("../mysql/mysql");
 const { getProductEavTableName } = require("../product/product_eav_table");
-const { items_per_page } = require("../const/config");
+const { psize } = require("../const/config");
 const productEntityInheritFields = ["product_id", "entity_id", "type_id", "created_at", "updated_at"];
 const productEntityPropsAsAttributes = [
     {
@@ -549,10 +549,10 @@ async function search (searchConfig) {
     let currentPage = parseInt(searchConfig.page);
     if(isNaN(currentPage) || currentPage < 1) currentPage = 1;
     let totalFound = products.length;
-    let totalPages = Math.ceil(products.length/items_per_page);
+    let totalPages = Math.ceil(products.length/psize);
     if(currentPage > totalPages) currentPage = totalPages;
-    let slice_start = (currentPage - 1)*items_per_page;
-    let slice_end = currentPage*items_per_page;
+    let slice_start = (currentPage - 1)*psize;
+    let slice_end = currentPage*psize;
     products = products.slice(slice_start, slice_end);
     products = await getDetailProducts(products, {isAdmin: searchConfig && searchConfig.isAdmin ? searchConfig.isAdmin : null});
     return {
@@ -560,7 +560,7 @@ async function search (searchConfig) {
         totalPages: totalPages,
         totalFound: totalFound,
         send: products.length,
-        items_per_page: items_per_page,
+        psize: psize,
         products: products
     }
 }

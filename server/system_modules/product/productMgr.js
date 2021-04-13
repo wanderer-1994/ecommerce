@@ -449,6 +449,54 @@ async function deleteProductEntities (product_ids) {
     return result;
 };
 
+async function getProductEntityOnly ({ entity_ids, searchConfig, pagination }) {
+    try {
+        let sql_search_product =
+        `
+        SELECT \`pe\`.*, \`pev\`.value AS \`name\`
+        FROM \`ecommerce\`.product_entity AS \`pe\`
+        LEFT JOIN \`ecommerce\`.product_eav_varchar AS \`pev\`
+        ON \`pev\`.attribute_id = "name" AND \`pev\`.entity_id = \`pe\`.entity_id
+        `;
+        if (entity_ids.length > 0 && searchConfig.searchPhrase.length > 0) {
+            sql_search_product +=
+            `
+            WHERE \`pe\`.entity_id IN (${entity_ids.map(item => `"${mysqlutils.escapeQuotes(item)}"`).join(", ")})
+            AND UPPER(\`pev\`.value) LIKE "%${mysqlutils.escapeQuotes(searchConfig.searchPhrase.toUpperCase())}%";
+            `;
+        } else if (entity_ids.length > 0) {
+            sql_search_product +=
+            `
+            WHERE \`pe\`.entity_id IN (${entity_ids.map(item => `"${mysqlutils.escapeQuotes(item)}"`).join(", ")});
+            `;
+        } else if (searchConfig.searchPhrase.length > 0) {
+            sql_search_product +=
+            `
+            WHERE UPPER(\`pev\`.value) LIKE "%${mysqlutils.escapeQuotes(searchConfig.searchPhrase.toUpperCase())}%";
+            `;
+        } else {
+            sql_search_product += `;`;
+        }
+        let products = await msClient.promiseQuery(sql_search_product);
+        let totalFound = products.length;
+        let totalPages = Math.ceil(products.length/pagination.psize);
+        if(pagination.page > totalPages) pagination.page = totalPages;
+        let slice_start = (pagination.page - 1) * pagination.psize;
+        let slice_end = pagination.page * pagination.psize;
+        products = products.slice(slice_start, slice_end);
+        return {
+            currentPage: pagination.page,
+            totalPages: totalPages,
+            totalFound: totalFound,
+            send: products.length,
+            psize: pagination.psize,
+            products: products
+        }
+    } catch (err) {
+        throw err;
+    }
+}
+
 function validateProductEntity (product) {
     let isValid = true;
     let m_failure = "";
@@ -581,5 +629,6 @@ function validateTierPrice (price) {
 
 module.exports = {
     saveProductEntity,
-    deleteProductEntities
+    deleteProductEntities,
+    getProductEntityOnly
 }

@@ -3,7 +3,7 @@
     "totalPages": 5,
     "totalFound": 105,
     "send": 24,
-    "items_per_page": 24,
+    "psize": 24,
     "products": [
         {
             "product_id": "PR0001",

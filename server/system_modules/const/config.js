@@ -1,5 +1,5 @@
-const items_per_page = 24;
+const psize = 24;
 
 module.exports = {
-    items_per_page
+    psize
 }

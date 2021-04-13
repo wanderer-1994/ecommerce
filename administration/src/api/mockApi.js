@@ -18,7 +18,7 @@ async function adminSearchProduct() {
 }
 
 // product
-async function addProducts() {
+async function createProducts() {
 
 }
 
@@ -26,8 +26,23 @@ async function updateProducts() {
 
 }
 
-async function deleteProducts() {
-
+async function deleteProducts(entity_ids) {
+    try {
+        let response = await axios({
+            method: "DELETE",
+            url: "/api/admin/product",
+            data: {
+                product_ids: entity_ids
+            }
+        });
+        console.log("live api: updateCategories");
+        return response.data;
+    } catch (err) {
+        console.log("mocking: deleteProducts");
+        return {
+            isSuccess: true
+        }
+    }
 }
 
 async function initProducts() {
@@ -632,6 +647,61 @@ async function createCategoryEavs (eavs) {
 }
 
 // product
+async function getProductEntityOnly (config) {
+    try {
+        let entity_ids;
+        let keyword;
+        let page;
+        let psize;
+        if (config.entity_ids && config.entity_ids.length > 0) {
+            entity_ids = config.entity_ids.join("|");
+        }
+        if (config.keyword && config.keyword.replace(/^\s+|\s+$/g, "") !== "") {
+            keyword = config.keyword;
+        }
+        if (parseInt(config.page) == config.page && parseInt(config.page) > 0) {
+            page = parseInt(config.page);
+        }
+        if (parseInt(config.psize) == config.psize && parseInt(config.psize) > 0) {
+            psize = parseInt(config.psize);
+        };
+        let url = `api/admin/product?entity_only=true${entity_ids ? `&entity_ids=${entity_ids}` : ""}${keyword ? `&keyword=${keyword}` : ""}${page ? `&page=${page}` : ""}${psize ? `&psize=${psize}` : ""}`;
+        let response = await axios({
+            method: "GET",
+            url: url
+        });
+        console.log("live api: getProductEntityOnly");
+        return response.data;
+    } catch (err) {
+        console.log(err);
+        console.log("mocking: getProductEntityOnly");
+        return {
+            "currentPage": 1,
+            "totalPages": 1,
+            "totalFound": 2,
+            "send": 2,
+            "psize": 24,
+            "products": [
+                {
+                    "entity_id": "PR0005",
+                    "type_id": "simple",
+                    "parent": null,
+                    "created_at": 1617854798283,
+                    "updated_at": 1617854798283,
+                    "name": "USB 3.0 64G HOCO UD8 Type-C Chính hãng"
+                },
+                {
+                    "entity_id": "PR0010",
+                    "type_id": "simple",
+                    "parent": null,
+                    "created_at": 1617854798283,
+                    "updated_at": 1617854798283,
+                    "name": "Cáp sạc nhanh HOCO X21 Plus Type-C (Silicone, 3.0A, 1m)"
+                }
+            ]
+        };
+    }
+}
 
 // product eav
 // category eav
@@ -879,9 +949,10 @@ export {
     adminAuth,
     adminLogout,
     adminSearchProduct,
-    addProducts,
+    createProducts,
     updateProducts,
     deleteProducts,
+    getProductEntityOnly,
     initProducts,
     updateSupInfo,
     adminSearchOrder,

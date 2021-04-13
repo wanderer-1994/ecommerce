@@ -26,6 +26,12 @@ const appAlertModel = { // eslint-disable-line
 function AppAlert (props) {
     let appAlert = props.appAlert;
 
+    if (appAlert) {
+        $("body").css("overflow", "hidden");
+    } else {
+        $("body").css("overflow", "");
+    }
+
     if (appAlert && appAlert.timeOut) {
         setTimeout(() => {
             $(".app-alert").addClass("inactive");

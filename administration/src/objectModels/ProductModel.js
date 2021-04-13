@@ -1,3 +1,88 @@
+import * as valueValidation from "./eav/valueValidation";
+import database_data_type from "./database_data_type";
+
+const product_entity_columns = [
+    {
+        column: "entity_id",
+        valueInvalidMessage: `'entity_id' must be none-empty string`,
+        f_convert_value: database_data_type["NONE_EMPTY_STRING"].f_convert_value,
+        f_validation: database_data_type["NONE_EMPTY_STRING"].f_validation
+    },
+    {
+        column: "name",
+        valueInvalidMessage: `'name' must be none-empty string`,
+        f_convert_value: database_data_type["NONE_EMPTY_STRING"].f_convert_value,
+        f_validation: database_data_type["NONE_EMPTY_STRING"].f_validation,
+    },
+    {
+        column: "type_id",
+        valueInvalidMessage: `'type_id' must be enum (simple|master|variant|grouped|bundle)`,
+        f_convert_value: database_data_type["NONE_EMPTY_STRING"].f_convert_value,
+        f_validation: function (value) {['simple', 'master', 'variant', 'grouped', 'bundle'].indexOf(value) !== -1}
+    },
+    {
+        column: "parent",
+        valueInvalidMessage: `'parent' must be none-empty string`,
+        f_convert_value: database_data_type["NONE_EMPTY_STRING"].f_convert_value,
+        f_validation: database_data_type["NONE_EMPTY_STRING"].f_validation
+    },
+    {
+        column: "created_at",
+        valueInvalidMessage: `'created_at' must be type datetime`,
+        f_convert_value: database_data_type["NONE_NEGATIVE_INT"].f_convert_value,
+        f_validation: database_data_type["NONE_NEGATIVE_INT"].f_validation
+    },
+    {
+        column: "updated_at",
+        valueInvalidMessage: `'updated-at' must be type datetime`,
+        f_convert_value: database_data_type["NONE_NEGATIVE_INT"].f_convert_value,
+        f_validation: database_data_type["NONE_NEGATIVE_INT"].f_validation
+    }
+];
+
+const product_eav_columns = [
+    {
+        column: "attribute_id",
+        f_convert_value: function({ value }) {
+            return database_data_type["NONE_EMPTY_STRING"].f_convert_value(value);
+        },
+        f_validation: ({ value }) => { return database_data_type["NONE_EMPTY_STRING"].f_validation(value) },
+        valueInvalidMessage: "'attribute_id' must be none-empty string."
+    },
+    {
+        column: "value",
+        f_convert_value: valueValidation.converValue,
+        f_validation: ({ attribute_id, value, data_type, html_type, validation, self }) => {
+            self.valueInvalidMessage = "";
+            if (value === null || value === "" || value === undefined) return true;
+            if (["multiinput", "multiselect"].indexOf(html_type) !== -1 && !Array.isArray(value)) {
+                self.valueInvalidMessage += `\n\t attribute '${attribute_id}' must have value of type array.`
+                return false;
+            };
+            if (Array.isArray(value)) {
+                let isValid = true;
+                let invalid_values = [];
+                value.forEach(v_item => {
+                    if (!valueValidation.validateValue({ value: v_item, data_type, html_type, validation })) {
+                        isValid = false;
+                        invalid_values.push(v_item);
+                    }
+                });
+                if (!isValid) {
+                    self.valueInvalidMessage += `\n\t attribute '${attribute_id}' contains invalid value ${invalid_values.map(item => `'${item}'`).join(", ")}.`
+                };
+                return isValid;
+            };
+            if (!valueValidation.validateValue({ value, data_type, html_type, validation })) {
+                self.valueInvalidMessage += `\n\t attribute '${attribute_id}' has invalid value.`;
+                return false;
+            };
+            return true;
+        },
+        valueInvalidMessage: ""
+    }
+];
+
 function getGallerry (product) {
     let temp = [];
     let gallerry = [];
@@ -81,9 +166,109 @@ function getName (product, entity_id) {
     return result;
 }
 
-module.exports = {
+function validateProductModel (product) {
+    let isValid = true;
+    let m_failure = "";
+    product_entity_columns.forEach(col_item => {
+        switch (product[col_item.column]) {
+            case undefined:
+                delete product[col_item.column];
+                break;
+            case null:
+            case "":
+                break;
+            default:
+                if (col_item.f_convert_value) {
+                    product[col_item.column] = col_item.f_convert_value(product[col_item.column]);
+                };
+                if (!col_item.f_validation(product[col_item.column])) {
+                    isValid = false;
+                    m_failure += `\n\t Invalid entity property: ${col_item.valueInvalidMessage}.`
+                }
+                break;
+        };
+    });
+
+    switch (product.attributes) {
+        case null:
+        case "":
+        case undefined:
+            delete product.attributes;
+            break;
+        default:
+            if (!Array.isArray(product.attributes)) {
+                isValid = false;
+                m_failure += `\n\t 'attributes' must be an array containing attribute items.`;
+                break;
+            };
+            for (let i = 0; i < product.attributes.length; i++) {
+                let attr_item = product.attributes[i];
+                if (attr_item.attribute_id === null || attr_item.attribute_id === "" || attr_item.attribute_id === undefined) {
+                    isValid = false;
+                    m_failure += "'attribute_id' must not be empty.";
+                    continue;
+                };
+                if (attr_item.value === undefined) {
+                    product.attributes.splice(i, 1);
+                    i -= 1;
+                    continue;
+                };
+                if (attr_item.value === null || attr_item.value === "") continue;
+                /*eslint-disable */
+                product_eav_columns.forEach(col_item => {
+                    switch (attr_item[col_item.column]) {
+                        case null:
+                        case "":
+                        case undefined:
+                            break;
+                        default:
+                            if (col_item.f_convert_value) {
+                                attr_item[col_item.column] = col_item.f_convert_value({
+                                    value: attr_item[col_item.column],
+                                    data_type: attr_item.data_type,
+                                    html_type: attr_item.html_type
+                                });
+                            };
+                            if (!col_item.f_validation({
+                                attribute_id: attr_item.attribute_id,
+                                value: attr_item[col_item.column],
+                                html_type: attr_item.html_type,
+                                data_type: attr_item.data_type,
+                                validation: attr_item.validation,
+                                self: col_item
+                            })) {
+                                isValid = false;
+                                m_failure += `\n\t ${col_item.valueInvalidMessage}`;
+                            }
+                            break;
+                    }
+                })
+                /*eslint-enable */
+            };
+            break;
+    };
+
+    if (isValid && Array.isArray(category.attributes)) {
+        // delete remnant fields of eav attributes
+        category.attributes.forEach(attribute => {
+            Object.keys(attribute).forEach(key => {
+                if (["attribute_id", "value"].indexOf(key) === -1) {
+                    delete attribute[key];
+                }
+            })
+        })
+    };
+
+    return {
+        isValid: isValid,
+        m_failure: m_failure
+    };
+}
+
+export {
     getGallerry,
     getThumbnail,
     getTierPrice,
-    getName
+    getName,
+    validateProductModel
 }

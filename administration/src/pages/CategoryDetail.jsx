@@ -301,7 +301,7 @@ function CategoryDetail (props) {
     return (
         <div className="category-detail">
             <div className="title">
-                <h3>{props.title}{category && category.name ? <span>: <span style={{fontStyle: "italic", color: "var(--colorSuccess)"}}>{category.name}</span></span> : ""}</h3>
+                <h3>{props.title}{ori_category && ori_category.name ? <span>: <span style={{fontStyle: "italic", color: "var(--colorSuccess)"}}>{ori_category.name}</span></span> : ""}</h3>
                 <button className="warning float large"
                     onClick={submitUpdateCategory}
                 >Update</button>

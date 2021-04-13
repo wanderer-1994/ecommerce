@@ -141,7 +141,7 @@ function CategoryEavDetail (props) {
     return (
         <div className="category-eav-detail">
             <div className="title">
-                <h3>{props.title} {eav && eav.label ? <span>: <span style={{fontStyle: "italic", color: "var(--colorSuccess)"}}>{eav.label}</span></span> : null}</h3>
+                <h3>{props.title} {ori_eav && ori_eav.label ? <span>: <span style={{fontStyle: "italic", color: "var(--colorSuccess)"}}>{ori_eav.label}</span></span> : null}</h3>
                 <button className="warning float large"
                     onClick={submitUpdateEav}
                 >Update</button>
