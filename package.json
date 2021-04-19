@@ -1,0 +1,23 @@
+{
+  "name": "ecommerce",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "concurrently \"cd server && nodemon server.js\" \"cd administration && npm start\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wanderer-1994/ecommerce.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wanderer-1994/ecommerce/issues"
+  },
+  "homepage": "https://github.com/wanderer-1994/ecommerce#readme",
+  "devDependencies": {
+    "concurrently": "^6.0.2"
+  }
+}
