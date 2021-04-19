@@ -5,6 +5,9 @@ import * as appFunction from "../utils/appFunction";
 import $ from "jquery";
 import EavAttributeRender from "../components/EavAttributeRender";
 import * as ProductModel from "../objectModels/ProductModel";
+import Parent from "./product/Parent";
+import Variant from "./product/Variant";
+import CategoryAssignment from "./product/CategoryAssignment";
 
 const product_columns = [
     {
@@ -227,13 +230,19 @@ function ProductDetail (props) {
                             </div>
                             {productEntity.type_id === "variant" ? (
                                 <div className="section-item parent">
-                                
+                                    <Parent productEntity setProductEntity />
                                 </div>
                             ) : null}
                             {productEntity.type_id === "master" ? (
-                                <div className="section-item variants">Variants</div>
+                                <div className="section-item variants">
+                                    <Variant productEntity setProductEntity />
+                                </div>
                             ) : null}
-                            <div className="section-item categories">Categories</div>
+                            {productEntity.type_id !== "variant" ? (
+                                <div className="section-item categories">
+                                    <CategoryAssignment productEntity setProductEntity />
+                                </div>
+                            ) : null}
                         </div>
                     </Fragment>
                 )}
