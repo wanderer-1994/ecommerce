@@ -145,7 +145,7 @@ async function saveCategoryEntity (category, option) {
                     `
                     UPDATE \`ecommerce\`.category_entity SET ${sqltb_category_entity.map(col_item => {
                         if (col_item.column === "entity_id") return null;
-                        return `${col_item.column} = "${mysqlutils.escapeQuotes(category[col_item.column])}"`
+                        return `${col_item.column} = ${mysqlutils.isEmptyValue(category[col_item.column]) ? "NULL" : `"${mysqlutils.escapeQuotes(category[col_item.column])}"`}`
                     }).filter(item => item !== null).join(", ")}
                     WHERE entity_id = "${mysqlutils.escapeQuotes(category.entity_id)}";
                     `

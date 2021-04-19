@@ -211,9 +211,11 @@ function ProductDetail (props) {
                                         onClick={event => switchSection(event)}
                                     >Variants</span>
                                 ) : null}
-                                <span className="item" data-binding="categories"
-                                    onClick={event => switchSection(event)}
-                                >Categories</span>
+                                {productEntity.type_id !== "variant" ? (
+                                    <span className="item" data-binding="categories"
+                                        onClick={event => switchSection(event)}
+                                    >Categories</span>
+                                ) : null}
                             </h4>
                             <div className="section-item attributes active">
                                 {productEavs.map((eav_item, index) => {

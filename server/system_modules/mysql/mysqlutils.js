@@ -136,6 +136,10 @@ function validateValue ({value, data_type, html_type, validation}) {
     return true;
 }
 
+function isEmptyValue (value) {
+    return value === null || value === undefined || value === "";
+}
+
 module.exports = {
     separateSQL,
     groupByAttribute,
@@ -143,5 +147,6 @@ module.exports = {
     buildProductEavIndexJson,
     isAttributeSearchable,
     convertDataType,
-    validateValue
+    validateValue,
+    isEmptyValue
 }

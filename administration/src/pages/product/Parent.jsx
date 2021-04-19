@@ -1,5 +1,5 @@
 function Parent ({ productEntity, setProductEntity }) {
-    retur (
+    return (
         <div>Parent section</div>
     )
 }
