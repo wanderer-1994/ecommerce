@@ -1,6 +1,7 @@
 import axios from "axios";
 import * as categoryModel from "../objectModels/CategoryModel";
 import * as eavUtils from "../objectModels/eavUtils";
+import queryString from "query-string";
 
 axios.defaults.baseURL = "http://localhost:4000";
 
@@ -13,11 +14,184 @@ async function adminLogout(admin_cookie) {
 
 }
 
-async function adminSearchProduct() {
-
+// product
+async function adminSearchProduct(config) {
+    try {
+        let query = queryString.stringify(config);
+        let response = await axios({
+            method: "GET",
+            url: `/api/admin/product?${query}`
+        });
+        return response.data;
+    } catch (err) {
+        console.log("mocking: adminSearchProduct");
+        return {
+            "currentPage": 1,
+            "totalPages": 1,
+            "totalFound": 1,
+            "send": 1,
+            "psize": 24,
+            "products": [
+                {
+                    "product_id": "PR0002",
+                    "type_id": "simple",
+                    "self": {
+                        "entity_id": "PR0002",
+                        "product_id": "PR0002",
+                        "type_id": "simple",
+                        "created_at": 1618333200000,
+                        "updated_at": 1618336254250,
+                        "tier_price": 145000,
+                        "available_quantity": 1,
+                        "categories": [
+                            {
+                                "category_id": "storage",
+                                "position": 0
+                            }
+                        ],
+                        "attributes": [
+                            {
+                                "attribute_id": "is_new",
+                                "label": "SP mới",
+                                "referred_target": null,
+                                "admin_only": 1,
+                                "html_type": "boolean",
+                                "data_type": "int",
+                                "validation": "0|1",
+                                "is_super": 1,
+                                "is_system": 1,
+                                "unit": null,
+                                "value": 1
+                            },
+                            {
+                                "attribute_id": "is_online",
+                                "label": "Online",
+                                "referred_target": null,
+                                "admin_only": 0,
+                                "html_type": "boolean",
+                                "data_type": "int",
+                                "validation": "0|1",
+                                "is_super": 1,
+                                "is_system": 1,
+                                "unit": null,
+                                "value": 0
+                            },
+                            {
+                                "attribute_id": "sup_price",
+                                "label": "Supplier price",
+                                "referred_target": null,
+                                "admin_only": 1,
+                                "html_type": "input",
+                                "data_type": "int",
+                                "validation": null,
+                                "is_super": 1,
+                                "is_system": 0,
+                                "unit": null,
+                                "value": 145000
+                            },
+                            {
+                                "attribute_id": "name",
+                                "label": "Product name",
+                                "referred_target": null,
+                                "admin_only": 0,
+                                "html_type": "input",
+                                "data_type": "varchar",
+                                "validation": null,
+                                "is_super": 1,
+                                "is_system": 1,
+                                "unit": null,
+                                "value": "USB 3.0 16G HOCO UD5 Chính hãng"
+                            },
+                            {
+                                "attribute_id": "sup_link",
+                                "label": "Supplier url",
+                                "referred_target": null,
+                                "admin_only": 1,
+                                "html_type": "input",
+                                "data_type": "varchar",
+                                "validation": null,
+                                "is_super": 1,
+                                "is_system": 0,
+                                "unit": null,
+                                "value": "https://phatdatcomputer.vn/san-pham/usb-30-16g-hoco-ud5-chinh-hang"
+                            },
+                            {
+                                "attribute_id": "sup_name",
+                                "label": "Supplier product name",
+                                "referred_target": null,
+                                "admin_only": 1,
+                                "html_type": "input",
+                                "data_type": "varchar",
+                                "validation": null,
+                                "is_super": 1,
+                                "is_system": 0,
+                                "unit": null,
+                                "value": "USB 3.0 16G HOCO UD5 Chính hãng"
+                            },
+                            {
+                                "attribute_id": "sup_warranty",
+                                "label": "Supplier warranty",
+                                "referred_target": null,
+                                "admin_only": 1,
+                                "html_type": "input",
+                                "data_type": "varchar",
+                                "validation": null,
+                                "is_super": 1,
+                                "is_system": 0,
+                                "unit": null,
+                                "value": "12T"
+                            },
+                            {
+                                "attribute_id": "thumbnail",
+                                "label": "Thumbnail",
+                                "referred_target": null,
+                                "admin_only": 0,
+                                "html_type": "input",
+                                "data_type": "varchar",
+                                "validation": null,
+                                "is_super": 1,
+                                "is_system": 1,
+                                "unit": null,
+                                "value": "https://phatdatcomputer.vn/upload/product/usb-hoco-16gb-ud5-30-chinh-hang1568793534_250x250.jpg"
+                            },
+                            {
+                                "attribute_id": "subsection",
+                                "label": "Tiểu mục",
+                                "referred_target": null,
+                                "admin_only": 1,
+                                "html_type": "multiinput",
+                                "data_type": "varchar",
+                                "validation": null,
+                                "is_super": 1,
+                                "is_system": 1,
+                                "unit": null,
+                                "value": [
+                                    "usb"
+                                ]
+                            },
+                            {
+                                "attribute_id": "images",
+                                "label": "Main images",
+                                "referred_target": null,
+                                "admin_only": 0,
+                                "html_type": "multiinput",
+                                "data_type": "varchar",
+                                "validation": null,
+                                "is_super": 1,
+                                "is_system": 1,
+                                "unit": null,
+                                "value": [
+                                    "https://phatdatcomputer.vn/upload/product/usb-hoco-16gb-ud5-30-chinh-hang1568793534.jpg"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    }
 }
 
-// product
 async function createProductEntities () {
 
 }

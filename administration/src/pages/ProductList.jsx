@@ -23,7 +23,7 @@ const product_entity_columns = [
         render: ({ self, prod_item, index, isNull }) => {
             return (
                 <td style={self.td_style} className={`td_input ${self.align} key ${isNull}`} key={index}>
-                    <Link to={`/category/${prod_item.entity_id}`} target="_blank">
+                    <Link to={`/product/${prod_item.entity_id}`} target="_blank">
                         <input disabled type={self.data_type} value={prod_item[self.column] || ""} />
                     </Link>
                 </td>

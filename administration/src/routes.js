@@ -127,7 +127,8 @@ const routes = [
         component: ProductDetail,
         ref_name: "Product detail",
         showOnNavbar: false,
-        showOnSidebar: false
+        showOnSidebar: false,
+        title: "Product Detail"
     },
     {
         path: "/product",

@@ -265,10 +265,23 @@ function validateProductModel (product) {
     };
 }
 
+function extractProductEntity ({ product, entity_id }) {
+    let entities = [...(product.variants || [])];
+    if (product.self) {
+        entities.push(product.self);
+    };
+    if (product.parent) {
+        entities.push(product.parent);
+    }
+    let entity = entities.find(item => item.entity_id === entity_id) || {};
+    return entity;
+}
+
 export {
     getGallerry,
     getThumbnail,
     getTierPrice,
     getName,
-    validateProductModel
+    validateProductModel,
+    extractProductEntity
 }
