@@ -1,7 +1,8 @@
 import { Fragment, useEffect, useState } from "react";
 import * as api from "../../api/mockApi";
+import * as ProductModel from "../../objectModels/ProductModel";
 
-function CategoryAssignment ({ productEntity, setProductEntity }) {
+function CategoryAssignment ({ productEntity, setProductEntity, ori_product }) {
 
     const [categories, setCategories] = useState({});
     const [isLoaded, setIsLoaded] = useState(0);
@@ -15,14 +16,16 @@ function CategoryAssignment ({ productEntity, setProductEntity }) {
         })
     }, [])
 
-    function renderOptionValue (category, level) {
+    function renderOptionValue (category, level, index) {
         return (
-            <Fragment>
-                <option style={{paddingLeft: `${level * 10}px`}} value={category.entity_id}>
+            <Fragment key={index}>
+                <option value={category.entity_id}
+                    style={{paddingLeft: `${level === 0 ? 5 : level * 10}px`, paddingRight: "10px"}}
+                >
                     {level > 0 ? "l_" : ""}{category.name}
                 </option>
-                {(category.children || []).map(item => {
-                    return renderOptionValue(item, level + 1);
+                {(category.children || []).map((item, index) => {
+                    return renderOptionValue(item, level + 1, index);
                 })}
             </Fragment>
         )
@@ -34,11 +37,29 @@ function CategoryAssignment ({ productEntity, setProductEntity }) {
                 <div>Loading</div>
             ) : (
                 <div>
-                    <select multiple value={(productEntity.categories || []).map(item => item.category_id)}>
-                        <option value="">------</option>
-                        {(categories.structured || []).map(item => {
+                    <select multiple style={{height: `${(categories.categories || []).length*17 + 17}px`}}
+                        value={(productEntity.categories || []).map(item => item.category_id)}
+                        onChange={event => {
+                            let selected = Array.from(event.target.selectedOptions, option => option.value);
+                            let ori_entity = ProductModel.extractProductEntity({
+                                product: ori_product,
+                                entity_id: productEntity.entity_id
+                            });
+                            productEntity.categories = [];
+                            selected.forEach(category_id => {
+                                let ori_match = (ori_entity.categories || []).find(item => item.category_id === category_id);
+                                if (!ori_match) {
+                                    ori_match = {category_id: category_id};
+                                };
+                                productEntity.categories.push(JSON.parse(JSON.stringify(ori_match)));
+                            });
+                            setProductEntity({...productEntity});
+                        }}
+                    >
+                        <option style={{paddingLeft: "5px", paddingRight: "10px"}} value="">------</option>
+                        {(categories.structured || []).map((item, index) => {
                             let level = 0;
-                            return renderOptionValue(item, level);
+                            return renderOptionValue(item, level, index);
                         })}
                     </select>
                 </div>

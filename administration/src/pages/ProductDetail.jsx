@@ -23,10 +23,21 @@ const product_columns = [
     {
         column: "type_id",
         column_name: "Product type",
-        render: ({ self, state, setState }) => {
+        render: ({ self, state, setState, ori_product }) => {
             return (
                 <select value={state[self.column] || ""}
-                    onChange={event => setState({ ...state, [self.column]: event.target.value })}
+                    onChange={event => {
+                        if (event.target.value === "variant") {
+                            state.categories = null;
+                        } else {
+                            let ori_entity = ProductModel.extractProductEntity({
+                                product: ori_product,
+                                entity_id: state.entity_id
+                            });
+                            state.categories = JSON.parse(JSON.stringify(ori_entity.categories || ""));
+                        }
+                        setState({ ...state, [self.column]: event.target.value })
+                    }}
                 >
                     <option value="">----------</option>
                     <option value="master">Master</option>
@@ -112,6 +123,7 @@ function ProductDetail (props) {
                 entity_ids: [props.match.params.entity_id].join("|")
             }).then(data => {
                 let product = data.products && data.products[0] ? data.products[0] : {};
+                console.log(product)
                 let entity = ProductModel.extractProductEntity({
                     product: product,
                     entity_id: props.match.params.entity_id
@@ -164,7 +176,7 @@ function ProductDetail (props) {
     return (
         <div className="product-detail">
             <div className="title">
-                <h3>{props.title}{ori_product && ori_product.self && ori_product.self.entity_id ? <span>: <span style={{fontStyle: "italic", color: "var(--colorSuccess)"}}>{ori_product.self.entity_id}</span></span> : ""}</h3>
+                <h3>{props.title}{productEntity && productEntity.entity_id && productEntity.entity_id ? <span>: <span style={{fontStyle: "italic", color: "var(--colorSuccess)"}}>{productEntity.entity_id}</span></span> : ""}</h3>
                 <button className="warning float large"
                     onClick={submitUpdateProductEntity}
                 >Update</button>
@@ -188,7 +200,8 @@ function ProductDetail (props) {
                                             {col_item.render({
                                                 self: col_item,
                                                 state: productEntity,
-                                                setState: setProductEntity
+                                                setState: setProductEntity,
+                                                ori_product: ori_product,
                                             })}
                                             <div className="alert_message hide"></div>
                                         </span>
@@ -232,17 +245,17 @@ function ProductDetail (props) {
                             </div>
                             {productEntity.type_id === "variant" ? (
                                 <div className="section-item parent">
-                                    <Parent productEntity setProductEntity />
+                                    <Parent productEntity={productEntity} setProductEntity={setProductEntity} />
                                 </div>
                             ) : null}
                             {productEntity.type_id === "master" ? (
                                 <div className="section-item variants">
-                                    <Variant productEntity setProductEntity />
+                                    <Variant productEntity={productEntity} setProductEntity={setProductEntity} />
                                 </div>
                             ) : null}
                             {productEntity.type_id !== "variant" ? (
                                 <div className="section-item categories">
-                                    <CategoryAssignment productEntity setProductEntity />
+                                    <CategoryAssignment productEntity={productEntity} setProductEntity={setProductEntity} ori_product={ori_product} />
                                 </div>
                             ) : null}
                         </div>

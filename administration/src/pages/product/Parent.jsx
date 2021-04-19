@@ -1,6 +1,6 @@
 function Parent ({ productEntity, setProductEntity }) {
     return (
-        <div>Parent section</div>
+        <div>{productEntity.parent || "-----"}</div>
     )
 }
 
