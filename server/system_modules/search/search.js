@@ -3,7 +3,7 @@ const fulltextSearch = require("./fulltextSearch");
 const msClient = require("../mysql/mysql");
 const { getProductEavTableName } = require("../product/product_eav_table");
 const { psize } = require("../const/config");
-const productEntityInheritFields = ["product_id", "entity_id", "type_id", "created_at", "updated_at"];
+const productEntityInheritFields = ["product_id", "entity_id", "type_id", "parent", "created_at", "updated_at"];
 const productEntityPropsAsAttributes = [
     {
         attribute_id: "tier_price",
@@ -342,66 +342,66 @@ async function getDetailProducts (products, option) {
     let product_ids = products.map(item => `'${mysqlutils.escapeQuotes(item.product_id.toString())}'`).join(", ");
     let sql =
     `
-    SELECT \`pe\`.entity_id, \`pe\`.product_id, \`pe\`.type_id, \`pe\`.created_at, \`pe\`.updated_at, \`pe\`.value, \`attributes\`.*, \`pe\`.attribute_id FROM (
+    SELECT \`pe\`.entity_id, \`pe\`.product_id, \`pe\`.type_id, \`pe\`.parent, \`pe\`.created_at, \`pe\`.updated_at, \`pe\`.value, \`attributes\`.*, \`pe\`.attribute_id FROM (
         SELECT
             \`pe\`.entity_id, IF((\`pe\`.parent IS NOT NULL AND \`pe\`.parent != ''), \`pe\`.parent, \`pe\`.entity_id) AS product_id,
-            \`pe\`.type_id, \`pe\`.created_at, \`pe\`.updated_at, \`eav\`.attribute_id, \`eav\`.value
+            \`pe\`.type_id, \`pe\`.parent, \`pe\`.created_at, \`pe\`.updated_at, \`eav\`.attribute_id, \`eav\`.value
         FROM \`ecommerce\`.product_entity AS \`pe\`
         LEFT JOIN \`ecommerce\`.product_eav_int AS \`eav\` ON \`eav\`.entity_id = \`pe\`.entity_id
         WHERE \`pe\`.entity_id IN (${product_ids}) OR \`pe\`.parent IN (${product_ids})
         UNION
         SELECT
             \`pe\`.entity_id, IF((\`pe\`.parent IS NOT NULL AND \`pe\`.parent != ''), \`pe\`.parent, \`pe\`.entity_id) AS product_id,
-            \`pe\`.type_id, \`pe\`.created_at, \`pe\`.updated_at, \`eav\`.attribute_id, \`eav\`.value
+            \`pe\`.type_id, \`pe\`.parent, \`pe\`.created_at, \`pe\`.updated_at, \`eav\`.attribute_id, \`eav\`.value
         FROM \`ecommerce\`.product_entity AS \`pe\`
         LEFT JOIN \`ecommerce\`.product_eav_decimal AS \`eav\` ON \`eav\`.entity_id = \`pe\`.entity_id
         WHERE \`pe\`.entity_id IN (${product_ids}) OR \`pe\`.parent IN (${product_ids})
         UNION
         SELECT
             \`pe\`.entity_id, IF((\`pe\`.parent IS NOT NULL AND \`pe\`.parent != ''), \`pe\`.parent, \`pe\`.entity_id) AS product_id,
-            \`pe\`.type_id, \`pe\`.created_at, \`pe\`.updated_at, \`eav\`.attribute_id, \`eav\`.value
+            \`pe\`.type_id, \`pe\`.parent, \`pe\`.created_at, \`pe\`.updated_at, \`eav\`.attribute_id, \`eav\`.value
         FROM \`ecommerce\`.product_entity AS \`pe\`
         LEFT JOIN \`ecommerce\`.product_eav_varchar AS \`eav\` ON \`eav\`.entity_id = \`pe\`.entity_id
         WHERE \`pe\`.entity_id IN (${product_ids}) OR \`pe\`.parent IN (${product_ids})
         UNION
         SELECT
             \`pe\`.entity_id, IF((\`pe\`.parent IS NOT NULL AND \`pe\`.parent != ''), \`pe\`.parent, \`pe\`.entity_id) AS product_id,
-            \`pe\`.type_id, \`pe\`.created_at, \`pe\`.updated_at, \`eav\`.attribute_id, \`eav\`.value
+            \`pe\`.type_id, \`pe\`.parent, \`pe\`.created_at, \`pe\`.updated_at, \`eav\`.attribute_id, \`eav\`.value
         FROM \`ecommerce\`.product_entity AS \`pe\`
         LEFT JOIN \`ecommerce\`.product_eav_text AS \`eav\` ON \`eav\`.entity_id = \`pe\`.entity_id
         WHERE \`pe\`.entity_id IN (${product_ids}) OR \`pe\`.parent IN (${product_ids})
         UNION
         SELECT
             \`pe\`.entity_id, IF((\`pe\`.parent IS NOT NULL AND \`pe\`.parent != ''), \`pe\`.parent, \`pe\`.entity_id) AS product_id,
-            \`pe\`.type_id, \`pe\`.created_at, \`pe\`.updated_at, \`eav\`.attribute_id, \`eav\`.value
+            \`pe\`.type_id, \`pe\`.parent, \`pe\`.created_at, \`pe\`.updated_at, \`eav\`.attribute_id, \`eav\`.value
         FROM \`ecommerce\`.product_entity AS \`pe\`
         LEFT JOIN \`ecommerce\`.product_eav_datetime AS \`eav\` ON \`eav\`.entity_id = \`pe\`.entity_id
         WHERE \`pe\`.entity_id IN (${product_ids}) OR \`pe\`.parent IN (${product_ids})
         UNION
         SELECT
             \`pe\`.entity_id, IF((\`pe\`.parent IS NOT NULL AND \`pe\`.parent != ''), \`pe\`.parent, \`pe\`.entity_id) AS product_id,
-            \`pe\`.type_id, \`pe\`.created_at, \`pe\`.updated_at, \`eav\`.attribute_id, \`eav\`.value
+            \`pe\`.type_id, \`pe\`.parent, \`pe\`.created_at, \`pe\`.updated_at, \`eav\`.attribute_id, \`eav\`.value
         FROM \`ecommerce\`.product_entity as \`pe\`
         LEFT JOIN \`ecommerce\`.product_eav_multi_value AS \`eav\` ON \`eav\`.entity_id = \`pe\`.entity_id
         WHERE \`pe\`.entity_id in (${product_ids}) OR \`pe\`.parent in (${product_ids})
         UNION
         SELECT
             \`pe\`.entity_id, IF((\`pe\`.parent IS NOT NULL AND \`pe\`.parent != ''), \`pe\`.parent, \`pe\`.entity_id) AS product_id,
-            \`pe\`.type_id, \`pe\`.created_at, \`pe\`.updated_at, 'available_quantity' AS \`attribute_id\`, \`inv\`.available_quantity AS \`value\`
+            \`pe\`.type_id, \`pe\`.parent, \`pe\`.created_at, \`pe\`.updated_at, 'available_quantity' AS \`attribute_id\`, \`inv\`.available_quantity AS \`value\`
         FROM \`ecommerce\`.product_entity as \`pe\`
         LEFT JOIN \`ecommerce\`.inventory AS \`inv\` ON \`inv\`.entity_id = \`pe\`.entity_id
         WHERE \`pe\`.entity_id in (${product_ids}) OR \`pe\`.parent in (${product_ids})
         UNION
         SELECT
             \`pe\`.entity_id, IF((\`pe\`.parent IS NOT NULL AND \`pe\`.parent != ''), \`pe\`.parent, \`pe\`.entity_id) AS product_id,
-            \`pe\`.type_id, \`pe\`.created_at, \`pe\`.updated_at, 'tier_price' AS \`attribute_id\`, \`tier_price\`.price AS \`value\`
+            \`pe\`.type_id, \`pe\`.parent, \`pe\`.created_at, \`pe\`.updated_at, 'tier_price' AS \`attribute_id\`, \`tier_price\`.price AS \`value\`
         FROM \`ecommerce\`.product_entity as \`pe\`
         LEFT JOIN \`ecommerce\`.product_tier_price AS \`tier_price\` ON \`tier_price\`.entity_id = \`pe\`.entity_id
         WHERE \`pe\`.entity_id in (${product_ids}) OR \`pe\`.parent in (${product_ids})
         UNION
         SELECT
             \`pe\`.entity_id, IF((\`pe\`.parent IS NOT NULL AND \`pe\`.parent != ''), \`pe\`.parent, \`pe\`.entity_id) AS product_id,
-            \`pe\`.type_id, \`pe\`.created_at, \`pe\`.updated_at, 'category' AS \`attribute_id\`, CONCAT(\`pca\`.category_id, '---', IFNULL(\`pca\`.position, "0")) AS \`value\`
+            \`pe\`.type_id, \`pe\`.parent, \`pe\`.created_at, \`pe\`.updated_at, 'category' AS \`attribute_id\`, CONCAT(\`pca\`.category_id, '---', IFNULL(\`pca\`.position, "0")) AS \`value\`
         FROM \`ecommerce\`.product_entity as \`pe\`
         LEFT JOIN \`ecommerce\`.product_category_assignment AS \`pca\` ON \`pca\`.product_id = \`pe\`.entity_id
         WHERE \`pe\`.entity_id in (${product_ids}) OR \`pe\`.parent in (${product_ids})

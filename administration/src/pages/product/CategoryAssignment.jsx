@@ -32,11 +32,11 @@ function CategoryAssignment ({ productEntity, setProductEntity, ori_product }) {
     }
 
     return (
-        <Fragment>
+        <div className="product-section-category">
             {!isLoaded ? (
-                <div>Loading</div>
+                <Fragment>Loading</Fragment>
             ) : (
-                <div>
+                <Fragment>
                     <select multiple style={{height: `${(categories.categories || []).length*17 + 17}px`}}
                         value={(productEntity.categories || []).map(item => item.category_id)}
                         onChange={event => {
@@ -46,13 +46,18 @@ function CategoryAssignment ({ productEntity, setProductEntity, ori_product }) {
                                 entity_id: productEntity.entity_id
                             });
                             productEntity.categories = [];
-                            selected.forEach(category_id => {
-                                let ori_match = (ori_entity.categories || []).find(item => item.category_id === category_id);
-                                if (!ori_match) {
-                                    ori_match = {category_id: category_id};
-                                };
-                                productEntity.categories.push(JSON.parse(JSON.stringify(ori_match)));
+                            let ori_categories = ori_entity.categories || [];
+                            ori_categories.forEach(category => {
+                                if (selected.indexOf(category.category_id) !== -1) {
+                                    productEntity.categories.push(JSON.parse(JSON.stringify(category)));
+                                    selected = selected.filter(item => item !== category.category_id);
+                                }
                             });
+                            selected.forEach(category_id => {
+                                productEntity.categories.push({
+                                    category_id: category_id
+                                })
+                            })
                             setProductEntity({...productEntity});
                         }}
                     >
@@ -62,9 +67,9 @@ function CategoryAssignment ({ productEntity, setProductEntity, ori_product }) {
                             return renderOptionValue(item, level, index);
                         })}
                     </select>
-                </div>
+                </Fragment>
             )}
-        </Fragment>
+        </div>
     )
 }
 

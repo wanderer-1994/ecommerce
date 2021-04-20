@@ -846,6 +846,7 @@ async function getProductEntityOnly (config) {
         let entity_ids;
         let keyword;
         let page;
+        let type_ids;
         let psize;
         if (config.entity_ids && config.entity_ids.length > 0) {
             entity_ids = config.entity_ids.join("|");
@@ -853,13 +854,26 @@ async function getProductEntityOnly (config) {
         if (config.keyword && config.keyword.replace(/^\s+|\s+$/g, "") !== "") {
             keyword = config.keyword;
         }
+        if (config.type_ids && config.type_ids.length > 0) {
+            type_ids = config.type_ids.join("|");
+        }
         if (parseInt(config.page) == config.page && parseInt(config.page) > 0) {
             page = parseInt(config.page);
         }
         if (parseInt(config.psize) == config.psize && parseInt(config.psize) > 0) {
             psize = parseInt(config.psize);
+        } else if (config.psize === "infinite") {
+            psize = config.psize;
         };
-        let url = `api/admin/product?entity_only=true${entity_ids ? `&entity_ids=${entity_ids}` : ""}${keyword ? `&keyword=${keyword}` : ""}${page ? `&page=${page}` : ""}${psize ? `&psize=${psize}` : ""}`;
+        let query = queryString.stringify({
+            entity_only: true,
+            entity_ids: entity_ids,
+            keyword: keyword,
+            type_ids: type_ids,
+            page: page,
+            psize: psize
+        })
+        let url = `api/admin/product?${query}`;
         let response = await axios({
             method: "GET",
             url: url

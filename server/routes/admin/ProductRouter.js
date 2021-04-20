@@ -26,15 +26,23 @@ router.get("/product", async (req, res) => {
             if (parseInt(page) != page || page < 1) {
                 page = 1;
             };
-            if (parseInt(items) != items || items < 1) {
-                items = psize;
-            };
             page = parseInt(page);
-            items = parseInt(items);
+            switch (items) {
+                default:
+                    if (items === "infinite") break;
+                    if (parseInt(items) != items || items < 1) {
+                        items = psize;
+                        break;
+                    } else {
+                        items = parseInt(items);
+                        break;
+                    };
+            }
             let searchResult = await productMgr.getProductEntityOnly({
-                entity_ids: (req.query.entity_ids || "").split("|").filter(item => item.replace(/^\s+|\s+$/g, "") !== ""),
                 searchConfig: {
-                    searchPhrase: (req.query.keyword || "").replace(/^\s+|\s+$/g, "")
+                    searchPhrase: (req.query.keyword || "").replace(/^\s+|\s+$/g, ""),
+                    entity_ids: (req.query.entity_ids || "").split("|").filter(item => item.replace(/^\s+|\s+$/g, "") !== ""),
+                    type_ids: (req.query.type_ids || "").split("|").filter(item => item.replace(/^\s+|\s+$/g, "") !== "")
                 },
                 pagination: {
                     page: page,

@@ -449,7 +449,7 @@ async function deleteProductEntities (product_ids) {
     return result;
 };
 
-async function getProductEntityOnly ({ entity_ids, searchConfig, pagination }) {
+async function getProductEntityOnly ({ searchConfig, pagination }) {
     try {
         let sql_search_product =
         `
@@ -458,27 +458,32 @@ async function getProductEntityOnly ({ entity_ids, searchConfig, pagination }) {
         LEFT JOIN \`ecommerce\`.product_eav_varchar AS \`pev\`
         ON \`pev\`.attribute_id = "name" AND \`pev\`.entity_id = \`pe\`.entity_id
         `;
-        if (entity_ids.length > 0 && searchConfig.searchPhrase.length > 0) {
-            sql_search_product +=
-            `
-            WHERE \`pe\`.entity_id IN (${entity_ids.map(item => `"${mysqlutils.escapeQuotes(item)}"`).join(", ")})
-            AND UPPER(\`pev\`.value) LIKE "%${mysqlutils.escapeQuotes(searchConfig.searchPhrase.toUpperCase())}%";
-            `;
-        } else if (entity_ids.length > 0) {
-            sql_search_product +=
-            `
-            WHERE \`pe\`.entity_id IN (${entity_ids.map(item => `"${mysqlutils.escapeQuotes(item)}"`).join(", ")});
-            `;
-        } else if (searchConfig.searchPhrase.length > 0) {
-            sql_search_product +=
-            `
-            WHERE UPPER(\`pev\`.value) LIKE "%${mysqlutils.escapeQuotes(searchConfig.searchPhrase.toUpperCase())}%";
-            `;
-        } else {
+        let conditions = [];
+        if (searchConfig.entity_ids && searchConfig.entity_ids.length > 0) {
+            conditions.push(
+                `\`pe\`.entity_id IN (${searchConfig.entity_ids.map(item => `"${mysqlutils.escapeQuotes(item)}"`).join(", ")})`
+            );
+        }
+        if (searchConfig.type_ids && searchConfig.type_ids.length > 0) {
+            conditions.push(
+                `\`pe\`.type_id IN (${searchConfig.type_ids.map(item => `"${mysqlutils.escapeQuotes(item)}"`).join(", ")})`
+            );
+        }
+        if (searchConfig.searchPhrase.length > 0) {
+            conditions.push(
+                `UPPER(\`pev\`.value) LIKE "%${mysqlutils.escapeQuotes(searchConfig.searchPhrase.toUpperCase())}%"`
+            )
+        }
+        if (conditions.length === 0) {
             sql_search_product += `;`;
+        } else {
+            sql_search_product += ` WHERE ${conditions.join(" AND ")};`;
         }
         let products = await msClient.promiseQuery(sql_search_product);
         let totalFound = products.length;
+        if (pagination.psize === "infinite") {
+            pagination.psize = products.length;
+        }
         let totalPages = Math.ceil(products.length/pagination.psize);
         if(pagination.page > totalPages) pagination.page = totalPages;
         let slice_start = (pagination.page - 1) * pagination.psize;

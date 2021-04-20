@@ -71,7 +71,7 @@ const product_entity_columns = [
             return (
                 <td style={self.td_style} className={`td_input ${self.align} ${isNull}`} key={index}>
                     <input
-                        disabled={!isOnEdit} type={self.data_type} value={prod_item[self.column] || ""}
+                        disabled type={self.data_type} value={prod_item[self.column] || ""}
                         onChange={(event) => {changeProductEntity({
                             entity_id: prod_item.entity_id,
                             column: self.column,
@@ -97,7 +97,7 @@ const product_entity_columns = [
             return (
                 <td style={self.td_style} className={`td_input ${self.align} ${isNull}`} key={index}>
                     <input
-                        disabled={!isOnEdit} type={self.data_type} value={prod_item[self.column] || ""}
+                        disabled type={self.data_type} value={prod_item[self.column] || ""}
                         onChange={(event) => {changeProductEntity({
                             entity_id: prod_item.entity_id,
                             column: self.column,

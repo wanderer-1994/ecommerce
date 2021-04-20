@@ -27,16 +27,30 @@ const product_columns = [
             return (
                 <select value={state[self.column] || ""}
                     onChange={event => {
+                        let ori_entity = ProductModel.extractProductEntity({
+                            product: ori_product,
+                            entity_id: state.entity_id
+                        });
                         if (event.target.value === "variant") {
                             state.categories = null;
+                            state.parent = ori_entity.parent;
                         } else {
-                            let ori_entity = ProductModel.extractProductEntity({
-                                product: ori_product,
-                                entity_id: state.entity_id
-                            });
+                            state.parent = null;
                             state.categories = JSON.parse(JSON.stringify(ori_entity.categories || ""));
                         }
-                        setState({ ...state, [self.column]: event.target.value })
+                        setState({ ...state, [self.column]: event.target.value });
+                        // re-render sections
+                        setTimeout(() => {
+                            let section_selected = false;
+                            $(".section-title .item").each(function () {
+                                if ($(this).hasClass("active")) {
+                                    section_selected = true;
+                                }
+                            });
+                            if (!section_selected) {
+                                switchSection(null, "attributes")
+                            }
+                        }, 100)
                     }}
                 >
                     <option value="">----------</option>
@@ -109,6 +123,29 @@ const product_columns = [
     }
 ];
 
+function switchSection (event, section) {
+    let data_binding = event ? $(event.target).data("binding") : section;
+    if (data_binding) {
+        // process titles
+        $(".section-title .item").each(function () {
+            if ($(this).data("binding") === data_binding) {
+                $(this).addClass("active");
+            } else {
+                $(this).removeClass("active");
+            }
+        })
+        // process section-item
+        $(".section-item").each(function () {
+            if ($(this).hasClass(data_binding)) {
+                $(this).addClass("active");
+            } else {
+                $(this).removeClass("active");
+            }
+        })
+    }
+
+}
+
 function ProductDetail (props) {
 
     const [ori_product, setOriProduct] = useState({});
@@ -147,30 +184,17 @@ function ProductDetail (props) {
     }, [props.match.params.entity_id]);
 
     function submitUpdateProductEntity (event) {
-
-    }
-
-    function switchSection (event) {
-        let data_binding = $(event.target).data("binding");
-        if (data_binding) {
-            // process titles
-            $(".section-title .item").each(function () {
-                if ($(this).data("binding") === data_binding) {
-                    $(this).addClass("active");
-                } else {
-                    $(this).removeClass("active");
-                }
-            })
-            // process section-item
-            $(".section-item").each(function () {
-                if ($(this).hasClass(data_binding)) {
-                    $(this).addClass("active");
-                } else {
-                    $(this).removeClass("active");
-                }
-            })
-        }
-
+        let ori_entity = ProductModel.extractProductEntity({
+            product: ori_product,
+            entity_id: productEntity.entity_id
+        });
+        let copy_entity = JSON.parse(JSON.stringify(productEntity));
+        Object.keys(copy_entity).forEach(key => {
+            if (JSON.stringify(copy_entity[key]) === JSON.stringify(ori_entity[key]) && key !== "entity_id") {
+                delete copy_entity[key];
+            } 
+        });
+        console.log(copy_entity);
     }
 
     return (
@@ -250,7 +274,7 @@ function ProductDetail (props) {
                             ) : null}
                             {productEntity.type_id === "master" ? (
                                 <div className="section-item variants">
-                                    <Variant productEntity={productEntity} setProductEntity={setProductEntity} />
+                                    <Variant productEntity={productEntity} setProductEntity={setProductEntity} ori_product={ori_product} />
                                 </div>
                             ) : null}
                             {productEntity.type_id !== "variant" ? (
