@@ -26,7 +26,7 @@ const eav_html_type = [
             return (
                 <InputOrTextarea className={isNull ? "null" : ""} component_type={component_type} type="text" value={eav_value.value || ""} 
                     onChange={event => {
-                        let value = valueValidation.converValue({
+                        let value = valueValidation.convertValue({
                             value: event.target.value,
                             data_type: eav_definition.data_type,
                             html_type: eav_definition.html_type
@@ -74,7 +74,7 @@ const eav_html_type = [
                             <Fragment key={index}>
                                 <InputOrTextarea className={isNull ? "null" : ""} component_type={component_type} className="multiinput_item" type="text" value={v_item || ""} 
                                     onChange={event => {
-                                        let value = valueValidation.converValue({
+                                        let value = valueValidation.convertValue({
                                             value: event.target.value,
                                             data_type: eav_definition.data_type,
                                             html_type: eav_definition.html_type
@@ -212,7 +212,7 @@ const eav_html_type = [
             return (
                 <input className={isNull ? "null" : ""} type="password" value={eav_value.value || ""} 
                     onChange={event => {
-                        let value = valueValidation.converValue({
+                        let value = valueValidation.convertValue({
                             value: event.target.value,
                             data_type: eav_definition.data_type,
                             html_type: eav_definition.html_type

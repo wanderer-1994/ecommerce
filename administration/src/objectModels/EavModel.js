@@ -71,7 +71,7 @@ const eav_columns = [
 const option_columns = [
     {
         column: "option_value",
-        f_convert_value: valueValidation.converValue,
+        f_convert_value: valueValidation.convertValue,
         f_validation: ({ value, data_type, html_type, validation, self }) => {
             self.valueInvalidMessage = "";
             if (value === null || value === "" || value === undefined) return true;

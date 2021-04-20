@@ -51,7 +51,7 @@ const product_eav_columns = [
     },
     {
         column: "value",
-        f_convert_value: valueValidation.converValue,
+        f_convert_value: valueValidation.convertValue,
         f_validation: ({ attribute_id, value, data_type, html_type, validation, self }) => {
             self.valueInvalidMessage = "";
             if (value === null || value === "" || value === undefined) return true;

@@ -136,7 +136,7 @@ function validateValue ({value, data_type, html_type, validation}) {
     return true;
 }
 
-function isEmptyValue (value) {
+function isValueEmpty (value) {
     return value === null || value === undefined || value === "";
 }
 
@@ -148,5 +148,5 @@ module.exports = {
     isAttributeSearchable,
     convertDataType,
     validateValue,
-    isEmptyValue
+    isValueEmpty
 }

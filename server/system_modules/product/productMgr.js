@@ -128,7 +128,7 @@ async function saveProductEntity (product, option) {
                     `
                     UPDATE \`ecommerce\`.product_entity SET ${sqltb_product_entity.map(col_item => {
                         if (col_item.column === "entity_id") return null;
-                        return `${col_item.column} = "${mysqlutils.escapeQuotes(product[col_item.column])}"`
+                        return `${col_item.column} = ${mysqlutils.isValueEmpty(product[col_item.column]) ? "NULL" : `"${mysqlutils.escapeQuotes(product[col_item.column])}"`}`
                     }).filter(item => item !== null).join(", ")}
                     WHERE entity_id = "${mysqlutils.escapeQuotes(product.entity_id)}";
                     `;

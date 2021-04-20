@@ -3,7 +3,7 @@ const data_type_decimal = ['decimal'];
 const data_type_text = ['varchar', 'text', 'html'];
 
 // convert to appropriate data type since html input always returns string
-function converValue ({ value, data_type, html_type }) {
+function convertValue ({ value, data_type, html_type }) {
     switch (html_type) {
         case "boolean":
             if (value == "0" || value === false) return 0;
@@ -68,6 +68,6 @@ function validateValue ({ value, data_type, html_type, validation }) {
 }
 
 export {
-    converValue,
+    convertValue,
     validateValue
 }

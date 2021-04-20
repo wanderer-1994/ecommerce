@@ -50,7 +50,7 @@ function EavEntityRender ({ mode, eav, setEav }) {
                                             let isNull = !v_item || v_item.option_value === null || v_item.option_value === "" || v_item.option_value === undefined;
                                             // validation message
                                             let invalid_message = "";
-                                            let converted_value = valueValidation.converValue({
+                                            let converted_value = valueValidation.convertValue({
                                                 value: v_item.option_value,
                                                 data_type: eav.data_type,
                                                 html_type: eav.html_type

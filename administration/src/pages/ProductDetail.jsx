@@ -8,6 +8,7 @@ import * as ProductModel from "../objectModels/ProductModel";
 import Parent from "./product/Parent";
 import Variant from "./product/Variant";
 import CategoryAssignment from "./product/CategoryAssignment";
+import utility from "../utils/utility";
 
 const product_columns = [
     {
@@ -160,7 +161,6 @@ function ProductDetail (props) {
                 entity_ids: [props.match.params.entity_id].join("|")
             }).then(data => {
                 let product = data.products && data.products[0] ? data.products[0] : {};
-                console.log(product)
                 let entity = ProductModel.extractProductEntity({
                     product: product,
                     entity_id: props.match.params.entity_id
@@ -183,7 +183,9 @@ function ProductDetail (props) {
         })
     }, [props.match.params.entity_id]);
 
-    function submitUpdateProductEntity (event) {
+    async function submitUpdateProductEntity (event) {
+        $(event.target).parent().find("button").addClass("disabled");
+        $(event.target).parent().find("button").attr("disabled", true);
         let ori_entity = ProductModel.extractProductEntity({
             product: ori_product,
             entity_id: productEntity.entity_id
@@ -194,7 +196,117 @@ function ProductDetail (props) {
                 delete copy_entity[key];
             } 
         });
-        console.log(copy_entity);
+        if (Array.isArray(copy_entity.attributes)) {
+            for (let i = 0; i < copy_entity.attributes.length; i++) {
+                let attribute = copy_entity.attributes[i];
+                let match = (ori_entity.attributes || []).find(item => item.attribute_id === attribute.attribute_id) || {};
+                if (JSON.stringify(match.value) === JSON.stringify(attribute.value) || (match.value === undefined && utility.isValueEmpty(attribute.value))) {
+                    copy_entity.attributes.splice(i, 1);
+                    i -= 1;
+                }
+            };
+            if (copy_entity.attributes.length === 0) {
+                delete copy_entity.attributes;
+            } else {
+                copy_entity.attributes.forEach((item, index) => {
+                    let definition = productEavs.find(def_item => def_item.attribute_id === item.attribute_id) || {};
+                    copy_entity.attributes[index] = {...definition, ...item};
+                })
+            }
+        };
+        let validation = ProductModel.validateProductModel(copy_entity);
+        if (! "entity_id" in copy_entity) {
+            validation.isValid = false;
+            validation.m_failure = `No 'entity_id' specified!\n\t` + (validation.m_failure || "");
+        }
+        if (Object.keys(copy_entity).length === 1) {
+            return appFunction.appAlert({
+                icon: "info",
+                title: <div>No changes detected!</div>,
+                message: <div style={{whiteSpace: "pre-line"}}>Please make changes before save!</div>,
+                showConfirm: true,
+                submitTitle: "OK",
+                onClickSubmit: () => {
+                    $(event.target).parent().find("button").removeClass("disabled");
+                    $(event.target).parent().find("button").attr("disabled", false);
+                }
+            })
+        };
+        if (!validation.isValid) {
+            return appFunction.appAlert({
+                icon: "warning",
+                title: <div>Invalid input</div>,
+                message: <div style={{whiteSpace: "pre-line"}}>{validation.m_failure}</div>,
+                showConfirm: true,
+                submitTitle: "OK",
+                onClickSubmit: () => {
+                    $(event.target).parent().find("button").removeClass("disabled");
+                    $(event.target).parent().find("button").attr("disabled", false);
+                }
+            })
+        };
+
+        copy_entity.updated_at = Date.now();
+        let result = await api.updateProductEntities([copy_entity]);
+        if (result && result.product_entities && result.product_entities[0] && result.product_entities[0].isSuccess) {
+            appFunction.appAlert({
+                icon: "success",
+                title: <div>Success</div>,
+                message: (
+                    <div>
+                        <span>Update success for product: </span>
+                        <span style={{color: "var(--colorSuccess)", textDecoration: "underline"}}>
+                            {copy_entity.name || ori_entity.name}
+                        </span>
+                    </div>
+                ),
+                timeOut: 1000,
+                onTimeOut: () => {
+                    $(event.target).parent().find("button").removeClass("disabled");
+                    $(event.target).parent().find("button").attr("disabled", false);
+                    api.adminSearchProduct({
+                        entity_ids: [props.match.params.entity_id].join("|")
+                    }).then(data => {
+                        let product = data.products && data.products[0] ? data.products[0] : {};
+                        let entity = ProductModel.extractProductEntity({
+                            product: product,
+                            entity_id: props.match.params.entity_id
+                        })
+                        setProductEntity(JSON.parse(JSON.stringify(entity)));
+                        setOriProduct(product);
+                    }).catch(err => {
+                        console.log(err);
+                    })
+                }
+            });
+        } else {
+            let m_failure = result && result.product_entities && result.product_entities[0] && result.product_entities[0] ? result.product_entities[0].m_failure : "";
+            appFunction.appAlert({
+                icon: "danger",
+                title: <div>Action incomplete!</div>,
+                message: (
+                    <div>
+                        <span>Could not update: </span>
+                        <span style={{color: "var(--colorDanger)", textDecoration: "underline"}}>
+                            {ori_entity.name}
+                        </span>
+                        <span> !</span>
+                        <div style={{marginTop: "10px", fontSize: "14px", color: "#000000", fontStyle: "italic", textDecoration: "underline"}}>
+                            Error log:
+                        </div>
+                        <div style={{marginTop: "5px", fontSize: "12px", color: "#000000", fontStyle: "italic"}}>
+                            {m_failure}
+                        </div>
+                    </div>
+                ),
+                showConfirm: true,
+                submitTitle: "OK",
+                onClickSubmit: () => {
+                    $(event.target).parent().find("button").removeClass("disabled");
+                    $(event.target).parent().find("button").attr("disabled", false);
+                }
+            });
+        }
     }
 
     return (
