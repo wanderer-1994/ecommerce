@@ -380,7 +380,21 @@ function validateCategoryAttributeValue (attribute, table_name) {
     return isValuesValid;
 }
 
+async function getCategoryProducts (category_id) {
+    try {
+        if (mysqlutils.isValueEmpty(category_id) || typeof(category_id) !== "string") {
+            throw new Error("ERROR: category_id not specified!")
+        }
+        let sql_get_category_product = `SELECT product_id, position FROM \`ecommerce\`.product_category_assignment WHERE category_id = "${mysqlutils.escapeQuotes(category_id)}";`;
+        let products = await msClient.promiseQuery(sql_get_category_product);
+        return products;
+    } catch (err) {
+        throw err;
+    }
+}
+
 module.exports = {
     saveCategoryEntity,
-    deleteCategoryEntities
+    deleteCategoryEntities,
+    getCategoryProducts
 }

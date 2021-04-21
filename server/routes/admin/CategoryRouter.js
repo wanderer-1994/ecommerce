@@ -119,4 +119,14 @@ router.delete("/category", checkAdminByCookie, async (req, res) => {
     }
 });
 
+router.get("/category/product", checkAdminByCookie, async (req, res) => {
+    try {
+        let products = await categoryMgr.getCategoryProducts(req.query.category_id);
+        res.json(products);
+    } catch (err) {
+        console.log(err);
+        res.json({Alert: res.Alert.push(createSystemErrMessage(002))})
+    }
+})
+
 module.exports = router;

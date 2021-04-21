@@ -5,6 +5,7 @@ import * as appFunction from "../utils/appFunction";
 import $ from "jquery";
 import EavAttributeRender from "../components/EavAttributeRender";
 import * as CategoryModel from "../objectModels/CategoryModel";
+import ProductAssignment from './category/ProductAssignment';
 
 const category_entity_columns = [
     {
@@ -105,12 +106,37 @@ const default_category = {
     attributes: []
 }
 
+function switchSection (event, section) {
+    let data_binding = event ? $(event.target).data("binding") : section;
+    if (data_binding) {
+        // process titles
+        $(".section-title .item").each(function () {
+            if ($(this).data("binding") === data_binding) {
+                $(this).addClass("active");
+            } else {
+                $(this).removeClass("active");
+            }
+        })
+        // process section-item
+        $(".section-item").each(function () {
+            if ($(this).hasClass(data_binding)) {
+                $(this).addClass("active");
+            } else {
+                $(this).removeClass("active");
+            }
+        })
+    }
+
+}
+
 function CategoryDetail (props) {
 
     const [ori_category, setOriCategory] = useState(JSON.parse(JSON.stringify(default_category)));
     const [category, setCategory] = useState(JSON.parse(JSON.stringify(default_category)));
     const [categoryEavs, setCategoryEavs] = useState([]);
     const [parentOptions, setParentOptions] = useState([]);
+    const [productAssignment, setProductAssignment] = useState([]);
+    const [ori_productAssignment, setOriProductAssignment] = useState([]);
     const [isLoaded, setIsLoaded] = useState(0);
 
     useEffect(() => {
@@ -130,6 +156,14 @@ function CategoryDetail (props) {
         promises.push(
             api.getCategoryEavs().then(category_eavs => {
                 setCategoryEavs(category_eavs || []);
+            }).catch(err => {
+                console.log(err);
+            })
+        );
+        promises.push(
+            api.getCategoryProducts(props.match.params.entity_id).then(products => {
+                setProductAssignment(JSON.parse(JSON.stringify(products)));
+                setOriProductAssignment(JSON.parse(JSON.stringify(products)));
             }).catch(err => {
                 console.log(err);
             })
@@ -336,18 +370,30 @@ function CategoryDetail (props) {
                             })}
                         </div>
                         <div className="entity-eav">
-                            <h4 className="section-title">Attributes</h4><br/>
-                            {categoryEavs.map((eav_item, index) => {
-                                let eav_value = (category.attributes || []).find(item => item.attribute_id === eav_item.attribute_id);
-                                if (!eav_value) {
-                                    eav_value = {
-                                        attribute_id: eav_item.attribute_id
-                                    };
-                                    if (!Array.isArray(category.attributes)) category.attributes = [];
-                                    category.attributes.push(eav_value);
-                                }
-                                return <EavAttributeRender key={index} eav_definition={eav_item} eav_value={eav_value} state={category} setState={setCategory} />
-                            })}
+                            <h4 className="section-title">
+                                <span className="item active" data-binding="attributes"
+                                    onClick={event => switchSection(event)}
+                                >Attributes</span>
+                                <span className="item" data-binding="product-assignment"
+                                    onClick={event => switchSection(event)}
+                                >Products</span>
+                            </h4>
+                            <div className="section-item attributes active">
+                                {categoryEavs.map((eav_item, index) => {
+                                    let eav_value = (category.attributes || []).find(item => item.attribute_id === eav_item.attribute_id);
+                                    if (!eav_value) {
+                                        eav_value = {
+                                            attribute_id: eav_item.attribute_id
+                                        };
+                                        if (!Array.isArray(category.attributes)) category.attributes = [];
+                                        category.attributes.push(eav_value);
+                                    }
+                                    return <EavAttributeRender key={index} eav_definition={eav_item} eav_value={eav_value} state={category} setState={setCategory} />
+                                })}
+                            </div>
+                            <div className="section-item product-assignment">
+                                <ProductAssignment category={category} productAssignment={productAssignment} setProductAssignment={setProductAssignment} ori_productAssignment={ori_productAssignment} setOriProductAssignment={setOriProductAssignment} />
+                            </div>
                         </div>
                     </Fragment>
                 )}

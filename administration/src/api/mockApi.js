@@ -2,6 +2,7 @@ import axios from "axios";
 import * as categoryModel from "../objectModels/CategoryModel";
 import * as eavUtils from "../objectModels/eavUtils";
 import queryString from "query-string";
+import utility from "../utils/utility";
 
 axios.defaults.baseURL = "http://localhost:4000";
 
@@ -634,7 +635,7 @@ async function deleteCategories (entity_ids) {
                 category_ids: entity_ids
             }
         });
-        console.log("live api: updateCategories");
+        console.log("live api: deleteCategories");
         return response.data;
     } catch (err) {
         console.log("mocking: deleteCategories");
@@ -642,6 +643,38 @@ async function deleteCategories (entity_ids) {
             isSuccess: true
         };
         return response
+    }
+}
+
+async function getCategoryProducts (category_id) {
+    try {
+        let response = await axios({
+            method: "GET",
+            url: `/api/admin/category/product?category_id=${category_id}`
+        });
+        console.log("live api: getCategoryProducts");
+        let products = response.data || [];
+        products.sort((a, b) => {
+            if (typeof(b.position) !== "number") return false;
+            if (typeof(a.position) !== "number") return true;
+            return a.position - b.position;
+        })
+        return products;
+    } catch (err) {
+        console.log("mocking: getCategoryProducts");
+        let response = {
+            data: [
+                {
+                    product_id: "PR0001",
+                    position: 1
+                },
+                {
+                    product_id: "PR0004",
+                    position: 2
+                }
+            ]
+        };
+        return response.data
     }
 }
 
@@ -1189,6 +1222,7 @@ export {
     updateCategories,
     deleteCategories,
     createCategories,
+    getCategoryProducts,
     getCategoryEavs,
     updateCategoryEavs,
     deleteCategoryEavs,

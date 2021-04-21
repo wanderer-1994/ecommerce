@@ -217,7 +217,12 @@ button.large.info {
 }
 .entity-eav .section-item {
     display: none;
+    padding-bottom: 20px;
 }
 .entity-eav .section-item.active {
     display: block;
+}
+button.section-button {
+    position: fixed;
+    top: calc(100vh - 50px);
 }
