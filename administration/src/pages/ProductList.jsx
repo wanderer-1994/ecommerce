@@ -7,6 +7,7 @@ import $ from "jquery";
 import "../css/list.css";
 import queryString from "query-string";
 import Pagination from "../components/Pagination";
+import utility from "../utils/utility";
 
 const product_entity_columns = [
     {
@@ -70,14 +71,28 @@ const product_entity_columns = [
         render: ({ self, prod_item, index, isNull, isOnEdit, changeProductEntity }) => {
             return (
                 <td style={self.td_style} className={`td_input ${self.align} ${isNull}`} key={index}>
-                    <input
-                        disabled type={self.data_type} value={prod_item[self.column] || ""}
-                        onChange={(event) => {changeProductEntity({
-                            entity_id: prod_item.entity_id,
-                            column: self.column,
-                            value: event.target.value
-                        })}}
-                    />
+                    <select
+                        disabled={!isOnEdit} type={self.data_type} value={prod_item[self.column] || ""}
+                        onChange={(event) => {
+                            changeProductEntity({
+                                entity_id: prod_item.entity_id,
+                                column: self.column,
+                                value: event.target.value
+                            });
+                            if (event.target.value === "simple" || event.target.value === "master") {
+                                changeProductEntity({
+                                    entity_id: prod_item.entity_id,
+                                    column: "parent",
+                                    value: ""
+                                })
+                            }
+                        }}
+                    >
+                        <option value="">-----</option>
+                        <option value="simple">Simple</option>
+                        <option value="master">Master</option>
+                        <option value="variant">Variant</option>
+                    </select>
                 </td>
             )
         }
@@ -97,12 +112,21 @@ const product_entity_columns = [
             return (
                 <td style={self.td_style} className={`td_input ${self.align} ${isNull}`} key={index}>
                     <input
-                        disabled type={self.data_type} value={prod_item[self.column] || ""}
-                        onChange={(event) => {changeProductEntity({
-                            entity_id: prod_item.entity_id,
-                            column: self.column,
-                            value: event.target.value
-                        })}}
+                        disabled={!isOnEdit} type={self.data_type} value={prod_item[self.column] || ""}
+                        onChange={(event) => {
+                            changeProductEntity({
+                                entity_id: prod_item.entity_id,
+                                column: self.column,
+                                value: event.target.value
+                            });
+                            if (!utility.isValueEmpty(event.target.value)) {
+                                changeProductEntity({
+                                    entity_id: prod_item.entity_id,
+                                    column: "type_id",
+                                    value: "variant"
+                                })
+                            }
+                        }}
                     />
                 </td>
             )

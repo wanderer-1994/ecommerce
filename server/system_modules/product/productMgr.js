@@ -72,16 +72,21 @@ async function saveProductEntity (product, option) {
         let messageUserFailure = "ERROR:";
 
         // check product parent exist
-        if (product.parent !== null && product.parent !== "" && product.parent !== undefined && typeof(product.parent) == "string") {
+        if (!mysqlutils.isValueEmpty(product.parent) && typeof(product.parent) == "string") {
             let sql_check_parent_exist =
             `
-            SELECT \`entity_id\` FROM \`ecommerce\`.product_entity WHERE \`entity_id\` = "${mysqlutils.escapeQuotes(product.parent)}";
+            SELECT \`entity_id\`, \`type_id\` FROM \`ecommerce\`.product_entity WHERE \`entity_id\` = "${mysqlutils.escapeQuotes(product.parent)}";
             `;
             let parent = await msClient.promiseQuery(sql_check_parent_exist);
             if (parent.length === 0) {
                 isUserFailure = true;
                 messageUserFailure += `\n\t Invalid parent product: product with entity_id '${product.parent}' not exist.`
+            };
+            if (parent && parent[0] && parent[0].type_id !== "master") {
+                isUserFailure = true;
+                messageUserFailure += `\n\t Could not assign non-master product as parent: product with entity_id '${product.parent}' is not a master product.`
             }
+            
         };
 
         let entityValidation = validateProductEntity(product);
@@ -264,6 +269,28 @@ async function saveProductEntity (product, option) {
                 break;
         }
 
+        let sql_if_variant;
+        switch (option.mode) {
+            case "UPDATE":
+                if (product.type_id === "variant") {
+                    sql_if_variant =
+                    `
+                    UPDATE \`ecommerce\`.product_entity SET type_id="simple", parent = NULL WHERE parent = "${mysqlutils.escapeQuotes(product.entity_id)}";
+                    DELETE FROM \`ecommerce\`.product_category_assignment WHERE \`product_id\` = "${mysqlutils.escapeQuotes(product.entity_id)}";
+                    `;
+                    break;
+                };
+                if (product.type_id === "simple") {
+                    sql_if_variant =
+                    `
+                    UPDATE \`ecommerce\`.product_entity SET type_id="simple", parent = NULL WHERE parent = "${mysqlutils.escapeQuotes(product.entity_id)}";
+                    `;
+                    break;
+                };
+            default:
+                break;
+        };
+
         let sql_eav_single_value = {
             product_eav_int: [],
             product_eav_decimal: [],
@@ -365,6 +392,7 @@ async function saveProductEntity (product, option) {
             sql_product_category_assignment,
             sql_inventory,
             sql_price,
+            sql_if_variant,
             ...sql_eav_single_value.product_eav_int,
             ...sql_eav_single_value.product_eav_decimal,
             ...sql_eav_single_value.product_eav_varchar,

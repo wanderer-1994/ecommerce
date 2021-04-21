@@ -192,8 +192,28 @@ async function adminSearchProduct(config) {
     }
 }
 
-async function createProductEntities () {
-
+async function createProductEntities (product_entities) {
+    try {
+        let response = await axios({
+            method: "POST",
+            url: "/api/admin/product",
+            data: {
+                product_entities: product_entities
+            }
+        });
+        console.log("live api: createProductEntities");
+        return response.data;
+    } catch (err) {
+        console.log("mocking: createProductEntities");
+        return {
+            "product_entities": [
+                {
+                    ...product_entities[0],
+                    "isSuccess": true
+                }
+            ]
+        }
+    }
 }
 
 async function updateProductEntities (product_entities) {

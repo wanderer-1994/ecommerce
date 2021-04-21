@@ -256,7 +256,7 @@ function ProductDetail (props) {
                     <div>
                         <span>Update success for product: </span>
                         <span style={{color: "var(--colorSuccess)", textDecoration: "underline"}}>
-                            {copy_entity.name || ori_entity.name}
+                            {copy_entity.entity_id}
                         </span>
                     </div>
                 ),
@@ -288,7 +288,7 @@ function ProductDetail (props) {
                     <div>
                         <span>Could not update: </span>
                         <span style={{color: "var(--colorDanger)", textDecoration: "underline"}}>
-                            {ori_entity.name}
+                            {copy_entity.entity_id}
                         </span>
                         <span> !</span>
                         <div style={{marginTop: "10px", fontSize: "14px", color: "#000000", fontStyle: "italic", textDecoration: "underline"}}>
