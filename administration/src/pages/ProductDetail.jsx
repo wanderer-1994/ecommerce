@@ -191,6 +191,15 @@ function ProductDetail (props) {
             entity_id: productEntity.entity_id
         });
         let copy_entity = JSON.parse(JSON.stringify(productEntity));
+        let unassigned_categories = (ori_entity.categories || []).filter(item => {
+            // if category exists in ori_entity & not exists in copy_entity => it is unassigned
+            return !(copy_entity.categories || []).find(m_item => m_item.category_id === item.category_id);
+        });
+        if (unassigned_categories.length > 0) {
+            unassigned_categories.forEach(item => item.action = "UNASSIGN");
+            copy_entity.categories = copy_entity.categories || [];
+            copy_entity.categories.push(...unassigned_categories)
+        }
         Object.keys(copy_entity).forEach(key => {
             if (JSON.stringify(copy_entity[key]) === JSON.stringify(ori_entity[key]) && key !== "entity_id") {
                 delete copy_entity[key];

@@ -658,7 +658,7 @@ async function getCategoryProducts (category_id) {
             if (typeof(b.position) !== "number") return false;
             if (typeof(a.position) !== "number") return true;
             return a.position - b.position;
-        })
+        });
         return products;
     } catch (err) {
         console.log("mocking: getCategoryProducts");

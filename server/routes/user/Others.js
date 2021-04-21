@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const msClient = require("../system_modules/mysql/mysql");
 const mysqlutils = require("../../system_modules/mysql/mysqlutils");
-const { updateSupInfo } = require("../system_modules/subinfo_updater/general_updater");
+const { updateSupInfo } = require("../system_modules/supinfo_updater/general_updater");
 const {
     escapeHTML,
     createSystemErrMessage,
