@@ -6,7 +6,7 @@ import $ from "jquery";
 import InputOrTextarea from "./InputOrTexarea";
 import Clear from "@material-ui/icons/Clear";
 import Add from "@material-ui/icons/Add";
-
+import utility from "../utils/utility";
 
 const forceWidth = {
     width: "100%"
@@ -19,12 +19,8 @@ const eav_html_type = [
             if (eav_definition.data_type === "text" || eav_definition.data_type === "html") {
                 component_type = "textarea";
             }
-            let isNull = false;
-            if (eav_value.value === null || eav_value.value === "" || eav_value.value === undefined) {
-                isNull = true;
-            }
             return (
-                <InputOrTextarea className={isNull ? "null" : ""} component_type={component_type} type="text" value={eav_value.value || ""} 
+                <InputOrTextarea className={utility.isValueEmpty(eav_value.value) ? "null" : ""} component_type={component_type} type="text" value={eav_value.value || ""} 
                     onChange={event => {
                         let value = valueValidation.convertValue({
                             value: event.target.value,
@@ -69,10 +65,9 @@ const eav_html_type = [
             return (
                 <Fragment>
                     {eav_value.value.map((v_item, index) => {
-                        let isNull = v_item === null || v_item === "" || v_item === undefined;
                         return (
                             <Fragment key={index}>
-                                <InputOrTextarea className={isNull ? "null" : ""} component_type={component_type} className="multiinput_item" type="text" value={v_item || ""} 
+                                <InputOrTextarea className={utility.isValueEmpty(v_item) ? "multiinput_item null" : "multiinput_item"} component_type={component_type} type="text" value={v_item || ""} 
                                     onChange={event => {
                                         let value = valueValidation.convertValue({
                                             value: event.target.value,
@@ -205,12 +200,8 @@ const eav_html_type = [
     {
         html_type: "password",
         render: ({ eav_definition, eav_value, state, setState }) => {
-            let isNull = false;
-            if (eav_value.value === null || eav_value.value === "" || eav_value.value === undefined) {
-                isNull = true;
-            }
             return (
-                <input className={isNull ? "null" : ""} type="password" value={eav_value.value || ""} 
+                <input className={utility.isValueEmpty(eav_value.value) ? "null" : ""} type="password" value={eav_value.value || ""} 
                     onChange={event => {
                         let value = valueValidation.convertValue({
                             value: event.target.value,
@@ -267,7 +258,7 @@ function EavAttributeRender ({ eav_definition, eav_value, state, setState }) {
             {render_type ? (
                 <div>
                     <span className="input_tag left">
-                        <input disabled title={eav_definition.attribute_id} type="text" value={eav_definition.label} />
+                        <input disabled title={`${eav_definition.attribute_id} (${eav_definition.data_type})`} type="text" value={eav_definition.label} />
                     </span>
                     <span className="input_value left"
                          style={{width: "calc(100% - 170px)"}}

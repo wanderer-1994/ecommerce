@@ -203,6 +203,15 @@ function ProductDetail (props) {
                 if (JSON.stringify(match.value) === JSON.stringify(attribute.value) || (match.value === undefined && utility.isValueEmpty(attribute.value))) {
                     copy_entity.attributes.splice(i, 1);
                     i -= 1;
+                    continue;
+                };
+                if (Array.isArray(attribute.value)) {
+                    attribute.value = attribute.value.filter(item => !utility.isValueEmpty(item));
+                    if (attribute.value.length === 0) {
+                        copy_entity.attributes.splice(i, 1);
+                        i -= 1;
+                        continue;
+                    }
                 }
             };
             if (copy_entity.attributes.length === 0) {

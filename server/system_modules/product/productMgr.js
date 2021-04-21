@@ -146,10 +146,11 @@ async function saveProductEntity (product, option) {
         let sql_product_category_assignment;
 
         // use switch is just a coding cheat to create a block where I can break anytime I want
+        // if assign product to any category & no type_id specified: ensure product type_id is not "variant"
         switch (option.mode) {
             default:
                 if (product.categories === undefined && option.mode === "UPDATE") break;
-                if (product.categories === null || product.categories === "" || product.categories === undefined || (Array.isArray(product.categories) && product.categories.length === 0) ) {
+                if (mysqlutils.isValueEmpty(product.categories) || (Array.isArray(product.categories) && product.categories.length === 0) ) {
                     sql_product_category_assignment =
                     `
                     DELETE FROM \`ecommerce\`.product_category_assignment WHERE \`product_id\` = "${mysqlutils.escapeQuotes(product.entity_id)}";
@@ -185,6 +186,18 @@ async function saveProductEntity (product, option) {
                     unassign_category = "";
                 }
                 if (assign_category.length > 0) {
+                    // if assign product to any category & no type_id specified: ensure product type_id is not "variant"
+                    if (option.mode === "CREATE" && product.type_id === "variant") {
+                        isUserFailure = true;
+                        messageUserFailure += `\n\t Could not assign variant product to category!`;
+                    } else if (option.mode === "UPDATE") {
+                        let sql_check_product_type = `SELECT entity_id, type_id FROM \`ecommerce\`.product_entity WHERE entity_id = "${mysqlutils.escapeQuotes(product.entity_id)}";`;
+                        let product_type = await msClient.promiseQuery(sql_check_product_type);
+                        if (product_type && product_type[0] && product_type[0].type_id === "variant") {
+                            isUserFailure = true;
+                            messageUserFailure += `\n\t Could not assign variant product ${product.entity_id} to category!`;
+                        }
+                    };
                     assign_category =
                     `
                     INSERT INTO \`ecommerce\`.product_category_assignment (${attr_product_category_assignment.map(item => item).join(",")})
@@ -269,6 +282,8 @@ async function saveProductEntity (product, option) {
                 break;
         }
 
+        // if set type_id to variant, remove all category-assignment & child-product of product
+        // if set type_id to simple, remove all child-product of product
         let sql_if_variant;
         switch (option.mode) {
             case "UPDATE":
@@ -404,7 +419,7 @@ async function saveProductEntity (product, option) {
         `
         START TRANSACTION;
         ${assembled_sql_update_product
-            .filter(item => (item !== null && item !== "" && item !== undefined))
+            .filter(item => !mysqlutils.isValueEmpty(item))
             .join("")
         }
         COMMIT;
@@ -534,7 +549,7 @@ function validateProductEntity (product) {
     let isValid = true;
     let m_failure = "";
     attr_product_entity.forEach(property => {
-        if (product[property.column] !== null && product[property.column] !== "" && product[property.column] !== undefined) {
+        if (!mysqlutils.isValueEmpty(product[property.column])) {
             if (!property.validation_function(product[property.column])) {
                 isValid = false;
                 m_failure += `\n\t Invalid entity property: ${property.valueInvalidMessage}.`
