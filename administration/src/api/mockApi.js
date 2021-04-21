@@ -285,12 +285,16 @@ async function getCategories() {
             url: "/api/admin/category"
         });
         let data = response.data;
-        data.categories.sort((a, b) => {
+        let unsortable = data.categories.filter(item => typeof(item.name) !== "string" || item.name.length < 1);
+        data.categories = data.categories
+        .filter(item => typeof(item.name) === "string" && item.name.length >= 1)
+        .sort((a, b) => {
             if (a.name && b.name) return (a.name - b.name);
             if (!a.name && !b.name) return 0;
             if (a.name) return 0;
             return 1;
         });
+        data.categories = [...data.categories, ...unsortable];
         data.structured = categoryModel.structurizeCategories(data.categories || []);
         console.log("live api: getCategories");
         return data;
@@ -654,11 +658,13 @@ async function getCategoryProducts (category_id) {
         });
         console.log("live api: getCategoryProducts");
         let products = response.data || [];
-        products.sort((a, b) => {
-            if (typeof(b.position) !== "number") return false;
-            if (typeof(a.position) !== "number") return true;
+        let unsortable = products.filter(item => typeof(item.position) !== "number" || item.position < 1);
+        products = products
+        .filter(item => typeof(item.position) === "number" && item.position >= 1)
+        .sort((a, b) => {
             return a.position - b.position;
         });
+        products = [...products, ...unsortable];
         return products;
     } catch (err) {
         console.log("mocking: getCategoryProducts");
