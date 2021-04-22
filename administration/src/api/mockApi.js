@@ -2,9 +2,8 @@ import axios from "axios";
 import * as categoryModel from "../objectModels/CategoryModel";
 import * as eavUtils from "../objectModels/eavUtils";
 import queryString from "query-string";
-import utility from "../utils/utility";
 
-axios.defaults.baseURL = "http://localhost:4000";
+axios.defaults.baseURL = window.location.origin.replace(/\:\d+$/, ":4000");
 
 // auth
 async function adminAuth(authInfo) {
