@@ -1,6 +1,9 @@
 import { Fragment, useEffect, useState } from "react";
+import { Select } from "antd";
 import * as api from "../../api/mockApi";
 import * as ProductModel from "../../objectModels/ProductModel";
+const { Option } = Select;
+
 
 function CategoryAssignment ({ productEntity, setProductEntity, ori_product }) {
 
@@ -19,11 +22,11 @@ function CategoryAssignment ({ productEntity, setProductEntity, ori_product }) {
     function renderOptionValue (category, level, index) {
         return (
             <Fragment key={index}>
-                <option value={category.entity_id}
-                    style={{paddingLeft: `${level === 0 ? 5 : level * 10}px`, paddingRight: "10px"}}
+                <Option value={category.entity_id}
+                    // style={{paddingLeft: `${level === 0 ? 5 : level * 10}px`, paddingRight: "10px"}}
                 >
-                    {level > 0 ? "l_" : ""}{category.name}
-                </option>
+                    {level > 0 ? "l_" : ""}{category.name} ({category.entity_id})
+                </Option>
                 {(category.children || []).map((item, index) => {
                     return renderOptionValue(item, level + 1, index);
                 })}
@@ -37,10 +40,10 @@ function CategoryAssignment ({ productEntity, setProductEntity, ori_product }) {
                 <Fragment>Loading</Fragment>
             ) : (
                 <Fragment>
-                    <select multiple style={{height: `${(categories.categories || []).length*17 + 17}px`}}
+                    <Select mode="multiple" allowClear placeholder="Select category"
+                        style={{minWidth: "200px", maxWidth: "500px"}}
                         value={(productEntity.categories || []).map(item => item.category_id)}
-                        onChange={event => {
-                            let selected = Array.from(event.target.selectedOptions, option => option.value);
+                        onChange={selected => {
                             let ori_entity = ProductModel.extractProductEntity({
                                 product: ori_product,
                                 entity_id: productEntity.entity_id
@@ -61,12 +64,11 @@ function CategoryAssignment ({ productEntity, setProductEntity, ori_product }) {
                             setProductEntity({...productEntity});
                         }}
                     >
-                        <option style={{paddingLeft: "5px", paddingRight: "10px"}} value="">------</option>
                         {(categories.structured || []).map((item, index) => {
                             let level = 0;
                             return renderOptionValue(item, level, index);
                         })}
-                    </select>
+                    </Select>
                 </Fragment>
             )}
         </div>

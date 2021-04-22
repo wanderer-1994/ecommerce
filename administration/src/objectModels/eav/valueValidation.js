@@ -45,8 +45,13 @@ function convertValue ({ value, data_type, html_type }) {
 
 function validateValue ({ value, data_type, html_type, validation }) {
     if (validation) {
-        let regex = new RegExp(validation);
-        if (!regex.test(value.toString())) return false;
+        let regex;
+        try {
+            regex = new RegExp(validation);
+            if (!regex.test(value.toString())) return false;
+        } catch(err) {
+            // do nothing
+        }
     }
     if (html_type === "boolean") {
         return value === 1 || value === 0;

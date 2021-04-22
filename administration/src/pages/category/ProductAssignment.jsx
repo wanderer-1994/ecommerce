@@ -1,14 +1,16 @@
-import { Fragment, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Clear from "@material-ui/icons/Clear";
 import ArrowRight from "@material-ui/icons/ArrowRight";
 import * as api from "../../api/mockApi";
 import $ from "jquery";
 import * as appFunction from "../../utils/appFunction";
-import utility from "../../utils/utility";
+import { Select } from "antd";
+const { Option } = Select;
 
 function ProductAssignment ({ category, productAssignment, setProductAssignment, ori_productAssignment, setOriProductAssignment }) {
 
     const [avalableProducts, setAvailableProducts] = useState([]);
+    const [tempAssign, setTempAssign] = useState([]);
 
     useEffect(() => {
         api.getProductEntityOnly({
@@ -111,24 +113,40 @@ function ProductAssignment ({ category, productAssignment, setProductAssignment,
             <button className="warning float section-button large"
                 onClick={updateCategoryProducts}
             >Apply</button>
+
+            <div className="add-more">
+                <h3 style={{display: "inline-block", fontStyle: "italic"}}>Add more:</h3>
+                <Select mode="multiple" value={tempAssign} placeholder="Assign more product"
+                    style={{width: "470px", marginLeft: "10px", marginRight: "5px"}}
+                    onChange={selected => {
+                        setTempAssign(selected);
+                    }}
+                >
+                    {avalableProducts.map((item, index) => {
+                        if (productAssignment.find(prod_item => item.entity_id === prod_item.product_id)) {
+                            return null;
+                        };
+                        return <Option key={index} value={item.entity_id}>{item.entity_id} - {item.name}</Option>
+                    })}
+                </Select>
+                <button style={{padding: "0px 5px 0px 5px", cursor: "pointer"}}
+                    onClick={event => {
+                        $(event.target).addClass("disabled");
+                        $(event.target).attr("disabled", true);
+                        productAssignment = [...productAssignment, ...tempAssign.map(item => {return {product_id: item}})];
+                        setProductAssignment(productAssignment);
+                        setTempAssign([]); 
+                        $(event.target).removeClass("disabled");
+                        $(event.target).attr("disabled", false);
+                    }}
+                >Assign</button>
+            </div>
+
             {productAssignment.map((prod_item, index) => {
                 prod_item.position = index + 1;
                 let product_name = (avalableProducts.find(item => item.entity_id === prod_item.product_id) || {}).name || "";
                 return (
                     <div key={index}>
-                        {/* <span className="input_value left">
-                            <select value={prod_item}
-                                onChange={() => console.log(1)}
-                            >
-                                <option value={prod_item.product_id}>{prod_item.product_id}</option>
-                                {avalableProducts.map((item, index) => {
-                                    let isExisted = productAssignment.find(c_item => c_item.product_id === item.entity_id);
-                                    return isExisted ? null : (
-                                            <option key={index} value={item.entity_id}>{item.entity_id} {utility.isValueEmpty(item.name) ? "" : `(${item.name})`}</option>
-                                        )
-                                })}
-                            </select>
-                        </span> */}
                         <span className="input_value left">
                             <input disabled type="text" value={prod_item.product_id} />
                         </span>
@@ -169,7 +187,7 @@ function ProductAssignment ({ category, productAssignment, setProductAssignment,
                                             }
                                         })
                                     };
-                                }, 50);
+                                }, 100);
                             }} />
                         </span>
                         <span className="input_value">

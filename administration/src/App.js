@@ -7,6 +7,7 @@ import Sidebar from "./components/Sidebar";
 import AppLoading from "./components/AppLoading";
 import AppAlert from "./components/AppAlert";
 import * as appFunction from "./utils/appFunction";
+import "antd/dist/antd.css";
 
 function App(props) {
     useEffect(() => {

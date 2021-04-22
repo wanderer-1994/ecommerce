@@ -63,7 +63,6 @@ const eav_entity_columns = [
         required: true,
         f_validation: database_data_type["NONE_EMPTY_STRING"].f_validation,
         render: ({ self, state, setState, mode }) => {
-            console.log(self);
             if (mode === "CREATE") mode = false;
             if (mode === "UPDATE") mode = true;
             self.invalid_message = "";
@@ -187,10 +186,22 @@ const eav_entity_columns = [
     {
         column: "validation",
         column_name: "regex validation",
+        f_validation: database_data_type["REGEXP"].f_validation,
         render: ({ self, state, setState }) => {
             let isNullValue = (state[self.column] === null || state[self.column] === "" || state[self.column] === undefined) ? "null" : "";
+            self.invalid_message = "";
+            if (!self.f_validation(state[self.column])) {
+                self.invalid_message = (
+                    <span>
+                        <span className="hightlight">{self.column_name}</span>
+                        <span> is invalid!</span>
+                    </span>
+                )
+            }
             return (
-                <input className={isNullValue} type="text" value={state[self.column] || ""} onChange={event => setState({ ...state, [self.column]: event.target.value })} />
+                <input className={isNullValue} type="text" value={state[self.column] || ""}
+                    onChange={event => setState({ ...state, [self.column]: event.target.value })}
+                />
             )
         }
     },

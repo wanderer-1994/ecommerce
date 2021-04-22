@@ -32,6 +32,16 @@ const database_data_type = {
         f_validation: function(value) {
             return typeof(value) === "number" && value >= 0 && value === parseInt(value);
         }
+    },
+    "REGEXP": {
+        f_validation: function(value) {
+            try {
+                let regex = new RegExp(value);
+                return true;
+            } catch (err) {
+                return false;
+            }
+        }
     }
 }
 
