@@ -31,7 +31,7 @@ async function appInit () {
     let env = utility.getCmdArgument("--env");
     let config_file = env_files[env] || env_files.default;
     require("dotenv").config({path: `./env_config/${config_file}`});
-    
+
     // connect database
     await msClient.connectAsync();
 
@@ -69,7 +69,7 @@ async function appInit () {
     //     // res.sendFile(__dirname + "/build/index.html");
     // })
 
-    app.listen(4000, () => {
+    app.listen(process.env.PORT, () => {
         console.log("listening port: ", process.env.PORT)
     })
 }
