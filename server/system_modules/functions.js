@@ -31,8 +31,23 @@ function generateZerofillId ({ absolute_id, zerofil_length }) {
     return id;
 }
 
+function getCmdArgument (arg_name) {
+    let value =  null;
+    process.argv.forEach(arg => {
+        if (arg.indexOf("=") > 0) {
+            let key = arg.slice(0, arg.indexOf("="));
+            if (key === arg_name) {
+                let new_value = arg.slice(arg.indexOf("=") + 1);
+                if (new_value !== "") value = new_value;
+            }
+        }        
+    });
+    return value;
+}
+
 module.exports = {
     createSystemErrMessage,
     removeVnCharacter,
-    generateZerofillId    
+    generateZerofillId,
+    getCmdArgument   
 }

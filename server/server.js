@@ -1,9 +1,10 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
-const cors = require("cors")
+const cors = require("cors");
 const formidable = require("formidable");
 const msClient = require("./system_modules/mysql/mysql");
+const utility = require("./system_modules/functions");
 
 const { 
     getResGeneralVariables,
@@ -18,8 +19,19 @@ const adminProductRouter = require("./routes/admin/ProductRouter");
 // const OrderRouter = require("./routes/user/orderRouter/OrderRouter");
 // const UserRouter = require("./routes/users/UserRouter");
 // const Others = require("./routes/user/Others");
+const env_files = {
+    "development"   : ".env.development",
+    "production"    : ".env.production",
+    "test"          : ".env.test",
+    "default"       : ".env.development",
+}
 
 async function appInit () {
+    // init app environment
+    let env = utility.getCmdArgument("--env");
+    let config_file = env_files[env] || env_files.default;
+    require("dotenv").config({path: `./env_config/${config_file}`});
+    
     // connect database
     await msClient.connectAsync();
 
@@ -58,7 +70,7 @@ async function appInit () {
     // })
 
     app.listen(4000, () => {
-        console.log("listening port: ", 4000)
+        console.log("listening port: ", process.env.PORT)
     })
 }
 
