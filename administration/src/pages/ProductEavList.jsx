@@ -332,21 +332,15 @@ function ProductEavList (props) {
                         onTimeOut: () => {
                             api.getProductEavs()
                                 .then(data => {
-                                    setEavList({
-                                        ...eav_list, ...data
-                                    });
+                                    setEavList({product_eavs: data});
+                                })
+                                .catch(err => {
+                                    console.log(err);
                                 })
                             $(event.target).parent().find("button").removeClass("disabled");
                             $(event.target).parent().find("button").attr("disabled", false);
                         }
                     });
-                    api.getProductEavs()
-                        .then(data => {
-                            setEavList({product_eavs: data});
-                        })
-                        .catch(err => {
-                            console.log(err);
-                        })
                 } else {
                     appFunction.appAlert({
                         icon: "danger",
@@ -390,7 +384,7 @@ function ProductEavList (props) {
         return (
             <Fragment key={index} >
                 <tr className={`tb-row-item ${isOnEdit ? "onEdit" : ""}`}>
-                    <td className="td_input null ord"><input disabled value={index} /></td>
+                    <td className="td_input null ord"><input disabled value={index + 1} /></td>
                     {eav_columns.map((col_item, index) => {
                         let value = eav_item[col_item.column];
                         let className = "";
