@@ -201,6 +201,7 @@ button.large.info {
     padding-left: 0px;
     background-color: #ffffff;
     display: inline-block;
+    vertical-align: top;
 }
 .entity-eav .section-title .item {
     cursor: pointer;

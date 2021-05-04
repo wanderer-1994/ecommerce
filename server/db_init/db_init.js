@@ -3,8 +3,8 @@ const msClient = require("../system_modules/mysql/mysql");
 
 var executes = [
     'schema_init.txt',
-    'data_product_eav.txt',
-    'data_category_eav.txt',
+    // 'data_product_eav.txt',
+    // 'data_category_eav.txt',
     // 'data_product_eav_datetime.txt',
     // 'data_product_category_assignment.txt',
     // 'data_product_eav_decimal.txt',

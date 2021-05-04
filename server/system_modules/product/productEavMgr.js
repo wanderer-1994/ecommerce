@@ -80,6 +80,9 @@ const product_eav_option_columns = [
         column: "value"
     },
     {
+        column: "label"
+    },
+    {
         column: "sort_order"
     }
 ];
@@ -88,7 +91,7 @@ async function getProductEavs () {
     try {
         let sql_get_product_eav =
         `
-        SELECT \`pe\`.*, \`peo\`.sort_order, \`peo\`.value AS \`option_value\`
+        SELECT \`pe\`.*, \`peo\`.label AS option_label, \`peo\`.sort_order, \`peo\`.value AS \`option_value\`
         FROM \`ecommerce\`.product_eav AS \`pe\`
         LEFT JOIN \`ecommerce\`.product_eav_option AS \`peo\`
         ON \`pe\`.html_type IN ('select', 'multiselect') AND \`pe\`.attribute_id = \`peo\`.attribute_id;
@@ -183,7 +186,7 @@ async function saveProductEav (product_eav, option) {
                     `
                     INSERT INTO \`ecommerce\`.product_eav_option (${product_eav_option_columns.map(col_item => col_item.column).join(", ")})
                     VALUES
-                    ${product_eav.options.map(opt_item => `("${mysqlutils.escapeQuotes(product_eav.attribute_id)}" , "${mysqlutils.escapeQuotes(opt_item.option_value)}", ${opt_item.sort_order ? `"${mysqlutils.escapeQuotes(opt_item.sort_order)}"` : "NULL"})`).join(",\n")}
+                    ${product_eav.options.map(opt_item => `("${mysqlutils.escapeQuotes(product_eav.attribute_id)}" , "${mysqlutils.escapeQuotes(opt_item.option_value)}", ${!mysqlutils.isValueEmpty(opt_item.label) ? `"${mysqlutils.escapeQuotes(opt_item.label)}"` : "NULL"}, ${opt_item.sort_order ? `"${mysqlutils.escapeQuotes(opt_item.sort_order)}"` : "NULL"})`).join(",\n")}
                     AS new
                     ON DUPLICATE KEY UPDATE 
                     ${product_eav_option_columns.map(col_item => `${col_item.column} = new.${col_item.column}`).join(",\n")};
@@ -282,9 +285,10 @@ function modelizeProductEavs (rawData) {
             if (['select', 'multiselect'].indexOf(eav.html_type) !== -1) {
                 eav.options = [];
                 (eav.__items || []).forEach(option => {
-                    if (option.option_value !== null && option.option_value !== "" && option.option_value !== undefined) {
+                    if (!mysqlutils.isValueEmpty(option.option_value)) {
                         eav.options.push({
                             option_value: mysqlutils.convertDataType(option.option_value, eav.data_type),
+                            label: option.option_label,
                             sort_order: option.sort_order
                         })
                     }
@@ -332,17 +336,20 @@ function validateProductEavModel (product_eav) {
         };
         if (Array.isArray(product_eav.options)) {
             product_eav.options.forEach(opt_item => {
-                if (!opt_item || opt_item.option_value === null && opt_item.option_value === "" && opt_item.option_value === undefined) {
+                if (!opt_item || mysqlutils.isValueEmpty(opt_item.option_value)) {
                     isValid = false;
                     m_failure += `invalid 'options' value.`;
                     return;
                 };
-                if (opt_item.sort_order !== null && opt_item.sort_order !== "" && opt_item.sort_order !== undefined) {
-                    if (typeof(opt_item.sort_order) !== "number") {
-                        isValid = false;
-                        m_failure += `invalid 'sort_order' for option. 'sort_order' must be number or left empty.`;
-                        return;
-                    }
+                if (!mysqlutils.isValueEmpty(opt_item.sort_order) && typeof(opt_item.sort_order) !== "number") {
+                    isValid = false;
+                    m_failure += `invalid 'sort_order' for option. 'sort_order' must be number or left empty.`;
+                    return;
+                };
+                if (!mysqlutils.isValueEmpty(opt_item.label) && typeof(opt_item.label) !== "string") {
+                    isValid = false;
+                    m_failure += `invalid 'label' for option. 'label' must be string or left empty.`;
+                    return;
                 };
                 let is_data_valid = mysqlutils.validateValue({
                     value: opt_item.option_value,

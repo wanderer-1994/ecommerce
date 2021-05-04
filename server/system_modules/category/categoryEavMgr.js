@@ -80,6 +80,9 @@ const category_eav_option_columns = [
         column: "value"
     },
     {
+        column: "label"
+    },
+    {
         column: "sort_order"
     }
 ]
@@ -88,7 +91,7 @@ async function getCategoryEavs () {
     try {
         let sql_get_category_eav =
         `
-        SELECT \`ce\`.*, \`ceo\`.sort_order, \`ceo\`.value AS \`option_value\`
+        SELECT \`ce\`.*, \`ceo\`.label AS option_label, \`ceo\`.sort_order, \`ceo\`.value AS \`option_value\`
         FROM \`ecommerce\`.category_eav AS \`ce\`
         LEFT JOIN \`ecommerce\`.category_eav_option AS \`ceo\`
         ON \`ce\`.html_type IN ('select', 'multiselect') AND \`ce\`.attribute_id = \`ceo\`.attribute_id;
@@ -183,7 +186,7 @@ async function saveCategoryEav (category_eav, option) {
                     `
                     INSERT INTO \`ecommerce\`.category_eav_option (${category_eav_option_columns.map(col_item => col_item.column).join(", ")})
                     VALUES
-                    ${category_eav.options.map(opt_item => `("${mysqlutils.escapeQuotes(category_eav.attribute_id)}" , "${mysqlutils.escapeQuotes(opt_item.option_value)}", ${opt_item.sort_order ? `"${mysqlutils.escapeQuotes(opt_item.sort_order)}"` : "NULL"})`).join(",\n")}
+                    ${category_eav.options.map(opt_item => `("${mysqlutils.escapeQuotes(category_eav.attribute_id)}" , "${mysqlutils.escapeQuotes(opt_item.option_value)}", ${!mysqlutils.isValueEmpty(opt_item.label) ? `"${mysqlutils.escapeQuotes(opt_item.label)}"` : "NULL"}, ${opt_item.sort_order ? `"${mysqlutils.escapeQuotes(opt_item.sort_order)}"` : "NULL"})`).join(",\n")}
                     AS new
                     ON DUPLICATE KEY UPDATE 
                     ${category_eav_option_columns.map(col_item => `${col_item.column} = new.${col_item.column}`).join(",\n")};
@@ -285,6 +288,7 @@ function modelizeCategoryEavs (rawData) {
                     if (option.option_value !== null && option.option_value !== "" && option.option_value !== undefined) {
                         eav.options.push({
                             option_value: mysqlutils.convertDataType(option.option_value, eav.data_type),
+                            label: option.option_label,
                             sort_order: option.sort_order
                         })
                     }
@@ -332,18 +336,21 @@ function validateCategoryEavModel (category_eav) {
         };
         if (Array.isArray(category_eav.options)) {
             category_eav.options.forEach(opt_item => {
-                if (!opt_item || opt_item.option_value === null && opt_item.option_value === "" && opt_item.option_value === undefined) {
+                if (!opt_item || mysqlutils.isValueEmpty(opt_item.option_value)) {
                     isValid = false;
                     m_failure += `invalid 'options' value.`;
                     return;
                 };
-                if (opt_item.sort_order !== null && opt_item.sort_order !== "" && opt_item.sort_order !== undefined) {
-                    if (typeof(opt_item.sort_order) !== "number") {
-                        isValid = false;
-                        m_failure += `invalid 'sort_order' for option. 'sort_order' must be number or left empty.`;
-                        return;
-                    }
+                if (!mysqlutils.isValueEmpty(opt_item.sort_order) && typeof(opt_item.sort_order) !== "number") {
+                    isValid = false;
+                    m_failure += `invalid 'sort_order' for option. 'sort_order' must be number or left empty.`;
+                    return;
                 };
+                if (!mysqlutils.isValueEmpty(opt_item.label) && typeof(opt_item.label) !== "string") {
+                    isValid = false;
+                    m_failure += `invalid 'label' for option. 'label' must be string or left empty.`;
+                    return;
+                }
                 let is_data_valid = mysqlutils.validateValue({
                     value: opt_item.option_value,
                     data_type: category_eav.data_type || match_eav_definition.data_type,

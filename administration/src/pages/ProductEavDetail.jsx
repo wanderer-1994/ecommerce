@@ -80,7 +80,6 @@ function ProductEavDetail (props) {
                 }
             })
         };
-        console.log("calling api")
         let data = await api.updateProductEavs([copy_eav]);
         let result = data && data.product_eavs ? data.product_eavs[0] : {};
         if (result.isSuccess) {

@@ -40,6 +40,7 @@ CREATE TABLE `ecommerce`.`product_eav` (
 CREATE TABLE `ecommerce`.`product_eav_option` (
   `attribute_id` VARCHAR(50) NOT NULL,
   `value` VARCHAR(255) NOT NULL,
+  `label` VARCHAR(255) NULL,
   `sort_order` INT NULL,
   PRIMARY KEY (`attribute_id`, `value`));
 
@@ -119,6 +120,7 @@ CREATE TABLE `ecommerce`.`category_eav` (
 CREATE TABLE `ecommerce`.`category_eav_option` (
   `attribute_id` VARCHAR(50) NOT NULL,
   `value` VARCHAR(255) NOT NULL,
+  `label` VARCHAR(255) NULL,
   `sort_order` INT NULL,
   PRIMARY KEY (`attribute_id`, `value`));
 

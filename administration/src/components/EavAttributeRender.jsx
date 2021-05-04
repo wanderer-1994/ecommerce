@@ -146,7 +146,7 @@ const eav_html_type = [
                         return (
                             <option
                                 key={index} value={option.option_value}
-                            >{option.option_value}</option>
+                            >{option.label || option.option_value}</option>
                         )
                     })}
                 </select>
@@ -190,7 +190,7 @@ const eav_html_type = [
                         return (
                             <option
                                 key={index} value={option.option_value}
-                            >{option.option_value}</option>
+                            >{option.label || option.option_value}</option>
                         )
                     })}
                 </select>

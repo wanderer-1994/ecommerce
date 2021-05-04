@@ -1,6 +1,7 @@
 // attribute_id, label, referred_target, admin_only, html_type, data_type, vaidation, is_super, is_system, unit
 import database_data_type from "./database_data_type";
 import * as valueValidation from "./eav/valueValidation";
+import utility from "../utils/utility";
 const eav_columns = [
     {
         column: "attribute_id",
@@ -84,6 +85,9 @@ const option_columns = [
         valueInvalidMessage: ""
     },
     {
+        column: "label",
+    },
+    {
         column: "sort_order",
         f_convert_value: ({ value }) => database_data_type["NONE_NEGATIVE_INT"].f_convert_value(value),
         f_validation: ({ value }) => database_data_type["NONE_NEGATIVE_INT"].f_validation(value),
@@ -128,7 +132,7 @@ function validateEavModel (eav) {
                 break;
             };
             eav.options.forEach(option_item => {
-                if (option_item.option_value === null || option_item.option_value === "" || option_item.option_value === undefined) {
+                if (utility.isValueEmpty(option_item.option_value)) {
                     isValid = false;
                     m_failure += "Invalid option: 'option_value' must not be empty.";
                     return;
@@ -152,7 +156,7 @@ function validateEavModel (eav) {
                                     html_type: eav.html_type
                                 });
                             };
-                            if (!col_item.f_validation({
+                            if (col_item.f_validation && !col_item.f_validation({
                                 value: option_item[col_item.column],
                                 html_type: eav.html_type,
                                 data_type: eav.data_type,

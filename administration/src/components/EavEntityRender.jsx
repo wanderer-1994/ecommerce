@@ -4,6 +4,7 @@ import * as valueValidation from '../objectModels/eav/valueValidation';
 import Clear from "@material-ui/icons/Clear";
 import Add from "@material-ui/icons/Add";
 import { eav_entity_columns } from "../common/eavCommon";
+import utility from "../utils/utility";
 
 function EavEntityRender ({ mode, eav, setEav }) {
     return (
@@ -38,7 +39,7 @@ function EavEntityRender ({ mode, eav, setEav }) {
                         >
                             {(function () {
                                 if (!Array.isArray(eav.options) || eav.options.length === 0) {
-                                    eav.options = [{option_value: ""}];
+                                    eav.options = [{option_value: "", label: ""}];
                                 }
                                 let component_type = "input";
                                 if (eav.data_type === "text" || eav.data_type === "html") {
@@ -47,7 +48,8 @@ function EavEntityRender ({ mode, eav, setEav }) {
                                 return (
                                     <Fragment>
                                         {eav.options.map((v_item, index) => {
-                                            let isNull = !v_item || v_item.option_value === null || v_item.option_value === "" || v_item.option_value === undefined;
+                                            let isNull = !v_item || utility.isValueEmpty(v_item.option_value);
+                                            let isNullLabel = !v_item || utility.isValueEmpty(v_item.label);
                                             // validation message
                                             let invalid_message = "";
                                             let converted_value = valueValidation.convertValue({
@@ -72,13 +74,33 @@ function EavEntityRender ({ mode, eav, setEav }) {
                                                 <div className="input_value" key={index}
                                                     style={{display: "block"}}
                                                 >
-                                                    <InputOrTextarea className={`multiinput_item${isNull ? " null" : ""}`} component_type={component_type} type="text" value={v_item.option_value || ""} 
-                                                        onChange={event => {
-                                                            eav.options[index].option_value = event.target.value;
-                                                            setEav({...eav})
-                                                        }}
-                                                        style={{width: "calc(100% - 40px)"}}
-                                                    />
+                                                    <span style={{width: "calc(100% - 300px)", display: "inline-block", verticalAlign: "top"}}>
+                                                        <InputOrTextarea 
+                                                            className={`multiinput_item${isNull ? " null" : ""}`}
+                                                            component_type={component_type}
+                                                            type="text" value={v_item.option_value || ""}
+                                                            placeholder="value"
+                                                            onChange={event => {
+                                                                eav.options[index].option_value = event.target.value;
+                                                                setEav({...eav})
+                                                            }}
+                                                            style={{width: "100%"}}
+                                                        />
+                                                        <div
+                                                            className={`alert_message ${invalid_message ? "hide" : ""}`}
+                                                            style={invalid_message ? {color: "var(--colorDanger)"} : {}}
+                                                        >{invalid_message}</div>
+                                                    </span>
+                                                    <span style={{verticalAlign: "top"}}>
+                                                        <input type="text" placeholder="label" value={v_item.label || ""}
+                                                            className={`multiinput_item${isNullLabel ? " null" : ""}`}
+                                                            style={{width: "250px", marginLeft: "10px"}}
+                                                            onChange={event => {
+                                                                eav.options[index].label = event.target.value;
+                                                                setEav({...eav})
+                                                            }}
+                                                        />
+                                                    </span>
                                                     {eav.options.length > 1 ? (
                                                         <Clear className="multiinput_remove" onClick={() => {
                                                             eav.options.splice(index, 1);
@@ -86,10 +108,6 @@ function EavEntityRender ({ mode, eav, setEav }) {
                                                         }} />
                                                     ): null}
                                                     <br/>
-                                                    <div
-                                                        className={`alert_message ${invalid_message ? "hide" : ""}`}
-                                                        style={invalid_message ? {color: "var(--colorDanger)"} : {}}
-                                                    >{invalid_message}</div>
                                                 </div>
                                             )
                                         })}
