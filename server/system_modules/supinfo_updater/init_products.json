@@ -1,139 +1,62 @@
 [
     {
-        "category": "storage",
-        "subsection": "usb",
+        "category": "wired_earbud",
         "products": [
-            "https://phatdatcomputer.vn/san-pham/usb-20-64g-hoco-ud6-chinh-hang",
-            "https://phatdatcomputer.vn/san-pham/usb-30-16g-hoco-ud5-chinh-hang",
-            "https://phatdatcomputer.vn/san-pham/usb-30-32g-hoco-ud5-chinh-hang",
-            "https://phatdatcomputer.vn/san-pham/usb-30-64g-hoco-ud5-chinh-hang",
-            "https://phatdatcomputer.vn/san-pham/usb-30-64g-hoco-ud8-typec-chinh-hang"        
+                
         ]
     },
     {
-        "category": "storage",
-        "subsection": "memory_card",
+        "category": "bluetooth_earbud",
         "products": [
-            "https://phatdatcomputer.vn/san-pham/the-nho-microsd-16g-hoco-box-class10-chinh-hang-chuyen-dung-camera",
-            "https://phatdatcomputer.vn/san-pham/the-nho-microsd-32g-hoco-box-class10-chuyen-dung-camera",
-            "https://phatdatcomputer.vn/san-pham/the-nho-microsd-64g-hoco-box-class10-chuyen-dung-camera",
-            "https://phatdatcomputer.vn/san-pham/the-nho-microsd-128g-hoco-box-class10-chinh-hang-chuyen-dung-camera"
+            
         ]
     },
     {
-        "category": "charger",
-        "subsection": "charge_cable",
+        "category": "wired_headphone",
         "products": [
-            "https://phatdatcomputer.vn/san-pham/cap-sac-nhanh-hoco-x21-plus-typec-silicone-30a-1m",
-            "https://phatdatcomputer.vn/san-pham/cap-sac-nhanh-hoco-x21-plus-microusb-silicone-30a-1m",
-            "https://phatdatcomputer.vn/san-pham/cap-sac-nhanh-hoco-x26-typec-day-du-1m",
-            "https://phatdatcomputer.vn/san-pham/cap-sac-nhanh-hoco-x37-microusb-24a-nhua-pvc-1m",
-            "https://phatdatcomputer.vn/san-pham/cap-sac-nhanh-hoco-x37-lightning-24a-nhua-pvc-1m",
-            "https://phatdatcomputer.vn/san-pham/cap-sac-nhanh-hoco-x37-typec-24a-nhua-pvc-1m",
-            "https://phatdatcomputer.vn/san-pham/cap-sac-nhanh-hoco-u29-microusb-nhua-tpe-20a-man-hinh-led-12m",
-            "https://phatdatcomputer.vn/san-pham/cap-sac-nhanh-hoco-u55-microusb-day-du-24a-12m",
-            "https://phatdatcomputer.vn/san-pham/cap-sac-nhanh-hoco-x51-typec-to-typec-50a-nhua-pvc-2m",
-            "https://phatdatcomputer.vn/san-pham/cap-sac-nhanh-hoco-u57-lightning-nhua-tpe-24a-12m",
-            "https://phatdatcomputer.vn/san-pham/cap-sac-nhanh-hoco-u55-typec-day-du-24a-12m",
-            "https://phatdatcomputer.vn/san-pham/cap-sac-nhanh-hoco-u57-microusb-nhua-tpe-24a-12m",
-            "https://phatdatcomputer.vn/san-pham/cap-sac-nhanh-hoco-u57-typec-nhua-tpe-24a-12m",
-            "https://phatdatcomputer.vn/san-pham/cap-sac-nhanh-hoco-u74-microusb-day-vai-ben-12m-24a",
-            "https://phatdatcomputer.vn/san-pham/cap-sac-nhanh-hoco-u74-typec-day-vai-ben-12m-24a",
-            "https://phatdatcomputer.vn/san-pham/cap-sac-nhanh-hoco-u75-microusb-day-du-12m-30a",
-            "https://phatdatcomputer.vn/san-pham/cap-sac-nhanh-hoco-u76-lightning-nam-cham-day-du-12m-20a",
-            "https://phatdatcomputer.vn/san-pham/cap-sac-nhanh-hoco-du09-typec-day-du-1m-tu-ngat-50a",
-            "https://phatdatcomputer.vn/san-pham/cap-sac-nhanh-hoco-du09-microusb-day-du-1m-tu-ngat-50a",
-            "https://phatdatcomputer.vn/san-pham/cap-sac-nhanh-hoco-du10-typec-day-du-1m-30a",
-            "https://phatdatcomputer.vn/san-pham/cap-sac-nhanh-hoco-du10-pro-microusb-day-du-025m-30a",
-            "https://phatdatcomputer.vn/san-pham/cap-sac-nhanh-hoco-du10-pro-lightning-day-du-025m-30a",
-            "https://phatdatcomputer.vn/san-pham/cap-sac-nhanh-hoco-du10-pro-typec-day-du-025m-30a",
-            "https://phatdatcomputer.vn/san-pham/cap-sac-nhanh-hoco-du10-max-typec-day-du-30a-2m",
-            "https://phatdatcomputer.vn/san-pham/cap-sac-nhanh-hoco-upl12-plus-typec-co-den-bao-24a-12m",
-            "https://phatdatcomputer.vn/san-pham/cap-sac-nhanh-hoco-ud01-microusb-day-du-50a-12m",
-            "https://phatdatcomputer.vn/san-pham/cap-sac-nhanh-hoco-ud02-typec-day-du-1m-30a"
+            
         ]
     },
     {
-        "category": "charger",
+        "category": "bluetooth_headphone",
         "subsection": "adapter",
         "products": [
-            "https://phatdatcomputer.vn/san-pham/coc-sac-hoco-c52a-2-usb-21a",
-            "https://phatdatcomputer.vn/san-pham/coc-sac-hoco-uh102-chinh-hang",
-            "https://phatdatcomputer.vn/san-pham/coc-sac-hoco-c22-24a-iphone-ipad",
-            "https://phatdatcomputer.vn/san-pham/coc-sac-nhanh-hoco-c73-02-cong-usb-24a",
-            "https://phatdatcomputer.vn/san-pham/coc-sac-nhanh-hoco-dc03-1-cong-usb-30a-den-led",
-            "https://phatdatcomputer.vn/san-pham/coc-sac-nhanh-hoco-dc03-pro-max-3-cong-usb-34a-man-hinh-led",
-            "https://phatdatcomputer.vn/san-pham/coc-sac-nhanh-hoco-c15-3a-3-cong-usb-man-hinh-led",
-            "https://phatdatcomputer.vn/san-pham/coc-sac-nhanh-hoco-c72-1-cong-usb-21a",
-            "https://phatdatcomputer.vn/san-pham/coc-sac-nhanh-hoco-dc28-2-cong-usb-50a-man-hinh-led",
-            "https://phatdatcomputer.vn/san-pham/coc-sac-nhanh-hoco-dc28-pro-1-cong-typec-1-cong-usb-30a-18w-man-hinh-led",
-            "https://phatdatcomputer.vn/san-pham/coc-sac-xe-hoi-hoco-e51-2-cong-usb-1-cong-typec-31a-fmbluetooth"
+
         ]
     },
     {
         "category": "charger",
         "subsection": "charger_set",
         "products": [
-            "https://phatdatcomputer.vn/san-pham/bo-sac-nhanh-hoco-dc28-typec-2-cong-usb-5a-max-led-1m",
-            "https://phatdatcomputer.vn/san-pham/bo-sac-nhanh-hoco-c72-lightning-01-cong-usb-21a-1m",
-            "https://phatdatcomputer.vn/san-pham/bo-sac-nhanh-hoco-c73-lightning-02-cong-usb-24a-1m"        
+      
         ]
     },
     {
         "category": "charger",
         "subsection": "wireless_charger",
         "products": [
-            "https://phatdatcomputer.vn/san-pham/de-sac-nhanh-khong-day-hoco-cw24-3in1-10w-chinh-hang"
+
         ]
     },
     {
         "category": "charger",
         "subsection": "powerbank",
         "products": [
-            "https://phatdatcomputer.vn/san-pham/pin-du-phong-5000mah-hoco-b35d-black-chinh-hang",
-            "https://phatdatcomputer.vn/san-pham/pin-du-phong-10000mah-hoco-j25a-chinh-hang-lien-cap-microusb",
-            "https://phatdatcomputer.vn/san-pham/pin-du-phong-10000mah-hoco-j41-white-chinh-hang-polymer-a-led",
-            "https://phatdatcomputer.vn/san-pham/pin-du-phong-10000mah-hoco-j46-red-chinh-hang-lcd-usb-20a-polymer-a",
-            "https://phatdatcomputer.vn/san-pham/pin-du-phong-10000mah-hoco-j47-gray-pin-lithium-2-cong-usb-qc-30-man-hinh-led",
-            "https://phatdatcomputer.vn/san-pham/pin-du-phong-10000mah-hoco-j56-black-chinh-hang-polymer-a-2-cong-usb-30-sac-ko-day-10w-led",
-            "https://phatdatcomputer.vn/san-pham/pin-du-phong-10000mah-hoco-j57-black-chinh-hang-polymer-a-led",
-            "https://phatdatcomputer.vn/san-pham/pin-du-phong-10000mah-hoco-j58-white-chinh-hang-polymer-a-2-cong-usb-1-cong-typec-30a",
-            "https://phatdatcomputer.vn/san-pham/pin-du-phong-10000mah-hoco-j59-black-chinh-hang-polymer-a-led",
-            "https://phatdatcomputer.vn/san-pham/pin-du-phong-10000mah-hoco-j64-blackwhite-2-cong-usb-20a-den-led",
-            "https://phatdatcomputer.vn/san-pham/pin-du-phong-10000mah-hoco-dj01-max-black-chinh-hang-2-cong-usb-21a-man-hinh-led",
-            "https://phatdatcomputer.vn/san-pham/pin-du-phong-20000mah-hoco-j59a-white-chinh-hang-polymer-a-led",
-            "https://phatdatcomputer.vn/san-pham/pin-du-phong-30000mah-hoco-j60-blackwhite-chinh-hang-4-cong-usb-led",
-            "https://phatdatcomputer.vn/san-pham/pin-du-phong-30000mah-hoco-j62-blackwhite-chinh-hang-3-cong-usb-led"
+
         ]
     },
     {
         "category": "sound_accessories",
         "subsection": "wired_head_phone",
         "products": [
-            "https://phatdatcomputer.vn/san-pham/tai-nghe-nhet-tai-hoco-m301",
-            "https://phatdatcomputer.vn/san-pham/tai-nghe-nhet-tai-hoco-m303",
-            "https://phatdatcomputer.vn/san-pham/tai-nghe-nhet-tai-hoco-m1-pro-chinh-hang-jack-typec",
-            "https://phatdatcomputer.vn/san-pham/tai-nghe-nhet-tai-hoco-m1-pro-chinh-hang-jack-cam-35mm",
-            "https://phatdatcomputer.vn/san-pham/tai-nghe-nhet-tai-hoco-m1-npp-chinh-hang",
-            "https://phatdatcomputer.vn/san-pham/tai-nghe-nhet-tai-hoco-m37-chinh-hang-nhua-tpe-12m",
-            "https://phatdatcomputer.vn/san-pham/tai-nghe-nhet-tai-hoco-m40-chinh-hang-nhua-tpe-12m",
-            "https://phatdatcomputer.vn/san-pham/tai-nghe-nhet-tai-hoco-m60-chinh-hang-nhua-tpe-12m-co-mic",
-            "https://phatdatcomputer.vn/san-pham/tai-nghe-nhet-tai-hoco-m70-chinh-hang-nhua-tpe-co-mic-12m",
-            "https://phatdatcomputer.vn/san-pham/tai-nghe-nhet-tai-hoco-m58-blackwhite-chinh-hang-nhua-tpe-12m",
-            "https://phatdatcomputer.vn/san-pham/tai-nghe-nhet-tai-hoco-m73-blackwhite-chinh-hang-nhua-tpe-12m-co-mic",
-            "https://phatdatcomputer.vn/san-pham/tai-nghe-nhet-tai-hoco-m74-nhua-tpe-12m"
+
         ]
     },
     {
         "category": "sound_accessories",
         "subsection": "bluetooth_head_phone",
         "products": [
-            "https://phatdatcomputer.vn/san-pham/tai-nghe-bluetooth-hoco-e1-tai-nghe-1-ben-v41",
-            "https://phatdatcomputer.vn/san-pham/tai-nghe-bluetooth-hoco-e52-blackwhite-chinh-hang-tai-nghe-2-ben-kep-ao-v50",
-            "https://phatdatcomputer.vn/san-pham/tai-nghe-bluetooth-hoco-es13-plus-chinh-hang-tai-nghe-2-ben-v41",
-            "https://phatdatcomputer.vn/san-pham/tai-nghe-bluetooth-hoco-es21-chinh-hang-the-thao-v42",
-            "https://phatdatcomputer.vn/san-pham/tai-nghe-bluetooth-hoco-es40-v50-chinh-hang",
-            "https://phatdatcomputer.vn/san-pham/tai-nghe-bluetooth-hoco-ek04-kingkong-tai-nghe-1-ben-v50"
+
         ]
     },
     {
@@ -202,33 +125,14 @@
         "category": "phone_accessories",
         "subsection": "phone_holder",
         "products": [
-            "https://phatdatcomputer.vn/san-pham/tui-dung-dien-thoai-chong-nuoc-hoco-common-chinh-hang",
-            "https://phatdatcomputer.vn/san-pham/gia-do-dien-thoai-xe-hoi-hoco-ca31a-chinh-hang",
-            "https://phatdatcomputer.vn/san-pham/gia-do-dien-thoai-xe-hoi-hoco-ca36-plus-chinh-hang",
-            "https://phatdatcomputer.vn/san-pham/gia-do-dien-thoai-xe-hoi-hoco-ca46-hop-kim-nhom",
-            "https://phatdatcomputer.vn/san-pham/gia-do-dien-thoai-xe-hoi-hoco-ca47-hop-kim-nhom",
-            "https://phatdatcomputer.vn/san-pham/gia-do-dien-thoai-xe-hoi-hoco-cph01-nhua-abs",
-            "https://phatdatcomputer.vn/san-pham/gia-do-dien-thoai-xe-hoi-hoco-ca69-chinh-hang-hop-kim-nhom",
-            "https://phatdatcomputer.vn/san-pham/kep-duoi-khi-hoco-ph23-cho-dien-thoai",
-            "https://phatdatcomputer.vn/san-pham/gia-do-dien-thoai-de-ban-hoco-ph30-hop-kim-nhom",
-            "https://phatdatcomputer.vn/san-pham/gia-do-dien-thoai-hoco-ca56"
+
         ]
     },
     {
         "category": "phone_accessories",
         "subsection": "screen_protector",
         "products": [
-            "https://phatdatcomputer.vn/san-pham/mdcl-hoco-cps1-iphone-78-plus-full-den",
-            "https://phatdatcomputer.vn/san-pham/mdcl-hoco-cps1-iphone-xr11-full-den",
-            "https://phatdatcomputer.vn/san-pham/mdcl-hoco-cps4-iphone-78-full-den",
-            "https://phatdatcomputer.vn/san-pham/mdcl-hoco-cps4-iphone-xr11-full-den",
-            "https://phatdatcomputer.vn/san-pham/mdcl-hoco-dg1-119d-iphone-66s-plus-full-den",
-            "https://phatdatcomputer.vn/san-pham/mdcl-hoco-dg1-119d-iphone-66s-plus-full-trang",
-            "https://phatdatcomputer.vn/san-pham/mdcl-hoco-dg1-119d-iphone-78-full-trang",
-            "https://phatdatcomputer.vn/san-pham/mdcl-hoco-dg1-119d-iphone-78-plus-full-trang",
-            "https://phatdatcomputer.vn/san-pham/mdcl-hoco-dg1-119d-iphone-xxs11-pro-full-den-1-hop-2-mieng",
-            "https://phatdatcomputer.vn/san-pham/mdcl-hoco-dg1-119d-iphone-xr11-full-den",
-            "https://phatdatcomputer.vn/san-pham/mdcl-hoco-dg1-119d-iphone-12-pro-max-67-full-den"
+
         ]
     },
     {

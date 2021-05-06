@@ -5,24 +5,6 @@ const categoryMgr = require("../category/categoryMgr");
 const search = require("../search/search");
 const fs = require("fs-extra");
 const utils = require("../functions");
-async function getSupplierProduct () {
-    const init_products = await fs.readJSON("./init_products.json", "utf8");
-    let products = [];
-    let quotation = await scraper.get_phatdatcomQuotation({
-        url: "default"
-    });
-    for (let i = 0; i < init_products.length; i++) {
-        let product_links = init_products[i].products;
-        for (let j = 0; j < product_links.length; j++) {
-            console.log("getting: ", product_links[j])
-            let product = await scraper.get_pdcomProdDetail(product_links[j], quotation);
-            product.category = init_products[i].category;
-            product.subsection = init_products[i].subsection;
-            products.push(product);
-        };
-    }
-    await fs.writeJSON("./init_products_1.json", products);
-}
 
 async function initProductDatabase () {
     // product_entity: "entity_id", "type_id", "created_at", "updated_at"

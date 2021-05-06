@@ -5,6 +5,7 @@ import * as appFunction from "../utils/appFunction";
 import * as CategoryModel from "../objectModels/CategoryModel";
 import $ from "jquery";
 import "../css/list.css";
+import utility from "../utils/utility";
 
 const category_entity_columns = [
     {
@@ -328,11 +329,11 @@ function CategoryList (props) {
                             <td style={col_item.td_style} className={`td_input ${col_item.align} ${className}`} key={index}>
                                 {col_item.column === "entity_id" ?
                                 (
-                                    <Link to={`/category/${cat_item.entity_id}`} target="_blank">
-                                        <input
-                                            disabled type={col_item.data_type} value={(value === null || value === "" || value === undefined) ? "" : value}
-                                        />
-                                    </Link>
+                                    <span style={{marginLeft: "10px"}}>
+                                        <Link to={`/category/${cat_item.entity_id}`} target="_blank">
+                                            {utility.isValueEmpty(value) ? "" : value}
+                                        </Link>
+                                    </span>
                                 )
                                 : (
                                     <input
