@@ -2,151 +2,102 @@
     {
         "category": "wired_earbud",
         "products": [
-                
+            "https://phatdatcomputer.vn/san-pham/tai-nghe-nhet-tai-hoco-m1-pro-chinh-hang-jack-typec",
+            "https://phatdatcomputer.vn/san-pham/tai-nghe-nhet-tai-hoco-m1-npp-chinh-hang",
+            "https://phatdatcomputer.vn/san-pham/tai-nghe-nhet-tai-hoco-m74-nhua-tpe-12m",
+            "https://phatdatcomputer.vn/san-pham/tai-nghe-nhet-tai-borofone-bm34-blackwhitepink-co-mic"
         ]
     },
     {
         "category": "bluetooth_earbud",
         "products": [
-            
+            "https://phatdatcomputer.vn/san-pham/tai-nghe-bluetooth-tws-amoi-f9-v50-cam-ung-tich-hop-pin-du-phong-gia-do-dien-thoai",
+            "https://phatdatcomputer.vn/san-pham/tai-nghe-bluetooth-hoco-es13-plus-chinh-hang-tai-nghe-2-ben-v41",
+            "https://phatdatcomputer.vn/san-pham/tai-nghe-bluetooth-hoco-es41-white-chinh-hang-tai-nghe-2-ben-v50",
+            "https://phatdatcomputer.vn/san-pham/tai-nghe-bluetooth-hoco-es45-chinh-hang-cam-ung-2-ben-v50"
         ]
     },
     {
         "category": "wired_headphone",
         "products": [
-            
+            "https://phatdatcomputer.vn/san-pham/headphone-hoco-w103-blackred-gaming-chinh-hang-12m-jack-headset-tich-hop-35mm-co-mic",
+            "https://phatdatcomputer.vn/san-pham/headphone-gaming-esport-vx3-led",
+            "https://phatdatcomputer.vn/san-pham/headphone-wangminh-8900l-chuyen-phong-net",
+            "https://phatdatcomputer.vn/san-pham/headphone-exavp-ex220-led-gaming",
+            "https://phatdatcomputer.vn/san-pham/headphone-exavp-n61-led-gaming",
+            "https://phatdatcomputer.vn/san-pham/headphone-exavp-n61-led-gaming"
         ]
     },
     {
         "category": "bluetooth_headphone",
-        "subsection": "adapter",
         "products": [
-
+            "https://phatdatcomputer.vn/san-pham/tai-nghe-bluetooth-chup-tai-borofone-bo8-chinh-hang",
+            "https://phatdatcomputer.vn/san-pham/headphone-bluetooth-tai-meo-hoco-w27-chinh-hang-co-mic"
         ]
     },
     {
-        "category": "charger",
-        "subsection": "charger_set",
+        "category": "powerbank",
         "products": [
-      
+            "https://phatdatcomputer.vn/san-pham/pin-du-phong-10000mah-borofone-bt21-white-chinh-hang-co-lcd",
+            "https://phatdatcomputer.vn/san-pham/pin-du-phong-10000mah-hoco-j48-chinh-hang-02-cong-usb-2a-polymer-a",
+            "https://phatdatcomputer.vn/san-pham/pin-du-phong-10000mah-lanex-lpbn12-blackgreen-polymer-a-2-cong-usb-21a-man-hinh-led",
+            "https://phatdatcomputer.vn/san-pham/pin-du-phong-10000mah-lanex-lpbp06-black-polymer-a-2-cong-usb-1-cong-typec-30a-pd-qc30-18w",
+            "https://phatdatcomputer.vn/san-pham/pin-du-phong-20000mah-borofone-bt26a-white-chinh-hang",
+            "https://phatdatcomputer.vn/san-pham/pin-du-phong-20000mah-lanex-lpbn18-2-cong-usb-21a-den-led",
+            "https://phatdatcomputer.vn/san-pham/pin-du-phong-30000mah-lanex-lpbn21-blackwhite-chinh-hang-2-cong-usb-21a-led",
+            "https://phatdatcomputer.vn/san-pham/pin-du-phong-30000mah-hoco-j60-blackwhite-chinh-hang-4-cong-usb-led"
         ]
     },
     {
-        "category": "charger",
-        "subsection": "wireless_charger",
-        "products": [
-
-        ]
-    },
-    {
-        "category": "charger",
-        "subsection": "powerbank",
-        "products": [
-
-        ]
-    },
-    {
-        "category": "sound_accessories",
-        "subsection": "wired_head_phone",
-        "products": [
-
-        ]
-    },
-    {
-        "category": "sound_accessories",
-        "subsection": "bluetooth_head_phone",
-        "products": [
-
-        ]
-    },
-    {
-        "category": "sound_accessories",
-        "subsection": "headphone",
+        "category": "adapter",
         "products": [
             
         ]
     },
     {
-        "category": "sound_accessories",
-        "subsection": "earphone",
+        "category": "cable",
+        "products": [
+
+        ]
+    },
+    {
+        "category": "wired_mouse",
+        "products": [
+
+        ]
+    },
+    {
+        "category": "bluetooth_mouse",
+        "products": [
+
+        ]
+    },
+    {
+        "category": "mousepad",
+        "products": [
+            
+        ]
+    },
+    {
+        "category": "keyboard",
+        "products": [
+            
+        ]
+    },
+    {
+        "category": "cooling_pad",
+        "products": [
+
+        ]
+    },
+    {
+        "category": "laptop_adapter",
         "products": [
             
         ]
     },
     {
         "category": "speaker",
-        "products": [
-            "https://phatdatcomputer.vn/san-pham/loa-bluetooth-hoco-ds04-blackblue-chinh-hang-cam-tay-v50"
-        ]
-    },
-    {
-        "category": "laptop_accessories",
-        "subsection": "mouse",
-        "products": [
-            
-        ]
-    },
-    {
-        "category": "laptop_accessories",
-        "subsection": "keyboard",
-        "products": [
-            
-        ]
-    },
-    {
-        "category": "laptop_accessories",
-        "subsection": "cooler",
-        "products": [
-            
-        ]
-    },
-    {
-        "category": "laptop_accessories",
-        "subsection": "carry_bag",
-        "products": [
-            
-        ]
-    },
-    {
-        "category": "phone_accessories",
-        "subsection": "selfie_case",
-        "products": [
-            
-        ]
-    },
-    {
-        "category": "phone_accessories",
-        "subsection": "phone_case",
-        "products": [
-        
-        ]
-    },
-    {
-        "category": "phone_accessories",
-        "subsection": "phone_holder",
-        "products": [
-
-        ]
-    },
-    {
-        "category": "phone_accessories",
-        "subsection": "screen_protector",
-        "products": [
-
-        ]
-    },
-    {
-        "category": "game_accessories",
-        "products": [
-            
-        ]
-    },
-    {
-        "category": "travel_accessories",
-        "products": []
-    },
-    {
-        "category": "routine_accessories",
         "products": [
             
         ]
