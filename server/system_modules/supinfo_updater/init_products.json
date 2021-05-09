@@ -22,16 +22,15 @@
         "products": [
             "https://phatdatcomputer.vn/san-pham/headphone-hoco-w103-blackred-gaming-chinh-hang-12m-jack-headset-tich-hop-35mm-co-mic",
             "https://phatdatcomputer.vn/san-pham/headphone-gaming-esport-vx3-led",
-            "https://phatdatcomputer.vn/san-pham/headphone-wangminh-8900l-chuyen-phong-net",
             "https://phatdatcomputer.vn/san-pham/headphone-exavp-ex220-led-gaming",
             "https://phatdatcomputer.vn/san-pham/headphone-exavp-n61-led-gaming",
-            "https://phatdatcomputer.vn/san-pham/headphone-exavp-n61-led-gaming"
+            "https://phatdatcomputer.vn/san-pham/headphone-exavp-n62-led-rung-gaming"
         ]
     },
     {
         "category": "bluetooth_headphone",
         "products": [
-            "https://phatdatcomputer.vn/san-pham/tai-nghe-bluetooth-chup-tai-borofone-bo8-chinh-hang",
+            "https://phatdatcomputer.vn/san-pham/tai-nghe-bluetooth-chup-tai-borofone-bo8-blackwhite-chinh-hang-the-nho",
             "https://phatdatcomputer.vn/san-pham/headphone-bluetooth-tai-meo-hoco-w27-chinh-hang-co-mic"
         ]
     },
@@ -43,7 +42,7 @@
             "https://phatdatcomputer.vn/san-pham/pin-du-phong-10000mah-lanex-lpbn12-blackgreen-polymer-a-2-cong-usb-21a-man-hinh-led",
             "https://phatdatcomputer.vn/san-pham/pin-du-phong-10000mah-lanex-lpbp06-black-polymer-a-2-cong-usb-1-cong-typec-30a-pd-qc30-18w",
             "https://phatdatcomputer.vn/san-pham/pin-du-phong-20000mah-borofone-bt26a-white-chinh-hang",
-            "https://phatdatcomputer.vn/san-pham/pin-du-phong-20000mah-lanex-lpbn18-2-cong-usb-21a-den-led",
+            "https://phatdatcomputer.vn/san-pham/pin-du-phong-20000mah-lanex-lpbn18-blackwhite-2-cong-usb-21a-den-led",
             "https://phatdatcomputer.vn/san-pham/pin-du-phong-30000mah-lanex-lpbn21-blackwhite-chinh-hang-2-cong-usb-21a-led",
             "https://phatdatcomputer.vn/san-pham/pin-du-phong-30000mah-hoco-j60-blackwhite-chinh-hang-4-cong-usb-led"
         ]
@@ -51,55 +50,114 @@
     {
         "category": "adapter",
         "products": [
-            
+            "https://phatdatcomputer.vn/san-pham/coc-sac-hoco-uh102-chinh-hang",
+            "https://phatdatcomputer.vn/san-pham/coc-sac-hoco-c39-24a-2-usb-man-hinh-led",
+            "https://phatdatcomputer.vn/san-pham/coc-sac-nhanh-hoco-dc03-pro-max-3-cong-usb-34a-man-hinh-led",
+            "https://phatdatcomputer.vn/san-pham/coc-sac-nhanh-hoco-c80-1-cong-usb-typec-31a-qc-31-18w"
         ]
     },
     {
         "category": "cable",
         "products": [
-
+            "https://phatdatcomputer.vn/san-pham/cap-sac-nhanh-hoco-du10-pro-typec-day-du-025m-30a",
+            "https://phatdatcomputer.vn/san-pham/cap-sac-romoss-lightning-day-dep-chinh-hang",
+            "https://phatdatcomputer.vn/san-pham/cap-sac-nhanh-hoco-u55-microusb-day-du-24a-12m",
+            "https://phatdatcomputer.vn/san-pham/cap-sac-nhanh-hoco-u55-typec-day-du-24a-12m",
+            "https://phatdatcomputer.vn/san-pham/cap-sac-nhanh-hoco-u70-microusb-24a-12m",
+            "https://phatdatcomputer.vn/san-pham/cap-sac-nhanh-hoco-u70-typec-24a-12m",
+            "https://phatdatcomputer.vn/san-pham/cap-sac-nhanh-hoco-u70-lightning-24a-12m",
+            "https://phatdatcomputer.vn/san-pham/cap-sac-nhanh-hoco-du10-max-lightning-day-du-30a-2m",
+            "https://phatdatcomputer.vn/san-pham/cap-sac-nhanh-hoco-du10-max-microusb-day-du-30a-2m",
+            "https://phatdatcomputer.vn/san-pham/cap-sac-nhanh-hoco-du10-max-typec-day-du-30a-2m",
+            "https://phatdatcomputer.vn/san-pham/cap-sac-borofone-bx32-microusb-nhua-tpe-025m",
+            "https://phatdatcomputer.vn/san-pham/cap-sac-borofone-bx32-typec-nhua-tpe-025m",
+            "https://phatdatcomputer.vn/san-pham/cap-sac-nhanh-hoco-x56-typec-to-lightning-white-30a-nylon-fiber-pd-20w-1m"
+        ]
+    },
+    {
+        "category": "charger_set",
+        "products": [
+            "https://phatdatcomputer.vn/san-pham/bo-sac-nhanh-hoco-dc28-lightning-2-cong-usb-5a-max-led-1m",
+            "https://phatdatcomputer.vn/san-pham/bo-sac-nhanh-hoco-dc28-typec-2-cong-usb-5a-max-led-1m",
+            "https://phatdatcomputer.vn/san-pham/bo-sac-nhanh-hoco-dc28-microusb-2-cong-usb-5a-max-led-1m",
+            "https://phatdatcomputer.vn/san-pham/bo-coc-cap-sac-borofone-ba25a-microusb-2-cong-usb",
+            "https://phatdatcomputer.vn/san-pham/bo-coc-cap-sac-borofone-ba25a-lightning-2-cong-usb",
+            "https://phatdatcomputer.vn/san-pham/bo-coc-cap-sac-borofone-ba25a-typec-2-cong-usb"
         ]
     },
     {
         "category": "wired_mouse",
         "products": [
-
+            "https://phatdatcomputer.vn/san-pham/mouse-bosston-m15-led-usb-chinh-hang",
+            "https://phatdatcomputer.vn/san-pham/mouse-bosston-d608-usb-chinh-hang",
+            "https://phatdatcomputer.vn/san-pham/mouse-bosston-r30a-led-usb-chinh-hang",
+            "https://phatdatcomputer.vn/san-pham/mouse-bosston-gm100-led-usb-chinh-hang",
+            "https://phatdatcomputer.vn/san-pham/mouse-imice-v9-gaming-chinh-hang-day-du-led",
+            "https://phatdatcomputer.vn/san-pham/mouse-apedra-m5-gaming-chinh-hang",
+            "https://phatdatcomputer.vn/san-pham/mouse-apedra-a7-gaming-chinh-hang-day-du-led",
+            "https://phatdatcomputer.vn/san-pham/mouse-rainbowgear-r102-usb-led-rgb-gaming",
+            "https://phatdatcomputer.vn/san-pham/mouse-rainbowgear-r350-usb-led-rgb-gaming-cao-cap"
         ]
     },
     {
         "category": "bluetooth_mouse",
         "products": [
-
+            "https://phatdatcomputer.vn/san-pham/mouse-ko-day-newmen-f266-chinh-hang",
+            "https://phatdatcomputer.vn/san-pham/mouse-ko-day-fdi2-chinh-hang",
+            "https://phatdatcomputer.vn/san-pham/mouse-ko-day-fdi882-bluered-chinh-hang",
+            "https://phatdatcomputer.vn/san-pham/mouse-ko-day-fdv8-bluegreengray-chinh-hang",
+            "https://phatdatcomputer.vn/san-pham/mouse-ko-day-twolf-q13"
         ]
     },
     {
         "category": "mousepad",
         "products": [
-            
+            "https://phatdatcomputer.vn/san-pham/pad-mouse-razer-x3-chuyen-game-kho-lon",
+            "https://phatdatcomputer.vn/san-pham/pad-mouse-s6-chuyen-game-800x300x3mm",
+            "https://phatdatcomputer.vn/san-pham/pad-mouse-s9-chuyen-game-780x300x5mm",
+            "https://phatdatcomputer.vn/san-pham/pad-mouse-imice-chuyen-game-800x300x3mm",
+            "https://phatdatcomputer.vn/san-pham/pad-mouse-estone-chuyen-game-290x250x3mm"
         ]
     },
     {
         "category": "keyboard",
         "products": [
-            
+            "https://phatdatcomputer.vn/san-pham/keyboard-bosston-mini-868",
+            "https://phatdatcomputer.vn/san-pham/keyboard-bosston-k830-usb-chinh-hang",
+            "https://phatdatcomputer.vn/san-pham/keyboard-newmen-e340-usb-chinh-hang",
+            "https://phatdatcomputer.vn/san-pham/keyboard-twolf-tf20-led-7-mau-usb",
+            "https://phatdatcomputer.vn/san-pham/keyboard-bosston-808-usb-chinh-hang",
+            "https://phatdatcomputer.vn/san-pham/keyboard-bosston-k380-led-usb-chinh-hang-gia-co",
+            "https://phatdatcomputer.vn/san-pham/keyboard-bosston-mk912-phim-co-9-che-do-led",
+            "https://phatdatcomputer.vn/san-pham/keyboard-hp-gk320-den-chinh-hang-usb-phim-co",
+            "https://phatdatcomputer.vn/san-pham/keyboard-philips-spk8614gr-bac-led-chinh-hang-usb-phim-co-red-swicth"
+        ]
+    },
+    {
+        "category": "keyboard_set",
+        "products": [
+            "https://phatdatcomputer.vn/san-pham/combo-ko-day-keyboard-mouse-fdik1500-chinh-hang",
+            "https://phatdatcomputer.vn/san-pham/combo-ko-day-keyboard-mouse-simetech-sm9000-mini-blackbluepink-nut-tron",
+            "https://phatdatcomputer.vn/san-pham/combo-ko-day-keyboard-mouse-pspy-k68-blackyellow-chinh-hang",
+            "https://phatdatcomputer.vn/san-pham/combo-ko-day-keyboard-mouse-fdik7300-blackwhite-chinh-hang"
         ]
     },
     {
         "category": "cooling_pad",
         "products": [
-
-        ]
-    },
-    {
-        "category": "laptop_adapter",
-        "products": [
-            
+            "https://phatdatcomputer.vn/san-pham/de-tan-nhiet-laptop-vsp-cooler-n27-1fan-14156",
+            "https://phatdatcomputer.vn/san-pham/de-tan-nhiet-laptop-n99-2fan-14156",
+            "https://phatdatcomputer.vn/san-pham/de-tan-nhiet-laptop-vsp-cooler-n22-6fan-14156"
         ]
     },
     {
         "category": "speaker",
         "products": [
-            
+            "https://phatdatcomputer.vn/san-pham/loa-bluetooth-kisonli-led-904",
+            "https://phatdatcomputer.vn/san-pham/loa-bluetooth-kisonli-led-901",
+            "https://phatdatcomputer.vn/san-pham/loa-bluetooth-borofone-br1-chinh-hang-v50-pin-1200mah-tf-usb",
+            "https://phatdatcomputer.vn/san-pham/loa-bluetooth-borofone-br2-mini-blackwhitebluegreenred-chinh-hang-v50-pin-1200mah-tf-usb",
+            "https://phatdatcomputer.vn/san-pham/loa-bluetooth-lanex-w05-chinh-hang"
         ]
     }
 ]

@@ -326,7 +326,7 @@ function ProductCreate (props) {
                     ) : null}
                     {productEntity.type_id !== "variant" ? (
                         <div className="section-item categories">
-                            <CategoryAssignment productEntity={productEntity} setProductEntity={setProductEntity} />
+                            <CategoryAssignment productEntity={productEntity} setProductEntity={setProductEntity} ori_product={productEntity} />
                         </div>
                     ) : null}
                 </div>

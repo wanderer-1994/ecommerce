@@ -1,4 +1,5 @@
 const msClient = require("./system_modules/mysql/mysql");
+const fs = require("fs-extra");
 
 async function test () {
     await msClient.connectAsync();
@@ -31,4 +32,13 @@ async function test () {
     console.log(result);
 };
 
-test();
+async function count () {
+    let data = await fs.readJSONSync("./system_modules/supinfo_updater/init_products.json");
+    let count = 0;
+    data.forEach(item => {
+        count += item.products.length;
+    });
+    console.log("total: ", count);
+}
+
+count();
