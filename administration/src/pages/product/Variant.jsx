@@ -4,15 +4,32 @@ const variant_columns = [
     {
         column: "entity_id",
         column_name: "ID",
-        style: {width: "100px"}
+        style: {width: "100px"},
+        render: function ({ self, entity, idx }) {
+            let value = entity[self.column];
+            return (
+                <td className="td_input" key={idx}
+                    style={self.style}
+                >
+                    <a href={`/product/${value}`} target="_blank">{value}</a>
+                </td>
+            )
+        }
     },
     {
-        getData: function (entity) {
-            let name = (entity.attributes || []).find(item => item.attribute_id === "name") || {};
-            return name.value;
-        },
         column_name: "Name",
-        style: {minWidth: "300px"}
+        style: {minWidth: "300px"},
+        render: function ({ self, entity, idx }) {
+            let name = (entity.attributes || []).find(item => item.attribute_id === "name") || {};
+            let value = name.value;
+            return (
+                <td className="td_input" key={idx}
+                    style={self.style}
+                >
+                    <input type="text" disabled value={value} />
+                </td>
+            )
+        }
     }
 ]
 
@@ -37,16 +54,11 @@ function Variant ({ ori_product }) {
                                     <td className="td_input null"
                                         style={{textAlign: "right", padding: "0px 5px 0px 5px"}}
                                     >{index + 1}</td>
-                                    {variant_columns.map((col_item, idx) => {
-                                        let value = col_item.column ? item[col_item.column] : col_item.getData(item);
-                                        return (
-                                            <td className="td_input" key={idx}
-                                                style={col_item.style}
-                                            >
-                                                <input type="text" disabled value={value} />
-                                            </td>
-                                        )
-                                    })}
+                                    {variant_columns.map((col_item, idx) => col_item.render({
+                                        self: col_item,
+                                        entity: item,
+                                        idx: idx
+                                    }))}
                                 </tr>
                             )
                         })}
