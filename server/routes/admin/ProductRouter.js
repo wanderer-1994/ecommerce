@@ -1,17 +1,14 @@
 const express = require("express");
 const router = express.Router();
 const msClient = require("../../system_modules/mysql/mysql");
-const { updateSupInfo } = require("../../supinfo_updater/general_updater");
-const {
-    createSystemErrMessage,
-    unescapeSelectedData
-} = require("../../system_modules/functions");
-const {
-    psize
-} = require("../../system_modules/const/config");
+const pdComUpdater = require("../../supinfo_updater/pdcom_functions");
+const { createSystemErrMessage } = require("../../system_modules/functions");
+const { psize } = require("../../system_modules/const/config");
 const productMgr = require("../../system_modules/product/productMgr");
-const search = require("../../system_modules/search/search");
+const Search = require("../../system_modules/search/search");
+const ProductModel = require("../../system_modules/search/ProductModel");
 const productEavRouter = require("./ProductEavRouter");
+const mysqlutils = require("../../system_modules/mysql/mysqlutils");
 
 router.use("/product", productEavRouter);
 
@@ -19,25 +16,27 @@ router.get("/product", async (req, res) => {
     // req.query= {page, categories, entity_ids, refinements, searchPhrase}
     // res.json({products: [], Alert: [], currentPage: number, totalPages: number})
     try{
+        // extract params
+        let page = req.query.page;
+        let items = req.query.psize;
+        if (parseInt(page) != page || page < 1) {
+            page = 1;
+        };
+        page = parseInt(page);
+        switch (items) {
+            default:
+                if (items === "infinite") break;
+                if (parseInt(items) != items || items < 1) {
+                    items = psize;
+                    break;
+                } else {
+                    items = parseInt(items);
+                    break;
+                };
+        };
+
         // admin get entity_only
         if (req.query.entity_only === "true") {
-            let page = req.query.page;
-            let items = req.query.psize;
-            if (parseInt(page) != page || page < 1) {
-                page = 1;
-            };
-            page = parseInt(page);
-            switch (items) {
-                default:
-                    if (items === "infinite") break;
-                    if (parseInt(items) != items || items < 1) {
-                        items = psize;
-                        break;
-                    } else {
-                        items = parseInt(items);
-                        break;
-                    };
-            }
             let searchResult = await productMgr.getProductEntityOnly({
                 searchConfig: {
                     searchPhrase: (req.query.keyword || "").replace(/^\s+|\s+$/g, ""),
@@ -53,7 +52,7 @@ router.get("/product", async (req, res) => {
         };
 
         // admin get full product attributes
-        let refinements = search.extractRefinements(req);
+        let refinements = Search.extractRefinements(req);
         refinements.forEach((attribute, index) => {
             let match = msClient.productEav.find(m_item => m_item.attribute_id == attribute.attribute_id && m_item.admin_only != 1);
             if (match) {
@@ -82,10 +81,13 @@ router.get("/product", async (req, res) => {
                 refinements: refinements,
                 searchPhrase: req.query.keyword,
                 searchDictionary: msClient.searchDictionary,
-                page: req.query.page,
+                pagination: {
+                    page: req.query.page,
+                    psize: items
+                },
                 isAdmin: true
             };
-            let searchResult = await search.search(searchConfig);
+            let searchResult = await Search.search(searchConfig);
             res.json(searchResult);
         }
     }catch(err){
@@ -174,134 +176,152 @@ router.put("/product/initprod", async (req, res) => {
     // req.body:    {product_ids: [prod_id]}
     // res.json({isSuccess: boolean, products, Alert: []})
     try{
-        let attr_to_init = ["prod_img", "prod_thumb", "sup_name", "sup_price", "sup_warranty", "prod_stock"]
-        if(!req.admin || !req.admin.admin_id) return res.end();
         
-        let product_ids = req.body.product_ids;
-        if(!product_ids || product_ids.length < 1) return res.end();
-        // first select
-        let sql_selectProduct = `SELECT * FROM phukiendhqg.product WHERE prod_id IN (${msClient.getSqlInCondittion(product_ids)});`;
-        let products_to_init = await msClient.promiseQuery(sql_selectProduct);
-        products_to_init = unescapeSelectedData(products_to_init);
-        let products_init_data = products_to_init.map(prod_item => {
-            return {
-                prod_id: prod_item.prod_id,
-                prod_link: prod_item.prod_link,
-                prod_stock: prod_item.prod_stock    // thêm prod_stock vì pd bình thới ko cập nhật prod_stock
-            }
-        })
-        products_init_data = await updateSupInfo(products_init_data);
-        let { updated_products, failed_products } = products_init_data;
-
-        // lưu những sp update được vào database
-        let last_updated = Date.now();
-        products_to_init.forEach(old_prod_item => {
-            let match_item = updated_products.find(new_prod_item => {
-                return new_prod_item.prod_id == old_prod_item.prod_id;
-            })
-            if(match_item){
-                old_prod_item.last_updated = `${last_updated}`;
-                old_prod_item.updated_info = "";
-                attr_to_init.forEach(attr_item => {
-                    if(old_prod_item[attr_item] != match_item[attr_item]){
-                        old_prod_item.updated_info += `<li><span style="color: red">${attr_item}</span> changed from <span style="color: red">${old_prod_item[attr_item]}</span> to <span style="color: red">${match_item[attr_item]}</span></li>`;
-                        old_prod_item[attr_item] = match_item[attr_item];
-                    }
-                })
-            }else{
-                old_prod_item.last_updated = `${last_updated}`;
-                old_prod_item.updated_info = `<li style="color: red">err</li>`;
-            }
-        })
-        // save updated products && failed updated products
-        let init_product_attr_arr = [];
-        for(let i in products_to_init[0]){
-            init_product_attr_arr.push(i);
-        }
-        await msClient.updateRows("phukiendhqg.product", init_product_attr_arr, products_to_init);
-        // reselect after update
-        products_to_init = await msClient.promiseQuery(sql_selectProduct);
-        res.json({
-            updated_products: products_to_init
-        });
-
     }catch(err){
-        try{
-            console.log("check err: ", err);
-            res.Alert.push(createSystemErrMessage(001))
-            res.json({Alert: res.Alert})
-        }catch(err){
-            console.log("err 2: ", err)
-        }
+
     }
 })
 
-router.put("/product/supinfo", async (req, res) => {
+router.put("/product/supplier/update", async (req, res) => {
     // req.body:    {product_ids: [prod_id]}
     // res.json({isSuccess: boolean, products, Alert: []})
     try{
-        let attr_to_update = ["sup_name", "sup_price", "sup_warranty", "prod_stock"]
-        if(!req.admin || !req.admin.admin_id) return res.end();
-        
-        let product_ids = req.body.product_ids;
-        if(!product_ids || product_ids.length < 1) return res.end();
-        // first select
-        let sql_selectProduct = `SELECT * FROM phukiendhqg.product WHERE prod_id IN (${msClient.getSqlInCondittion(product_ids)});`;
-        let products_to_update = await msClient.promiseQuery(sql_selectProduct);
-        products_to_update = unescapeSelectedData(products_to_update);
-        let products_update_data = products_to_update.map(prod_item => {
-            return {
-                prod_id: prod_item.prod_id,
-                prod_link: prod_item.prod_link,
-                prod_stock: prod_item.prod_stock    // thêm prod_stock vì pd bình thới ko cập nhật prod_stock
-            }
-        })
-        products_update_data = await updateSupInfo(products_update_data);
-        let { updated_products, failed_products } = products_update_data;
+        let today = new Date();
+        let updated_attributes = ["sup_name", "sup_price", "sup_stock", "sup_warrnaty"];
+        let supplier_products = await pdComUpdater.get_phatdatcomQuotation();
+        let search_db_product_config = {
+            pagination: {
+                psize: "infinite"
+            },
+            isAdmin: true
+        };
+        let searchResult = await Search.search(search_db_product_config);
+        let db_products = searchResult.products;
+        let updated_products = [];
+        db_products.forEach(product => {
+            if (product.self) {
+                let sup_link = ProductModel.getAttributeValue(product, product.self, "sup_link", true);
 
-        // lưu những sp update được vào database
-        let last_updated = Date.now();
-        products_to_update.forEach(old_prod_item => {
-            let match_item = updated_products.find(new_prod_item => {
-                return new_prod_item.prod_id == old_prod_item.prod_id;
-            })
-            if(match_item){
-                delete match_item.prod_thumb;
-                delete match_item.prod_img;
-                old_prod_item.last_updated = 0;
-                old_prod_item.updated_info = "";
-                attr_to_update.forEach(attr_item => {
-                    if(old_prod_item[attr_item] != match_item[attr_item]){
-                        old_prod_item.updated_info += `<li><span style="color: red">${attr_item}</span> changed from <span style="color: red">${old_prod_item[attr_item]}</span> to <span style="color: red">${match_item[attr_item]}</span></li>`;
-                        old_prod_item[attr_item] = match_item[attr_item];
-                        old_prod_item.last_updated = `${last_updated}`;
+                // if no sup_link => product is not come from supplier
+                if (!sup_link) return;
+                let supplier_match_prod = supplier_products.find(item => item.sup_link === sup_link);
+                let product_update_obj = {
+                    entity_id: product.self.entity_id,
+                    attributes: []
+                };
+
+                // if no supplier_match_prod => alert supplier product lost
+                if (!supplier_match_prod) {
+                    product_update_obj.attributes.push({
+                        attribute_id: "supplier_updated_info",
+                        value: `
+                        <ul>
+                            <li>Date: ${today.toLocaleDateString()} ${today.toLocaleTimeString()}</li>
+                            <li style="color:red;">Supplier product link is lost!</li>
+                        </ul>`
+                    });
+                    updated_products.push(product_update_obj);
+                    return;
+                }
+
+                // if supplier_match_prod => check if info change
+                let changes = [];
+                updated_attributes.forEach(attribute_id => {
+                    let value = ProductModel.getAttributeValue(product, product.self, attribute_id, true);
+                    if (value !== supplier_match_prod[attribute_id]) {
+                        if (!mysqlutils.isValueEmpty(value) || !mysqlutils.isValueEmpty(supplier_match_prod[attribute_id])) {
+                            product_update_obj.attributes.push({
+                                attribute_id: attribute_id,
+                                value: supplier_match_prod[attribute_id]
+                            });
+                            changes.push(
+                            `<li>
+                                <span style="color:red;">${attribute_id}</span> changes from
+                                <span style="color:red;">${mysqlutils.isValueEmpty(value) ? "null" : value}</span> to
+                                <span style="color:red;">${mysqlutils.isValueEmpty(supplier_match_prod[attribute_id]) ? "null" : supplier_match_prod[attribute_id]}</span>
+                            </li>`
+                            )
+                        }
+                    }
+                });
+                if (product_update_obj.attributes.length > 0) {
+                    changes = 
+                    `<ul>
+                        <li>Date: ${today.toLocaleDateString()} ${today.toLocaleTimeString()}</li>
+                        ${changes.join("\n")}
+                    </ul>`;
+                    product_update_obj.attributes.push({
+                        attribute_id: "supplier_updated_info",
+                        value: changes
+                    })
+                }
+            }
+
+            if (product.variants && product.variants.length > 0) {
+                product.variants.forEach(variant => {
+                    let sup_link = ProductModel.getAttributeValue(product, product.variant, "sup_link", true);
+
+                    // if no sup_link => product is not come from supplier
+                    if (!sup_link) return;
+                    let supplier_match_prod = supplier_products.find(item => item.sup_link === sup_link);
+                    let product_update_obj = {
+                        entity_id: product.self.entity_id,
+                        attributes: []
+                    };
+
+                    // if no supplier_match_prod => alert supplier product lost
+                    if (!supplier_match_prod) {
+                        product_update_obj.attributes.push({
+                            attribute_id: "supplier_updated_info",
+                            value: `
+                            <ul>
+                                <li>Date: ${today.toLocaleDateString()} ${today.toLocaleTimeString()}</li>
+                                <li style="color:red;">Supplier product link is lost!</li>
+                            </ul>`
+                        });
+                        updated_products.push(product_update_obj);
+                        return;
+                    }
+
+                    // if supplier_match_prod => check if info change
+                    let changes = [];
+                    updated_attributes.forEach(attribute_id => {
+                        let value = ProductModel.getAttributeValue(product, product.self, attribute_id, true);
+                        if (value !== supplier_match_prod[attribute_id]) {
+                            if (!mysqlutils.isValueEmpty(value) || !mysqlutils.isValueEmpty(supplier_match_prod[attribute_id])) {
+                                product_update_obj.attributes.push({
+                                    attribute_id: attribute_id,
+                                    value: supplier_match_prod[attribute_id]
+                                });
+                                changes.push(
+                                `<li>
+                                    <span style="color:red;">${attribute_id}</span> changes from
+                                    <span style="color:red;">${mysqlutils.isValueEmpty(value) ? "null" : value}</span> to
+                                    <span style="color:red;">${mysqlutils.isValueEmpty(supplier_match_prod[attribute_id]) ? "null" : supplier_match_prod[attribute_id]}</span>
+                                </li>`
+                                )
+                            }
+                        }
+                    });
+                    if (product_update_obj.attributes.length > 0) {
+                        changes = 
+                        `<ul>
+                            <li>Date: ${today.toLocaleDateString()} ${today.toLocaleTimeString()}</li>
+                            ${changes.join("\n")}
+                        </ul>`;
+                        product_update_obj.attributes.push({
+                            attribute_id: "supplier_updated_info",
+                            value: changes
+                        })
                     }
                 })
-            }else{
-                old_prod_item.last_updated = `${last_updated}`;
-                old_prod_item.updated_info = `<li style="color: red">err</li>`;
             }
         })
-        // save updated products && failed updated products
-        let update_product_attr_arr = [];
-        for(let i in products_to_update[0]){
-            update_product_attr_arr.push(i);
-        }
-        await msClient.updateRows("phukiendhqg.product", update_product_attr_arr, products_to_update);
-        // reselect after update
-        products_to_update = await msClient.promiseQuery(sql_selectProduct);
-        res.json({
-            updated_products: products_to_update
-        });
-
+        res.json({link: ProductModel.getAttributeValue(db_products[0], "PR0002", "sup_link", true)});
+        // res.json({link: db_products[0]});
     }catch(err){
-        try{
-            console.log("check err: ", err);
-            res.Alert.push(createSystemErrMessage(001))
-            res.json({Alert: res.Alert})
-        }catch(err){
-            console.log("err 2: ", err)
-        }
+        console.log(err);
+        res.json({err: err.message})
     }
 })
 

@@ -1,5 +1,7 @@
 const msClient = require("./system_modules/mysql/mysql");
+const Search = require("./system_modules/search/search");
 const fs = require("fs-extra");
+const pdComUpdater = require("./supinfo_updater/pdcom_functions");
 
 async function test () {
     await msClient.connectAsync();
@@ -41,4 +43,41 @@ async function count () {
     console.log("total: ", count);
 }
 
-count();
+async function getPDCQuotation () {
+    let new_products = await pdComUpdater.get_phatdatcomQuotation();
+    console.log(new_products[0]);
+};
+
+async function getDBProducts () {
+    try{
+        await msClient.connectAsync();
+        let supplier_products = await pdComUpdater.get_phatdatcomQuotation();
+        let search_db_product_config = {
+            refinements: [{
+                attribute_id: "sup_link",
+                value: supplier_products.map(item => item.sup_link)
+            }],
+            pagination: {
+                psize: "infinite"
+            },
+            isAdmin: true
+        };
+        search_db_product_config.refinements.forEach((attribute, index) => {
+            let match = msClient.productEav.find(m_item => m_item.attribute_id == attribute.attribute_id);
+            if (match) {
+                attribute.html_type = match.html_type;
+                attribute.data_type = match.data_type;
+            } else {
+                search_db_product_config.refinements[index] = null;
+            }
+        });
+        let db_products = await Search.search(search_db_product_config);
+        console.log(db_products);
+        msClient.disconnect();
+    }catch(err){
+        console.log(err);
+        msClient.disconnect();
+    }
+}
+
+getPDCQuotation();

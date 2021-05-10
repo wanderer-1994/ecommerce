@@ -17,5 +17,8 @@
     "searchDictionary": {
         "synonyms": [["SẠC DỰ PHÒNG", "POWERBANK", "PIN DỰ PHÒNG"], ["CÁP SẠC", "DÂY SẠC"], ["IPHONE", "LIGHTNING"], ["ANDROID", "SAMSUNG"]]
     },
-    "page": 2
+    "pagination": {
+        "page": 2,
+        "psize": "infinite"
+    }
 }

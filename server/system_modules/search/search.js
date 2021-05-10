@@ -221,7 +221,7 @@ function createSearchQueryDB ({ categories, entity_ids, refinements, searchPhras
         assembledQuery = 
         `
         SELECT entity_id AS product_id, 1 AS \`weight\`, 'all' AS \`type\`
-        FROM \`ecommerce\`.product_entity WHERE parent IS NULL OR parent = ''
+        FROM \`ecommerce\`.product_entity WHERE parent IS NULL OR parent = '';
         `;
     } else {
         assembledQuery = assembledQuery.join(" UNION ALL ")
@@ -536,32 +536,40 @@ function extractRefinements (req) {
 }
 
 async function search (searchConfig) {
-    let required = searchConfigValidation(searchConfig);
-    let assembledQuery = createSearchQueryDB(searchConfig);
-    let rowData = await msClient.promiseQuery(assembledQuery);
-    let products = mysqlutils.groupByAttribute({
-        rawData: rowData,
-        groupBy: "product_id"
-    });
-    products = filterProductEntitiesByRequired({ products, required });
-    products = sortProductsBySignificantWeight(products);
-    products = filterDistinctProductEntities(products);
-    let currentPage = parseInt(searchConfig.page);
-    if(isNaN(currentPage) || currentPage < 1) currentPage = 1;
-    let totalFound = products.length;
-    let totalPages = Math.ceil(products.length/psize);
-    if(currentPage > totalPages) currentPage = totalPages;
-    let slice_start = (currentPage - 1)*psize;
-    let slice_end = currentPage*psize;
-    products = products.slice(slice_start, slice_end);
-    products = await getDetailProducts(products, {isAdmin: searchConfig && searchConfig.isAdmin ? searchConfig.isAdmin : null});
-    return {
-        currentPage: currentPage,
-        totalPages: totalPages,
-        totalFound: totalFound,
-        send: products.length,
-        psize: psize,
-        products: products
+    try {
+        let required = searchConfigValidation(searchConfig);
+        let assembledQuery = createSearchQueryDB(JSON.parse(JSON.stringify(searchConfig)));
+        let rowData = await msClient.promiseQuery(assembledQuery);
+        let products = mysqlutils.groupByAttribute({
+            rawData: rowData,
+            groupBy: "product_id"
+        });
+        products = filterProductEntitiesByRequired({ products, required });
+        products = sortProductsBySignificantWeight(products);
+        products = filterDistinctProductEntities(products);
+        let currentPage = parseInt(searchConfig.pagination ? searchConfig.pagination.page : null);
+        let page_size = psize;
+        if (searchConfig.isAdmin && searchConfig.pagination && searchConfig.pagination.psize) {
+            page_size = searchConfig.pagination.psize;
+        };
+        if(isNaN(currentPage) || currentPage < 1) currentPage = 1;
+        let totalFound = products.length;
+        let totalPages = page_size === "infinite" ? 1 : Math.ceil(products.length/page_size);
+        if(currentPage > totalPages) currentPage = totalPages;
+        let slice_start = page_size === "infinite" ? 0 : (currentPage - 1)*page_size;
+        let slice_end = page_size === "infinite" ? totalFound : currentPage*page_size;
+        products = products.slice(slice_start, slice_end);
+        products = await getDetailProducts(products, {isAdmin: searchConfig && searchConfig.isAdmin ? searchConfig.isAdmin : null});
+        return {
+            currentPage: currentPage,
+            totalPages: totalPages,
+            totalFound: totalFound,
+            send: products.length,
+            psize: page_size === "infinite" ? totalFound: page_size,
+            products: products
+        }
+    } catch (err) {
+        throw err;
     }
 }
 
