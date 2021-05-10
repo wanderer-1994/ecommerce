@@ -6,7 +6,7 @@
   "scripts": {
     "start": "concurrently \"cd server && nodemon server.js\" \"cd administration && npm start\"",
     "db_init": "cd server/db_init && node db_init",
-    "data_init": "cd server/system_modules/supinfo_updater && node scrape_init",
+    "data_init": "cd server/supinfo_updater && node scrape_init",
     "refresh_product": "cd server/db_init && node refresh_product",
     "refresh_category": "cd server/db_init && node refresh_category",
     "refresh_product_eav": "cd server/db_init && node refresh_product_eav",

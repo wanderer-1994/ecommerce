@@ -33,7 +33,7 @@ async function test () {
 };
 
 async function count () {
-    let data = await fs.readJSONSync("./system_modules/supinfo_updater/init_products.json");
+    let data = await fs.readJSONSync("./supinfo_updater/init_products.json");
     let count = 0;
     data.forEach(item => {
         count += item.products.length;

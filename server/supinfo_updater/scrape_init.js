@@ -1,10 +1,10 @@
 const scraper = require("./pdcom_functions");
-const msClient = require("../mysql/mysql");
-const productMgr = require("../product/productMgr");
-const categoryMgr = require("../category/categoryMgr");
-const search = require("../search/search");
+const msClient = require("../system_modules/mysql/mysql");
+const productMgr = require("../system_modules/product/productMgr");
+const categoryMgr = require("../system_modules/category/categoryMgr");
+const search = require("../system_modules/search/search");
 const fs = require("fs-extra");
-const utils = require("../functions");
+const utils = require("../system_modules/functions");
 
 async function initProductDatabase () {
     // product_entity: "entity_id", "type_id", "created_at", "updated_at"
