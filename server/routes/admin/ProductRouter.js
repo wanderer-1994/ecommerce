@@ -187,7 +187,7 @@ router.put("/product/supplier/update", async (req, res) => {
     // res.json({isSuccess: boolean, products, Alert: []})
     try{
         let today = new Date();
-        let updated_attributes = ["sup_name", "sup_price", "sup_stock", "sup_warrnaty"];
+        let updated_attributes = ["sup_name", "sup_price", "sup_stock", "sup_warranty"];
         let supplier_products = await pdComUpdater.get_phatdatcomQuotation();
         let search_db_product_config = {
             pagination: {
@@ -199,14 +199,16 @@ router.put("/product/supplier/update", async (req, res) => {
         let db_products = searchResult.products;
         let updated_products = [];
         db_products.forEach(product => {
-            if (product.self) {
-                let sup_link = ProductModel.getAttributeValue(product, product.self, "sup_link", true);
+            let updated_temp = [];
+            let product_entities = [product.self, product.parent, ...(product.variants || [])].filter(item => !mysqlutils.isValueEmpty(item));
+            product_entities.forEach(entity => {
+                let sup_link = ProductModel.getAttributeValue(product, entity, "sup_link", false);
 
                 // if no sup_link => product is not come from supplier
                 if (!sup_link) return;
                 let supplier_match_prod = supplier_products.find(item => item.sup_link === sup_link);
                 let product_update_obj = {
-                    entity_id: product.self.entity_id,
+                    entity_id: entity.entity_id,
                     attributes: []
                 };
 
@@ -220,73 +222,12 @@ router.put("/product/supplier/update", async (req, res) => {
                             <li style="color:red;">Supplier product link is lost!</li>
                         </ul>`
                     });
-                    updated_products.push(product_update_obj);
-                    return;
-                }
-
-                // if supplier_match_prod => check if info change
-                let changes = [];
-                updated_attributes.forEach(attribute_id => {
-                    let value = ProductModel.getAttributeValue(product, product.self, attribute_id, true);
-                    if (value !== supplier_match_prod[attribute_id]) {
-                        if (!mysqlutils.isValueEmpty(value) || !mysqlutils.isValueEmpty(supplier_match_prod[attribute_id])) {
-                            product_update_obj.attributes.push({
-                                attribute_id: attribute_id,
-                                value: supplier_match_prod[attribute_id]
-                            });
-                            changes.push(
-                            `<li>
-                                <span style="color:red;">${attribute_id}</span> changes from
-                                <span style="color:red;">${mysqlutils.isValueEmpty(value) ? "null" : value}</span> to
-                                <span style="color:red;">${mysqlutils.isValueEmpty(supplier_match_prod[attribute_id]) ? "null" : supplier_match_prod[attribute_id]}</span>
-                            </li>`
-                            )
-                        }
-                    }
-                });
-                if (product_update_obj.attributes.length > 0) {
-                    changes = 
-                    `<ul>
-                        <li>Date: ${today.toLocaleDateString()} ${today.toLocaleTimeString()}</li>
-                        ${changes.join("\n")}
-                    </ul>`;
-                    product_update_obj.attributes.push({
-                        attribute_id: "supplier_updated_info",
-                        value: changes
-                    })
-                }
-            }
-
-            if (product.variants && product.variants.length > 0) {
-                product.variants.forEach(variant => {
-                    let sup_link = ProductModel.getAttributeValue(product, product.variant, "sup_link", true);
-
-                    // if no sup_link => product is not come from supplier
-                    if (!sup_link) return;
-                    let supplier_match_prod = supplier_products.find(item => item.sup_link === sup_link);
-                    let product_update_obj = {
-                        entity_id: product.self.entity_id,
-                        attributes: []
-                    };
-
-                    // if no supplier_match_prod => alert supplier product lost
-                    if (!supplier_match_prod) {
-                        product_update_obj.attributes.push({
-                            attribute_id: "supplier_updated_info",
-                            value: `
-                            <ul>
-                                <li>Date: ${today.toLocaleDateString()} ${today.toLocaleTimeString()}</li>
-                                <li style="color:red;">Supplier product link is lost!</li>
-                            </ul>`
-                        });
-                        updated_products.push(product_update_obj);
-                        return;
-                    }
-
+                    updated_temp.push(product_update_obj);
+                } else {
                     // if supplier_match_prod => check if info change
                     let changes = [];
                     updated_attributes.forEach(attribute_id => {
-                        let value = ProductModel.getAttributeValue(product, product.self, attribute_id, true);
+                        let value = ProductModel.getAttributeValue(product, entity, attribute_id, false);
                         if (value !== supplier_match_prod[attribute_id]) {
                             if (!mysqlutils.isValueEmpty(value) || !mysqlutils.isValueEmpty(supplier_match_prod[attribute_id])) {
                                 product_update_obj.attributes.push({
@@ -312,13 +253,44 @@ router.put("/product/supplier/update", async (req, res) => {
                         product_update_obj.attributes.push({
                             attribute_id: "supplier_updated_info",
                             value: changes
-                        })
+                        });
+                        updated_temp.push(product_update_obj);
                     }
-                })
+                };
+            });
+            
+            // update supplier_update_acknowledge for self & parent only
+            if (updated_temp.length > 0) {
+                let representive_entity = product.parent || product.self;
+                if (representive_entity) {
+                    let updated_temp_match = updated_temp.find(item => item.entity_id === representive_entity.entity_id);
+                    if (!updated_temp_match) {
+                        updated_temp_match = {
+                            entity_id: representive_entity.entity_id,
+                            attributes: []
+                        };
+                        updated_temp.push(updated_temp_match);
+                    };
+                    updated_temp_match.attributes.push({
+                        attribute_id: "supplier_update_acknowledge",
+                        value: 0
+                    });
+                };
+                updated_products.push(...updated_temp);
             }
-        })
-        res.json({link: ProductModel.getAttributeValue(db_products[0], "PR0002", "sup_link", true)});
-        // res.json({link: db_products[0]});
+        });
+
+        // update supplier_last_updated for all updated_products entities & save
+        if (updated_products.length > 0) {
+            updated_products.forEach(item => {
+                item.attributes.push({
+                    attribute_id: "supplier_last_updated",
+                    value: today.getTime()
+                })
+            })
+        }
+
+        res.json({updated_products: updated_products});
     }catch(err){
         console.log(err);
         res.json({err: err.message})
