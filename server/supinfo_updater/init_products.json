@@ -48,7 +48,7 @@
         ]
     },
     {
-        "category": "adapter",
+        "category": "phone_adapter",
         "products": [
             "https://phatdatcomputer.vn/san-pham/coc-sac-hoco-uh102-chinh-hang",
             "https://phatdatcomputer.vn/san-pham/coc-sac-hoco-c39-24a-2-usb-man-hinh-led",
@@ -146,7 +146,6 @@
         "category": "cooling_pad",
         "products": [
             "https://phatdatcomputer.vn/san-pham/de-tan-nhiet-laptop-vsp-cooler-n27-1fan-14156",
-            "https://phatdatcomputer.vn/san-pham/de-tan-nhiet-laptop-n99-2fan-14156",
             "https://phatdatcomputer.vn/san-pham/de-tan-nhiet-laptop-vsp-cooler-n22-6fan-14156"
         ]
     },
@@ -156,7 +155,7 @@
             "https://phatdatcomputer.vn/san-pham/loa-bluetooth-kisonli-led-904",
             "https://phatdatcomputer.vn/san-pham/loa-bluetooth-kisonli-led-901",
             "https://phatdatcomputer.vn/san-pham/loa-bluetooth-borofone-br1-chinh-hang-v50-pin-1200mah-tf-usb",
-            "https://phatdatcomputer.vn/san-pham/loa-bluetooth-borofone-br2-mini-blackwhitebluegreenred-chinh-hang-v50-pin-1200mah-tf-usb",
+            "https://phatdatcomputer.vn/san-pham/loa-bluetooth-borofone-br2-mini-blackwhitegreenred-chinh-hang-v50-pin-1200mah-tf-usb",
             "https://phatdatcomputer.vn/san-pham/loa-bluetooth-lanex-w05-chinh-hang"
         ]
     }
