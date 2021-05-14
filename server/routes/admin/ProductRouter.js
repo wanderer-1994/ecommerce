@@ -216,11 +216,7 @@ router.put("/product/supplier/update", async (req, res) => {
                 if (!supplier_match_prod) {
                     product_update_obj.attributes.push({
                         attribute_id: "supplier_updated_info",
-                        value: `
-                        <ul>
-                            <li>Date: ${today.toLocaleDateString()} ${today.toLocaleTimeString()}</li>
-                            <li style="color:red;">Supplier product link is lost!</li>
-                        </ul>`
+                        value: `<ul><li>Date: ${today.toLocaleDateString()} ${today.toLocaleTimeString()}</li><li style="color:red;">Supplier product link is lost!</li></ul>`
                     });
                     updated_temp.push(product_update_obj);
                 } else {
@@ -235,27 +231,21 @@ router.put("/product/supplier/update", async (req, res) => {
                                     value: supplier_match_prod[attribute_id]
                                 });
                                 changes.push(
-                                `<li>
-                                    <span style="color:red;">${attribute_id}</span> changes from
-                                    <span style="color:red;">${mysqlutils.isValueEmpty(value) ? "null" : value}</span> to
-                                    <span style="color:red;">${mysqlutils.isValueEmpty(supplier_match_prod[attribute_id]) ? "null" : supplier_match_prod[attribute_id]}</span>
-                                </li>`
+                                `<li><span style="color:red;">${attribute_id}</span> changes from <span style="color:red;">${mysqlutils.isValueEmpty(value) ? "null" : value}</span> to <span style="color:red;">${mysqlutils.isValueEmpty(supplier_match_prod[attribute_id]) ? "null" : supplier_match_prod[attribute_id]}</span></li>`
                                 )
                             }
                         }
                     });
                     if (product_update_obj.attributes.length > 0) {
                         changes = 
-                        `<ul>
-                            <li>Date: ${today.toLocaleDateString()} ${today.toLocaleTimeString()}</li>
-                            ${changes.join("\n")}
-                        </ul>`;
+                        `<ul><li>Date: ${today.toLocaleDateString()} ${today.toLocaleTimeString()}</li>${changes.join("\n")}</ul>`;
                         product_update_obj.attributes.push({
                             attribute_id: "supplier_updated_info",
                             value: changes
                         });
                         updated_temp.push(product_update_obj);
-                    }
+                    };
+
                 };
             });
             
@@ -288,7 +278,36 @@ router.put("/product/supplier/update", async (req, res) => {
                     value: today.getTime()
                 })
             })
-        }
+        };
+
+        // concat new updated info with existing updated info
+        if (updated_products.length > 0) {
+            let sql_get_supplier_updated_info = 
+            `
+            SELECT \`pe\`.entity_id, \`pet\`.value FROM \`ecommerce\`.product_entity AS \`pe\`
+            LEFT JOIN \`ecommerce\`.product_eav_text AS \`pet\`
+            ON \`pe\`.entity_id = \`pet\`.entity_id AND \`pet\`.attribute_id = "supplier_updated_info";
+            `
+            let currentUpdatedInfo = await msClient.promiseQuery(sql_get_supplier_updated_info);
+            updated_products.forEach(item => {
+                let updated_info = item.attributes.find(attr_item => {
+                    return attr_item.attribute_id === "supplier_updated_info";
+                });
+                if (updated_info) {
+                    let existing_updated_info = currentUpdatedInfo.find(prod_item => {
+                        return prod_item.entity_id === item.entity_id;
+                    });
+                    if (existing_updated_info && !mysqlutils.isValueEmpty(existing_updated_info.value)) {
+                        updated_info.value = updated_info.value + "--------------------" + existing_updated_info.value;
+                    };
+                    while (updated_info.value.length > 60000) {
+                        let temp = updated_info.value.split("--------------------");
+                        temp.pop();
+                        updated_info.value = temp.join("--------------------");
+                    }
+                }
+            })
+        };
 
         res.json({updated_products: updated_products});
     }catch(err){
