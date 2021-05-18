@@ -1,3 +1,7 @@
+.webdav {
+    min-height: 100%;
+    font-family: monospace;
+}
 .webdav .item {
     display: block;
     cursor: pointer;
@@ -34,4 +38,47 @@
     vertical-align: middle;
     font-family: monospace;
     font-size: 13px;
+}
+
+.webdav .action {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 1px solid #ababab70;
+    background-color: #efefef;
+    padding: 10px;
+    text-align: center;
+}
+
+.webdav .action h4 {
+    text-align: left;
+    font-family: monospace;
+}
+
+.webdav .action input {
+    border-radius: 5px;
+    border: 2px solid #ababab;
+    padding: 2px 4px 2px 4px;
+    outline: none;
+    font-family: monospace;
+}
+
+.webdav .action button {
+    margin-left: 3px;
+    padding: 0px 2px 0px 2px;
+    cursor: pointer;
+    font-family: monospace;
+}
+
+.webdav .action button.save {
+    color: var(--colorSuccess);
+}
+
+.webdav .action button.cancel {
+    color: var(--colorWarning);
+}
+
+.webdav .action button:hover {
+    filter: brightness(120%);
 }

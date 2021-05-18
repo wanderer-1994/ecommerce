@@ -12,7 +12,7 @@ const config = require("./config");
 
     router.get("*", async (req, res) => {
         try {
-            let folder_path = req.path.replace(/\/$/, "");
+            let folder_path = decodeURIComponent(req.path.replace(/\/$/, ""));
             folder_path = `${config.ROOT_FOLDER}${folder_path}`;
             let is_path_exist = await fs.pathExists(folder_path);
             if (!is_path_exist) {
@@ -49,6 +49,35 @@ const config = require("./config");
             })
         }
     });
+
+    router.post("*", async (req, res) => {
+        try {
+            let new_dir = req.body.directory;
+            let original_folder_path = decodeURIComponent(req.path.replace(/\/$/, ""));
+            let folder_path = `${config.ROOT_FOLDER}${original_folder_path}`;
+            let is_path_exist = await fs.pathExists(folder_path);
+            if (!is_path_exist) {
+                return res.json({
+                    err_message: `Directory "${original_folder_path}" not exists!`
+                })
+            };
+            let stat = fs.lstatSync(folder_path);
+            if (!stat.isDirectory()) {
+                return res.json({
+                    err_message: `Directory "${original_folder_path}" not exists!`
+                })
+            };
+            await fs.mkdir(PATH.join(folder_path, new_dir));
+            res.json({
+                isSuccess: true
+            })
+        } catch (err) {
+            res.json({
+                err_message: err.message
+            })
+        }
+    });
+
 })();
 
 module.exports = router;

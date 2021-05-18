@@ -23,6 +23,23 @@ async function listDirectory (folder_path) {
     }
 }
 
+async function mkdir (folder_path, new_directory_name) {
+    try {
+        let response = await axios({
+            method: "POST",
+            url: "/api" + folder_path,
+            data: {
+                directory: new_directory_name
+            }
+        });
+        let data = response.data;
+        return data;
+    } catch (err) {
+        throw err;
+    }
+}
+
 export {
-    listDirectory
+    listDirectory,
+    mkdir
 }

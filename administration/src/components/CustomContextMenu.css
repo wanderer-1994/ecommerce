@@ -1,0 +1,22 @@
+.custom-context-menu {
+    position: absolute;
+    top: calc(50vh - 50px);
+    left: calc(50vw - 50px);
+    border: 1px solid #ababab50;
+    background-color: #efefef;
+    min-width: 100px;
+    padding: 3px;
+}
+
+.custom-context-menu .context-menu-item {
+    height: 25px;
+    padding: 1px 7px 1px 7px;
+    cursor: pointer;
+    border-radius: 2px;
+    font-size: 15px;
+    font-family: monospace;
+}
+
+.custom-context-menu .context-menu-item:hover{
+    background-color: #ffffff;
+}

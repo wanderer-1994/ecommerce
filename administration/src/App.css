@@ -44,5 +44,6 @@ body::-webkit-scrollbar {
 }
 
 .content {
-    /* height: 200vh; */
+    height: calc(100vh - 50px);
+    overflow-y: auto;
 }
