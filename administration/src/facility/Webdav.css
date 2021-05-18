@@ -1,0 +1,37 @@
+.webdav .item {
+    display: block;
+    cursor: pointer;
+    margin-bottom: 5px;
+    margin-right: 5px;
+    padding: 2px;
+    border-radius: 3px;
+}
+.webdav .path-indicator {
+    font-weight: bold;
+    font-family: monospace;
+    margin-top: 10px;
+}
+
+.webdav .item:last-child {
+    margin-bottom: 10px;
+}
+
+.webdav .item:hover {
+    border: 1px solid #24963e50;
+    background-color: #24963e10;
+}
+
+.webdav .item .icon {
+    width: 15px;
+    height: 15px;
+    display: inline-block;
+    background-size: contain;
+    vertical-align: middle;
+    margin-right: 3px;
+}
+
+.webdav .item .name {
+    vertical-align: middle;
+    font-family: monospace;
+    font-size: 13px;
+}

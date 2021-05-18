@@ -3,6 +3,7 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const cors = require("cors");
 const formidable = require("formidable");
+const PATH = require("path");
 const msClient = require("./system_modules/mysql/mysql");
 const utility = require("./system_modules/functions");
 
@@ -19,6 +20,7 @@ const adminProductRouter = require("./routes/admin/ProductRouter");
 // const OrderRouter = require("./routes/user/orderRouter/OrderRouter");
 // const UserRouter = require("./routes/users/UserRouter");
 // const Others = require("./routes/user/Others");
+const fileServer = require("./file_server/fileServer");
 const env_files = {
     "development"   : ".env.development",
     "production"    : ".env.production",
@@ -39,8 +41,7 @@ async function appInit () {
     const app = express();
     // app.set('trust proxy', true);
     app.use(cors());
-    app.use(express.static("/APP/phukiendhqg/client/build"));
-    // app.use(express.static(__dirname + "/build"));
+    app.use("/public", express.static(PATH.join(__dirname, "/webdav/public")));
     app.use(cookieParser());
     app.use(bodyParser.urlencoded({extended: false}));
     app.use(bodyParser.json());
@@ -68,6 +69,8 @@ async function appInit () {
     //     res.sendFile("/APP/phukiendhqg/client/build/index.html");
     //     // res.sendFile(__dirname + "/build/index.html");
     // })
+
+    app.use("/api/webdav", fileServer);
 
     app.listen(process.env.PORT, () => {
         console.log("listening port: ", process.env.PORT)

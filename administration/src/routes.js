@@ -18,6 +18,7 @@ import ProductEavDetail from "./pages/ProductEavDetail";
 import ProductEavList from "./pages/ProductEavList";
 import WarrantyDetail from "./pages/WarrantyDetail";
 import WarrantyList from "./pages/WarrantyList";
+import Webdav from "./facility/Webdav";
 
 const routes = [
     {
@@ -176,6 +177,15 @@ const routes = [
         showOnNavbar: false,
         showOnSidebar: true,
         title: "Warranty Tracking"
+    },
+    {
+        path: "/webdav",
+        component: Webdav,
+        ref_name: "Webdav",
+        showOnNavbar: false,
+        showOnSidebar: true,
+        title: "Webdav",
+        exact: false
     }
 ]
 

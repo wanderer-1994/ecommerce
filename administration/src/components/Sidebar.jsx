@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { matchPath } from "react-router";
 import routes from "../routes";
 import "./Sidebar.css";
 import ArrowRight from "@material-ui/icons/ArrowRight";
@@ -29,16 +30,23 @@ function Sidebar (props) {
             <div className="wrapper">
                 <div className="switch-icon" onClick={toggleSidebar}><ArrowRight /></div>
                 <Link className="logo" to="/"></Link>
-                {
-                    routes
-                    .filter(item => item.showOnSidebar)
-                    .map((item, index) =>
+                {routes
+                .filter(item => item.showOnSidebar)
+                .map((item, index) => {
+                    let is_active;
+                    if (item.exact === false) {
+                        is_active = matchPath(props.location.pathname, item.path);
+                    } else {
+                        is_active = props.location.pathname === item.path
+                    }
+                    return (
                         <Link
                             key={index}
                             to={item.path}
-                            className={`navitem ${props.location.pathname === item.path ? "active" : ""}`}
-                        >{item.ref_name}</Link>)
-                }
+                            className={`navitem ${is_active ? "active" : ""}`}
+                        >{item.ref_name}</Link>
+                    )
+                })}
             </div>
         </div>
     )

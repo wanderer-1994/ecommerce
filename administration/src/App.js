@@ -8,6 +8,7 @@ import AppLoading from "./components/AppLoading";
 import AppAlert from "./components/AppAlert";
 import * as appFunction from "./utils/appFunction";
 import "antd/dist/antd.css";
+import TextEditor from "./components/TextEditor";
 
 function App(props) {
     useEffect(() => {
@@ -21,13 +22,17 @@ function App(props) {
             <AppAlert/>
             <Route path="*" component={Sidebar} />
             <div className="main">
+                <Route exact path="/aaaaa" component={TextEditor} />
                 <Switch>
-                    {
-                        routes.map((item, index) =>  
-                        <Route exact key={index} path={item.path} render={
-                            (props) => <item.component {...props} title={item.title || ""} />
-                        } />)
-                    }
+                    {routes.map((item, index) => {
+                        let exact = true;
+                        if (item.exact) exact = false;
+                        return (
+                            <Route exact={item.exact} key={index} path={item.path} render={
+                                (props) => <item.component {...props} title={item.title || ""} />
+                            } />
+                        )
+                    })}
                 </Switch>
             </div>
         </Fragment>

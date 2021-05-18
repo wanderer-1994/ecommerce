@@ -9,6 +9,7 @@ const Search = require("../../system_modules/search/search");
 const ProductModel = require("../../system_modules/search/ProductModel");
 const productEavRouter = require("./ProductEavRouter");
 const mysqlutils = require("../../system_modules/mysql/mysqlutils");
+const config = require("../../system_modules/const/config");
 
 router.use("/product", productEavRouter);
 
@@ -298,20 +299,43 @@ router.put("/product/supplier/update", async (req, res) => {
                         return prod_item.entity_id === item.entity_id;
                     });
                     if (existing_updated_info && !mysqlutils.isValueEmpty(existing_updated_info.value)) {
-                        updated_info.value = updated_info.value + "--------------------" + existing_updated_info.value;
+                        updated_info.value = updated_info.value + config.SUPPLIER_UPDATED_INFO_SPLITER + existing_updated_info.value;
                     };
-                    while (updated_info.value.length > 60000) {
-                        let temp = updated_info.value.split("--------------------");
+                    while (updated_info.value.length > config.SUPPLIER_UPDATED_INFO_MAX_LENGTH) {
+                        let temp = updated_info.value.split(config.SUPPLIER_UPDATED_INFO_SPLITER);
                         temp.pop();
-                        updated_info.value = temp.join("--------------------");
+                        updated_info.value = temp.join(config.SUPPLIER_UPDATED_INFO_SPLITER);
                     }
                 }
             })
         };
 
-        res.json({updated_products: updated_products});
+        let promises = [];
+        updated_products.forEach((entity, index) => {
+            promises.push(
+                productMgr.saveProductEntity(entity, {mode: "UPDATE"})
+                .then(() => {
+                    updated_products[index] = {
+                        entity_id: entity.entity_id,
+                        isSuccess: true
+                    };
+                })
+                .catch(err => {
+                    updated_products[index] = {
+                        entity_id: entity.entity_id,
+                        isSuccess: false,
+                        m_failure: err.message
+                    };
+                })
+            );
+        });
+        Promise.all(promises).then(() => {
+            res.json({
+                updated_products: updated_products
+            });
+        });
+
     }catch(err){
-        console.log(err);
         res.json({err: err.message})
     }
 })
