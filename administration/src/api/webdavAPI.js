@@ -23,14 +23,11 @@ async function listDirectory (folder_path) {
     }
 }
 
-async function mkdir (folder_path, new_directory_name) {
+async function mkdir (folder_path) {
     try {
         let response = await axios({
             method: "POST",
-            url: "/api" + folder_path,
-            data: {
-                directory: new_directory_name
-            }
+            url: "/api" + folder_path
         });
         let data = response.data;
         return data;
@@ -39,7 +36,35 @@ async function mkdir (folder_path, new_directory_name) {
     }
 }
 
+async function deleteItem (item_path) {
+    try {
+        let response = await axios({
+            method: "DELETE",
+            url: "/api" + item_path
+        });
+        return response.data;
+    } catch (err) {
+        throw err;
+    }
+}
+
+async function uploadFiles (folder_path, formData) {
+    try {
+        let response = await axios({
+            method: "POST",
+            url: "/api" + folder_path,
+            data: formData,
+            headers: {"content-type": "multipart/form-data"}
+        });
+        return response.data;
+    } catch (err) {
+        throw err;
+    }
+}
+
 export {
     listDirectory,
-    mkdir
+    mkdir,
+    deleteItem,
+    uploadFiles
 }

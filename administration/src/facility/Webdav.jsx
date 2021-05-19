@@ -4,36 +4,21 @@ import * as webdavAPI from "../api/webdavAPI";
 import $ from "jquery";
 import "./Webdav.css";
 import CustomContextMenu from "../components/CustomContextMenu";
-import Clear from "@material-ui/icons";
+import FileUploader from "../components/FileUploader";
 import * as appFunction from "../utils/appFunction";
 
 function Webdav (props) {
 
     const [item_list, setItemList] = useState([]);
-    const [icon_directory, setIconDirectory] = useState("");
-    const [icon_file, setIconFile] = useState("");
+    const [icon_set, setIconSet] = useState({});
     const [path_exist, setPathExist] = useState(true);
     const [context_menu_items, setContextMenuItem] = useState([]);
     const [context_menu_position, setContextMenuPosition] = useState({});
     const [action, setAction] = useState("");
+    const [choosen_files, setChoosenFiles] = useState(null);
 
     useEffect(() => {
-        webdavAPI.listDirectory(props.location.pathname)
-        .then(data => {
-            if (data) {
-                setItemList(data.item_list || []);
-                setIconDirectory(data.icon_directory || "");
-                setIconFile(data.icon_file || "");
-                if (data.path_exist === false) {
-                    setPathExist(false);
-                } else {
-                    setPathExist(true);
-                }
-            }
-        })
-        .catch(err => {
-            console.log(err);
-        })
+        listDirectory();
     }, [props.location.pathname]);
 
     useEffect(() => {
@@ -72,60 +57,32 @@ function Webdav (props) {
         }
     }, [])
 
-    function renderItem (item, index) {
-        let bg_img = "";
-        bg_img = item.is_file ? icon_file : bg_img;
-        bg_img = item.is_directory ? icon_directory : bg_img;
-        if (item.is_file) {
-            return (
-                <a key={index} className="item" target="blank"
-                   href={`http://localhost:5000/api${window.location.pathname}/${item.name}`}
-                >
-                    <span className="icon" style={{backgroundImage: `url(${bg_img})`}}></span>
-                    <span className="name">{item.name}</span>
-                </a>
-            )
-        };
-        
-        if (item.is_directory) {
-            return (
-                <Link key={index} className="item" to={props.location.pathname + "/" + item.name}>
-                    <span className="icon" style={{backgroundImage: `url(${bg_img})`}}></span>
-                    <span className="name">{item.name}</span>
-                </Link>
-            )
-        };
-
-        return (
-            <div key={index} className="item">
-                <span className="icon" style={{backgroundImage: `url(${bg_img})`}}></span>
-                <span className="name">{item.name}</span>
-            </div>
-        )
+    function listDirectory () {
+        webdavAPI.listDirectory(props.location.pathname.replace(/\/$/, ""))
+        .then(data => {
+            if (data) {
+                setItemList(data.item_list || []);
+                delete data.item_list;
+                setIconSet(data);
+                if (data.path_exist === false) {
+                    setPathExist(false);
+                } else {
+                    setPathExist(true);
+                }
+            }
+        })
+        .catch(err => {
+            console.log(err);
+        })
     }
 
     async function submitCreateDirectory (event) {
         try {
             let dir_name = $(event.target).parent().children("input").val();
             setAction("");
-            let data = await webdavAPI.mkdir(props.location.pathname, dir_name);
+            let data = await webdavAPI.mkdir(props.location.pathname.replace(/\/$/, "") + "/" + dir_name);
             if (data.isSuccess) {
-                webdavAPI.listDirectory(props.location.pathname)
-                .then(data => {
-                    if (data) {
-                        setItemList(data.item_list || []);
-                        setIconDirectory(data.icon_directory || "");
-                        setIconFile(data.icon_file || "");
-                        if (data.path_exist === false) {
-                            setPathExist(false);
-                        } else {
-                            setPathExist(true);
-                        }
-                    }
-                })
-                .catch(err => {
-                    console.log(err);
-                })
+                listDirectory();
             } else {
                 appFunction.appAlert({
                     icon: "warning",
@@ -139,6 +96,111 @@ function Webdav (props) {
             console.log(err);
         }
     }
+
+    async function handleDeleteItem (item) {
+        try {
+            let item_type = "item";
+            if (item.is_file) item_type = "file";
+            if (item.is_directory) item_type = "folder";
+            appFunction.appAlert({
+                icon: "warning",
+                title: <span>{`Confirm delete ${item_type}: `}<span style={{color: "green", fontStyle: "italic", textDecoration: "underline"}}>{item.name}</span></span>,
+                message: `${item_type} ${item.name} could not be recovered after deleted.`,
+                showConfirm: true,
+                submitTitle: "OK",
+                cancelTitle: "Cancel",
+                onClickSubmit: async () => {
+                    let item_path = props.location.pathname.replace(/\/$/, "") + `/${item.name}`;
+                    let result = await webdavAPI.deleteItem(item_path);
+                    if (result.isSuccess) {
+                        appFunction.appAlert({
+                            icon: "success",
+                            title: "Success!",
+                            message: `${item_type} ${item.name} deleted!`,
+                            timeOut: 500
+                        });
+                        listDirectory();
+                    } else {
+                        appFunction.appAlert({
+                            icon: "danger",
+                            title: "Action incomplete!",
+                            message: result.err_message,
+                            showConfirm: true,
+                            submitTitle: "OK",
+                        })
+                    }
+                }
+            })
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    async function handleUpload () {
+        try {
+            let formData = new FormData();
+            formData.append("action", "upload");
+            if (choosen_files) {
+                for (let i = 0; i < choosen_files.length; i++) {
+                    formData.append(i, choosen_files[i]);
+                }
+            }
+            setAction("");
+            setChoosenFiles(null);
+            let result = await webdavAPI.uploadFiles(props.location.pathname.replace(/\/$/, ""), formData);
+            listDirectory();
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    function renderItem (item, index) {
+        let bg_img = "";
+        bg_img = item.is_file ? icon_set.icon_file : bg_img;
+        bg_img = item.is_directory ? icon_set.icon_directory : bg_img;
+        if (item.is_file) {
+            return (
+                <div key={index} className="item" >
+                    <a className="link" target="blank"
+                        href={`http://localhost:5000/api${window.location.pathname}/${item.name}`}
+                    >
+                        <span className="icon" style={{backgroundImage: `url(${bg_img})`}}></span>
+                        <span className="name">{item.name}</span>
+                    </a>
+                    <div className="delete" style={{backgroundImage: `url(${icon_set.icon_delete})`}}
+                        onClick={() => handleDeleteItem(item)}
+                    ></div>
+                </div>
+            )
+        };
+        
+        if (item.is_directory) {
+            return (
+                <div key={index} className="item" >
+                    <Link className="link" to={props.location.pathname.replace(/\/$/, "") + "/" + item.name}>
+                        <span className="icon" style={{backgroundImage: `url(${bg_img})`}}></span>
+                        <span className="name">{item.name}</span>
+                    </Link>
+                    <div className="delete" style={{backgroundImage: `url(${icon_set.icon_delete})`}}
+                        onClick={() => handleDeleteItem(item)}
+                    ></div>
+                </div>
+            )
+        };
+
+        return (
+            <div key={index} className="item">
+                <span className="icon" style={{backgroundImage: `url(${bg_img})`}}></span>
+                <span className="name">{item.name}</span>
+                <div className="delete" style={{backgroundImage: `url(${icon_set.icon_delete})`}}
+                    onClick={() => handleDeleteItem(item)}
+                ></div>
+            </div>
+        )
+    }
+
+    let total_files = item_list.filter(item => item.is_file).length;
+    let total_directories = item_list.filter(item => item.is_directory).length;
 
     return (
         <Fragment>
@@ -156,10 +218,35 @@ function Webdav (props) {
                                 <h4>Folder name</h4>
                                 <input type="text" />
                                 <button className="save" onClick={(event) => submitCreateDirectory(event)}>Save</button>
-                                <button className="cancel" onClick={(event) => setAction("")}>Cancel</button>
+                                <button className="cancel" onClick={() => setAction("")}>Cancel</button>
                             </div>
                         ) : null}
-                        <h3 className="path-indicator">~{props.location.pathname}</h3>
+                        {action === "file_upload" ? (
+                            <div className="action">
+                                <FileUploader multiple={false}
+                                    onChange={(event) =>  setChoosenFiles(event.target.files)}
+                                />
+                                <button className="save" onClick={() => handleUpload()}>Save</button>
+                                <button className="cancel" onClick={() => {
+                                    setAction("");
+                                    setChoosenFiles(null);
+                                }}>Cancel</button>
+                            </div>
+                        ) : null}
+                        {action === "file_upload_multiple" ? (
+                            <div className="action">
+                                <FileUploader multiple={true}
+                                    onChange={(event) => setChoosenFiles(event.target.files)}
+                                />
+                                <button className="save" onClick={() => handleUpload()}>Save</button>
+                                <button className="cancel" onClick={() => {
+                                    setAction("");
+                                    setChoosenFiles(null);
+                                }}>Cancel</button>
+                            </div>
+                        ) : null}
+                        <h3 className="path-indicator">~{props.location.pathname.replace(/\/$/, "")}</h3>
+                        <div className="count">{item_list.length} items - {total_directories} folders - {total_files} files</div>
                         {item_list.map((item, index) => {
                             return renderItem(item, index);
                         })}

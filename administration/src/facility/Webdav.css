@@ -2,25 +2,39 @@
     min-height: 100%;
     font-family: monospace;
 }
-.webdav .item {
-    display: block;
-    cursor: pointer;
-    margin-bottom: 5px;
-    margin-right: 5px;
-    padding: 2px;
-    border-radius: 3px;
-}
+
 .webdav .path-indicator {
     font-weight: bold;
     font-family: monospace;
     margin-top: 10px;
 }
 
+.webdav .count {
+    font-style: italic;
+    font-family: monospace;
+    margin-top: -7px;
+    margin-bottom: 10px;
+}
+
+.webdav .item {
+    display: block;
+    margin-bottom: 5px;
+    margin-right: 5px;
+    padding: 2px;
+    border-radius: 3px;
+}
+
 .webdav .item:last-child {
     margin-bottom: 10px;
 }
 
-.webdav .item:hover {
+.webdav .item .link {
+    display: inline-block;
+    width: calc(100% - 30px);
+    vertical-align: middle;
+}
+
+.webdav .item .link:hover {
     border: 1px solid #24963e50;
     background-color: #24963e10;
 }
@@ -38,6 +52,20 @@
     vertical-align: middle;
     font-family: monospace;
     font-size: 13px;
+}
+
+.webdav .item .delete {
+    width: 15px;
+    height: 15px;
+    display: inline-block;
+    background-size: contain;
+    vertical-align: middle;
+    float: right;
+    cursor: pointer;
+}
+
+.webdav .item .delete:hover {
+    filter: brightness(120%);
 }
 
 .webdav .action {
@@ -69,6 +97,7 @@
     padding: 0px 2px 0px 2px;
     cursor: pointer;
     font-family: monospace;
+    margin-top: 5px;
 }
 
 .webdav .action button.save {
