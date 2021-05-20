@@ -3,8 +3,6 @@ import * as categoryModel from "../objectModels/CategoryModel";
 import * as eavUtils from "../objectModels/eavUtils";
 import queryString from "query-string";
 
-axios.defaults.baseURL = window.location.origin.replace(/\:\d+$/, `:${process.env.REACT_APP_SERVER_PORT}`);
-
 async function listDirectory (folder_path) {
     try {
         let response = await axios({

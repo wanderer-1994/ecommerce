@@ -5,6 +5,7 @@ import * as appFunction from "../utils/appFunction";
 import $ from "jquery";
 import EavAttributeRender from "../components/EavAttributeRender";
 import * as CategoryModel from "../objectModels/CategoryModel";
+import EavCustomRender from "./category/EavCustomRender";
 
 const category_entity_columns = [
     {
@@ -292,7 +293,11 @@ function CategoryCreate(props) {
                             if (!Array.isArray(category.attributes)) category.attributes = [];
                             category.attributes.push(eav_value);
                         }
-                        return <EavAttributeRender key={index} eav_definition={eav_item} eav_value={eav_value} state={category} setState={setCategory} />
+                        let Component = EavAttributeRender;
+                        if (Object.keys(EavCustomRender).indexOf(eav_item.attribute_id) !== -1) {
+                            Component = EavCustomRender[eav_item.attribute_id];
+                        }
+                        return <Component key={index} eav_definition={eav_item} eav_value={eav_value} state={category} setState={setCategory} />
                     })}
                 </div>
             </div>
