@@ -9,6 +9,7 @@ import Parent from "./product/Parent";
 import Variant from "./product/Variant";
 import CategoryAssignment from "./product/CategoryAssignment";
 import utility from "../utils/utility";
+import EavCustomRender from "./product/EavCustomRender";
 
 const product_columns = [
     {
@@ -394,8 +395,12 @@ function ProductDetail (props) {
                                         };
                                         if (!Array.isArray(productEntity.attributes)) productEntity.attributes = [];
                                         productEntity.attributes.push(eav_value);
+                                    };
+                                    let Component = EavAttributeRender;
+                                    if (Object.keys(EavCustomRender).indexOf(eav_item.attribute_id) !== -1) {
+                                        Component = EavCustomRender[eav_item.attribute_id];
                                     }
-                                    return <EavAttributeRender key={index} eav_definition={eav_item} eav_value={eav_value} state={productEntity} setState={setProductEntity} />
+                                    return <Component key={index} eav_definition={eav_item} eav_value={eav_value} state={productEntity} setState={setProductEntity} />
                                 })}
                             </div>
                             {productEntity.type_id === "variant" ? (

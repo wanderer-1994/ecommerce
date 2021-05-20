@@ -7,6 +7,18 @@
     font-weight: bold;
     font-family: monospace;
     margin-top: 10px;
+    color: #035efc;
+}
+
+.webdav .path-indicator .path-item {
+    font-style: italic;
+    text-decoration: underline;
+    cursor: pointer;
+    margin: 0px 3px 0px 3px;
+}
+
+.webdav .path-indicator .path-item:hover {
+    filter: brightness(150%);
 }
 
 .webdav .count {
@@ -32,11 +44,16 @@
     display: inline-block;
     width: calc(100% - 30px);
     vertical-align: middle;
+    cursor: pointer;
 }
 
 .webdav .item .link:hover {
     border: 1px solid #24963e50;
     background-color: #24963e10;
+}
+
+.webdav .item .link.selected {
+    background-color: #035efc50;
 }
 
 .webdav .item .icon {

@@ -2,6 +2,7 @@ import { connect } from "react-redux";
 import { Fragment, useEffect } from "react";
 import { Switch, Route } from "react-router-dom";
 import './App.css';
+import './css/modal.css';
 import routes from "./routes";
 import Sidebar from "./components/Sidebar";
 import AppLoading from "./components/AppLoading";

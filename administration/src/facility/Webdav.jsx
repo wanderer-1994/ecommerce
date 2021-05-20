@@ -154,6 +154,26 @@ function Webdav (props) {
         }
     }
 
+    function renderPathIndicator (path) {
+        if (typeof(path) !== "string") return path;
+        let list = path.split("/");
+        return (
+            <Fragment>
+                {list.map((item, index) => {
+                    if (index === 0) return null;
+                    let item_path = list.slice(0, index + 1);
+                    item_path = item_path.join("/");
+                    return (
+                        <span key={index}>
+                            <span>/</span>
+                            <span className="path-item" path={item_path} onClick={() => props.history.push(item_path)}>{item}</span>
+                        </span>
+                    )
+                })}
+            </Fragment>
+        )
+    }
+
     function renderItem (item, index) {
         let bg_img = "";
         bg_img = item.is_file ? icon_set.icon_file : bg_img;
@@ -245,7 +265,7 @@ function Webdav (props) {
                                 }}>Cancel</button>
                             </div>
                         ) : null}
-                        <h3 className="path-indicator">~{props.location.pathname.replace(/\/$/, "")}</h3>
+                        <h3 className="path-indicator">~{renderPathIndicator(props.location.pathname.replace(/\/$/, ""))}</h3>
                         <div className="count">{item_list.length} items - {total_directories} folders - {total_files} files</div>
                         {item_list.map((item, index) => {
                             return renderItem(item, index);

@@ -1,0 +1,55 @@
+.image-selector {
+    display: inline-block;
+    min-width: 50px;
+    height: 35px;
+    margin-left: 5px;
+    position: relative;
+    cursor: pointer;
+    border: 1px solid #ababab80;
+    border-radius: 3px;
+    vertical-align: top;
+    font-family: sans-serif;
+    font-size: 12px;
+    font-style: italic;
+    margin-bottom: 5px;
+    user-select: none;
+}
+
+.image-selector .text {
+    padding: 5px;
+    height: 100%;
+}
+
+.image-selector .text.active {
+    background-color: #3498eb;
+    filter: brightness(120%);
+}
+
+.image-selector:hover {
+    filter: brightness(120%);
+}
+
+.image-selector:hover .image-preview {
+    display: block;
+}
+
+.image-selector .image-preview {
+    position: absolute;
+    top: -102px;
+    left: 0px;
+    height: 100px;
+    width: 100px;
+    border: 1px solid red;
+    display: none;
+    cursor: auto;
+    text-align: center;
+}
+
+.image-selector .image-preview img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.image-selector:hover .image-preview.placeholder {
+    background-color: #ffffff;
+}

@@ -1,7 +1,9 @@
 import { createStore } from 'redux';
 
 const initState = {
-    appLoading: true
+    appLoading: true,
+    appAlert: false,
+    fileBrowserInstances: []
 };
 
 function reducer (state = initState, action) {
@@ -10,6 +12,8 @@ function reducer (state = initState, action) {
             return { ...state, appLoading: action.payload };
         case "APP_ALERT":
             return {...state, appAlert: action.payload};
+        case "FILE_BROWSER_INSTANCE":
+            return {...state, fileBrowserInstances: action.payload};
         default:
             return state;
     }
