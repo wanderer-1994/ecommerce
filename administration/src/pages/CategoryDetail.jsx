@@ -393,7 +393,7 @@ function CategoryDetail (props) {
                                     if (Object.keys(EavCustomRender).indexOf(eav_item.attribute_id) !== -1) {
                                         Component = EavCustomRender[eav_item.attribute_id];
                                     }
-                                    return <Component key={index} eav_definition={eav_item} eav_value={eav_value} state={category} setState={setCategory} />
+                                    return <Component key={index} eav_definition={eav_item} eav_value={eav_value} state={category} setState={setCategory} c_multiple={true} />
                                 })}
                             </div>
                             <div className="section-item product-assignment">

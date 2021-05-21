@@ -2,6 +2,9 @@ import "./FileBrowser.css";
 import { useState, useEffect, Fragment } from "react";
 import { connect } from "react-redux";
 import * as webdavAPI from "../api/webdavAPI";
+import $ from "jquery";
+import axios from "axios";
+import utility from "../utils/utility";
 
 let persist_webdav_path = "/webdav";
 
@@ -69,9 +72,31 @@ function FileBrowser (props) {
     }, [props.open, instanceUUID])
 
     useEffect(() => {
+        $("body").on("mouseover.image_preview", function (event) {
+            if ($(event.target).hasClass("link") && $(event.target).hasClass("type-file")) {
+                let img_url = utility.webdavToPublicUrl($(event.target).data("url"));
+                $(".modal-content .image-preview").addClass("active");
+                $(".modal-content .image-preview").css({
+                    "top": `${event.clientY - 110}px`,
+                    "left": `${event.clientX}px`
+                });
+                $(".modal-content .image-preview img").attr("src", axios.defaults.baseURL + img_url);
+            } else {
+                $(".modal-content .image-preview").removeClass("active");
+                $(".modal-content .image-preview img").attr("src", "");
+            }
+        });
+        return function () {
+            $("body").off("mouseover.image_preview");
+        }
+    }, [])
+
+    useEffect(() => {
         listDirectory();
         setSelected([]);
     }, [webdav_path])
+
+
 
     function listDirectory () {
         webdavAPI.listDirectory(webdav_path.replace(/\/$/, ""))
@@ -135,11 +160,12 @@ function FileBrowser (props) {
             let is_selected = item_idx === -1 ? false : true;
             return (
                 <div key={index} className="item">
-                    <div className={`link${is_selected ? " selected" : ""}`}
+                    <div className={`link type-file${is_selected ? " selected" : ""}`}
+                        data-url={webdav_path + "/" + item.name}
                         onClick={() => {
                             let new_selected = [];
                             if (item_idx === -1) {
-                                if (props.multiple) {
+                                if (props.c_multiple) {
                                     new_selected = [...selected, item_full_path];
                                 } else {
                                     new_selected = [item_full_path];
@@ -169,8 +195,11 @@ function FileBrowser (props) {
                     <div className="file-browser modal-cover">
                         <div className="modal-header">Select file</div>
                         <div className="modal-content">
+                            <div className="image-preview">
+                                <img src="" />
+                            </div>
                         {path_exist ? (
-                            <div className="webdav">
+                            <div className="webdav active">
                                 <h3 className="path-indicator">~{renderPathIndicator(webdav_path)}</h3>
                                 <div className="count">{item_list.length} items - {total_directories} folders - {total_files} files</div>
                                 {item_list.map((item, index) => {
@@ -178,7 +207,8 @@ function FileBrowser (props) {
                                 })}
                             </div>
                         ) : (
-                            <div className="webdav-inactive">
+                            <div className="webdav inactive">
+                                <h3 className="path-indicator">~{renderPathIndicator(webdav_path)}</h3>
                                 Webdav path not exists!
                             </div>
                         )}

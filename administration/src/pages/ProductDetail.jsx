@@ -400,7 +400,7 @@ function ProductDetail (props) {
                                     if (Object.keys(EavCustomRender).indexOf(eav_item.attribute_id) !== -1) {
                                         Component = EavCustomRender[eav_item.attribute_id];
                                     }
-                                    return <Component key={index} eav_definition={eav_item} eav_value={eav_value} state={productEntity} setState={setProductEntity} />
+                                    return <Component key={index} eav_definition={eav_item} eav_value={eav_value} state={productEntity} setState={setProductEntity} c_multiple={true} />
                                 })}
                             </div>
                             {productEntity.type_id === "variant" ? (

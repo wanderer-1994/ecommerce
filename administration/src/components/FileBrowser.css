@@ -7,3 +7,22 @@
     background-color: #efefef;
     transform: translateX(-50%) translateY(-50%);
 }
+
+.file-browser .image-preview {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    text-align: center;
+    display: none;
+    border: 1px solid green;
+    border-radius: 3px;
+}
+
+.file-browser .image-preview.active {
+    display: block;
+}
+
+.file-browser .image-preview img {
+    max-height: 100%;
+    max-width: 100%;
+}

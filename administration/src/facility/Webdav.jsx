@@ -232,7 +232,7 @@ function Webdav (props) {
                     <CustomContextMenu items={context_menu_items} position={context_menu_position} />
                 ) : null}
                 {path_exist ? (
-                    <div className="webdav">
+                    <div className="webdav active">
                         {action === "mkdir" ? (
                             <div className="action">
                                 <h4>Folder name</h4>
@@ -272,7 +272,8 @@ function Webdav (props) {
                         })}
                     </div>
                 ) : (
-                    <div className="webdav-inactive">
+                    <div className="webdav inactive">
+                        <h3 className="path-indicator">~{renderPathIndicator(props.location.pathname.replace(/\/$/, ""))}</h3>
                         Webdav path not exists!
                     </div>
                 )}

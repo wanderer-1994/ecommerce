@@ -7,7 +7,7 @@ import FileBrowser from "../components/FileBrowser";
 import axios from "axios";
 import "./ImageSelector.css";
 
-function Item ({ value, onChange }) {
+function Item ({ value, onChange, c_multiple }) {
     const [open_file_browser, setOpenFileBrowser] = useState(false);
     return (
         <Fragment>
@@ -22,7 +22,7 @@ function Item ({ value, onChange }) {
                 >Select image</div>
             </span>
             {open_file_browser ? (
-                <FileBrowser open={true} multiple={false}
+                <FileBrowser open={true} c_multiple={c_multiple}
                     onRefuse={() => setOpenFileBrowser(false)}
                     onClose={() => setOpenFileBrowser(false)}
                     onChange={(selected) => {
@@ -35,17 +35,13 @@ function Item ({ value, onChange }) {
     )
 }
 
-function ImageSelector ({ eav_definition, eav_value, state, setState }) {
+function ImageSelector ({ eav_definition, eav_value, state, setState, c_multiple }) {
 
     const [changeImageFunction, setChangeImageFunction] = useState(null);
     const [image_picker_open, setImagePickerOpen] = useState(false);
 
     if (eav_definition.html_type === "multiinput" && (!Array.isArray(eav_value.value) || eav_value.value.length === 0)) {
         eav_value.value = [""];
-    }
-
-    function webdavToPublicUrl (webdav_url) {
-        return  webdav_url.replace("/webdav", "");
     }
 
     function validateValue (eav_definition, value) {
@@ -97,7 +93,7 @@ function ImageSelector ({ eav_definition, eav_value, state, setState }) {
                     <Item value={eav_value.value}
                         onChange={(selected) => {
                             if (selected && selected[0]) {
-                                eav_value.value = webdavToPublicUrl(selected[0]);
+                                eav_value.value = utility.webdavToPublicUrl(selected[0]);
                                 setState({...state});
                             }
                         }}
@@ -114,10 +110,13 @@ function ImageSelector ({ eav_definition, eav_value, state, setState }) {
                                     <div className="input_value"
                                         style={{width: "calc(100% - 30px)", marginTop: "0px"}}
                                     >
-                                        <Item value={v_item}
+                                        <Item value={v_item} c_multiple={c_multiple}
                                             onChange={(selected) => {
-                                                if (selected && selected[0]) {
-                                                    eav_value.value[v_index] = webdavToPublicUrl(selected[0]);
+                                                if (selected && selected.length > 0) {
+                                                    selected.forEach((s_item, s_index) => {
+                                                        selected[s_index] = utility.webdavToPublicUrl(s_item);
+                                                    })
+                                                    eav_value.value.splice(v_index, 1, ...selected);
                                                     setState({...state});
                                                 }
                                             }}
