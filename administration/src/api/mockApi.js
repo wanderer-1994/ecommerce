@@ -3,7 +3,11 @@ import * as categoryModel from "../objectModels/CategoryModel";
 import * as eavUtils from "../objectModels/eavUtils";
 import queryString from "query-string";
 
-axios.defaults.baseURL = window.location.origin.replace(/\:\d+$/, `:${process.env.REACT_APP_SERVER_PORT}`);
+if (process.env.REACT_APP_CLIENT_PORT && process.env.REACT_APP_SERVER_PORT) {
+    axios.defaults.baseURL = window.location.origin.replace(process.env.REACT_APP_CLIENT_PORT, process.env.REACT_APP_SERVER_PORT);
+} else {
+    axios.defaults.baseURL = window.location.origin;
+}
 
 // auth
 async function adminAuth(authInfo) {
