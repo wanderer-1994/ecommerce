@@ -5,16 +5,6 @@ import * as webdavAPI from "../api/webdavAPI";
 import $ from "jquery";
 import utility from "../utils/utility";
 
-let persist_webdav_path = localStorage.getItem("webdav_path");
-if (!persist_webdav_path || persist_webdav_path.indexOf("/webdav") === -1) {
-    persist_webdav_path = "/webdav";
-};
-
-let persist_webdav_search_phrase = localStorage.getItem("webdav_search_phrase");
-if (utility.isValueEmpty(persist_webdav_search_phrase)) {
-    persist_webdav_search_phrase = "";
-};
-
 function FileBrowser (props) {
 
     const [instanceUUID, setInstanceUUID] = useState(null);
@@ -23,13 +13,27 @@ function FileBrowser (props) {
     const [item_list, setItemList] = useState([]);
     const [icon_set, setIconSet] = useState({});
     const [path_exist, setPathExist] = useState(true);
-    const [webdav_path, setWebdavPath] = useState(persist_webdav_path);
+    const [webdav_path, setWebdavPath] = useState("");
     const [selected, setSelected] = useState([]);
-    const [search_phrase, setSearchPhrase] = useState(persist_webdav_search_phrase);
+    const [search_phrase, setSearchPhrase] = useState("");
 
     useEffect(() => {
         let timestamp_uuid = Date.now().toString();
         setInstanceUUID(timestamp_uuid);
+
+        // persist previous experiences
+        let persist_webdav_search_phrase = localStorage.getItem("webdav_search_phrase");
+        if (utility.isValueEmpty(persist_webdav_search_phrase)) {
+            persist_webdav_search_phrase = "";
+        };
+        setSearchPhrase(persist_webdav_search_phrase);
+
+        let persist_webdav_path = localStorage.getItem("webdav_path");
+        if (!persist_webdav_path || persist_webdav_path.indexOf("/webdav") === -1) {
+            persist_webdav_path = "/webdav";
+        };
+        setWebdavPath(persist_webdav_path);
+
         $(document).on("keydown.escape_file_browser", function (event) {
             if (event.key === "Escape" && !event.ctrlKey && !event.altKey) {
                 props.onClose();
@@ -90,27 +94,26 @@ function FileBrowser (props) {
         setSelected([]);
     }, [webdav_path])
 
-
-
     function listDirectory () {
-        webdavAPI.listDirectory(webdav_path.replace(/\/$/, ""))
-        .then(data => {
-            if (data) {
-                setItemList(data.item_list || []);
-                delete data.item_list;
-                setIconSet(data);
-                if (data.path_exist === false) {
-                    setPathExist(false);
-                } else {
-                    setPathExist(true);
-                    persist_webdav_path = webdav_path;
-                    localStorage.setItem("webdav_path", persist_webdav_path);
+        if (!utility.isValueEmpty(webdav_path)) {
+            webdavAPI.listDirectory(webdav_path.replace(/\/$/, ""))
+            .then(data => {
+                if (data) {
+                    setItemList(data.item_list || []);
+                    delete data.item_list;
+                    setIconSet(data);
+                    if (data.path_exist === false) {
+                        setPathExist(false);
+                    } else {
+                        setPathExist(true);
+                        localStorage.setItem("webdav_path", webdav_path);
+                    }
                 }
-            }
-        })
-        .catch(err => {
-            console.log(err);
-        })
+            })
+            .catch(err => {
+                console.log(err);
+            })
+        }
     }
 
     function renderPathIndicator (path) {
@@ -222,7 +225,6 @@ function FileBrowser (props) {
                                     <div className="search">
                                         <input type="text" value={search_phrase} onChange={(event) => {
                                             setSearchPhrase(event.target.value);
-                                            persist_webdav_search_phrase = event.target.value;
                                             localStorage.setItem("webdav_search_phrase", event.target.value);
                                         }} />
                                     </div>
