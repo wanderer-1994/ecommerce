@@ -39,7 +39,8 @@ const category_entity_columns = [
         }
     }
 ];
-const attr_eav = ["entity_id", "attribute_id", "value", "sort_order"];
+const attr_eav = ["entity_id", "attribute_id", "value"];
+const attr_eav_multi_value = ["entity_id", "attribute_id", "value", "sort_order"];
 const { getCategoryEavTableName } = require("./category_eav_table");
 
 async function saveCategoryEntity (category, option) {
@@ -235,7 +236,7 @@ async function saveCategoryEntity (category, option) {
                 if (row_item.value.length > 0) {
                     sql_row_item +=
                     `
-                    INSERT INTO \`ecommerce\`.category_eav_multi_value (${attr_eav.map(col_item => col_item).join(", ")})
+                    INSERT INTO \`ecommerce\`.category_eav_multi_value (${attr_eav_multi_value.map(col_item => col_item).join(", ")})
                     VALUES
                     ${row_item.value
                         .map(

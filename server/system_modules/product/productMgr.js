@@ -41,7 +41,8 @@ const attr_product_entity = [
 const attr_product_category_assignment = ["product_id", "category_id", "position"];
 const attr_inventory = ["entity_id", "available_quantity"];
 const attr_tier_price = ["entity_id", "price"];
-const attr_eav = ["entity_id", "attribute_id", "value", "sort_order"];
+const attr_eav = ["entity_id", "attribute_id", "value"];
+const attr_eav_multi_value = ["entity_id", "attribute_id", "value", "sort_order"];
 const { getProductEavTableName } = require("./product_eav_table");
 
 async function saveProductEntity (product, option) {
@@ -388,7 +389,7 @@ async function saveProductEntity (product, option) {
                 if (row_item.value.length > 0) {
                     sql_row_item +=
                     `
-                    INSERT INTO \`ecommerce\`.product_eav_multi_value (${attr_eav.map(col_item => col_item).join(", ")})
+                    INSERT INTO \`ecommerce\`.product_eav_multi_value (${attr_eav_multi_value.map(col_item => col_item).join(", ")})
                     VALUES
                     ${row_item.value
                         .map(

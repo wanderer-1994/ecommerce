@@ -75,26 +75,6 @@ function FileBrowser (props) {
     }, [props.open, instanceUUID])
 
     useEffect(() => {
-        $("body").on("mouseover.image_preview", function (event) {
-            if ($(event.target).hasClass("link") && $(event.target).hasClass("type-file")) {
-                let img_url = utility.webdavToPublicUrl($(event.target).data("url"));
-                $(".modal-content .image-preview").addClass("active");
-                $(".modal-content .image-preview").css({
-                    "top": `${event.clientY - 110}px`,
-                    "left": `${event.clientX}px`
-                });
-                $(".modal-content .image-preview img").attr("src", utility.toPublicUrlWithHost(img_url));
-            } else {
-                $(".modal-content .image-preview").removeClass("active");
-                $(".modal-content .image-preview img").attr("src", "");
-            }
-        });
-        return function () {
-            $("body").off("mouseover.image_preview");
-        }
-    }, [])
-
-    useEffect(() => {
         listDirectory();
         setSelected([]);
     }, [webdav_path])
@@ -162,10 +142,28 @@ function FileBrowser (props) {
             let item_full_path = webdav_path + "/" + item.name;
             let item_idx = selected.indexOf(item_full_path);
             let is_selected = item_idx === -1 ? false : true;
+            let public_path = utility.webdavToPublicUrl(webdav_path + "/" + item.name);
+            let public_path_with_host = utility.toPublicUrlWithHost(public_path);
             return (
                 <div key={index} className="item">
                     <div className={`link type-file${is_selected ? " selected" : ""}`}
                         data-url={webdav_path + "/" + item.name}
+                        // Again, using useEffect with jquery issuing not updating variable when search_phrase is changed!
+                        onMouseEnter={(event) => {
+                            $(".modal-content .image-preview").addClass("active");
+                            $(".modal-content .image-preview").css({
+                                "top": `${event.clientY - 110}px`,
+                                "left": `${event.clientX}px`
+                            });
+                            $(".modal-content .image-preview img").attr("src", public_path_with_host);
+                        }}
+                        onMouseLeave={() => {
+                            $(".modal-content .image-preview").removeClass("active");
+                            $(".modal-content .image-preview img").attr("src", "");
+                        }}
+                        onDoubleClick={() => {
+                            window.open(public_path_with_host, "_blank");
+                        }}
                         onClick={() => {
                             let new_selected = [];
                             if (item_idx === -1) {
