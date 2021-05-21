@@ -3,7 +3,6 @@ import { useState, useEffect, Fragment } from "react";
 import { connect } from "react-redux";
 import * as webdavAPI from "../api/webdavAPI";
 import $ from "jquery";
-import axios from "axios";
 import utility from "../utils/utility";
 
 let persist_webdav_path = "/webdav";
@@ -81,7 +80,7 @@ function FileBrowser (props) {
                     "top": `${event.clientY - 110}px`,
                     "left": `${event.clientX}px`
                 });
-                $(".modal-content .image-preview img").attr("src", axios.defaults.baseURL + img_url);
+                $(".modal-content .image-preview img").attr("src", utility.toPublicUrlWithHost(img_url));
             } else {
                 $(".modal-content .image-preview").removeClass("active");
                 $(".modal-content .image-preview img").attr("src", "");

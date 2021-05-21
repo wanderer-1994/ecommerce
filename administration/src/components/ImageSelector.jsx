@@ -4,7 +4,6 @@ import Clear from "@material-ui/icons/Clear";
 import Add from "@material-ui/icons/Add";
 import utility from "../utils/utility";
 import FileBrowser from "../components/FileBrowser";
-import axios from "axios";
 import "./ImageSelector.css";
 
 function Item ({ value, onChange, c_multiple }) {
@@ -14,7 +13,7 @@ function Item ({ value, onChange, c_multiple }) {
             <span className="image-selector">
                 <div className="image-preview placeholder">No image selected</div>
                 <div className="image-preview">
-                    <img src={`${axios.defaults.baseURL}${value}`} />
+                    <img src={utility.toPublicUrlWithHost(value)} />
                 </div>
                 <div className={`text${open_file_browser ? " active" : ""}`} 
                     onClick={() => setOpenFileBrowser(!open_file_browser)}
