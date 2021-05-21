@@ -222,6 +222,7 @@ function FileBrowser (props) {
                                     <div className="search">
                                         <input type="text" value={search_phrase} onChange={(event) => {
                                             setSearchPhrase(event.target.value);
+                                            persist_webdav_search_phrase = event.target.value;
                                             localStorage.setItem("webdav_search_phrase", event.target.value);
                                         }} />
                                     </div>
