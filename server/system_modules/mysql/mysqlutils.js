@@ -34,6 +34,25 @@ function groupByAttribute ({rawData, groupBy, nullExcept}) {
     return result;
 }
 
+function sortByAttribute({ array, attribute, type }) {
+    try {
+        let default_type = "ASC";
+        if (type === "DES") default_type = type;
+        let filter_null = array.filter(item => (isValueEmpty(item[attribute]) || item[attribute] === 0));
+        let filter_valid = array.filter(item => (!isValueEmpty(item[attribute]) && item[attribute] !== 0));
+        filter_valid.sort((a, b) => {
+            if (default_type === "ASC") {
+                return a[attribute] - b[attribute];
+            } else {
+                return b[attribute] - a[attribute];
+            }
+        });
+        return [...filter_valid, ...filter_null];
+    } catch (err) {
+        return array;
+    }
+}
+
 function escapeQuotes (string) {
     return string.toString().replace(/\`/g, "\\`").replace(/\"/g, '\\"').replace(/\'/g, "\\'");
 }
@@ -143,10 +162,11 @@ function isValueEmpty (value) {
 module.exports = {
     separateSQL,
     groupByAttribute,
+    sortByAttribute,
     escapeQuotes,
     buildProductEavIndexJson,
     isAttributeSearchable,
     convertDataType,
     validateValue,
-    isValueEmpty
+    isValueEmpty,
 }

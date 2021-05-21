@@ -49,5 +49,5 @@ module.exports = {
     createSystemErrMessage,
     removeVnCharacter,
     generateZerofillId,
-    getCmdArgument   
+    getCmdArgument
 }

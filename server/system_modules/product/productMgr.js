@@ -41,7 +41,7 @@ const attr_product_entity = [
 const attr_product_category_assignment = ["product_id", "category_id", "position"];
 const attr_inventory = ["entity_id", "available_quantity"];
 const attr_tier_price = ["entity_id", "price"];
-const attr_eav = ["entity_id", "attribute_id", "value"];
+const attr_eav = ["entity_id", "attribute_id", "value", "sort_order"];
 const { getProductEavTableName } = require("./product_eav_table");
 
 async function saveProductEntity (product, option) {
@@ -392,7 +392,7 @@ async function saveProductEntity (product, option) {
                     VALUES
                     ${row_item.value
                         .map(
-                            value_item => `("${mysqlutils.escapeQuotes(product.entity_id)}", "${mysqlutils.escapeQuotes(row_item.attribute_id)}", "${mysqlutils.escapeQuotes(value_item)}")`
+                            (value_item, v_index) => `("${mysqlutils.escapeQuotes(product.entity_id)}", "${mysqlutils.escapeQuotes(row_item.attribute_id)}", "${mysqlutils.escapeQuotes(value_item)}", "${v_index + 1}")`
                         )
                         .join(",\n")
                     };

@@ -342,66 +342,66 @@ async function getDetailProducts (products, option) {
     let product_ids = products.map(item => `'${mysqlutils.escapeQuotes(item.product_id.toString())}'`).join(", ");
     let sql =
     `
-    SELECT \`pe\`.entity_id, \`pe\`.product_id, \`pe\`.type_id, \`pe\`.parent, \`pe\`.created_at, \`pe\`.updated_at, \`pe\`.value, \`attributes\`.*, \`pe\`.attribute_id FROM (
+    SELECT \`pe\`.entity_id, \`pe\`.product_id, \`pe\`.type_id, \`pe\`.parent, \`pe\`.created_at, \`pe\`.updated_at, \`pe\`.value, \`pe\`.sort_order, \`attributes\`.*, \`pe\`.attribute_id FROM (
         SELECT
             \`pe\`.entity_id, IF((\`pe\`.parent IS NOT NULL AND \`pe\`.parent != ''), \`pe\`.parent, \`pe\`.entity_id) AS product_id,
-            \`pe\`.type_id, \`pe\`.parent, \`pe\`.created_at, \`pe\`.updated_at, \`eav\`.attribute_id, \`eav\`.value
+            \`pe\`.type_id, \`pe\`.parent, \`pe\`.created_at, \`pe\`.updated_at, \`eav\`.attribute_id, \`eav\`.value, 0 AS \`sort_order\`
         FROM \`ecommerce\`.product_entity AS \`pe\`
         LEFT JOIN \`ecommerce\`.product_eav_int AS \`eav\` ON \`eav\`.entity_id = \`pe\`.entity_id
         WHERE \`pe\`.entity_id IN (${product_ids}) OR \`pe\`.parent IN (${product_ids})
         UNION
         SELECT
             \`pe\`.entity_id, IF((\`pe\`.parent IS NOT NULL AND \`pe\`.parent != ''), \`pe\`.parent, \`pe\`.entity_id) AS product_id,
-            \`pe\`.type_id, \`pe\`.parent, \`pe\`.created_at, \`pe\`.updated_at, \`eav\`.attribute_id, \`eav\`.value
+            \`pe\`.type_id, \`pe\`.parent, \`pe\`.created_at, \`pe\`.updated_at, \`eav\`.attribute_id, \`eav\`.value, 0 AS \`sort_order\`
         FROM \`ecommerce\`.product_entity AS \`pe\`
         LEFT JOIN \`ecommerce\`.product_eav_decimal AS \`eav\` ON \`eav\`.entity_id = \`pe\`.entity_id
         WHERE \`pe\`.entity_id IN (${product_ids}) OR \`pe\`.parent IN (${product_ids})
         UNION
         SELECT
             \`pe\`.entity_id, IF((\`pe\`.parent IS NOT NULL AND \`pe\`.parent != ''), \`pe\`.parent, \`pe\`.entity_id) AS product_id,
-            \`pe\`.type_id, \`pe\`.parent, \`pe\`.created_at, \`pe\`.updated_at, \`eav\`.attribute_id, \`eav\`.value
+            \`pe\`.type_id, \`pe\`.parent, \`pe\`.created_at, \`pe\`.updated_at, \`eav\`.attribute_id, \`eav\`.value, 0 AS \`sort_order\`
         FROM \`ecommerce\`.product_entity AS \`pe\`
         LEFT JOIN \`ecommerce\`.product_eav_varchar AS \`eav\` ON \`eav\`.entity_id = \`pe\`.entity_id
         WHERE \`pe\`.entity_id IN (${product_ids}) OR \`pe\`.parent IN (${product_ids})
         UNION
         SELECT
             \`pe\`.entity_id, IF((\`pe\`.parent IS NOT NULL AND \`pe\`.parent != ''), \`pe\`.parent, \`pe\`.entity_id) AS product_id,
-            \`pe\`.type_id, \`pe\`.parent, \`pe\`.created_at, \`pe\`.updated_at, \`eav\`.attribute_id, \`eav\`.value
+            \`pe\`.type_id, \`pe\`.parent, \`pe\`.created_at, \`pe\`.updated_at, \`eav\`.attribute_id, \`eav\`.value, 0 AS \`sort_order\`
         FROM \`ecommerce\`.product_entity AS \`pe\`
         LEFT JOIN \`ecommerce\`.product_eav_text AS \`eav\` ON \`eav\`.entity_id = \`pe\`.entity_id
         WHERE \`pe\`.entity_id IN (${product_ids}) OR \`pe\`.parent IN (${product_ids})
         UNION
         SELECT
             \`pe\`.entity_id, IF((\`pe\`.parent IS NOT NULL AND \`pe\`.parent != ''), \`pe\`.parent, \`pe\`.entity_id) AS product_id,
-            \`pe\`.type_id, \`pe\`.parent, \`pe\`.created_at, \`pe\`.updated_at, \`eav\`.attribute_id, \`eav\`.value
+            \`pe\`.type_id, \`pe\`.parent, \`pe\`.created_at, \`pe\`.updated_at, \`eav\`.attribute_id, \`eav\`.value, 0 AS \`sort_order\`
         FROM \`ecommerce\`.product_entity AS \`pe\`
         LEFT JOIN \`ecommerce\`.product_eav_datetime AS \`eav\` ON \`eav\`.entity_id = \`pe\`.entity_id
         WHERE \`pe\`.entity_id IN (${product_ids}) OR \`pe\`.parent IN (${product_ids})
         UNION
         SELECT
             \`pe\`.entity_id, IF((\`pe\`.parent IS NOT NULL AND \`pe\`.parent != ''), \`pe\`.parent, \`pe\`.entity_id) AS product_id,
-            \`pe\`.type_id, \`pe\`.parent, \`pe\`.created_at, \`pe\`.updated_at, \`eav\`.attribute_id, \`eav\`.value
+            \`pe\`.type_id, \`pe\`.parent, \`pe\`.created_at, \`pe\`.updated_at, \`eav\`.attribute_id, \`eav\`.value, \`eav\`.sort_order
         FROM \`ecommerce\`.product_entity as \`pe\`
         LEFT JOIN \`ecommerce\`.product_eav_multi_value AS \`eav\` ON \`eav\`.entity_id = \`pe\`.entity_id
         WHERE \`pe\`.entity_id in (${product_ids}) OR \`pe\`.parent in (${product_ids})
         UNION
         SELECT
             \`pe\`.entity_id, IF((\`pe\`.parent IS NOT NULL AND \`pe\`.parent != ''), \`pe\`.parent, \`pe\`.entity_id) AS product_id,
-            \`pe\`.type_id, \`pe\`.parent, \`pe\`.created_at, \`pe\`.updated_at, 'available_quantity' AS \`attribute_id\`, \`inv\`.available_quantity AS \`value\`
+            \`pe\`.type_id, \`pe\`.parent, \`pe\`.created_at, \`pe\`.updated_at, 'available_quantity' AS \`attribute_id\`, \`inv\`.available_quantity AS \`value\`, 0 AS \`sort_order\`
         FROM \`ecommerce\`.product_entity as \`pe\`
         LEFT JOIN \`ecommerce\`.inventory AS \`inv\` ON \`inv\`.entity_id = \`pe\`.entity_id
         WHERE \`pe\`.entity_id in (${product_ids}) OR \`pe\`.parent in (${product_ids})
         UNION
         SELECT
             \`pe\`.entity_id, IF((\`pe\`.parent IS NOT NULL AND \`pe\`.parent != ''), \`pe\`.parent, \`pe\`.entity_id) AS product_id,
-            \`pe\`.type_id, \`pe\`.parent, \`pe\`.created_at, \`pe\`.updated_at, 'tier_price' AS \`attribute_id\`, \`tier_price\`.price AS \`value\`
+            \`pe\`.type_id, \`pe\`.parent, \`pe\`.created_at, \`pe\`.updated_at, 'tier_price' AS \`attribute_id\`, \`tier_price\`.price AS \`value\`, 0 AS \`sort_order\`
         FROM \`ecommerce\`.product_entity as \`pe\`
         LEFT JOIN \`ecommerce\`.product_tier_price AS \`tier_price\` ON \`tier_price\`.entity_id = \`pe\`.entity_id
         WHERE \`pe\`.entity_id in (${product_ids}) OR \`pe\`.parent in (${product_ids})
         UNION
         SELECT
             \`pe\`.entity_id, IF((\`pe\`.parent IS NOT NULL AND \`pe\`.parent != ''), \`pe\`.parent, \`pe\`.entity_id) AS product_id,
-            \`pe\`.type_id, \`pe\`.parent, \`pe\`.created_at, \`pe\`.updated_at, 'category' AS \`attribute_id\`, CONCAT(\`pca\`.category_id, '---', IFNULL(\`pca\`.position, "0")) AS \`value\`
+            \`pe\`.type_id, \`pe\`.parent, \`pe\`.created_at, \`pe\`.updated_at, 'category' AS \`attribute_id\`, \`pca\`.category_id AS \`value\`, \`pca\`.position AS \`sort_order\`
         FROM \`ecommerce\`.product_entity as \`pe\`
         LEFT JOIN \`ecommerce\`.product_category_assignment AS \`pca\` ON \`pca\`.product_id = \`pe\`.entity_id
         WHERE \`pe\`.entity_id in (${product_ids}) OR \`pe\`.parent in (${product_ids})
@@ -462,8 +462,8 @@ function modelizeProductsData (rawData, option) {
                     product_entity.__items.forEach(attribute => {
                         if (attribute && attribute.attribute_id === "category" && attribute.value !== null) {
                             attribute.value = attribute.value.toString();
-                            let category_id = attribute.value.replace(/---\d+$/, "");
-                            let position = attribute.value.slice(category_id.length + 3);
+                            let category_id = attribute.value;
+                            let position = attribute.sort_order;
                             position = parseInt(position);
                             if (isNaN(position)) {
                                 position = 0;
@@ -492,6 +492,11 @@ function modelizeProductsData (rawData, option) {
                     }
                     if(multivalueAttributes.indexOf(attr_item.html_type) !== -1){
                         attr_item.value = [];
+                        attr_item.__items = mysqlutils.sortByAttribute({
+                            array: attr_item.__items,
+                            attribute: "sort_order",
+                            type: "ASC"
+                        });
                         attr_item.__items.forEach(value_item => {
                             if (value_item) {
                                 let converted_value = mysqlutils.convertDataType(value_item.value, attr_item.data_type);

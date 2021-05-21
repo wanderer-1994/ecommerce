@@ -39,7 +39,7 @@ const category_entity_columns = [
         }
     }
 ];
-const attr_eav = ["entity_id", "attribute_id", "value"];
+const attr_eav = ["entity_id", "attribute_id", "value", "sort_order"];
 const { getCategoryEavTableName } = require("./category_eav_table");
 
 async function saveCategoryEntity (category, option) {
@@ -239,7 +239,7 @@ async function saveCategoryEntity (category, option) {
                     VALUES
                     ${row_item.value
                         .map(
-                            value_item => `("${mysqlutils.escapeQuotes(category.entity_id)}", "${mysqlutils.escapeQuotes(row_item.attribute_id)}", "${mysqlutils.escapeQuotes(value_item)}")`
+                            (value_item, v_index) => `("${mysqlutils.escapeQuotes(category.entity_id)}", "${mysqlutils.escapeQuotes(row_item.attribute_id)}", "${mysqlutils.escapeQuotes(value_item)}", "${v_index + 1}")`
                         )
                         .join(",\n")
                     };
