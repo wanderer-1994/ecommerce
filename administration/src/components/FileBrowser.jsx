@@ -10,6 +10,11 @@ if (!persist_webdav_path || persist_webdav_path.indexOf("/webdav") === -1) {
     persist_webdav_path = "/webdav";
 };
 
+let persist_webdav_search_phrase = localStorage.getItem("webdav_search_phrase");
+if (utility.isValueEmpty(persist_webdav_search_phrase)) {
+    persist_webdav_search_phrase = "";
+};
+
 function FileBrowser (props) {
 
     const [instanceUUID, setInstanceUUID] = useState(null);
@@ -20,11 +25,16 @@ function FileBrowser (props) {
     const [path_exist, setPathExist] = useState(true);
     const [webdav_path, setWebdavPath] = useState(persist_webdav_path);
     const [selected, setSelected] = useState([]);
-    const [search_phrase, setSearchPhrase] = useState("");
+    const [search_phrase, setSearchPhrase] = useState(persist_webdav_search_phrase);
 
     useEffect(() => {
         let timestamp_uuid = Date.now().toString();
         setInstanceUUID(timestamp_uuid);
+        $(document).on("keydown.escape_file_browser", function (event) {
+            if (event.key === "Escape" && !event.ctrlKey && !event.altKey) {
+                props.onClose();
+            }
+        });
         return function () {
             let fileBrowserInstances = props.fileBrowserInstances;
             // USE timestamp_uuid not instanceUUID eventhough timestamp_uuid = instanceUUID
@@ -37,7 +47,8 @@ function FileBrowser (props) {
                     type: "FILE_BROWSER_INSTANCE",
                     payload: fileBrowserInstances
                 });
-            }
+            };
+            $(document).off("keydown.escape_file_browser");
         }
     }, [])
 
@@ -210,8 +221,9 @@ function FileBrowser (props) {
                                     <h3 className="path-indicator">~{renderPathIndicator(webdav_path)}</h3>
                                     <div className="search">
                                         <input type="text" value={search_phrase} onChange={(event) => {
-                                            setSearchPhrase(event.target.value)}
-                                        } />
+                                            setSearchPhrase(event.target.value);
+                                            localStorage.setItem("webdav_search_phrase", event.target.value);
+                                        }} />
                                     </div>
                                 </div>
                                 <div className="count">{item_list.length} items - {total_directories} folders - {total_files} files</div>
