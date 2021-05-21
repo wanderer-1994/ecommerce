@@ -5,7 +5,10 @@ import * as webdavAPI from "../api/webdavAPI";
 import $ from "jquery";
 import utility from "../utils/utility";
 
-let persist_webdav_path = "/webdav";
+let persist_webdav_path = localStorage.getItem("webdav_path");
+if (!persist_webdav_path || persist_webdav_path.indexOf("/webdav") === -1) {
+    persist_webdav_path = "/webdav";
+};
 
 function FileBrowser (props) {
 
@@ -110,6 +113,7 @@ function FileBrowser (props) {
                 } else {
                     setPathExist(true);
                     persist_webdav_path = webdav_path;
+                    localStorage.setItem("webdav_path", persist_webdav_path);
                 }
             }
         })
