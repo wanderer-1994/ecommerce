@@ -22,7 +22,6 @@ async function saveFile (file, folder_path, isOverWrite) {
         if (fs.existsSync(file_path) && !isOverWrite) {
             throw new Error(`Could not upload file ${file.name}. File already exists!`);
         };
-        console.log(file.name)
         await fs.copy(file.path, folder_path + "/" + file.name);
         await fs.unlink(file.path);
     } catch (err) {
