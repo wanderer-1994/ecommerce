@@ -18,6 +18,7 @@ function FileBrowser (props) {
     const [path_exist, setPathExist] = useState(true);
     const [webdav_path, setWebdavPath] = useState(persist_webdav_path);
     const [selected, setSelected] = useState([]);
+    const [search_phrase, setSearchPhrase] = useState("");
 
     useEffect(() => {
         let timestamp_uuid = Date.now().toString();
@@ -187,6 +188,10 @@ function FileBrowser (props) {
 
     let total_files = item_list.filter(item => item.is_file).length;
     let total_directories = item_list.filter(item => item.is_directory).length;
+    let search_items = [...item_list];
+    if (!utility.isValueEmpty(search_phrase)) {
+        search_items = item_list.filter(item => item.name.indexOf(search_phrase) !== -1);
+    }
 
     return (
         <Fragment>
@@ -200,9 +205,16 @@ function FileBrowser (props) {
                             </div>
                         {path_exist ? (
                             <div className="webdav active">
-                                <h3 className="path-indicator">~{renderPathIndicator(webdav_path)}</h3>
+                                <div className="header">
+                                    <h3 className="path-indicator">~{renderPathIndicator(webdav_path)}</h3>
+                                    <div className="search">
+                                        <input type="text" value={search_phrase} onChange={(event) => {
+                                            setSearchPhrase(event.target.value)}
+                                        } />
+                                    </div>
+                                </div>
                                 <div className="count">{item_list.length} items - {total_directories} folders - {total_files} files</div>
-                                {item_list.map((item, index) => {
+                                {search_items.map((item, index) => {
                                     return renderItem(item, index);
                                 })}
                             </div>

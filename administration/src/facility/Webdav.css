@@ -3,6 +3,11 @@
     font-family: monospace;
 }
 
+/* .webdav .header contains .path-indicator & .search */
+.webdav .header {
+    position: relative;
+}
+
 .webdav .path-indicator {
     font-weight: bold;
     font-family: monospace;
@@ -19,6 +24,21 @@
 
 .webdav .path-indicator .path-item:hover {
     filter: brightness(150%);
+    position: relative;
+}
+
+.webdav .search {
+    position: absolute;
+    right: 5px;
+    top: 0px;
+}
+
+.webdav .search input {
+    outline: none;
+    border: 1px solid #ababab;
+    border-radius: 3px;
+    height: 30px;
+    box-shadow: 2px 2px 10px -6px;
 }
 
 .webdav .count {
