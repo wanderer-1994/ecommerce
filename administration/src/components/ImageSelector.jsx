@@ -11,7 +11,6 @@ function Item ({ value, onChange, c_multiple }) {
     const [open_file_browser, setOpenFileBrowser] = useState(false);
     return (
         <Fragment>
-            <input className="multiinput_item" disabled type="text" value={value} style={{width: "calc(100% - 90px)"}} />
             <span className="image-selector">
                 <div className="image-preview placeholder">No image selected</div>
                 <div className="image-preview">
@@ -90,14 +89,23 @@ function ImageSelector ({ eav_definition, eav_value, state, setState, c_multiple
                 style={{width: "calc(100% - 170px)"}}
             >
                 {eav_definition.html_type !== "multiinput" ? (
-                    <Item value={eav_value.value}
-                        onChange={(selected) => {
-                            if (selected && selected[0]) {
-                                eav_value.value = utility.webdavToPublicUrl(selected[0]);
+                    <Fragment>
+                        <input className={`multiinput_item${utility.isValueEmpty(eav_value.value) ? " null" : ""}`}
+                            type="text" value={eav_value.value} style={{width: "calc(100% - 90px)"}}
+                            onChange={(event) => {
+                                eav_value.value = event.target.value;
                                 setState({...state});
-                            }
-                        }}
-                    />
+                            }} 
+                        />
+                        <Item value={eav_value.value}
+                            onChange={(selected) => {
+                                if (selected && selected[0]) {
+                                    eav_value.value = utility.webdavToPublicUrl(selected[0]);
+                                    setState({...state});
+                                }
+                            }}
+                        />
+                    </Fragment>
                 ) : (
                     <Fragment>
                         {eav_value.value.map((v_item, v_index) => {
@@ -110,6 +118,13 @@ function ImageSelector ({ eav_definition, eav_value, state, setState, c_multiple
                                     <div className="input_value"
                                         style={{width: "calc(100% - 30px)", marginTop: "0px"}}
                                     >
+                                        <input className={`multiinput_item${utility.isValueEmpty(v_item) ? " null" : ""}`} type="text" 
+                                            value={v_item} style={{width: "calc(100% - 90px)"}}
+                                            onChange={(event) => {
+                                                eav_value.value[v_index] = event.target.value;
+                                                setState({...state});
+                                            }}    
+                                        />
                                         <Item value={v_item} c_multiple={c_multiple}
                                             onChange={(selected) => {
                                                 if (selected && selected.length > 0) {
