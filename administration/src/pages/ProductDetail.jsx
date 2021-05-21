@@ -214,7 +214,7 @@ function ProductDetail (props) {
                     attribute.value = attribute.value.filter(item => !utility.isValueEmpty(item));
                 };
                 let match = (ori_entity.attributes || []).find(item => item.attribute_id === attribute.attribute_id) || {};
-                if (JSON.stringify(match.value) === JSON.stringify(attribute.value) || (match.value === undefined && utility.isValueEmpty(attribute.value))) {
+                if (JSON.stringify(match.value) === JSON.stringify(attribute.value) || (match.value === undefined && (utility.isValueEmpty(attribute.value) || attribute.value.length === 0))) {
                     copy_entity.attributes.splice(i, 1);
                     i -= 1;
                     continue;
