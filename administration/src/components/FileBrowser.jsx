@@ -205,7 +205,7 @@ function FileBrowser (props) {
     let total_directories = item_list.filter(item => item.is_directory).length;
     let search_items = [...item_list];
     if (!utility.isValueEmpty(search_phrase)) {
-        search_items = item_list.filter(item => item.name.indexOf(search_phrase) !== -1);
+        search_items = item_list.filter(item => item.name && item.name.toLowerCase().indexOf(search_phrase.toLowerCase()) !== -1);
     }
 
     return (
