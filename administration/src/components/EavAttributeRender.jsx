@@ -166,6 +166,7 @@ const eav_html_type = [
                         let selected = Array.from(event.target.selectedOptions, option => option.value);
                         let invalid_value = [];
                         selected.forEach(selected_value => {
+                            if (selected_value === "") return;
                             let match = eav_definition.options.find(item => item.option_value == selected_value);
                             if (!match) {
                                 invalid_value.push(selected_value)
@@ -186,6 +187,7 @@ const eav_html_type = [
                     }}
                     style={forceWidth}
                 >
+                    <option value="">-------------------------------</option>
                     {(eav_definition.options || []).map((option, index) => {
                         return (
                             <option
