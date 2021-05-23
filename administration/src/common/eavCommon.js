@@ -134,6 +134,9 @@ const eav_entity_columns = [
                         if (force_data_type) {
                             state.data_type = force_data_type;
                         };
+                        if (["select", "multiselect"].indexOf(event.target.value) === -1) {
+                            delete state.options;
+                        }
                         state[self.column] = event.target.value;
                         setState({...state})
                     }}
