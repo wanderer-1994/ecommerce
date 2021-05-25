@@ -5,6 +5,20 @@ CREATE schema `ecommerce`;
 ###
 USE `ecommerce`;
 
+### EAV COMMON
+CREATE TABLE `ecommerce`.`eav_group` (
+  `group_id` VARCHAR(50) NOT NULL,
+  `entity_type` VARCHAR(50) NOT NULL,
+  `sort_order` INT NULL,
+  PRIMARY KEY (`group_id`, `entity_type`));
+
+CREATE TABLE `ecommerce`.`eav_group_assignment` (
+  `group_id` VARCHAR(50) NOT NULL,
+  `entity_type` VARCHAR(50) NOT NULL,
+  `attribute_id` VARCHAR(50) NOT NULL,
+  `sort_order` INT NULL,
+  PRIMARY KEY (`group_id`, `entity_type`, `attribute_id`));
+
 ### PRODUCT EAV
 ###
 CREATE TABLE `ecommerce`.`product_entity` (
@@ -34,6 +48,7 @@ CREATE TABLE `ecommerce`.`product_eav` (
   `is_super` ENUM('0', '1') NULL DEFAULT '0',
   `is_system` ENUM('0', '1') NULL DEFAULT '0',
   `unit` VARCHAR(50) NULL,
+  `sort_order` INT NULL,
   PRIMARY KEY (`attribute_id`));
 
 ###
@@ -49,7 +64,7 @@ CREATE TABLE `ecommerce`.`product_eav_multi_value` (
   `entity_id` VARCHAR(50) NOT NULL,
   `attribute_id` VARCHAR(50) NOT NULL,
   `value` TEXT NOT NULL,
-  `sort_order`  INT NULL);
+  `sort_order` INT NULL);
 
 ###
 CREATE TABLE `ecommerce`.`product_eav_index` (
@@ -115,6 +130,7 @@ CREATE TABLE `ecommerce`.`category_eav` (
   `is_super` ENUM('0', '1') NULL DEFAULT '0',
   `is_system` ENUM('0', '1') NULL DEFAULT '0',
   `unit` VARCHAR(50) NULL,
+  `sort_order` INT NULL,
   PRIMARY KEY (`attribute_id`));
 
 ###
@@ -129,7 +145,7 @@ CREATE TABLE `ecommerce`.`category_eav_option` (
 CREATE TABLE `ecommerce`.`category_eav_int` (
   `entity_id` VARCHAR(50) NOT NULL,
   `attribute_id` VARCHAR(50) NOT NULL,
-  `value`  INT NOT NULL,
+  `value` INT NOT NULL,
   PRIMARY KEY (`entity_id`, `attribute_id`));
 
 ###
@@ -165,7 +181,7 @@ CREATE TABLE `ecommerce`.`category_eav_multi_value` (
   `entity_id` VARCHAR(50) NOT NULL,
   `attribute_id` VARCHAR(50) NOT NULL,
   `value` TEXT NOT NULL,
-  `sort_order`  INT NULL);
+  `sort_order` INT NULL);
 
 ### ORDER
 ###

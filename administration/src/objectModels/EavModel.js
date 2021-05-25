@@ -89,9 +89,9 @@ const option_columns = [
     },
     {
         column: "sort_order",
-        f_convert_value: ({ value }) => database_data_type["NONE_NEGATIVE_INT"].f_convert_value(value),
-        f_validation: ({ value }) => database_data_type["NONE_NEGATIVE_INT"].f_validation(value),
-        valueInvalidMessage: "'sort_order' must be none-negative int or left empty!"
+        f_convert_value: ({ value }) => database_data_type["POSITIVE_INT"].f_convert_value(value),
+        f_validation: ({ value }) => database_data_type["POSITIVE_INT"].f_validation(value),
+        valueInvalidMessage: "'sort_order' must be positive or left empty!"
     }
 ]
 

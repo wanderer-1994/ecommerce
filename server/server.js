@@ -17,6 +17,7 @@ const userCategoryRouter = require("./routes/user/CategoryRouter");
 const adminCategoryRouter = require("./routes/admin/CategoryRouter");
 const userProductRouter = require("./routes/user/ProductRouter");
 const adminProductRouter = require("./routes/admin/ProductRouter");
+const adminEavRouter = require("./routes/admin/EavRouter");
 // const OrderRouter = require("./routes/user/orderRouter/OrderRouter");
 // const UserRouter = require("./routes/users/UserRouter");
 // const Others = require("./routes/user/Others");
@@ -58,7 +59,8 @@ async function appInit () {
 
     const adminApiModules = [
         adminCategoryRouter,
-        adminProductRouter
+        adminProductRouter,
+        adminEavRouter
     ]
 
     app.use("/api", userApiModules);

@@ -1,91 +1,8 @@
 const msClient = require("../../system_modules/mysql/mysql");
 const mysqlutils = require("../../system_modules/mysql/mysqlutils");
-const category_eav_columns = [
-    {
-        column: "attribute_id",
-        valueInvalidMessage: "'attribute_id' must be number or none-empty string.",
-        validation_function: function (value) {
-            return (typeof(value) === "string" || typeof(value) === "number") && value.toString().length > 0;
-        }
-    },
-    {
-        column: "label",
-        valueInvalidMessage: "'label' must be none-empty string.",
-        validation_function: function (value) {
-            return typeof(value) === "string" && value.toString().length > 0;
-        }
-    },
-    {
-        column: "referred_target",
-        valueInvalidMessage: "'referred_target' must be none-empty string.",
-        validation_function: function (value) {
-            return typeof(value) === "string" && value.toString().length > 0;
-        }
-    },
-    {
-        column: "admin_only",
-        valueInvalidMessage: "'admin_only' must be enum (0, 1).",
-        validation_function: function (value) {
-            return value === 0 || value === 1;
-        }
-    },
-    {
-        column: "html_type",
-        valueInvalidMessage: "'html_type' must be enum ('input', 'multiinput', 'select', 'multiselect', 'password', 'boolean').",
-        validation_function: function (value) {
-            return ['input', 'multiinput', 'select', 'multiselect', 'password', 'boolean'].indexOf(value) !== -1;
-        }
-    },
-    {
-        column: "data_type",
-        valueInvalidMessage: "'data_type' must be enum ('int', 'decimal', 'varchar', 'text', 'html', 'datetime').",
-        validation_function: function (value) {
-            return ['int', 'decimal', 'varchar', 'text', 'html', 'datetime'].indexOf(value) !== -1;
-        }
-    },
-    {
-        column: "validation",
-        valueInvalidMessage: "'validation' must be none-empty string",
-        validation_function: function (value) {
-            return typeof(value) === "string" && value.length > 0;
-        }
-    },
-    {
-        column: "is_super",
-        valueInvalidMessage: "'is_super' must be enum (0, 1).",
-        validation_function: function (value) {
-            return value === 0 || value === 1;
-        }
-    },
-    {
-        column: "is_system",
-        valueInvalidMessage: "'is_system' must be enum (0, 1).",
-        validation_function: function (value) {
-            return value === 0 || value === 1;
-        }
-    },
-    {
-        column: "unit",
-        valueInvalidMessage: "'unit' must be none-empty string",
-        validation_function: function (value) {
-            return typeof(value) === "string" && value.length > 0;
-        }
-    }
-];
-const category_eav_option_columns = [
-    {
-        column: "attribute_id"
-    },
-    {
-        column: "value"
-    },
-    {
-        column: "label"
-    },
-    {
-        column: "sort_order"
-    }
-]
+const eavCommon = require("../common/eav/eavCommon");
+const category_eav_columns = eavCommon.eav_columns;
+const category_eav_option_columns = eavCommon.eav_option_columns;
 
 async function getCategoryEavs () {
     try {
@@ -254,13 +171,18 @@ async function deleteCategoryEavs (category_eav_ids, option) {
             {
                 tb_name: "category_eav_multi_value",
                 entity_column: "attribute_id"
+            },
+            {
+                tb_name: "eav_group_assignment",
+                entity_column: "attribute_id",
+                extra: `AND \`entity_type\` = "category"`
             }
         ];
         let sql_delete_category_eav =
         `
         START TRANSACTION;
         ${tbs_to_delete.map(table => {
-            return `DELETE FROM \`ecommerce\`.${table.tb_name} WHERE \`${table.entity_column}\` IN (${category_eav_ids.map(item => `"${mysqlutils.escapeQuotes(item)}"`).join(", ")});`
+            return `DELETE FROM \`ecommerce\`.${table.tb_name} WHERE \`${table.entity_column}\` IN (${category_eav_ids.map(item => `"${mysqlutils.escapeQuotes(item)}"`).join(", ")})${table.extra ? ` ${table.extra}` : ""};`
         }).join("\n")}
         COMMIT;
         `

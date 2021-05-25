@@ -30,17 +30,6 @@ const database_data_type = {
             return value;
         },
         f_validation: function(value) {
-            return typeof(value) === "number" && value > 0 && value === parseInt(value);
-        }
-    },
-    "NONE_NEGATIVE_INT": {
-        f_convert_value: function(value) {
-            if (parseInt(value) == value) { // eslint-disable-line
-                return parseInt(value);
-            };
-            return value;
-        },
-        f_validation: function(value) {
             return typeof(value) === "number" && value >= 0 && value === parseInt(value);
         }
     },
@@ -56,4 +45,4 @@ const database_data_type = {
     }
 }
 
-export default database_data_type;
+module.exports = database_data_type;

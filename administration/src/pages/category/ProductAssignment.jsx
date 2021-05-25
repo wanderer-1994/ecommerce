@@ -14,7 +14,7 @@ function ProductAssignment ({ category, productAssignment, setProductAssignment,
 
     useEffect(() => {
         api.getProductEntityOnly({
-            type_id: ["simple", "master"],
+            type_ids: ["simple", "master"],
             psize: "infinite"
         }).then(data => {
             let products = data.products || [];

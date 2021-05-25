@@ -1,0 +1,19 @@
+{
+    "entity_type": "product",
+    "eav_groups": [
+        {
+            "group_id": "Cable attributes",
+            "sort_order": 1,
+            "attributes": [
+                {
+                    "attribute_id": "cable_cordlength",
+                    "sort_order": 1
+                },
+                {
+                    "attribute_id": "cable_material",
+                    "sort_order": 2
+                }
+            ]
+        }
+    ]
+}

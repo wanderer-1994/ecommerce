@@ -29,14 +29,14 @@ const product_entity_columns = [
     {
         column: "created_at",
         valueInvalidMessage: `'created_at' must be type datetime`,
-        f_convert_value: database_data_type["NONE_NEGATIVE_INT"].f_convert_value,
-        f_validation: database_data_type["NONE_NEGATIVE_INT"].f_validation
+        f_convert_value: database_data_type["POSITIVE_INT"].f_convert_value,
+        f_validation: database_data_type["POSITIVE_INT"].f_validation
     },
     {
         column: "updated_at",
         valueInvalidMessage: `'updated-at' must be type datetime`,
-        f_convert_value: database_data_type["NONE_NEGATIVE_INT"].f_convert_value,
-        f_validation: database_data_type["NONE_NEGATIVE_INT"].f_validation
+        f_convert_value: database_data_type["POSITIVE_INT"].f_convert_value,
+        f_validation: database_data_type["POSITIVE_INT"].f_validation
     }
 ];
 

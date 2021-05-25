@@ -26,8 +26,8 @@ const category_entity_columns = [{
     {
         column: "position",
         valueInvalidMessage: `'position' must be non-negative number (type int) or left empty`,
-        f_convert_value: database_data_type["NONE_NEGATIVE_INT"].f_convert_value,
-        f_validation: database_data_type["NONE_NEGATIVE_INT"].f_validation
+        f_convert_value: database_data_type["POSITIVE_INT"].f_convert_value,
+        f_validation: database_data_type["POSITIVE_INT"].f_validation
     }
 ];
 
