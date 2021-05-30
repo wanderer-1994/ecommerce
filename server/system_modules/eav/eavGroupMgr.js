@@ -26,6 +26,7 @@ async function getEavGroups (entity_type) {
             group.sort_order = group.__items && group.__items[0] ? group.__items[0].sort_order : null;
             group.attributes = group.__items;
             delete group.__items;
+            group.attributes = group.attributes.filter(item => !mysqlutils.isValueEmpty(item.attribute_id));
             group.attributes.forEach(attribute => {
                 attribute.sort_order = attribute.attribute_sort_order;
                 ["group_id", "attribute_sort_order"].forEach(key => {

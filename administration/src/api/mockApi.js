@@ -2,6 +2,7 @@ import axios from "axios";
 import * as categoryModel from "../objectModels/CategoryModel";
 import * as eavUtils from "../objectModels/eavUtils";
 import queryString from "query-string";
+import utility from "../utils/utility";
 
 if (process.env.REACT_APP_CLIENT_PORT && process.env.REACT_APP_SERVER_PORT) {
     axios.defaults.baseURL = window.location.origin.replace(process.env.REACT_APP_CLIENT_PORT, process.env.REACT_APP_SERVER_PORT);
@@ -1215,6 +1216,188 @@ async function createProductEavs (eavs) {
     }
 }
 
+// eav groups
+async function getEavGroups (entity_type) {
+    try {
+        let response = await axios({
+            method: "GET",
+            url: `/api/admin/eav/group?entity_type=${entity_type}`
+        });
+        let data = response.data || {};
+        if (!data.eav_groups) data.eav_groups = [];
+        data.eav_groups.forEach(group => {
+            group.attributes = utility.sortArrayByAttribute({
+                array: group.attributes,
+                attribute_id: "sort_order",
+                sort_rule: "ASC"
+            })
+        });
+        data.eav_groups = utility.sortArrayByAttribute({
+            array: data.eav_groups,
+            attribute_id: "sort_order",
+            sort_rule: "ASC"
+        });
+        console.log("live api: getEavGroups");
+        return data;
+    } catch (err) {
+        console.log("mocking: getEavGroups");
+        let response = {
+            data: {
+                "entity_type": "product",
+                "eav_groups": [
+                    {
+                        "group_id": "Cable attributes",
+                        "sort_order": 1,
+                        "attributes": [
+                            {
+                                "sort_order": 2,
+                                "attribute_id": "cable_material"
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+        return response.data;
+    }
+}
+
+async function createEavGroups (entity_type, eav_groups) {
+    try {
+        let response = await axios({
+            method: "POST",
+            url: `/api/admin/eav/group?entity_type=${entity_type}`,
+            data: {eav_groups: eav_groups}
+        });
+        console.log("live api: createEavGroups");
+        return response.data;
+    } catch (err) {
+        console.log("mocking: createEavGroups");
+        let response = {
+            data: {
+                "eav_groups": [
+                    {
+                        "group_id": "Cable attributes",
+                        "sort_order": 1,
+                        "attributes": [
+                            {
+                                "attribute_id": "cable_cordlength",
+                                "sort_order": 3
+                            },
+                            {
+                                "attribute_id": "cable_material",
+                                "sort_order": 2,
+                                "action": "UNASSIGN"
+                            }
+                        ],
+                        "isSuccess": true,
+                    }
+                ]
+            }
+        }
+        return response.data;
+    }
+}
+
+async function updateEavGroups (entity_type, eav_groups) {
+    try {
+        let response = await axios({
+            method: "PUT",
+            url: `/api/admin/eav/group?entity_type=${entity_type}`,
+            data: {eav_groups: eav_groups}
+        });
+        console.log("live api: updateEavGroups");
+        return response.data;
+    } catch (err) {
+        console.log("mocking: updateEavGroups");
+        let response = {
+            data: {
+                "eav_groups": [
+                    {
+                        "group_id": "Cable attributes",
+                        "sort_order": 1,
+                        "attributes": [
+                            {
+                                "attribute_id": "cable_cordlength",
+                                "sort_order": 3,
+                                "action": "UNASSIGN"
+                            },
+                            {
+                                "attribute_id": "cable_material",
+                                "sort_order": 2
+                            }
+                        ],
+                        "isSuccess": true
+                    }
+                ]
+            }
+        }
+        return response.data;
+    }
+}
+
+async function deleteEavGroups (entity_type, eav_group_ids) {
+    try {
+        let response = await axios({
+            method: "DELETE",
+            url: `/api/admin/eav/group?entity_type=${entity_type}`,
+            data: {eav_group_ids: eav_group_ids}
+        });
+        console.log("live api: deleteEavGroups");
+        return response.data;
+    } catch (err) {
+        console.log("mocking: deleteEavGroups");
+        let response = {
+            data: {
+                "isSuccess": true,
+                "result": [
+                    {
+                        "fieldCount": 0,
+                        "affectedRows": 0,
+                        "insertId": 0,
+                        "serverStatus": 11,
+                        "warningCount": 0,
+                        "message": "",
+                        "protocol41": true,
+                        "changedRows": 0
+                    },
+                    {
+                        "fieldCount": 0,
+                        "affectedRows": 1,
+                        "insertId": 0,
+                        "serverStatus": 11,
+                        "warningCount": 0,
+                        "message": "",
+                        "protocol41": true,
+                        "changedRows": 0
+                    },
+                    {
+                        "fieldCount": 0,
+                        "affectedRows": 1,
+                        "insertId": 0,
+                        "serverStatus": 11,
+                        "warningCount": 0,
+                        "message": "",
+                        "protocol41": true,
+                        "changedRows": 0
+                    },
+                    {
+                        "fieldCount": 0,
+                        "affectedRows": 0,
+                        "insertId": 0,
+                        "serverStatus": 2,
+                        "warningCount": 0,
+                        "message": "",
+                        "protocol41": true,
+                        "changedRows": 0
+                    }
+                ]
+            }
+        }
+        return response.data;
+    }
+}
+
 export {
     adminAuth,
     adminLogout,
@@ -1239,5 +1422,9 @@ export {
     getProductEavs,
     updateProductEavs,
     deleteProductEavs,
-    createProductEavs
+    createProductEavs,
+    getEavGroups,
+    createEavGroups,
+    updateEavGroups,
+    deleteEavGroups
 }

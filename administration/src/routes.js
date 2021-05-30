@@ -4,6 +4,7 @@ import CategoryList from "./pages/CategoryList";
 import CategoryEavCreate from "./pages/CategoryEavCreate";
 import CategoryEavDetail from "./pages/CategoryEavDetail";
 import CategoryEavList from "./pages/CategoryEavList";
+import CategoryEavGroupList from "./pages/CategoryEavGroupList";
 import CustomerCreate from "./pages/CustomerCreate";
 import CustomerDetail from "./pages/CustomerDetail";
 import CustomerList from "./pages/CustomerList";
@@ -16,6 +17,7 @@ import ProductList from "./pages/ProductList";
 import ProductEavCreate from "./pages/ProductEavCreate";
 import ProductEavDetail from "./pages/ProductEavDetail";
 import ProductEavList from "./pages/ProductEavList";
+import ProductEavGroupList from "./pages/ProductEavGroupList";
 import WarrantyDetail from "./pages/WarrantyDetail";
 import WarrantyList from "./pages/WarrantyList";
 import Webdav from "./facility/Webdav";
@@ -68,6 +70,14 @@ const routes = [
         showOnNavbar: false,
         showOnSidebar: true,
         title: "Category Eav Management"
+    },
+    {
+        path: "/eav/group/category",
+        component: CategoryEavGroupList,
+        ref_name: "Category eav group",
+        showOnNavbar: false,
+        showOnSidebar: true,
+        title: "Category Eav Group Management"
     },
     {
         path: "/create/customer",
@@ -162,6 +172,14 @@ const routes = [
         showOnNavbar: false,
         showOnSidebar: true,
         title: "Product Eav Management"
+    },
+    {
+        path: "/eav/group/product",
+        component: ProductEavGroupList,
+        ref_name: "Product eav group",
+        showOnNavbar: false,
+        showOnSidebar: true,
+        title: "Product Eav Group Management"
     },
     {
         path: "/warranty/:entity_id",

@@ -283,6 +283,106 @@ const eav_entity_columns = [
     }
 ];
 
+const eav_group_columns = [
+    {
+        column: "group_id",
+        column_name: "Group ID",
+        required: true,
+        f_validation: database_data_type["NONE_EMPTY_STRING"].f_validation,
+        render: ({ self, state, setState, mode }) => {
+            if (mode === "CREATE") mode = false;
+            if (mode === "UPDATE") mode = true;
+            self.invalid_message = "";
+            let isNullValue = (state[self.column] === null || state[self.column] === "" || state[self.column] === undefined) ? "null" : "";
+            if (state[self.column] !== undefined && !self.f_validation(state[self.column])) {
+                self.invalid_message = (
+                    <span>
+                        <span className="hightlight">{self.column_name}</span>
+                        <span> must not be empty!</span>
+                    </span>
+                )
+            }
+            return (
+                <input disabled={mode} className={isNullValue} type="text" value={state[self.column] || ""} onChange={event => setState({ ...state, [self.column]: event.target.value })} />
+            )
+        }
+    },
+    {
+        column: "sort_order",
+        column_name: "Group ord.",
+        required: false,
+        f_validation: database_data_type["POSITIVE_INT"].f_validation,
+        render: ({ self, state, setState, mode }) => {
+            if (mode === "CREATE") mode = false;
+            if (mode === "UPDATE") mode = true;
+            self.invalid_message = "";
+            let isNullValue = (state[self.column] === null || state[self.column] === "" || state[self.column] === undefined) ? "null" : "";
+            if (state[self.column] !== undefined && !self.f_validation(state[self.column])) {
+                self.invalid_message = (
+                    <span>
+                        <span className="hightlight">{self.column_name}</span>
+                        <span> must not be empty!</span>
+                    </span>
+                )
+            }
+            return (
+                <input disabled={mode} className={isNullValue} type="text" value={state[self.column] || ""} onChange={event => setState({ ...state, [self.column]: event.target.value })} />
+            )
+        }
+    },
+]
+
+const eav_group_attribute_columns = [
+    {
+        column: "attribute_id",
+        column_name: "Attribute ID",
+        required: true,
+        f_validation: database_data_type["NONE_EMPTY_STRING"].f_validation,
+        render: ({ self, state, setState, mode }) => {
+            if (mode === "CREATE") mode = false;
+            if (mode === "UPDATE") mode = true;
+            self.invalid_message = "";
+            let isNullValue = (state[self.column] === null || state[self.column] === "" || state[self.column] === undefined) ? "null" : "";
+            if (state[self.column] !== undefined && !self.f_validation(state[self.column])) {
+                self.invalid_message = (
+                    <span>
+                        <span className="hightlight">{self.column_name}</span>
+                        <span> must not be empty!</span>
+                    </span>
+                )
+            }
+            return (
+                <input disabled={mode} className={isNullValue} type="text" value={state[self.column] || ""} onChange={event => setState({ ...state, [self.column]: event.target.value })} />
+            )
+        }
+    },
+    {
+        column: "sort_order",
+        column_name: "Attr ord.",
+        required: false,
+        f_validation: database_data_type["POSITIVE_INT"].f_validation,
+        render: ({ self, state, setState, mode }) => {
+            if (mode === "CREATE") mode = false;
+            if (mode === "UPDATE") mode = true;
+            self.invalid_message = "";
+            let isNullValue = (state[self.column] === null || state[self.column] === "" || state[self.column] === undefined) ? "null" : "";
+            if (state[self.column] !== undefined && !self.f_validation(state[self.column])) {
+                self.invalid_message = (
+                    <span>
+                        <span className="hightlight">{self.column_name}</span>
+                        <span> must not be empty!</span>
+                    </span>
+                )
+            }
+            return (
+                <input disabled={mode} className={isNullValue} type="text" value={state[self.column] || ""} onChange={event => setState({ ...state, [self.column]: event.target.value })} />
+            )
+        }
+    },
+]
+
 export {
-    eav_entity_columns
+    eav_entity_columns,
+    eav_group_columns,
+    eav_group_attribute_columns
 };

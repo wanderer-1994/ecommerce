@@ -25,6 +25,12 @@ body {
     transition: opacity .5s linear, width 0s linear .5s, height 0s linear .5s;
 }
 
+.app-alert span.hightlight {
+    color: var(--colorSuccess);
+    font-style: italic;
+    text-decoration: underline;
+}
+
 /*  */
 @media all and (min-width: 901px){
     .app-alert .alert-wrapper{
