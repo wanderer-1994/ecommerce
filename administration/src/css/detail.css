@@ -223,6 +223,20 @@ button.large.info {
 .entity-eav .section-item.active {
     display: block;
 }
+.entity-eav .section-item .eav-group-title {
+    background-color: #ababab;
+    color: #ffffff;
+    font-weight: bold;
+    font-style: italic;
+    padding: 3px 10px 3px 10px;
+    width: calc(100% - 15px);
+    margin-top: 20px;
+}
+
+.entity-eav .section-item .eav-group-title:first-child {
+    margin-top: 0px;
+}
+
 button.section-button {
     position: fixed;
     top: calc(100vh - 50px);

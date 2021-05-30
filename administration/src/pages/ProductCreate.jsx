@@ -149,12 +149,35 @@ function ProductCreate (props) {
 
     const [productEntity, setProductEntity] = useState({});
     const [productEavs, setProductEavs] = useState([]);
+    const [entityEavGroup, setEntityEavGroup] = useState([]);
+    const [eavGroupIncluded, setEavGroupIncluded] = useState([]);
+    const [isLoaded, setIsLoaded] = useState(0);
 
     useEffect(() => {
-        api.getProductEavs().then(product_eavs => {
-            setProductEavs(product_eavs || []);
-        }).catch(err => {
-            console.log(err);
+        let promises = [];
+        promises.push(
+            api.getProductEavs().then(product_eavs => {
+                setProductEavs(product_eavs || []);
+            }).catch(err => {
+                console.log(err);
+            })
+        );
+        promises.push(
+            api.getEavGroups("product").then(data => {
+                setEntityEavGroup(data.eav_groups || []);
+                let included = [];
+                (data.eav_groups || []).forEach(item => {
+                    (item.attributes || []).forEach(attribute => {
+                        included.push(attribute.attribute_id);
+                    });
+                });
+                setEavGroupIncluded(included);
+            }).catch(err => {
+                console.log(err);
+            })
+        )
+        Promise.all(promises).then(() => {
+            setIsLoaded(1);
         })
     }, []);
 
@@ -308,7 +331,33 @@ function ProductCreate (props) {
                         ) : null}
                     </h4>
                     <div className="section-item attributes active">
+                        {entityEavGroup.map((eav_group, index) => {
+                            return (
+                                <Fragment key={index}>
+                                    <h4 className="eav-group-title">{eav_group.group_id}</h4>
+                                    {(eav_group.attributes || []).map((attribute, attr_idx) => {
+                                        let eav_item = productEavs.find(item => item.attribute_id === attribute.attribute_id);
+                                        if (!eav_item) return null;
+                                        let eav_value = (productEntity.attributes || []).find(item => item.attribute_id === eav_item.attribute_id);
+                                        if (!eav_value) {
+                                            eav_value = {
+                                                attribute_id: eav_item.attribute_id
+                                            };
+                                            if (!Array.isArray(productEntity.attributes)) productEntity.attributes = [];
+                                            productEntity.attributes.push(eav_value);
+                                        }
+                                        let Component = EavAttributeRender;
+                                        if (Object.keys(EavCustomRender).indexOf(eav_item.attribute_id) !== -1) {
+                                            Component = EavCustomRender[eav_item.attribute_id];
+                                        }
+                                        return <Component key={attr_idx} eav_definition={eav_item} eav_value={eav_value} state={productEntity} setState={setProductEntity} c_multiple={true} />
+                                    })}
+                                </Fragment>
+                            )
+                        })}
+                        <h4 className="eav-group-title">Ungrouped attributes</h4>
                         {productEavs.map((eav_item, index) => {
+                            if (eavGroupIncluded.indexOf(eav_item.attribute_id) !== -1) return null;
                             let eav_value = (productEntity.attributes || []).find(item => item.attribute_id === eav_item.attribute_id);
                             if (!eav_value) {
                                 eav_value = {

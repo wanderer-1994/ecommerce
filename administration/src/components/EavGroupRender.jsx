@@ -200,6 +200,14 @@ function EavGroupRender (props) {
                                                     eav_groups.splice(index, 1);
                                                     eav_groups.splice(new_pos - 1, 0, group_item);
                                                     setEavGroups([...eav_groups]);
+                                                    let eav_group_positions = eav_groups.map((item, item_idx) => {
+                                                        return {
+                                                            group_id: item.group_id,
+                                                            sort_order: item_idx + 1
+                                                        }
+                                                    });
+                                                    api.updateEavGroups(props.entity_type, eav_group_positions)
+                                                    .then(data => {}).catch(err => console.log(err));
                                                     $target.val("");
                                                 } else {
                                                     appFunction.appAlert({
