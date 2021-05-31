@@ -23,7 +23,9 @@ function CategoryItemRecursive ({ level, category }) {
                             <CategoryItemRecursive key={index} level={level + 1} category={child} />
                         )
                     })}
-                    <div className="thumb-image" style={{backgroundImage: `url(${image_url || ""})`}}></div>
+                    <div className="thumb-image" style={{
+                        backgroundImage: `url(${image_url || ""})`
+                    }}></div>
                 </div>
             ) : null}
         </span>

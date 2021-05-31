@@ -64,6 +64,8 @@
     top: 0px;
     right: 0px;
     height: 100%;
-    min-width: 300px;
-    border: 1px solid red;
+    width: 300px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
