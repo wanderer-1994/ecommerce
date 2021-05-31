@@ -3,6 +3,25 @@
     vertical-align: top;
 }
 
+.entity-eav .section-item .eav-value-item {
+    position: relative;
+}
+
+.entity-eav .section-item .eav-value-item .unit {
+    position: absolute;
+    top: 7px;
+    right: 17px;
+    display: block;
+    padding: 5px;
+    min-width: 40px;
+    text-align: center;
+    border-radius: 3px;
+    background-color: #ffffff90;
+    font-style: italic;
+    font-family: sans-serif;
+    font-size: 13px;
+}
+
 .input_tag {
     margin-top: 5px;
     display: inline-block;

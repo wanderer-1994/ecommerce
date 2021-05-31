@@ -258,7 +258,7 @@ function EavAttributeRender ({ eav_definition, eav_value, state, setState }) {
     return (
         <Fragment>
             {render_type ? (
-                <div>
+                <div className="eav-value-item">
                     <span className="input_tag left">
                         <input disabled title={`${eav_definition.attribute_id} (${eav_definition.data_type})`} type="text" value={eav_definition.label} />
                     </span>
@@ -266,6 +266,9 @@ function EavAttributeRender ({ eav_definition, eav_value, state, setState }) {
                          style={{width: "calc(100% - 170px)"}}
                     >
                         {render_type.render({ eav_definition, eav_value, state, setState })}
+                        {!utility.isValueEmpty(eav_definition.unit) ? (
+                            <span className="unit">{eav_definition.unit}</span>
+                        ) : null}
                         <div className="alert_message hide"></div>
                     </span>
                 </div>
