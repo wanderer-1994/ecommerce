@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, Fragment } from "react";
 import * as api from "../api/mockApi";
 import "../css/detail.css";
 import * as appFunction from "../utils/appFunction";
@@ -114,9 +114,13 @@ const default_category = {
 }
 
 function CategoryCreate(props) {
+
     const [category, setCategory] = useState(JSON.parse(JSON.stringify(default_category)));
     const [categoryEavs, setCategoryEavs] = useState([]);
     const [parentOptions, setParentOptions] = useState([]);
+    const [entityEavGroup, setEntityEavGroup] = useState([]);
+    const [eavGroupIncluded, setEavGroupIncluded] = useState([]);
+
     useEffect(() => {
         api.getCategoryEavs()
             .then(category_eavs => {
@@ -133,6 +137,20 @@ function CategoryCreate(props) {
             .catch(err => {
                 console.log(err);
             });
+        api.getEavGroups("category")
+            .then(data => {
+                setEntityEavGroup(data.eav_groups || []);
+                let included = [];
+                (data.eav_groups || []).forEach(item => {
+                    (item.attributes || []).forEach(attribute => {
+                        included.push(attribute.attribute_id);
+                    });
+                });
+                setEavGroupIncluded(included);
+            })
+            .catch(err => {
+                console.log(err);
+            })
     }, []);
 
     async function submitCreateCategory (event) {
@@ -284,21 +302,49 @@ function CategoryCreate(props) {
                 </div>
                 <div className="entity-eav">
                     <h4 className="section-title">Attributes</h4>
-                    {categoryEavs.map((eav_item, index) => {
-                        let eav_value = (category.attributes || []).find(item => item.attribute_id === eav_item.attribute_id);
-                        if (!eav_value) {
-                            eav_value = {
-                                attribute_id: eav_item.attribute_id
-                            };
-                            if (!Array.isArray(category.attributes)) category.attributes = [];
-                            category.attributes.push(eav_value);
-                        }
-                        let Component = EavAttributeRender;
-                        if (Object.keys(EavCustomRender).indexOf(eav_item.attribute_id) !== -1) {
-                            Component = EavCustomRender[eav_item.attribute_id];
-                        }
-                        return <Component key={index} eav_definition={eav_item} eav_value={eav_value} state={category} setState={setCategory} c_multiple={true} />
-                    })}
+                    <div className="section-item attributes active">
+                        {entityEavGroup.map((eav_group, index) => {
+                            return (
+                                <Fragment key={index}>
+                                    <h4 className="eav-group-title">{eav_group.group_id}</h4>
+                                    {(eav_group.attributes || []).map((attribute, attr_idx) => {
+                                        let eav_item = categoryEavs.find(item => item.attribute_id === attribute.attribute_id);
+                                        if (!eav_item) return null;
+                                        let eav_value = (category.attributes || []).find(item => item.attribute_id === eav_item.attribute_id);
+                                        if (!eav_value) {
+                                            eav_value = {
+                                                attribute_id: eav_item.attribute_id
+                                            };
+                                            if (!Array.isArray(category.attributes)) category.attributes = [];
+                                            category.attributes.push(eav_value);
+                                        }
+                                        let Component = EavAttributeRender;
+                                        if (Object.keys(EavCustomRender).indexOf(eav_item.attribute_id) !== -1) {
+                                            Component = EavCustomRender[eav_item.attribute_id];
+                                        }
+                                        return <Component key={attr_idx} eav_definition={eav_item} eav_value={eav_value} state={category} setState={setCategory} c_multiple={true} />
+                                    })}
+                                </Fragment>
+                            )
+                        })}
+                        <h4 className="eav-group-title">Ungrouped attributes</h4>
+                        {categoryEavs.map((eav_item, index) => {
+                            if (eavGroupIncluded.indexOf(eav_item.attribute_id) !== -1) return null;
+                            let eav_value = (category.attributes || []).find(item => item.attribute_id === eav_item.attribute_id);
+                            if (!eav_value) {
+                                eav_value = {
+                                    attribute_id: eav_item.attribute_id
+                                };
+                                if (!Array.isArray(category.attributes)) category.attributes = [];
+                                category.attributes.push(eav_value);
+                            }
+                            let Component = EavAttributeRender;
+                            if (Object.keys(EavCustomRender).indexOf(eav_item.attribute_id) !== -1) {
+                                Component = EavCustomRender[eav_item.attribute_id];
+                            }
+                            return <Component key={index} eav_definition={eav_item} eav_value={eav_value} state={category} setState={setCategory} c_multiple={true} />
+                        })}
+                    </div>
                 </div>
             </div>
         </div>
