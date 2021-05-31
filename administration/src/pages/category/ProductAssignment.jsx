@@ -151,7 +151,7 @@ function ProductAssignment ({ category, productAssignment, setProductAssignment,
                             <input disabled type="text" value={prod_item.product_id} />
                         </span>
                         <span className="input_tag left" style={{marginLeft: "5px"}}>
-                            <a target="blank" href={`/product/${prod_item.product_id}`}>
+                            <a target="_blank" href={`/product/${prod_item.product_id}`}>
                                 <input disabled type="text" value={product_name}
                                     style={{minWidth: "300px", cursor: "pointer"}}
                                 />
