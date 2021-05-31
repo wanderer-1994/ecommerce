@@ -1,3 +1,13 @@
+const axios = require("axios");
+const utility = require("../utils/utility");
+const CategoryModel = require("../objectModels/CategoryModel");
+
+if (process.env.REACT_APP_CLIENT_PORT && process.env.REACT_APP_SERVER_PORT) {
+    axios.defaults.baseURL = window.location.origin.replace(process.env.REACT_APP_CLIENT_PORT, process.env.REACT_APP_SERVER_PORT);
+} else {
+    axios.defaults.baseURL = window.location.origin;
+}
+
 async function getHomePageData () {
     return {
         bannerImage: "https://i.pinimg.com/originals/78/61/73/7861735800c9086f638ae1421c706e08.jpg",
@@ -1016,6 +1026,20 @@ async function accessAnnounce (machine_key, last_access) {
 
 }
 
+async function getSiteNavigation () {
+    try {
+        let response = await axios({
+            method: "GET",
+            url: "/api/category"
+        });
+        let categories = response.data.categories;
+        let structurized = CategoryModel.structurizeCategories(categories, "");
+        return structurized;
+    } catch (err) {
+        throw err;
+    }
+}
+
 module.exports = {
     getHomePageData,
     getCategories,
@@ -1023,5 +1047,6 @@ module.exports = {
     placeOrder,
     getOrderHistory,
     validateCart,
-    accessAnnounce
+    accessAnnounce,
+    getSiteNavigation
 }

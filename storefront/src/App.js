@@ -2,7 +2,7 @@ import { Fragment } from "react";
 import { Route, Switch, Link } from "react-router-dom";
 import AppLoading from "./components/Apploading";
 import AppAlert from "./components/AppAlert";
-import Menu from "./components/Menu";
+import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Category from "./pages/Category";
 import Product from "./pages/Product";
@@ -13,15 +13,15 @@ import PageNotFound from "./pages/PageNotFound";
 function App() {
     return (
         <Fragment>
+            <AppLoading />
+            <AppAlert />
+            <Route path="*" component={Navbar} />
             <Link to="/">Home</Link>
             <Link to="/prod">Product</Link>
             <Link to="/cat">Category</Link>
             <Link to="/search">Search</Link>
             <Link to="/404">404</Link>
             <Link to="/abc">Others</Link>
-            <AppLoading />
-            <AppAlert />
-            <Menu />
             <Switch>
                 <Route exact path="/" component={Home} />
                 <Route path="/prod" component={Product}></Route>

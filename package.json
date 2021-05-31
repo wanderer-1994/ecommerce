@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "concurrently \"cd server && nodemon server.js\" \"cd administration && npm start\"",
+    "start": "concurrently \"cd server && nodemon server.js\" \"cd administration && npm start\" \"cd storefront && npm start\"",
     "db_init": "cd server/db_init && node db_init",
     "data_init": "cd server/supinfo_updater && node scrape_init",
     "refresh_product": "cd server/db_init && node refresh_product",
