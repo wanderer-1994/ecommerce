@@ -17,8 +17,8 @@ function get_storageCart () {
 
 const initialState = {
     cart: get_storageCart(),
-    appLoading: true,
-    appAlert: 1
+    appLoading: [],
+    appAlert: null
 };
 
 const reducer = (state = initialState, action) => {
@@ -33,6 +33,10 @@ const reducer = (state = initialState, action) => {
             return {...state, appAlert: action.payload};
         case "UPDATE_CART":
             return {...state, cart: action.payload};
+        case "UPDATE_CATEGORIES":
+            return {...state, categories: action.payload};
+        case "UPDATE_STRUCTURIZED_CATEGORIES":
+            return {...state, structurizedCategories: action.payload};
         default:
             return state;
     }

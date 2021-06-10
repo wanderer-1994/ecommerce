@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { Fragment, useEffect } from "react";
 import { Route, Switch, Link } from "react-router-dom";
 import AppLoading from "./components/Apploading";
 import AppAlert from "./components/AppAlert";
@@ -11,8 +11,26 @@ import Footer from "./components/Footer";
 import PageNotFound from "./pages/PageNotFound";
 import constant from "./utils/constant";
 import staticPages from "./static_pages/StaticPages";
+import store from "./redux/store";
+import Api from "./api/mockApi";
 
 function App() {
+
+    useEffect(() => {
+        Api.getCategories().then(data => {
+            store.dispatch({
+                type: "UPDATE_CATEGORIES",
+                payload: data.categories
+            });
+            store.dispatch({
+                type: "UPDATE_STRUCTURIZED_CATEGORIES",
+                payload: data.structurized
+            });
+        }).catch(err => {
+            console.log(err);
+        })
+    }, [])
+
     return (
         <Fragment>
             <AppLoading />

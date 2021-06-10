@@ -2,12 +2,10 @@ const express = require("express");
 const router = express.Router();
 const msClient = require("../../system_modules/mysql/mysql");
 const search = require("../../system_modules/search/search");
+const config = require("../../system_modules/const/config");
 const {
     createSystemErrMessage,
 } = require("../../system_modules/functions");
-const {
-    psize
-} = require("../../system_modules/const/config");
 
 router.get("/product", async (req, res) => {
     // req.query= {page, categories, entity_ids, refinements, searchPhrase}
@@ -42,7 +40,10 @@ router.get("/product", async (req, res) => {
                 refinements: refinements,
                 searchPhrase: req.query.keyword,
                 searchDictionary: msClient.searchDictionary,
-                page: req.query.page,
+                pagination: {
+                    page: req.query.page,
+                    psize: config.PAGE_SIZE
+                },
                 isAdmin: false
             };
             let searchResult = await search.search(searchConfig);

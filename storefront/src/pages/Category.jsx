@@ -3,38 +3,51 @@ import api from "../api/mockApi";
 import "./Category.css";
 import productModel from "../object_models/ProductModel";
 import categoryModel from "../object_models/CategoryModel";
+import appFunction from "../utils/appFunction";
+import { connect } from "react-redux";
+import constant from "../utils/constant";
+import queryString from "query-string";
 
 function Category (props) {
-    const [category_id, setCategoryId] = useState("charger");
     const [category, setCategory] = useState({});
     const [products, setProducts] = useState([]);
     
     useEffect(() => {
-        async function fetchCategory () {
-            try {
-                let categories = await api.getCategories();
-                let structured = categoryModel.structurizeCategories(categories);
-                let category = categories.find(cat_item => cat_item.entity_id == category_id);
-                category.children = categories.filter(cat_item => cat_item.parent === category.entity_id).sort((a, b) => a.position - b.position);
-                setCategory(category);
-            } catch (err) {
-
-            }
-        };
-        fetchCategory();
-    }, [props.location.pathname]);
-
-    useEffect(() => {
-        async function fetchProducts () {
+        async function fetchProducts (searchConfig) {
             try{
-                let search = await api.searchProduct();
+                let search = await api.searchProduct(searchConfig);
+                if (search.currentPage !== 0 && search.currentPage !== searchConfig.page) {
+                    let query = queryString.parse(props.location.search);
+                    query.page = search.currentPage;
+                    query = queryString.stringify(query);
+                    props.history.push(`${props.location.pathname}?${query}`);
+                }
                 setProducts(search.products);
             } catch(err) {
-
+                console.log(err);
             }
         }
-        fetchProducts();
-    }, [])
+
+        let categoryId;
+        if (props.location.pathname.indexOf(constant.URL_CAT_SPLITER) !== -1) {
+            categoryId = props.location.pathname.split(constant.URL_CAT_SPLITER).reverse()[0];
+        }
+        let categories = props.categories ? JSON.parse(JSON.stringify(props.categories)) : [];
+        let category = categories.find(cat_item => cat_item.entity_id == categoryId) || {};
+        category.children = categories.filter(cat_item => cat_item.parent === category.entity_id).sort((a, b) => a.position - b.position);
+        setCategory(category);
+
+        // call api product
+        let query = queryString.parse(props.location.search);
+        let page = query.page ? query.page : 1;
+        page = parseInt(page) == page ? page : 1;
+        let searchConfig = {
+            page: page,
+            psize: constant.PAGE_SIZE
+        };
+        searchConfig.categories = categoryId || undefined;
+        fetchProducts(searchConfig);
+    }, [props.location.pathname]);
 
     return (
         <div className="category-page">
@@ -106,4 +119,10 @@ function renderProducts (products) {
     }
 }
 
-export default Category;
+function mapStateToProps (state) {
+    return {
+        categories: state.categories
+    }
+}
+
+export default connect(mapStateToProps)(Category);

@@ -6,6 +6,7 @@ import CategoryModel from "../object_models/CategoryModel";
 import utility from "../utils/utility";
 import $ from "jquery";
 import constant from "../utils/constant";
+import { connect } from "react-redux";
 
 const category_spliter = "-cat.";
 
@@ -62,14 +63,8 @@ function Navbar (props) {
     const [navigation, setNavigation] = useState([]);
 
     useEffect(() => {
-        api.getSiteNavigation()
-        .then(categories => {
-            setNavigation(categories);
-        })
-        .catch(err => {
-            console.log(err)
-        })
-    }, [])
+        setNavigation(props.navigation || []);
+    }, [props.navigation])
 
     return (
         <div className="navbar-horizontal">
@@ -85,4 +80,10 @@ function Navbar (props) {
     )
 }
 
-export default Navbar;
+function mapStateToProps (state) {
+    return {
+        navigation: state.structurizedCategories
+    }
+}
+
+export default connect(mapStateToProps)(Navbar);

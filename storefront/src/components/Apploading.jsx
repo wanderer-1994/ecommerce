@@ -1,22 +1,14 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { connect } from "react-redux"
 
-function AppLoading ({ appLoading, dispatch }) {
-    useEffect(() => {
-        setTimeout(() => {
-            dispatch({
-                type: "UPDATE_APPLOADING",
-                payload: false
-            })
-        }, 5000)
-    }, []);
+function AppLoading (props) {
     
     return (
-        appLoading ? 
-        <div className="app-loading">
-            THIS IS APP LOADING
-        </div>
-        : null
+        props.appLoading && props.appLoading.length > 0 ? (
+            <div className="app-loading">
+                THIS IS APP LOADING {props.appLoading}
+            </div>
+        ) : null
     );
 }
 

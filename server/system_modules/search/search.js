@@ -2,7 +2,7 @@ const mysqlutils = require("../mysql/mysqlutils");
 const fulltextSearch = require("./fulltextSearch");
 const msClient = require("../mysql/mysql");
 const { getProductEavTableName } = require("../product/product_eav_table");
-const { psize } = require("../const/config");
+const config = require("../const/config");
 const productEntityInheritFields = ["product_id", "entity_id", "type_id", "parent", "created_at", "updated_at"];
 const productEntityPropsAsAttributes = [
     {
@@ -553,8 +553,8 @@ async function search (searchConfig) {
         products = sortProductsBySignificantWeight(products);
         products = filterDistinctProductEntities(products);
         let currentPage = parseInt(searchConfig.pagination ? searchConfig.pagination.page : null);
-        let page_size = psize;
-        if (searchConfig.isAdmin && searchConfig.pagination && searchConfig.pagination.psize) {
+        let page_size = config.PAGE_SIZE;
+        if (searchConfig.pagination && searchConfig.pagination.psize) {
             page_size = searchConfig.pagination.psize;
         };
         if(isNaN(currentPage) || currentPage < 1) currentPage = 1;
