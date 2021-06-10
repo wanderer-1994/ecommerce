@@ -31,9 +31,23 @@ function sortArrayByAttribute ({ array, attribute_id, sort_rule }) {
     }
 };
 
+function splitArray (array, length) {
+    let result = [];
+    let idx = 0;
+    while (idx < array.length) {
+        let child_array = array.slice(idx, idx + length);
+        idx += length;
+        if (child_array.length > 0) {
+            result.push(child_array);
+        }
+    };
+    return result;
+}
+
 module.exports = {
     isValueEmpty,
     webdavToPublicUrl,
     toPublicUrlWithHost,
-    sortArrayByAttribute
+    sortArrayByAttribute,
+    splitArray
 };

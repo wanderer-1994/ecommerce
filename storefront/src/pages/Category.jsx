@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import api from "../api/mockApi";
 import "./Category.css";
-import productModel from "../objectModels/ProductModel";
-import categoryModel from "../objectModels/CategoryModel";
+import productModel from "../object_models/ProductModel";
+import categoryModel from "../object_models/CategoryModel";
 
-function Category () {
+function Category (props) {
     const [category_id, setCategoryId] = useState("charger");
     const [category, setCategory] = useState({});
     const [products, setProducts] = useState([]);
@@ -14,7 +14,6 @@ function Category () {
             try {
                 let categories = await api.getCategories();
                 let structured = categoryModel.structurizeCategories(categories);
-                console.log(structured);
                 let category = categories.find(cat_item => cat_item.entity_id == category_id);
                 category.children = categories.filter(cat_item => cat_item.parent === category.entity_id).sort((a, b) => a.position - b.position);
                 setCategory(category);
@@ -23,7 +22,7 @@ function Category () {
             }
         };
         fetchCategory();
-    }, []);
+    }, [props.location.pathname]);
 
     useEffect(() => {
         async function fetchProducts () {

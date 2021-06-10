@@ -2,25 +2,50 @@ import "./Navbar.css";
 import { Link } from "react-router-dom";
 import { useEffect, useState, Fragment } from "react";
 import api from "../api/mockApi";
-import CategoryModel from "../objectModels/CategoryModel";
+import CategoryModel from "../object_models/CategoryModel";
 import utility from "../utils/utility";
+import $ from "jquery";
+import constant from "../utils/constant";
 
-function CategoryItemRecursive ({ level, category }) {
+const category_spliter = "-cat.";
+
+function CategoryItemRecursive (props) {
+    const { level, category } = {...props}
     let image_url = CategoryModel.getCategoryAttribute(category, "thumbnail");
     if (image_url) {
         image_url = utility.toPublicUrlWithHost(image_url);
     }
+    let splited_children = utility.splitArray(category.children || [], 4);
     return (
         <span className={`nav-item item-level-${level}`}>
-            <Link to={`/${encodeURIComponent(category.name)}-cat.${category.entity_id}`}>
+            <Link to={`/${encodeURIComponent(category.name)}${constant.URL_CAT_SPLITER}${category.entity_id}`}
+                {...props}
+            >
                 <span>{category.name}</span>
                 {level === 1 ? <div className="underline"></div> : null}
             </Link>
-            {category.children && category.children.length > 0 ? (
+            {splited_children && splited_children.length > 0 ? (
                 <div className="child-container">
-                    {category.children.map((child, index) => {
+                    {splited_children.map((spl_arr, arr_idx) => {
                         return (
-                            <CategoryItemRecursive key={index} level={level + 1} category={child} />
+                            <div className="nav-item-spliter" key={arr_idx}>
+                                {spl_arr.map((child_cat, cat_idx) => {
+                                    return (
+                                        <CategoryItemRecursive key={cat_idx} level={level + 1} category={child_cat}
+                                            onMouseEnter={(event) => {
+                                                let child_image_url = CategoryModel.getCategoryAttribute(child_cat, "thumbnail");
+                                                if (child_image_url) {
+                                                    child_image_url = utility.toPublicUrlWithHost(child_image_url);
+                                                    $(event.target).parents(".child-container").children(".thumb-image").css("background-image", `url(${child_image_url})`);
+                                                }
+                                            }}
+                                            onMouseLeave={(event) => {
+                                                $(event.target).parents(".child-container").children(".thumb-image").css("background-image", `url(${image_url || ""})`);
+                                            }}
+                                        />
+                                    )
+                                })}
+                            </div>
                         )
                     })}
                     <div className="thumb-image" style={{
@@ -39,7 +64,6 @@ function Navbar (props) {
     useEffect(() => {
         api.getSiteNavigation()
         .then(categories => {
-            console.log(categories);
             setNavigation(categories);
         })
         .catch(err => {
@@ -48,7 +72,8 @@ function Navbar (props) {
     }, [])
 
     return (
-        <div className="nav-bar-horizontal">
+        <div className="navbar-horizontal">
+            <Link className="navbar-logo" to="/">GO!</Link>
             <div className="nav-wrapper">
                 {navigation.map((category, index) => {
                     return (

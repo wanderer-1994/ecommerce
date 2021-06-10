@@ -1,7 +1,7 @@
 import "./Product.css";
 import { useEffect, useState, Fragment } from "react";
 import $ from "../jquery/Jquery";
-import productModel from "../objectModels/ProductModel";
+import productModel from "../object_models/ProductModel";
 import api from "../api/mockApi";
 
 function Product () {

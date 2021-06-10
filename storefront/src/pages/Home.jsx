@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import "./Home.css";
 import api from "../api/mockApi";
-import categoryModel from "../objectModels/CategoryModel";
+import categoryModel from "../object_models/CategoryModel";
 
 function Home () {
     const [bannerImage, setBannerImage] = useState("");

@@ -1,6 +1,6 @@
 const axios = require("axios");
 const utility = require("../utils/utility");
-const CategoryModel = require("../objectModels/CategoryModel");
+const CategoryModel = require("../object_models/CategoryModel");
 
 if (process.env.REACT_APP_CLIENT_PORT && process.env.REACT_APP_SERVER_PORT) {
     axios.defaults.baseURL = window.location.origin.replace(process.env.REACT_APP_CLIENT_PORT, process.env.REACT_APP_SERVER_PORT);
