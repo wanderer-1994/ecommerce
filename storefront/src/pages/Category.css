@@ -1,32 +1,23 @@
+
+.category-page .banner-image {
+    height: calc(100vh - var(--navHeight) - 200px);
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
 .category-page {
     user-select: none;
 }
 
 .category-page .cat-title {
-    background-color: #171936;
     color: #dedede;
     font-family: sans-serif;
     font-size: 30px;
 }
 
 .category-page .cat-description {
-    background-color: #171936;
     color: #ffffff90;
-    padding-bottom: 150px;
-}
-
-.category-page .cat-image {
-    margin-top: -120px;
-    margin-left: 5px;
-    width: calc(100% - 10px);
-}
-
-.category-page .cat-image img {
-    max-width: 100%;
-    max-height: 100%;
-    min-height: 200px;
-    box-shadow: 0px 0px 10px #a4a4a4;
-    pointer-events: none;
 }
 
 .category-page .sub-categories {

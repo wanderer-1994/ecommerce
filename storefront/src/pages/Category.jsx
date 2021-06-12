@@ -7,6 +7,7 @@ import appFunction from "../utils/appFunction";
 import { connect } from "react-redux";
 import constant from "../utils/constant";
 import queryString from "query-string";
+import utility from "../utils/utility";
 
 function SubCategory ({ category }) {
     if (!category || !category.children || !category.children.length > 0) return null;
@@ -62,6 +63,7 @@ function Category (props) {
     const [category, setCategory] = useState({});
     const [products, setProducts] = useState([]);
     
+    // useEffect to fetch products when url changed
     useEffect(() => {
         async function fetchProducts (searchConfig) {
             let indentifier = appFunction.addAppLoading();
@@ -85,10 +87,6 @@ function Category (props) {
         if (props.location.pathname.indexOf(constant.URL_CAT_SPLITER) !== -1) {
             categoryId = props.location.pathname.split(constant.URL_CAT_SPLITER).reverse()[0];
         }
-        let categories = props.categories ? JSON.parse(JSON.stringify(props.categories)) : [];
-        let category = categories.find(cat_item => cat_item.entity_id == categoryId) || {};
-        category.children = categories.filter(cat_item => cat_item.parent === category.entity_id).sort((a, b) => a.position - b.position);
-        setCategory(category);
 
         // call api product
         let query = queryString.parse(props.location.search);
@@ -102,16 +100,34 @@ function Category (props) {
         fetchProducts(searchConfig);
     }, [props.location.pathname]);
 
+    // useEffect to update categories when url changed & also when app update categories list
+    useEffect(() => {
+        let categoryId;
+        if (props.location.pathname.indexOf(constant.URL_CAT_SPLITER) !== -1) {
+            categoryId = props.location.pathname.split(constant.URL_CAT_SPLITER).reverse()[0];
+        }
+        let categories = props.categories ? JSON.parse(JSON.stringify(props.categories)) : [];
+        let category = categories.find(cat_item => cat_item.entity_id == categoryId) || {};
+        category.children = categories.filter(cat_item => cat_item.parent === category.entity_id).sort((a, b) => a.position - b.position);
+        setCategory(category);
+    }, [props.location.pathname, props.categories])
+
+    let bannerImg = categoryModel.getCategoryAttribute(category, "banner_image");
+    if (bannerImg) {
+        bannerImg = utility.toPublicUrlWithHost(bannerImg);
+    }
+
     return (
         <div className="category-page">
-            <div className="cat-title">{category.title}</div>
-            <div
-                className="cat-description"
-                dangerouslySetInnerHTML={{__html: categoryModel.getCategoryAttribute(category, "introduction")}}
+            <div className="banner-image"
+                style={{backgroundImage: `url(${bannerImg})`}}
             >
-            </div>
-            <div className="cat-image">
-                <img src={categoryModel.getCategoryAttribute(category, "banner_image")} alt="" />
+                <div className="cat-title">{category.name}</div>
+                <div
+                    className="cat-description"
+                    dangerouslySetInnerHTML={{__html: categoryModel.getCategoryAttribute(category, "introduction")}}
+                >
+                </div>
             </div>
             <SubCategory category={category} />
             <ProductList products={products} />

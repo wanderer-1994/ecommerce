@@ -20,6 +20,7 @@
 
 body {
   --footerHeight: 300px;
+  --navHeight: 64px;
   min-height: 100vh;
   position: relative;
   padding-bottom: var(--footerHeight);

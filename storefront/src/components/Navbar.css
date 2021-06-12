@@ -1,6 +1,6 @@
 .navbar-horizontal {
     background-color: #121212;
-    height: 64px;
+    height: var(--navHeight);
     padding-top: 12px;
     z-index: 100;
     position: relative;
