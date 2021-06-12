@@ -12,12 +12,14 @@ import PageNotFound from "./pages/PageNotFound";
 import constant from "./utils/constant";
 import staticPages from "./static_pages/StaticPages";
 import store from "./redux/store";
-import Api from "./api/mockApi";
+import api from "./api/mockApi";
+import appFunction from "./utils/appFunction";
 
 function App() {
 
     useEffect(() => {
-        Api.getCategories().then(data => {
+        let identifier = appFunction.addAppLoading();
+        api.getCategories().then(data => {
             store.dispatch({
                 type: "UPDATE_CATEGORIES",
                 payload: data.categories
@@ -26,8 +28,10 @@ function App() {
                 type: "UPDATE_STRUCTURIZED_CATEGORIES",
                 payload: data.structurized
             });
+            appFunction.removeAppLoading(identifier);
         }).catch(err => {
             console.log(err);
+            appFunction.removeAppLoading(identifier);
         })
     }, [])
 

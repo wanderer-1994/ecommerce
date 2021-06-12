@@ -6,7 +6,7 @@ function addAppLoading () {
     current.push(identifier);
     store.dispatch({
         type: "UPDATE_APPLOADING",
-        payload: current
+        payload: [...current]
     });
     return identifier;
 }
@@ -16,7 +16,7 @@ function removeAppLoading (identifier) {
     current = current.filter(item => item !== identifier);
     store.dispatch({
         type: "UPDATE_APPLOADING",
-        payload: current
+        payload: [...current]
     });
 }
 

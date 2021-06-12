@@ -18,6 +18,13 @@
   animation: bgsweep 1s infinite;
 }
 
+body {
+  --footerHeight: 300px;
+  min-height: 100vh;
+  position: relative;
+  padding-bottom: var(--footerHeight);
+}
+
 @keyframes bgsweep {
   0% {
       background-position: 100%;

@@ -2,7 +2,7 @@
     background-color: #121212;
     height: 64px;
     padding-top: 12px;
-    z-index: 1000;
+    z-index: 100;
     position: relative;
     user-select: none;
 }
