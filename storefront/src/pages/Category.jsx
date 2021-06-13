@@ -94,6 +94,7 @@ function Category (props) {
         page = parseInt(page) == page ? page : 1;
         let searchConfig = {
             page: page,
+            categoryRecursive: 0,
             // psize: server default psize = 12
         };
         searchConfig.categories = categoryId || undefined;

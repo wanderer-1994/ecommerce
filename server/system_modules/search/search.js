@@ -63,7 +63,7 @@ const attributeInheritFields = [
 const multivalueAttributes = ["multiselect", "multiinput"];
 const productTypeIds = ["self", "parent", "variants"];
 
-function createSearchQueryDB ({ categories, entity_ids, refinements, searchPhrase, searchDictionary, inStock, tier_price }) {
+function createSearchQueryDB ({ categories, categoryRecursive, entity_ids, refinements, searchPhrase, searchDictionary, inStock, tier_price }) {
     // ## search by category_id
     let queryCID = "";
     if (categories && categories.length > 0) {
@@ -73,10 +73,13 @@ function createSearchQueryDB ({ categories, entity_ids, refinements, searchPhras
             SELECT entity_id
             FROM \`ecommerce\`.category_entity
             WHERE entity_id IN (\'${categories.map(item => mysqlutils.escapeQuotes(item)).join("\', \'")}\')
+            ${categoryRecursive !== 1 ? "" :
+            `
             UNION ALL
             SELECT p.entity_id
             FROM \`ecommerce\`.category_entity AS \`p\`
             INNER JOIN \`cte\` ON \`p\`.parent = \`cte\`.entity_id
+            `}
         )
         SELECT product_id, MAX(weight) AS weight, \'category\' AS \`type\` FROM (
             SELECT
@@ -230,7 +233,7 @@ function createSearchQueryDB ({ categories, entity_ids, refinements, searchPhras
     return assembledQuery;
 };
 
-function searchConfigValidation ({ categories, entity_ids, refinements, searchPhrase, inStock, tier_price }) {
+function searchConfigValidation ({ categories, categoryRecursive, entity_ids, refinements, searchPhrase, inStock, tier_price }) {
     try {
         let required = [];
         if (categories && Array.isArray(categories) && categories.length > 0) {
@@ -242,6 +245,9 @@ function searchConfigValidation ({ categories, entity_ids, refinements, searchPh
         } else if (categories && !Array.isArray(categories)) {
             throw new Error("Search config invalid: categories must be an array!");
         }
+        if (!mysqlutils.isValueEmpty(categoryRecursive) && [0, 1].indexOf(categoryRecursive) === -1) {
+            throw new Error("Search config invalid: categoryRecursive must be enum int 0|1!");
+        };
         if (entity_ids && Array.isArray(entity_ids) && entity_ids.length > 0) {
             entity_ids.forEach(item => {
                 if (typeof(item) != "string" || item.length == 0)

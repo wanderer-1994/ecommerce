@@ -37,6 +37,7 @@ router.get("/product", async (req, res) => {
             let searchConfig = {
                 categories: req.query.categories ? req.query.categories.split("|") : null,
                 entity_ids: req.query.entity_ids ? req.query.entity_ids.split("|") : null,
+                categoryRecursive: ["0", "1"].indexOf(req.query.categoryRecursive) !== -1 ? parseInt(req.query.categoryRecursive) : 1,
                 refinements: refinements,
                 searchPhrase: req.query.keyword,
                 searchDictionary: msClient.searchDictionary,
