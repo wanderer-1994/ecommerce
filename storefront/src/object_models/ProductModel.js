@@ -1,17 +1,20 @@
+import utility from "../utils/utility";
+import constant from "../utils/constant";
+
 function getGallerry (product) {
     let temp = [];
     let gallerry = [];
     if (product.self) temp.push(product.self);
-    if (product.master) temp.push(product.master);
+    if (product.parent) temp.push(product.parent);
     if (product.variants) temp.push(...product.variants);
     temp.forEach(prod_entity => {
         let entity_id = prod_entity.entity_id;
-        let entity_gallerry = (prod_entity.attributes) ? prod_entity.attributes.find(item => item.attribute_id === "images") : null;
-        if (entity_gallerry && entity_gallerry.value) {
+        let entity_gallerry = (prod_entity.attributes) ? prod_entity.attributes.find(item => item.attribute_id === "gallery") : null;
+        if (entity_gallerry && Array.isArray(entity_gallerry.value)) {
             entity_gallerry.value.forEach(item => {
                 gallerry.push({
                     entity_id: entity_id,
-                    image: item
+                    imgUrl: item
                 })
             })
         }
@@ -19,20 +22,39 @@ function getGallerry (product) {
     return gallerry;
 };
 
-function getThumbnail (product) {
-    let temp = product.master || product.self;
+function getThumbnail (product, entity_id) {
+    let result = getProductSuperAttribute(product, "thumbnail", entity_id);
+    if (utility.isValueEmpty(result) || (Array.isArray(result) && result.length === 0)) {
+        let gallerry = getGallerry(product);
+        if (gallerry.length > 0) result = gallerry[0].imgUrl;
+    };
+    return result;
+}
+
+function getProductSuperAttribute (product, attribute_id, entity_id) {
+    let temp = [];
+    if (product.self) temp.push(product.self);
+    if (product.parent) temp.push(product.parent);
+    if (product.variants) temp.push(...product.variants);
     let result;
-    if (temp) {
-        let thumb_attribute = (temp.attributes || []).find(attr_item => attr_item.attribute_id === "thumbnail");
+    let prod_entity;
+    if (entity_id) {
+        prod_entity = temp.find(prod_entity => prod_entity.entity_id === entity_id) || {};
+        let thumb_attribute = (prod_entity.attributes || []).find(attr_item => attr_item.attribute_id === attribute_id);
         if (thumb_attribute) result = thumb_attribute.value;
     };
+    if (utility.isValueEmpty(result)  || (Array.isArray(result) && result.length === 0)) {
+        let prod_entity = (product.self || product.parent) || {};
+        let thumb_attribute = (prod_entity.attributes || []).find(attr_item => attr_item.attribute_id === attribute_id);
+        if (thumb_attribute) result = thumb_attribute.value;
+    }
     return result;
 };
 
-function getTierPrice(product, entity_id) {
+function getPrice(product, entity_id) {
     let temp = [];
     if (product.self) temp.push(product.self);
-    if (product.master) temp.push(product.master);
+    if (product.parent) temp.push(product.parent);
     if (product.variants) temp.push(...product.variants);
     let result = {
         price: null
@@ -41,7 +63,7 @@ function getTierPrice(product, entity_id) {
         let match = temp.find(prod_entity => {
             return prod_entity.entity_id === entity_id;
         });
-        if (match) result.price = match.tier_price;
+        if (match) result.tier_price = match.tier_price;
         return result;
     };
     // if no entity_id specified
@@ -54,7 +76,7 @@ function getTierPrice(product, entity_id) {
         }
     });
     if (tier_price_list.length === 1) {
-        result.price = tier_price_list[0];
+        result.tier_price = tier_price_list[0];
     } else if (tier_price_list.length > 1) {
         result.max_price = Math.max(...tier_price_list);
         result.min_price = Math.min(...tier_price_list);
@@ -65,7 +87,7 @@ function getTierPrice(product, entity_id) {
 function getName (product, entity_id) {
     let temp = [];
     if (product.self) temp.push(product.self);
-    if (product.master) temp.push(product.master);
+    if (product.parent) temp.push(product.parent);
     if (product.variants) temp.push(...product.variants);
     let result;
     let prod_entity;
@@ -81,9 +103,20 @@ function getName (product, entity_id) {
     return result;
 }
 
-module.exports = {
+function generateProductUrl (product, entity_id) {
+    let productName = getName(product, entity_id) || "";
+    if (utility.isValueEmpty(entity_id)) {
+        let temp = (product.self || product.parent) || {};
+        entity_id = temp.entity_id || "";
+    }
+    return encodeURI(`${productName}${constant.URL_PROD_SPLITER}${entity_id}`);
+}
+
+export default {
     getGallerry,
     getThumbnail,
-    getTierPrice,
-    getName
+    getProductSuperAttribute,
+    getPrice,
+    getName,
+    generateProductUrl
 }

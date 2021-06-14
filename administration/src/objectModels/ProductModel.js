@@ -91,12 +91,12 @@ function getGallerry (product) {
     if (product.variants) temp.push(...product.variants);
     temp.forEach(prod_entity => {
         let entity_id = prod_entity.entity_id;
-        let entity_gallerry = (prod_entity.attributes) ? prod_entity.attributes.find(item => item.attribute_id === "images") : null;
-        if (entity_gallerry && entity_gallerry.value) {
+        let entity_gallerry = (prod_entity.attributes) ? prod_entity.attributes.find(item => item.attribute_id === "gallery") : null;
+        if (entity_gallerry && Array.isArray(entity_gallerry.value)) {
             entity_gallerry.value.forEach(item => {
                 gallerry.push({
                     entity_id: entity_id,
-                    image: item
+                    imgUrl: item
                 })
             })
         }

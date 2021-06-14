@@ -19,7 +19,7 @@ function CategoryItemRecursive (props) {
     let splited_children = utility.splitArray(category.children || [], 4);
     return (
         <span className={`nav-item item-level-${level}`}>
-            <Link to={`/${encodeURIComponent(category.name)}${constant.URL_CAT_SPLITER}${category.entity_id}`}
+            <Link to={CategoryModel.generateCategoryUrl(category)}
                 {...props}
             >
                 <span>{category.name}</span>

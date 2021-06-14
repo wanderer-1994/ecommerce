@@ -50,7 +50,7 @@ function Product () {
                 <div className="gallerry">
                     <div className="main-image"
                         style={{
-                            backgroundImage: `url(${gallerry[0] ? gallerry[0].image : ""})`,
+                            backgroundImage: `url(${gallerry[0] ? gallerry[0].imgUrl : ""})`,
                             backgroundSize: "cover",
                             backgroundPosition: "center"
                         }}
@@ -67,7 +67,7 @@ function Product () {
                                     <div 
                                         className="absolute" 
                                         style={{
-                                            backgroundImage: `url(${item.image})`,
+                                            backgroundImage: `url(${item.imgUrl})`,
                                             backgroundSize: "contain",
                                             backgroundPosition: "center"
                                         }}

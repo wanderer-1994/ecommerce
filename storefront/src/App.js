@@ -15,7 +15,7 @@ import store from "./redux/store";
 import api from "./api/mockApi";
 import appFunction from "./utils/appFunction";
 
-function App() {
+function App(props) {
 
     useEffect(() => {
         let identifier = appFunction.addAppLoading();
@@ -34,6 +34,10 @@ function App() {
             appFunction.removeAppLoading(identifier);
         })
     }, [])
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [props.location.pathname])
 
     return (
         <Fragment>

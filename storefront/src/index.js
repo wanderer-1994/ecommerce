@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { Router, BrowserRouter} from "react-router-dom";
+import { Router, BrowserRouter, Route} from "react-router-dom";
 import { Provider } from "react-redux";
 import { createBrowserHistory } from "history";
 import store from "./redux/store";
@@ -15,7 +15,7 @@ ReactDOM.render(
     <Provider store={store}>
       <Router history={browserHistory}>
         <BrowserRouter>
-          <App />
+          <Route path="*" component={App} />
         </BrowserRouter>
       </Router>
     </Provider>

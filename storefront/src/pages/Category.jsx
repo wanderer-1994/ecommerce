@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import api from "../api/mockApi";
 import "./Category.css";
-import productModel from "../object_models/ProductModel";
-import categoryModel from "../object_models/CategoryModel";
+import ProductModel from "../object_models/ProductModel";
+import CategoryModel from "../object_models/CategoryModel";
 import appFunction from "../utils/appFunction";
 import { connect } from "react-redux";
 import constant from "../utils/constant";
@@ -14,9 +15,13 @@ function SubCategory ({ category }) {
     return (
         <div className="sub-categories">
             <div className="slider-inner" style={{minWidth: `${category.children.length*200}px`}}>
-                {category.children.map((item, index) => {
+                {category.children.map((childCategory, index) => {
                     return (
-                        <div key={index} className="item"></div>
+                        <Link key={index} className="item" to={CategoryModel.generateCategoryUrl(childCategory)}
+                            style={{backgroundImage: `url(${CategoryModel.getCategoryAttributeToHostUrl(childCategory, "thumbnail")})`}}
+                        >
+                            <span className="name">{childCategory.name}</span>
+                        </Link>
                     )
                 })}
             </div>
@@ -29,27 +34,24 @@ function ProductList ({ products }) {
     return (
         <div className="prod-list">
             {products.map((product, index) => {
-                let tier_price = productModel.getTierPrice(product);
-                let tier_price_text = "...đ";
-                if (tier_price.price !== null && tier_price.price !== undefined) {
-                    tier_price_text = tier_price.price.toLocaleString().replace(/\./g, ",") + "đ";
-                } else if (
-                    tier_price.max_price !== null &&
-                    tier_price.max_price !== undefined &&
-                    tier_price.min_price !== null &&
-                    tier_price.min_price !== undefined
-                ) {
-                    tier_price_text = `${tier_price.min_price.toLocaleString().replace(/\./g, ",")}đ - ${tier_price.max_price.toLocaleString().replace(/\./g, ",")}đ`
+                let price = ProductModel.getPrice(product);
+                let price_text = "...đ";
+                if (price.tier_price !== null && price.tier_price !== undefined) {
+                    price_text = price.tier_price.toLocaleString().replace(/\./g, ",") + "đ";
+                } else if (!utility.isValueEmpty(price.max_price) && !utility.isValueEmpty(price.min_price)) {
+                    price_text = `${price.min_price.toLocaleString().replace(/\./g, ",")}đ - ${price.max_price.toLocaleString().replace(/\./g, ",")}đ`
                 }
                 return (
                     <div key={index} className="prod-box">
                         <div className="prod-thumbnail">
-                            <img src={productModel.getThumbnail(product)} alt="" />
+                            <img src={utility.toPublicUrlWithHost(ProductModel.getThumbnail(product))} alt="" />
                         </div>
                         <div className="prod-info">
-                            <div className="prod-name">{productModel.getName(product) || "..."}</div>
+                            <Link className="prod-name"
+                                to={ProductModel.generateProductUrl(product)}
+                            >{ProductModel.getName(product) || "..."}</Link>
                             <div className="price">
-                                <span className="old">279,000đ</span>{tier_price_text}
+                                <span className="old">279,000đ</span>{price_text}
                             </div>
                         </div>
                     </div>
@@ -63,7 +65,6 @@ function Category (props) {
     const [category, setCategory] = useState({});
     const [products, setProducts] = useState([]);
     
-    // useEffect to fetch products when url changed
     useEffect(() => {
         async function fetchProducts (searchConfig) {
             let indentifier = appFunction.addAppLoading();
@@ -87,46 +88,43 @@ function Category (props) {
         if (props.location.pathname.indexOf(constant.URL_CAT_SPLITER) !== -1) {
             categoryId = props.location.pathname.split(constant.URL_CAT_SPLITER).reverse()[0];
         }
-
-        // call api product
-        let query = queryString.parse(props.location.search);
-        let page = query.page ? query.page : 1;
-        page = parseInt(page) == page ? page : 1;
-        let searchConfig = {
-            page: page,
-            categoryRecursive: 0,
-            // psize: server default psize = 12
-        };
-        searchConfig.categories = categoryId || undefined;
-        fetchProducts(searchConfig);
-    }, [props.location.pathname]);
-
-    // useEffect to update categories when url changed & also when app update categories list
-    useEffect(() => {
-        let categoryId;
-        if (props.location.pathname.indexOf(constant.URL_CAT_SPLITER) !== -1) {
-            categoryId = props.location.pathname.split(constant.URL_CAT_SPLITER).reverse()[0];
-        }
         let categories = props.categories ? JSON.parse(JSON.stringify(props.categories)) : [];
         let category = categories.find(cat_item => cat_item.entity_id == categoryId) || {};
         category.children = categories.filter(cat_item => cat_item.parent === category.entity_id).sort((a, b) => a.position - b.position);
         setCategory(category);
-    }, [props.location.pathname, props.categories])
 
-    let bannerImg = categoryModel.getCategoryAttribute(category, "banner_image");
-    if (bannerImg) {
-        bannerImg = utility.toPublicUrlWithHost(bannerImg);
-    }
+        if (category.entity_id === categoryId) {
+            let categoryUrl = CategoryModel.generateCategoryUrl(category);
+            let browserUrl = encodeURI(props.location.pathname.replace(/^\//, ""));
+            if (browserUrl !== categoryUrl) {
+                props.history.replace(categoryUrl);
+                console.log(browserUrl)
+                console.log(categoryUrl)
+            } else {
+                // call api product
+                let query = queryString.parse(props.location.search);
+                let page = query.page ? query.page : 1;
+                page = parseInt(page) == page ? page : 1;
+                let searchConfig = {
+                    page: page,
+                    categoryRecursive: 0,
+                    // psize: server default psize = 12
+                };
+                searchConfig.categories = categoryId || undefined;
+                fetchProducts(searchConfig);
+            }
+        }
+    }, [props.location.pathname, props.categories]);
 
     return (
         <div className="category-page">
             <div className="banner-image"
-                style={{backgroundImage: `url(${bannerImg})`}}
+                style={{backgroundImage: `url(${CategoryModel.getCategoryAttributeToHostUrl(category, "banner_image")})`}}
             >
                 <div className="cat-title">{category.name}</div>
                 <div
                     className="cat-description"
-                    dangerouslySetInnerHTML={{__html: categoryModel.getCategoryAttribute(category, "introduction")}}
+                    dangerouslySetInnerHTML={{__html: CategoryModel.getCategoryAttribute(category, "introduction")}}
                 >
                 </div>
             </div>
