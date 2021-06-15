@@ -6,29 +6,31 @@ function ScrollRestoration (props) {
 
     useEffect(() => {
         window.history.scrollRestoration = "manual";
-        let newScroll;
-        if (windowScroll && windowScroll[0] && props.location.pathname === windowScroll[0].pathname) {
-            newScroll = windowScroll[0];
+        let previousScroll = windowScroll[windowScroll.length - 2];
+        let currentScroll;
+        if (previousScroll && props.location.pathname === previousScroll.pathname) {
+            windowScroll.pop();
+            currentScroll = previousScroll;
         } else {
-            newScroll = {
+            currentScroll = {
                 pathname: props.location.pathname,
                 scrollX: 0,
                 scrollY: 0
-            }
+            };
+            windowScroll.push(currentScroll);
         };
-        windowScroll.shift();
-        windowScroll.push(newScroll);
         
         setTimeout(() => {
             window.scrollTo({
-                top: newScroll.scrollY,
+                top: currentScroll.scrollY,
+                left: currentScroll.scrollX,
                 behavior: "smooth"
             });
         }, 100)
 
         // listen to & update scroll on window scroll
         $(window).on("scroll.preserveScroll", () => {
-            windowScroll[1] = {
+            windowScroll[windowScroll.length - 1] = {
                 pathname: props.location.pathname,
                 scrollX: window.scrollX,
                 scrollY: window.scrollY

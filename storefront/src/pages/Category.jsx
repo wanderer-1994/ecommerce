@@ -2,65 +2,13 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import api from "../api/mockApi";
 import "./Category.css";
-import ProductModel from "../object_models/ProductModel";
 import CategoryModel from "../object_models/CategoryModel";
 import appFunction from "../utils/appFunction";
 import { connect } from "react-redux";
 import constant from "../utils/constant";
 import queryString from "query-string";
-import utility from "../utils/utility";
-
-function SubCategory ({ category }) {
-    if (!category || !category.children || !category.children.length > 0) return null;
-    return (
-        <div className="sub-categories">
-            <div className="slider-inner" style={{minWidth: `${category.children.length*200}px`}}>
-                {category.children.map((childCategory, index) => {
-                    return (
-                        <Link key={index} className="item" to={CategoryModel.generateCategoryUrl(childCategory)}
-                            style={{backgroundImage: `url(${CategoryModel.getCategoryAttributeToHostUrl(childCategory, "thumbnail")})`}}
-                        >
-                            <span className="name">{childCategory.name}</span>
-                        </Link>
-                    )
-                })}
-            </div>
-        </div>
-    )
-}
-
-function ProductList ({ products }) {
-    if (!products || products.length === 0) return null;
-    return (
-        <div className="prod-list">
-            {products.map((product, index) => {
-                let price = ProductModel.getPrice(product);
-                let price_text = "...đ";
-                if (price.tier_price !== null && price.tier_price !== undefined) {
-                    price_text = price.tier_price.toLocaleString().replace(/\./g, ",") + "đ";
-                } else if (!utility.isValueEmpty(price.max_price) && !utility.isValueEmpty(price.min_price)) {
-                    price_text = `${price.min_price.toLocaleString().replace(/\./g, ",")}đ - ${price.max_price.toLocaleString().replace(/\./g, ",")}đ`
-                }
-                return (
-                    <div key={index} className="prod-box">
-                        <div className="prod-thumbnail">
-                            {/* product thumbnai is parent-inherited. If neither entity or parent has thumbnail, taken the first gallerry img */}
-                            <img src={utility.toPublicUrlWithHost(ProductModel.getThumbnail(product))} alt="" />    
-                        </div>
-                        <div className="prod-info">
-                            <Link className="prod-name"
-                                to={ProductModel.generateProductUrl(product)}
-                            >{ProductModel.getName(product) || "..."}</Link>
-                            <div className="price">
-                                <span className="old">279,000đ</span>{price_text}
-                            </div>
-                        </div>
-                    </div>
-                )
-            })}
-        </div>
-    )
-}
+import ProductList from "../components/ProductList";
+import CategoryList from "../components/CategoryList";
 
 function Category (props) {
     const [category, setCategory] = useState({});
@@ -129,7 +77,7 @@ function Category (props) {
                 >
                 </div>
             </div>
-            <SubCategory category={category} />
+            <CategoryList categories={category.children} />
             <ProductList products={products} />
         </div>
     )
