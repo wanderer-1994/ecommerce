@@ -26,7 +26,12 @@ function getThumbnail (product, entity_id) {
     let result = getProductSuperAttribute(product, "thumbnail", entity_id);
     if (utility.isValueEmpty(result) || (Array.isArray(result) && result.length === 0)) {
         let gallerry = getGallerry(product);
-        if (gallerry.length > 0) result = gallerry[0].imgUrl;
+        if (gallerry.length > 0) {
+            if (!utility.isValueEmpty(entity_id)) {
+                gallerry = gallerry.filter(imgItem => imgItem.entity_id === entity_id);
+            }
+            result = gallerry[0].imgUrl;
+        }
     };
     return result;
 }

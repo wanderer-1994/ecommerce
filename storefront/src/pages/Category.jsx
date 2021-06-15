@@ -44,7 +44,8 @@ function ProductList ({ products }) {
                 return (
                     <div key={index} className="prod-box">
                         <div className="prod-thumbnail">
-                            <img src={utility.toPublicUrlWithHost(ProductModel.getThumbnail(product))} alt="" />
+                            {/* product thumbnai is parent-inherited. If neither entity or parent has thumbnail, taken the first gallerry img */}
+                            <img src={utility.toPublicUrlWithHost(ProductModel.getThumbnail(product))} alt="" />    
                         </div>
                         <div className="prod-info">
                             <Link className="prod-name"

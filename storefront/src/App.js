@@ -1,8 +1,9 @@
-import { Fragment, useEffect } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Route, Switch, Link } from "react-router-dom";
 import AppLoading from "./components/Apploading";
 import AppAlert from "./components/AppAlert";
 import Navbar from "./components/Navbar";
+import ScrollRestoration from "./components/ScrollRestoration";
 import Home from "./pages/Home";
 import Category from "./pages/Category";
 import Product from "./pages/Product";
@@ -15,7 +16,7 @@ import store from "./redux/store";
 import api from "./api/mockApi";
 import appFunction from "./utils/appFunction";
 
-function App(props) {
+function App() {
 
     useEffect(() => {
         let identifier = appFunction.addAppLoading();
@@ -32,18 +33,15 @@ function App(props) {
         }).catch(err => {
             console.log(err);
             appFunction.removeAppLoading(identifier);
-        })
+        });
     }, [])
-
-    useEffect(() => {
-        window.scrollTo(0, 0);
-    }, [props.location.pathname])
 
     return (
         <Fragment>
             <AppLoading />
             <AppAlert />
             <Route path="*" component={Navbar} />
+            <Route path="*" component={ScrollRestoration} />
             <Switch>
                 <Route exact path="/" component={Home} />
                 <Route path="/search" component={Search}></Route>
