@@ -37,6 +37,13 @@ const product_entity_columns = [
         valueInvalidMessage: `'updated-at' must be type datetime`,
         f_convert_value: database_data_type["POSITIVE_INT"].f_convert_value,
         f_validation: database_data_type["POSITIVE_INT"].f_validation
+    },
+    {
+        // this is extra column in frontend model
+        column: "available_quantity",
+        valueInvalidMessage: `'available_quantity' must be non-negative number type int`,
+        f_convert_value: database_data_type["NONE_NEGATIVE_INT"].f_convert_value,
+        f_validation: database_data_type["NONE_NEGATIVE_INT"].f_validation
     }
 ];
 

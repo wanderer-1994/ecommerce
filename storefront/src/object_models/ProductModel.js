@@ -1,6 +1,18 @@
 import utility from "../utils/utility";
 import constant from "../utils/constant";
 
+function getEntity (product, entity_id) {
+    if (!product) return null;
+    let temp = [];
+    if (product.self) temp.push(product.self);
+    if (product.parent) temp.push(product.parent);
+    if (product.variants) temp.push(...product.variants);
+    if (entity_id) {
+        return temp.find(prod_entity => prod_entity.entity_id === entity_id);
+    };
+    return temp[0];
+}
+
 function getGallerry (product) {
     let temp = [];
     let gallerry = [];
@@ -37,20 +49,15 @@ function getThumbnail (product, entity_id) {
 }
 
 function getProductSuperAttribute (product, attribute_id, entity_id) {
-    let temp = [];
-    if (product.self) temp.push(product.self);
-    if (product.parent) temp.push(product.parent);
-    if (product.variants) temp.push(...product.variants);
     let result;
-    let prod_entity;
-    if (entity_id) {
-        prod_entity = temp.find(prod_entity => prod_entity.entity_id === entity_id) || {};
-        let thumb_attribute = (prod_entity.attributes || []).find(attr_item => attr_item.attribute_id === attribute_id);
+    let entity = getEntity(product, entity_id);
+    if (entity) {
+        let thumb_attribute = (entity.attributes || []).find(attr_item => attr_item.attribute_id === attribute_id);
         if (thumb_attribute) result = thumb_attribute.value;
     };
     if (utility.isValueEmpty(result)  || (Array.isArray(result) && result.length === 0)) {
-        let prod_entity = (product.self || product.parent) || {};
-        let thumb_attribute = (prod_entity.attributes || []).find(attr_item => attr_item.attribute_id === attribute_id);
+        entity = (product.self || product.parent) || {};
+        let thumb_attribute = (entity.attributes || []).find(attr_item => attr_item.attribute_id === attribute_id);
         if (thumb_attribute) result = thumb_attribute.value;
     }
     return result;
@@ -90,19 +97,10 @@ function getPrice(product, entity_id) {
 };
 
 function getName (product, entity_id) {
-    let temp = [];
-    if (product.self) temp.push(product.self);
-    if (product.parent) temp.push(product.parent);
-    if (product.variants) temp.push(...product.variants);
     let result;
-    let prod_entity;
-    if (entity_id) {
-        prod_entity = temp.find(prod_entity => prod_entity.entity_id === entity_id);
-    } else {
-        prod_entity = temp[0];
-    }
-    if (prod_entity) {
-        let name_attribute = (prod_entity.attributes || []).find(attr_item => attr_item.attribute_id === "name");
+    let entity = getEntity(product, entity_id) || getEntity(product);
+    if (entity) {
+        let name_attribute = (entity.attributes || []).find(attr_item => attr_item.attribute_id === "name");
         if (name_attribute) result = name_attribute.value;
     };
     return result;
@@ -117,11 +115,52 @@ function generateProductUrl (product, entity_id) {
     return encodeURI(`${productName}${constant.URL_PROD_SPLITER}${entity_id}`);
 }
 
+function getRootCategory (product, categories, entity_id) {
+    let rootCategory;
+    let entity = getEntity(product, entity_id);
+    if (entity) {
+        (entity.categories || []).forEach((assignment, index) => {
+            if (assignment.is_primary === true || index === 0) {
+                let rootCategoryId = assignment.category_id;
+                let category = categories.find(catItem => catItem.entity_id === rootCategoryId);
+                if (category) rootCategory = category;
+            }
+        })
+    };
+    return rootCategory;
+}
+
+function getProductSwatch(product, category) {
+    let swatchAttributes = ["color", "cable_jacktype"];
+    let result = [];
+    let temp = [];
+    if (product.self) temp.push(product.self);
+    if (product.parent) temp.push(product.parent);
+    if (product.variants) temp.push(...product.variants);
+    swatchAttributes.forEach(attribute_id => {
+        
+    });
+    let swatchModel = [
+        {
+            attribute_id: "color",
+            values: [
+                {
+                    value: "xanh",
+                    
+                }
+            ]
+        }
+    ]
+}
+
 export default {
+    getEntity,
     getGallerry,
     getThumbnail,
     getProductSuperAttribute,
     getPrice,
     getName,
-    generateProductUrl
+    generateProductUrl,
+    getRootCategory,
+    getProductSwatch
 }

@@ -78,7 +78,7 @@ function Category (props) {
                 </div>
             </div>
             <CategoryList categories={category.children} />
-            <ProductList products={products} />
+            <ProductList products={products} category={category} />
         </div>
     )
 };
