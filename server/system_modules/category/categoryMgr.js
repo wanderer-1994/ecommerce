@@ -268,7 +268,7 @@ async function saveCategoryEntity (category, option) {
         }
         COMMIT;
         `;
-        assembled_sql_update_category = assembled_sql_update_category.replace(/\n+(\s|\t)+/g, "\n").replace(/;\n/g, ";\n\n");
+        // assembled_sql_update_category = assembled_sql_update_category.replace(/\n+(\s|\t)+/g, "\n").replace(/;\n/g, ";\n\n");
         let result = await msClient.promiseQuery(assembled_sql_update_category);
         return result;
     } catch (err) {

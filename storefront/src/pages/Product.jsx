@@ -1,97 +1,154 @@
 import "./Product.css";
 import { useEffect, useState, Fragment } from "react";
-import $ from "../jquery/Jquery";
-import productModel from "../object_models/ProductModel";
 import api from "../api/mockApi";
+import appFunction from "../utils/appFunction";
+import constant from "../utils/constant";
+import ProductModel from "../object_models/ProductModel";
+import utility from "../utils/utility";
+import { Carousel } from "antd";
+import $ from "jquery";
+window.ScrollControl = window.ScrollControl || [];
 
-function Product () {
+function Product (props) {
 
     const [product, setProduct] = useState({});
-
-    useEffect(() => {
-        $(".gallerry").on("click.gallerryRotate", function () {
-            let img_items = $(this).find(".image-item");
-            img_items.each(function (index, value) {
-                let nth = parseInt($(this).css("--nth")) + 1;
-                let total = parseInt($(this).css("--total"));
-                $(this).css("--nth", nth);
-                if (nth % total === 0) {
-                    $(".gallerry").find(".main-image").css({
-                        "background-image": $(this).find(".absolute").css("background-image"),
-                        "background-size": "cover",
-                        "background-position": "center"
-                    }
-                    )
-                }
-            });
-        });
-        return () => {
-            $(".gallerry").off("click.gallerryRotate");
-        }
-    }, []);
+    const [entity_id, setEntityId] = useState("");
+    const [carouselAuto, setCarouselAuto] = useState(true);
 
     useEffect(() => {
         async function fetchData () {
             try {
-                let search = await api.searchProduct();
-                let product = search.products[0] || {};
-                setProduct(product);
+                let indentifier = appFunction.addAppLoading();
+                let productId;
+                if (props.location.pathname.indexOf(constant.URL_PROD_SPLITER) !== -1) {
+                    productId = props.location.pathname.split(constant.URL_PROD_SPLITER).reverse()[0];
+                };
+                let search = await api.searchProduct({entity_ids: productId || undefined});
+                let apiProduct = search.products[0] || {};
+                setProduct(apiProduct);
+                appFunction.removeAppLoading(indentifier);
+                let productEntity = ProductModel.getEntity(apiProduct, productId);
+                if (productEntity && productEntity.entity_id === productId) {
+                    let productUrl = ProductModel.generateProductUrl(apiProduct, productId);
+                    let browserUrl = encodeURI(props.location.pathname.replace(/^\//, ""));
+                    // redirect when url not match
+                    if (browserUrl !== productUrl) {
+                        props.history.replace(productUrl);
+                    };
+                    setEntityId(productId);
+                    if (props.location.hash) { // auto scroll to selected product when url contains #product-variant-id
+                        let $selectedVariantImg = $(props.location.hash);
+                        if ($selectedVariantImg && $selectedVariantImg[0] && typeof ($selectedVariantImg[0] === "function")) {
+                            let appScroll = window.ScrollControl.find(item => item.pathname === props.location.pathname);
+                            if (!appScroll || (appScroll.scrollX === 0 && appScroll.scrollY === 0)) { // Prevent conflict with app scroll restoration
+                                setTimeout(() => {
+                                    $selectedVariantImg[0].scrollIntoView({behavior: "smooth"});
+                                }, 100);
+                            }
+                        }
+                    }
+                };
+                // set carousel not auto when specified entity & entity has gallery image
+                if (productEntity !== apiProduct.parent && productEntity !== apiProduct.self) {
+                    let gallery = ProductModel.getGallery(apiProduct);
+                    let isHasGalleryImg = gallery.some(item => {
+                        return item.entity_id === productId;
+                    })
+                    setCarouselAuto(!isHasGalleryImg)
+                } else {
+                    setCarouselAuto(true);
+                }
             } catch (err) {
-
+                console.log(err);
             }
         };
         fetchData();
-    }, [])
+    }, [props.location.pathname])
 
-    function renderProduct (product) {
-        let gallerry = productModel.getGallerry(product);
-        return (
-            <Fragment>
-                <div className="gallerry">
-                    <div className="main-image"
-                        style={{
-                            backgroundImage: `url(${gallerry[0] ? gallerry[0].imgUrl : ""})`,
-                            backgroundSize: "cover",
-                            backgroundPosition: "center"
-                        }}
-                    >
+    let gallery = ProductModel.getGallery(product);
+    let carouselPos = 0;
+    let currentEntityId; // control #id of image gallery
+    let currentEntityIndex = 0;
+    if (carouselAuto === false) {
+        for (let i = 0; i < gallery.length; i++) {
+            if (gallery[i].entity_id === entity_id) {
+                carouselPos = i;
+                break;
+            }
+        };
+    };
+    return (
+        <div className="product-page">
+            <div className="prod-main-content">
+                <div className="text-content">
+                    <div className="wrap-box">
+                        {ProductModel.getName(product, entity_id)}<br/>
+                        hihi<br/>
+                        hihi<br/>
+                        hihi<br/>
+                        hihi<br/>
+                        hihi<br/>
+                        hihi<br/>
+                        hihi<br/>
+                        hihi<br/>
+                        <a href={`${props.location.pathname}#${gallery[5] ? gallery[5].entity_id : ""}`}>test</a><br/>
+                        <a href={`${props.location.pathname}#${gallery[5] ? gallery[5].entity_id : ""}`}>abc</a>
                     </div>
-                    <div className="list">
-                        {gallerry.map((item, index) => {
-                            return (
-                                <div key={index} className="image-item" style={{
-                                    "--nth": index,
-                                    "--total": gallerry.length
-                                }}
-                                >
-                                    <div 
-                                        className="absolute" 
-                                        style={{
-                                            backgroundImage: `url(${item.imgUrl})`,
-                                            backgroundSize: "contain",
-                                            backgroundPosition: "center"
-                                        }}
-                                    >
+                </div>
+                <div className="gallery">
+                    <div className="mobile-carousel">
+                        <Carousel autoplay={carouselAuto} draggable={true} swipe={true}
+                            ref={slider => {
+                                if (slider) {
+                                    window.slider = slider;
+                                    setTimeout(() => {
+                                        if (carouselPos > 0) {
+                                            window.slider.goTo(carouselPos);
+                                        }
+                                    }, 100)
+                                }
+                            }}
+                        >
+                            {gallery.map((img, index) => {
+                                return (
+                                    <div key={index}>
+                                        <div className="carousel-item"
+                                            style={{backgroundImage: `url(${utility.toPublicUrlWithHost(img.imgUrl)})`}}
+                                        ></div>
                                     </div>
+                                )
+                            })}
+                        </Carousel>
+                    </div>
+                    <div className="desktop-gallery">
+                        {gallery.length === 1 ? 
+                        (
+                            <div id={`#${gallery[0].entity_id}`} className="gallery-unique">
+                                <img src={utility.toPublicUrlWithHost(gallery[0].imgUrl)} alt="" />
+                            </div>
+                        ) : gallery.map((img, index) => {
+                            if (img.entity_id !== currentEntityId) {
+                                currentEntityId = img.entity_id;
+                                currentEntityIndex = 0;
+                            } else {
+                                currentEntityIndex += 1;
+                            };
+                            let isSelected = props.location.hash.replace(/^#/, "") === currentEntityId ? true : false;
+                            return (
+                                <div key={index} 
+                                    id={`${currentEntityId}${currentEntityIndex === 0 ? "" : `_${currentEntityIndex}`}`}
+                                    className={`gallery-item${isSelected ? " selected" : ""}`}
+                                >
+                                    <img src={utility.toPublicUrlWithHost(img.imgUrl)} alt="" />
                                 </div>
                             )
                         })}
                     </div>
                 </div>
-                <div className="info">
-                    <h4 className="name">TAI NGHE NHÉT TAI BOROFONE BM27</h4>
-                    <div className="description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Error, suscipit optio numquam dicta debitis repellat labore eligendi corrupti nulla at quas magni? Quod, beatae nostrum eius qui quas debitis itaque.</div>
-                </div>
-                <div className="related">
-                    
-                </div>
-            </Fragment>
-        )
-    }
-
-    return (
-        <div className="product-page">
-            {renderProduct(product)}
+            </div>
+            <div id="abc" className="related">
+                    hehe
+            </div>
         </div>
     )
 }

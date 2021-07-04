@@ -15,6 +15,7 @@ import staticPages from "./static_pages/StaticPages";
 import store from "./redux/store";
 import api from "./api/mockApi";
 import appFunction from "./utils/appFunction";
+import "antd/dist/antd.css";
 
 function App() {
 

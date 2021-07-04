@@ -47,8 +47,6 @@ function Category (props) {
             let browserUrl = encodeURI(props.location.pathname.replace(/^\//, ""));
             if (browserUrl !== categoryUrl) {
                 props.history.replace(categoryUrl);
-                console.log(browserUrl)
-                console.log(categoryUrl)
             } else {
                 // call api product
                 let query = queryString.parse(props.location.search);

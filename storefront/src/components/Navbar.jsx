@@ -1,14 +1,10 @@
 import "./Navbar.css";
 import { Link } from "react-router-dom";
-import { useEffect, useState, Fragment } from "react";
-import api from "../api/mockApi";
+import { useEffect, useState } from "react";
 import CategoryModel from "../object_models/CategoryModel";
 import utility from "../utils/utility";
 import $ from "jquery";
-import constant from "../utils/constant";
 import { connect } from "react-redux";
-
-const category_spliter = "-cat.";
 
 function CategoryItemRecursive (props) {
     const { level, category } = {...props}
@@ -64,7 +60,38 @@ function Navbar (props) {
 
     useEffect(() => {
         setNavigation(props.navigation || []);
-    }, [props.navigation])
+    }, [props.navigation]);
+
+    useEffect(() => {
+        const navbarHeight = parseInt($(".navbar-horizontal").css("height"));
+        const thresoldScrollPosition = navbarHeight; // 100px scroll to start navbar slide
+        const timeoutThresold = 150; // 150ms delay to trigger navbar slide
+        let scrollTimeoutKeeper;
+        let initialScroll = window.scrollY;
+        $(window).on("scroll.navbarslide", () => {
+            let scrollDirection = window.scrollY >= initialScroll ? "DOWN" : "UP";
+            initialScroll = window.scrollY;
+            if (scrollTimeoutKeeper) {
+                clearInterval(scrollTimeoutKeeper);
+            };
+            if (scrollDirection === "UP" && window.scrollY > thresoldScrollPosition) {
+                scrollTimeoutKeeper = setTimeout(() => {
+                    $(".navbar-horizontal").css({"top": `${-navbarHeight}px`});
+                    setTimeout(() => {
+                        $(".navbar-horizontal").addClass("slide-down");
+                        $(".navbar-horizontal").css({"top": "0px"});
+                    }, 0);
+                }, timeoutThresold);
+            };
+            if (window.scrollY === 0 || scrollDirection === "DOWN") {
+                $(".navbar-horizontal").removeClass("slide-down");
+                $(".navbar-horizontal").css({"top": ""});
+            }
+        });
+        return function () {
+            $(window).off("scroll.navbarslide");
+        }
+    }, []);
 
     return (
         <div className="navbar-horizontal">

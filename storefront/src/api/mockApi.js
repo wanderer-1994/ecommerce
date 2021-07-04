@@ -276,6 +276,24 @@ async function getCategories () {
     }
 }
 
+/**
+ * @param {{
+ *  categories: String,
+ *  entity_ids: String,
+ *  keyword: String,
+ *  page: Number,
+ *  psize: Number,
+ *  filter_attribute_id: String
+ * }} searchConfig
+ * @returns {{
+ *  currentPage: Number,
+ *  products: Array.<{product: Object}>,
+ *  psize: Number,
+ *  send: Number,
+ *  totalFound: Number,
+ *  totalPages: Number
+ * }}
+ */
 async function searchProduct (searchConfig) {
     try {
         try {

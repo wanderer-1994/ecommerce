@@ -90,25 +90,25 @@ const product_eav_columns = [
     }
 ];
 
-function getGallerry (product) {
+function getGallery (product) {
     let temp = [];
-    let gallerry = [];
+    let gallery = [];
     if (product.self) temp.push(product.self);
     if (product.master) temp.push(product.master);
     if (product.variants) temp.push(...product.variants);
     temp.forEach(prod_entity => {
         let entity_id = prod_entity.entity_id;
-        let entity_gallerry = (prod_entity.attributes) ? prod_entity.attributes.find(item => item.attribute_id === "gallery") : null;
-        if (entity_gallerry && Array.isArray(entity_gallerry.value)) {
-            entity_gallerry.value.forEach(item => {
-                gallerry.push({
+        let entity_gallery = (prod_entity.attributes) ? prod_entity.attributes.find(item => item.attribute_id === "gallery") : null;
+        if (entity_gallery && Array.isArray(entity_gallery.value)) {
+            entity_gallery.value.forEach(item => {
+                gallery.push({
                     entity_id: entity_id,
                     imgUrl: item
                 })
             })
         }
     });
-    return gallerry;
+    return gallery;
 };
 
 function getThumbnail (product) {
@@ -285,7 +285,7 @@ function extractProductEntity ({ product, entity_id }) {
 }
 
 export {
-    getGallerry,
+    getGallery,
     getThumbnail,
     getTierPrice,
     getName,

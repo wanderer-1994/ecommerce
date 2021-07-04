@@ -425,7 +425,7 @@ async function saveProductEntity (product, option) {
         }
         COMMIT;
         `;
-        assembled_sql_update_product = assembled_sql_update_product.replace(/\n+(\s|\t)+/g, "\n").replace(/;\n/g, ";\n\n");
+        // assembled_sql_update_product = assembled_sql_update_product.replace(/\n+(\s|\t)+/g, "\n").replace(/;\n/g, ";\n\n");
         let result = await msClient.promiseQuery(assembled_sql_update_product);
         return result;
     } catch (err) {
