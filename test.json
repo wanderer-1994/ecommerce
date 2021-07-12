@@ -1,8 +1,9 @@
 [
     {
-        "attribute_id": "color"
-    },
-    {
-        "attribute_id": "cable_jacktype"
+        "attribute_id": "color",
+        "displayName": "Màu"
+    }, {
+        "attribute_id": "cable_jacktype",
+        "displayName": "Jack"
     }
 ]

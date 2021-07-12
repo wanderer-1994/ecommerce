@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import utility from "../utils/utility";
 import ProductModel from "../object_models/ProductModel";
+import queryString from "query-string";
 import "./ProductList.css";
 
 function ProductList (props) {
@@ -43,8 +44,10 @@ function ProductList (props) {
                                                 {swatch.values && swatch.values.length > 0 ? (
                                                     <div className="swatch-attribute">
                                                         {swatch.values.map((valueItem, idx) => {
-                                                            let entity_id = valueItem.entities && valueItem.entities[0] ? valueItem.entities[0].entity_id : null;
-                                                            let entityUrl = ProductModel.generateProductUrl(product, entity_id);
+                                                            let query = {
+                                                                [`v_${swatch.attribute_id}`]: valueItem.value
+                                                            }
+                                                            let entityUrl = `${ProductModel.generateProductUrl(product)}?${queryString.stringify(query)}`;
                                                             return (
                                                                 <Link key={idx}
                                                                     className={`swatch-value ${valueItem.available_quantity > 0 ? "available" : "unavailable"}`}

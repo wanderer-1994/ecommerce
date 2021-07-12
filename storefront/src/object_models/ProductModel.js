@@ -163,7 +163,15 @@ function generateProductUrl (product, entity_id) {
     return encodeURI(`${productName}${constant.URL_PROD_SPLITER}${entity_id}`);
 }
 
-function getRootCategory (product, categories, entity_id) {
+/**
+ * 
+ * @param {Object} product 
+ * @param {Array.<Object>} categories 
+ * @param {String | null} entity_id 
+ * @returns {Object}
+ */
+function getPrimaryCategory (product, categories, entity_id) {
+    if (!product || !categories) return;
     let rootCategory;
     let entity = getEntity(product, entity_id);
     if (entity) {
@@ -179,25 +187,24 @@ function getRootCategory (product, categories, entity_id) {
 }
 
 /**
- * swatchModel = [
- *   {
- *       attribute_id: "color",
- *       available_quantity: 10,
- *       values: [
- *           {
- *               value: "xanh",
- *               available_quantity: 10,
- *               entities: [{
- *                   entity_id: "PR0001",
- *                   available_quantity: 1
- *               }]
- *           }
- *       ]
- *   }
- *]
-*/
+ * 
+ * @param {Object} product 
+ * @param {Object} category 
+ * @returns {Array.<{
+ *  attribute_id        : String,
+ *  displayName         : String,
+ *  values: Array.<{
+ *      value               : String,
+ *      available_quantity  : Number,
+ *      entities            : Array.<{
+ *          entity_id           : String,
+ *          available_quantity  : Number
+ *      }>
+ *  }>
+ * }>}
+ */
 function getProductSwatch(product, category) {
-    let swatchAttributes = CategoryModel.getCategoryAttribute(category, "swatchConfig");
+    let swatchAttributes = CategoryModel.getCategoryAttribute(category, "variationModel");
     try {
         swatchAttributes = JSON.parse(swatchAttributes);
         if (!Array.isArray(swatchAttributes)) {
@@ -208,25 +215,24 @@ function getProductSwatch(product, category) {
         swatchAttributes = [];
     }
     let swatchModel = [];
-    let temp = [];
-    if (product.self) temp.push(product.self);
-    if (product.parent) temp.push(product.parent);
-    if (product.variants) temp.push(...product.variants);
+    if (!Array.isArray(product.variants) || product.variants.length === 0) return swatchModel;
     swatchAttributes.forEach(swatchItem => {
         let attribute_id = swatchItem.attribute_id;
         let matchSwatch = swatchModel.find(item => item.attribute_id === attribute_id);
         if (!matchSwatch) {
             matchSwatch = {
                 attribute_id: attribute_id,
+                displayName: swatchItem.displayName,
                 values: []
             };
             swatchModel.push(matchSwatch);
         };
-        temp.forEach(entity => {
+        product.variants.forEach(entity => {
             let value = getEntityAttribute(product, attribute_id, entity.entity_id);
             if (!utility.isValueEmpty(value)) {
                 if (Array.isArray(value)) {
                     value.forEach(v_item => {
+                        if (utility.isValueEmpty(v_item)) return;
                         let matchValue = matchSwatch.values.find(item => item.value === v_item);
                         if (!matchValue) {
                             matchValue = {
@@ -271,6 +277,7 @@ function getProductSwatch(product, category) {
             }
         })
     });
+    swatchModel = swatchModel.filter(item => item.values.length > 0);
     return swatchModel;
 }
 
@@ -283,6 +290,6 @@ export default {
     getPrice,
     getName,
     generateProductUrl,
-    getRootCategory,
+    getPrimaryCategory,
     getProductSwatch
 }
